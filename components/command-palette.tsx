@@ -1,0 +1,260 @@
+"use client";
+
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import {
+  ArrowRight,
+  Copy,
+  FileText,
+  Github,
+  Linkedin,
+  Mail,
+  Moon,
+  Search,
+  Sun,
+} from "lucide-react";
+import { useTheme } from "next-themes";
+import { navLinks, site } from "@/lib/site";
+import { cn } from "@/lib/utils";
+
+type Item = {
+  id: string;
+  label: string;
+  group: string;
+  icon: React.ReactNode;
+  run: () => void;
+  keywords?: string;
+};
+
+export function CommandPalette() {
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const [index, setIndex] = useState(0);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const { resolvedTheme, setTheme } = useTheme();
+
+  const close = useCallback(() => {
+    setOpen(false);
+    setQuery("");
+    setIndex(0);
+  }, []);
+
+  const go = useCallback(
+    (hash: string) => {
+      close();
+      document.querySelector(hash)?.scrollIntoView({ behavior: "smooth" });
+    },
+    [close],
+  );
+
+  const items = useMemo<Item[]>(() => {
+    const nav: Item[] = navLinks.map((l) => ({
+      id: l.href,
+      label: l.label,
+      group: "Navigate",
+      icon: <ArrowRight className="size-4" />,
+      run: () => go(l.href),
+    }));
+
+    const actions: Item[] = [
+      {
+        id: "theme",
+        label: resolvedTheme === "dark" ? "Switch to light theme" : "Switch to dark theme",
+        group: "Actions",
+        icon:
+          resolvedTheme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />,
+        run: () => {
+          setTheme(resolvedTheme === "dark" ? "light" : "dark");
+          close();
+        },
+      },
+      {
+        id: "copy-email",
+        label: "Copy email address",
+        group: "Actions",
+        keywords: site.email,
+        icon: <Copy className="size-4" />,
+        run: () => {
+          void navigator.clipboard.writeText(site.email);
+          close();
+        },
+      },
+      {
+        id: "cv",
+        label: "Download CV",
+        group: "Actions",
+        icon: <FileText className="size-4" />,
+        run: () => {
+          window.open(site.resumeUrl, "_blank");
+          close();
+        },
+      },
+    ];
+
+    const links: Item[] = [
+      {
+        id: "github",
+        label: "GitHub",
+        group: "Links",
+        icon: <Github className="size-4" />,
+        run: () => {
+          window.open(site.socials.github, "_blank", "noopener");
+          close();
+        },
+      },
+      {
+        id: "linkedin",
+        label: "LinkedIn",
+        group: "Links",
+        icon: <Linkedin className="size-4" />,
+        run: () => {
+          window.open(site.socials.linkedin, "_blank", "noopener");
+          close();
+        },
+      },
+      {
+        id: "email",
+        label: "Send an email",
+        group: "Links",
+        icon: <Mail className="size-4" />,
+        run: () => {
+          window.location.href = `mailto:${site.email}`;
+          close();
+        },
+      },
+    ];
+
+    return [...nav, ...actions, ...links];
+  }, [close, go, resolvedTheme, setTheme]);
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return items;
+    return items.filter((i) =>
+      `${i.label} ${i.group} ${i.keywords ?? ""}`.toLowerCase().includes(q),
+    );
+  }, [items, query]);
+
+  const groups = useMemo(() => {
+    const map = new Map<string, Item[]>();
+    filtered.forEach((i) => {
+      map.set(i.group, [...(map.get(i.group) ?? []), i]);
+    });
+    return [...map.entries()];
+  }, [filtered]);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key.toLowerCase() === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setOpen((v) => !v);
+      }
+      if (e.key === "Escape") close();
+    };
+    const onOpen = () => setOpen(true);
+
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("open-command-palette", onOpen);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("open-command-palette", onOpen);
+    };
+  }, [close]);
+
+  useEffect(() => {
+    if (open) setTimeout(() => inputRef.current?.focus(), 40);
+  }, [open]);
+
+  useEffect(() => setIndex(0), [query]);
+
+  const onListKey = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setIndex((i) => (i + 1) % Math.max(filtered.length, 1));
+    }
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setIndex((i) => (i - 1 + filtered.length) % Math.max(filtered.length, 1));
+    }
+    if (e.key === "Enter") {
+      e.preventDefault();
+      filtered[index]?.run();
+    }
+  };
+
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[70] flex items-start justify-center bg-background/70 p-4 pt-[12vh] backdrop-blur-sm"
+          onClick={close}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.97, y: -8 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.98, y: -4 }}
+            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Command palette"
+            className="w-full max-w-lg overflow-hidden rounded-2xl border border-border bg-card shadow-2xl"
+          >
+            <div className="flex items-center gap-3 border-b border-border px-4">
+              <Search className="size-4 shrink-0 text-muted-foreground" />
+              <input
+                ref={inputRef}
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={onListKey}
+                placeholder="Type a command or search…"
+                className="w-full bg-transparent py-4 text-sm outline-none placeholder:text-muted-foreground"
+              />
+              <kbd className="rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
+                ESC
+              </kbd>
+            </div>
+
+            <div className="max-h-80 overflow-y-auto p-2">
+              {filtered.length === 0 && (
+                <p className="px-3 py-8 text-center text-sm text-muted-foreground">
+                  No results for “{query}”
+                </p>
+              )}
+              {groups.map(([group, groupItems]) => (
+                <div key={group} className="mb-1">
+                  <p className="px-3 py-2 text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
+                    {group}
+                  </p>
+                  {groupItems.map((item) => {
+                    const i = filtered.indexOf(item);
+                    return (
+                      <button
+                        key={item.id}
+                        type="button"
+                        onMouseEnter={() => setIndex(i)}
+                        onClick={item.run}
+                        className={cn(
+                          "flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition-colors",
+                          i === index
+                            ? "bg-muted text-foreground"
+                            : "text-muted-foreground",
+                        )}
+                      >
+                        <span className="text-muted-foreground">{item.icon}</span>
+                        {item.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
