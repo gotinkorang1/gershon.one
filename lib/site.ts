@@ -129,7 +129,7 @@ export const experience: Job[] = [
     division: "Creative Department",
     role: "IT Specialist (National Service)",
     start: "2020-09",
-    end: "2021-08",
+    end: "2020-12",
     location: "Ghana",
     summary: "Web development and internal IT support inside a creative agency.",
     highlights: [
