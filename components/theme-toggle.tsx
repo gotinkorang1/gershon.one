@@ -10,9 +10,9 @@ export function ThemeToggle() {
 
   useEffect(() => setMounted(true), []);
 
-  // `resolvedTheme` is undefined during SSR and on the first client render,
-  // so every attribute derived from it — icon *and* aria-label — has to wait
-  // for mount. Branching on it earlier produces a hydration mismatch.
+  // `resolvedTheme` is undefined during SSR and on the first client render, so
+  // every attribute derived from it — icon *and* aria-label — has to wait for
+  // mount. Branching on it earlier produces a hydration mismatch.
   const isDark = resolvedTheme === "dark";
 
   return (
@@ -26,16 +26,16 @@ export function ThemeToggle() {
           : "Toggle theme"
       }
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="relative grid size-9 place-items-center rounded-full border border-border/70 bg-card/60 text-muted-foreground backdrop-blur transition hover:text-foreground hover:border-border"
+      className="grid size-9 place-items-center border border-rule text-faint transition-colors hover:border-rule-strong hover:text-foreground"
     >
       {mounted ? (
         isDark ? (
-          <Sun className="size-4" />
+          <Sun className="size-3.5" />
         ) : (
-          <Moon className="size-4" />
+          <Moon className="size-3.5" />
         )
       ) : (
-        <span className="size-4" />
+        <span className="size-3.5" />
       )}
     </button>
   );

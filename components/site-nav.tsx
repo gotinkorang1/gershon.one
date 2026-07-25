@@ -2,19 +2,18 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "motion/react";
-import { Command, Menu, X } from "lucide-react";
+import { Command } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { navLinks, site } from "@/lib/site";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 export function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState("");
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState<string>("");
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -32,7 +31,7 @@ export function SiteNav() {
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
         if (visible?.target.id) setActive(`#${visible.target.id}`);
       },
-      { rootMargin: "-45% 0px -50% 0px", threshold: [0, 0.25, 0.5, 1] },
+      { rootMargin: "-40% 0px -55% 0px", threshold: [0, 0.3, 1] },
     );
 
     sections.forEach((s) => observer.observe(s));
@@ -46,127 +45,115 @@ export function SiteNav() {
     };
   }, [open]);
 
-  const openPalette = () =>
-    window.dispatchEvent(new CustomEvent("open-command-palette"));
-
   return (
     <>
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[80] focus:rounded-md focus:bg-card focus:px-4 focus:py-2 focus:text-sm focus:shadow-lg"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-6 focus:top-6 focus:z-[80] focus:bg-foreground focus:px-4 focus:py-2 focus:text-sm focus:text-background"
       >
         Skip to content
       </a>
 
       <header
         className={cn(
-          "fixed inset-x-0 top-0 z-50 transition-all duration-500",
-          scrolled ? "py-3" : "py-5",
+          "fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300",
+          scrolled
+            ? "border-rule bg-background/85 backdrop-blur-md"
+            : "border-transparent",
         )}
       >
-        <div className="container-page">
-          <nav
-            className={cn(
-              "flex items-center justify-between gap-4 rounded-full border px-4 py-2.5 transition-all duration-500",
-              scrolled
-                ? "border-border/80 bg-background/70 shadow-[0_8px_30px_-12px_rgb(0_0_0_/_0.35)] backdrop-blur-xl"
-                : "border-transparent bg-transparent",
-            )}
-          >
-            <Link
-              href="/"
-              className="group flex items-center gap-2.5 font-mono text-sm font-semibold tracking-tight"
-            >
-              <span className="grid size-7 place-items-center rounded-md bg-foreground text-[11px] font-bold text-background transition-transform group-hover:scale-110">
-                {site.initials}
-              </span>
-              <span className="hidden sm:inline">gershon.one</span>
-            </Link>
+        <div className="shell flex h-16 items-center justify-between gap-6">
+          <Link href="/" className="flex items-baseline gap-3">
+            <span className="text-[0.9375rem] font-medium tracking-tight">
+              {site.shortName}
+            </span>
+            <span className="label hidden sm:inline">{site.role}</span>
+          </Link>
 
-            <ul className="hidden items-center gap-1 md:flex">
-              {navLinks.map((link) => {
-                const isActive = active === link.href;
-                return (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className={cn(
-                        "relative rounded-full px-3.5 py-1.5 text-sm transition-colors",
-                        isActive
-                          ? "text-foreground"
-                          : "text-muted-foreground hover:text-foreground",
-                      )}
-                    >
-                      {isActive && (
-                        <motion.span
-                          layoutId="nav-pill"
-                          className="absolute inset-0 -z-10 rounded-full bg-muted"
-                          transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                        />
-                      )}
-                      {link.label}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={openPalette}
-                aria-label="Open command palette"
-                className="hidden items-center gap-2 rounded-full border border-border/70 bg-card/60 py-1.5 pl-3 pr-2 text-xs text-muted-foreground backdrop-blur transition hover:text-foreground sm:flex"
+          <nav className="hidden items-center gap-8 md:flex">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  "link group flex items-baseline gap-2 text-sm transition-colors",
+                  active === link.href ? "text-foreground" : "text-muted-foreground",
+                )}
               >
-                <span>Search</span>
-                <kbd className="flex items-center gap-0.5 rounded border border-border/70 bg-muted px-1.5 py-0.5 font-mono text-[10px]">
-                  <Command className="size-2.5" />K
-                </kbd>
-              </button>
-              <ThemeToggle />
-              <button
-                type="button"
-                onClick={() => setOpen((v) => !v)}
-                aria-label="Toggle menu"
-                aria-expanded={open}
-                className="grid size-9 place-items-center rounded-full border border-border/70 bg-card/60 backdrop-blur md:hidden"
-              >
-                {open ? <X className="size-4" /> : <Menu className="size-4" />}
-              </button>
-            </div>
+                <span className="label text-[0.625rem]">{link.index}</span>
+                {link.label}
+              </Link>
+            ))}
           </nav>
+
+          <div className="flex items-center gap-2">
+            <a
+              href={site.resumeUrl}
+              className="hidden bg-foreground px-4 py-2 text-xs font-medium tracking-tight text-background transition-opacity hover:opacity-80 sm:inline-block"
+            >
+              Download CV
+            </a>
+            <button
+              type="button"
+              onClick={() =>
+                window.dispatchEvent(new CustomEvent("open-command-palette"))
+              }
+              aria-label="Open command palette"
+              className="hidden size-9 place-items-center border border-rule text-faint transition-colors hover:border-rule-strong hover:text-foreground lg:grid"
+            >
+              <Command className="size-3.5" />
+            </button>
+            <ThemeToggle />
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              aria-label={open ? "Close menu" : "Open menu"}
+              aria-expanded={open}
+              className="relative grid size-9 place-items-center md:hidden"
+            >
+              <span
+                className={cn(
+                  "absolute h-px w-5 bg-foreground transition-transform duration-300",
+                  open ? "rotate-45" : "-translate-y-1",
+                )}
+              />
+              <span
+                className={cn(
+                  "absolute h-px w-5 bg-foreground transition-transform duration-300",
+                  open ? "-rotate-45" : "translate-y-1",
+                )}
+              />
+            </button>
+          </div>
         </div>
       </header>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-background/95 backdrop-blur-xl md:hidden"
-          >
-            <ul className="container-page flex h-full flex-col justify-center gap-2">
-              {navLinks.map((link, i) => (
-                <motion.li
-                  key={link.href}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.04 * i }}
-                >
-                  <Link
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    className="block border-b border-border/60 py-4 text-3xl font-medium tracking-tight"
-                  >
-                    {link.label}
-                  </Link>
-                </motion.li>
-              ))}
-            </ul>
-          </motion.div>
+      <div
+        className={cn(
+          "fixed inset-0 z-40 bg-background transition-[opacity,visibility] duration-300 md:hidden",
+          open ? "visible opacity-100" : "invisible opacity-0",
         )}
-      </AnimatePresence>
+      >
+        <nav className="shell flex h-full flex-col justify-center">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setOpen(false)}
+              className="flex items-baseline gap-4 border-b border-rule py-5"
+            >
+              <span className="label">{link.index}</span>
+              <span className="text-3xl tracking-tight">{link.label}</span>
+            </Link>
+          ))}
+          <a
+            href={site.resumeUrl}
+            className="mt-8 bg-foreground px-5 py-3.5 text-center text-sm font-medium text-background"
+          >
+            Download CV
+          </a>
+        </nav>
+      </div>
     </>
   );
 }

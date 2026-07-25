@@ -1,18 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Archivo, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
-import { ScrollProgress } from "@/components/scroll-progress";
 import { CommandPalette } from "@/components/command-palette";
 import { Analytics } from "@/components/analytics";
 import { site } from "@/lib/site";
 import "./globals.css";
 
-const inter = Inter({
+const sans = Archivo({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
+  axes: ["wdth"],
 });
 
 const mono = JetBrains_Mono({
@@ -22,39 +22,35 @@ const mono = JetBrains_Mono({
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? site.url;
+const title = `${site.shortName} — ${site.role}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: {
-    default: `${site.shortName} — Cloud, Network & Software Engineer`,
-    template: `%s — ${site.shortName}`,
-  },
+  title: { default: title, template: `%s — ${site.shortName}` },
   description: site.summary,
   keywords: [
     "Gershon Otinkorang",
-    "Cloud Engineer Ghana",
-    "Network Engineer",
-    "AWS Certified",
-    "MikroTik",
-    "Next.js Developer",
-    "IT Professional Ghana",
+    "IT Systems Administrator",
+    "Network Administrator",
+    "MikroTik RouterOS",
+    "Starlink",
+    "ERPNext",
+    "Odoo",
+    "IT jobs St. John's Newfoundland",
+    "Network Administrator Canada",
   ],
   authors: [{ name: site.name, url: siteUrl }],
   creator: site.name,
   alternates: { canonical: "/" },
   openGraph: {
-    type: "website",
+    type: "profile",
     url: siteUrl,
     siteName: site.name,
-    title: `${site.shortName} — Cloud, Network & Software Engineer`,
+    title,
     description: site.summary,
-    locale: "en_GB",
+    locale: "en_CA",
   },
-  twitter: {
-    card: "summary_large_image",
-    title: `${site.shortName} — Cloud, Network & Software Engineer`,
-    description: site.summary,
-  },
+  twitter: { card: "summary_large_image", title, description: site.summary },
   robots: {
     index: true,
     follow: true,
@@ -64,8 +60,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0b0c0e" },
+    { media: "(prefers-color-scheme: light)", color: "#fbfbfa" },
+    { media: "(prefers-color-scheme: dark)", color: "#1a1a19" },
   ],
 };
 
@@ -75,14 +71,16 @@ const jsonLd = {
   name: site.name,
   url: siteUrl,
   email: `mailto:${site.email}`,
-  jobTitle: "Cloud & Network Engineer",
-  address: { "@type": "PostalAddress", addressCountry: "GH" },
+  telephone: site.phone,
+  jobTitle: site.role,
+  address: { "@type": "PostalAddress", addressLocality: "Accra", addressCountry: "GH" },
   alumniOf: [
     {
       "@type": "CollegeOrUniversity",
       name: "Kwame Nkrumah University of Science and Technology",
     },
     { "@type": "CollegeOrUniversity", name: "Takoradi Technical University" },
+    { "@type": "CollegeOrUniversity", name: "Memorial University of Newfoundland" },
   ],
   hasCredential: {
     "@type": "EducationalOccupationalCredential",
@@ -91,22 +89,32 @@ const jsonLd = {
     recognizedBy: { "@type": "Organization", name: "Amazon Web Services" },
   },
   knowsAbout: [
+    "Network Administration",
+    "MikroTik RouterOS",
+    "Satellite Internet",
+    "ERP Administration",
+    "Systems Administration",
     "Cloud Computing",
-    "Network Architecture",
-    "Cybersecurity",
-    "Software Development",
   ],
-  sameAs: [site.socials.github, site.socials.linkedin, site.socials.x],
+  seeks: {
+    "@type": "Demand",
+    availabilityStarts: "2026-08-01",
+    areaServed: { "@type": "Place", name: "St. John's, Newfoundland and Labrador, Canada" },
+  },
+  sameAs: [site.socials.github, site.socials.linkedin],
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${mono.variable}`}>
-      <body className="relative min-h-dvh antialiased">
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${sans.variable} ${mono.variable}`}
+    >
+      <body className="min-h-dvh antialiased">
         <ThemeProvider>
-          <ScrollProgress />
           <SiteNav />
           <CommandPalette />
           <main id="main">{children}</main>

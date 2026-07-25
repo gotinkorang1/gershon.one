@@ -2,47 +2,47 @@
  * Single source of truth for every piece of content on the site.
  * Edit this file to update the portfolio — no component changes needed.
  *
- * Items marked `TODO:` are placeholders awaiting real details.
+ * Sourced from the CV. Items marked `TODO:` still need confirmation.
  */
 
 export const site = {
   name: "Gershon Adjei Otinkorang",
   shortName: "Gershon Otinkorang",
   initials: "GO",
-  // TODO: confirm exact city
+  role: "IT Systems & Network Administrator",
   location: "Accra, Ghana",
+  relocation: {
+    to: "St. John's, NL, Canada",
+    when: "August 2026",
+    note: "Relocating for an MSc at Memorial University",
+  },
   timezone: "GMT",
-  email: "gotinkorang@gmail.com",
+  email: "contact@gershon.one",
+  phone: "+233 (0) 55 466 4733",
+  phoneHref: "+233554664733",
   url: "https://gershon.one",
-  headline: "I design, build and secure the infrastructure software runs on.",
+  headline:
+    "I keep networks, servers and ERP systems running for organisations that cannot afford downtime.",
   summary:
-    "IT professional working across cloud infrastructure, enterprise networking and full-stack development. AWS certified, KNUST-trained, and happiest when a network diagram turns into something people can actually use.",
-  roles: [
-    "Cloud Engineer",
-    "Network Architect",
-    "Software Developer",
-    "Cybersecurity Enthusiast",
-    "AI Builder",
-  ],
-  availability: "Open to cloud & infrastructure roles",
+    "Five years administering enterprise network infrastructure, ERP platforms and IT operations across private and public sector organisations in Ghana. MikroTik RouterOS, dual-Starlink failover, Frappe/ERPNext and Odoo, across multi-site environments.",
+  availability: "Available in Canada from August 2026",
   resumeUrl: "/gershon-otinkorang-cv.pdf", // TODO: drop your CV into /public
   socials: {
-    // TODO: replace with your real handles
-    github: "https://github.com/gershonotinkorang",
+    // TODO: confirm these handles
+    github: "https://github.com/gotinkorang1",
     linkedin: "https://www.linkedin.com/in/gershonotinkorang",
-    x: "https://x.com/gershonotink",
   },
 } as const;
 
 /* -------------------------------------------------------------------------- */
-/*  Stats — the counters under the hero                                       */
+/*  Facts — the scannable strip a recruiter reads first                       */
 /* -------------------------------------------------------------------------- */
 
-export const stats = [
-  { value: 5, suffix: "+", label: "Years in IT" },
-  { value: 30, suffix: "+", label: "Networks deployed" },
-  { value: 12, suffix: "", label: "Projects shipped" },
-  { value: 99.9, suffix: "%", label: "Uptime maintained", decimals: 1 },
+export const facts = [
+  { label: "Experience", value: "5+ years" },
+  { label: "Current role", value: "IT Support Officer" },
+  { label: "Available", value: "Aug 2026" },
+  { label: "Based", value: "Accra → St. John's" },
 ] as const;
 
 /* -------------------------------------------------------------------------- */
@@ -51,6 +51,7 @@ export const stats = [
 
 export type Job = {
   company: string;
+  division?: string;
   role: string;
   start: string;
   end: string | null;
@@ -60,229 +61,195 @@ export type Job = {
   stack: string[];
 };
 
-// TODO: replace the placeholder roles below with your real history.
 export const experience: Job[] = [
   {
-    company: "Independent / Freelance",
-    role: "Cloud & Network Engineer",
-    start: "2024-01",
+    company: "Greenhouse International Development Group Ghana Ltd.",
+    division: "Engineering & Design Department",
+    role: "IT Support Officer",
+    start: "2023-10",
     end: null,
-    location: "Ghana — Remote",
-    summary:
-      "Design and deployment of small-business network and cloud infrastructure: routing, failover, monitoring and the web apps that sit on top.",
-    highlights: [
-      "Built MikroTik-based multi-WAN networks with Starlink and fibre failover for zero-downtime operations.",
-      "Migrated on-premise workloads to AWS, cutting hardware maintenance overhead substantially.",
-      "Automated provisioning and configuration backups, removing manual, error-prone steps.",
-    ],
-    stack: ["AWS", "MikroTik", "Docker", "Linux", "Next.js"],
-  },
-  {
-    company: "TODO: Employer name",
-    role: "IT Support / Network Administrator",
-    start: "2021-01",
-    end: "2023-12",
     location: "Ghana",
     summary:
-      "Day-to-day operation of the corporate network, end-user systems and internal services.",
+      "Sole administrator for a multi-site network, the production servers behind it, and the ERP platform the engineering and operations teams run on.",
     highlights: [
-      "Maintained LAN/WLAN infrastructure across multiple sites.",
-      "Reduced repeat incidents by documenting fixes into a searchable runbook.",
-      "Ran patching, backup and endpoint-security routines.",
+      "Administer and secure a multi-site network on MikroTik CCR2004 routers — dual Starlink WAN with port-based failover, bandwidth queuing and firewall hardening on RouterOS 7.x.",
+      "Maintain production servers and the company ERP (Frappe/ERPNext, Odoo), protecting data integrity and uptime for engineering and operational workflows.",
+      "Diagnose complex connectivity failures including fibre-optic link loss and routing-related latency, minimising downtime across departments.",
+      "Design, deploy and manage IP camera and CCTV systems for facility security and monitoring.",
+      "Act as departmental supervisor in the Engineering & Design Manager's absence, overseeing local staff and workflow.",
+      "Lead recruitment and structured technical interviews for IT Officer hires, including job postings and interview guides.",
+      "Procure hardware and software licences, and enforce IT policy and licensing compliance.",
     ],
-    stack: ["Cisco", "Windows Server", "Active Directory", "VMware"],
+    stack: [
+      "MikroTik CCR2004",
+      "RouterOS 7.x",
+      "Starlink",
+      "Frappe/ERPNext",
+      "Odoo",
+      "WireGuard",
+      "CCTV",
+    ],
+  },
+  {
+    company: "Prop-Tis GH Limited",
+    division: "IT / Advertising Department",
+    role: "Lead IT Officer",
+    start: "2022-03",
+    end: "2023-10",
+    location: "Ghana",
+    summary:
+      "Owned the company's real estate listing platform and the IT function around it, alongside the creative production team.",
+    highlights: [
+      "Developed and managed the real estate listing platform, improving performance and user experience.",
+      "Implemented SEO strategies that increased organic visibility and web traffic.",
+      "Supervised creative production teams across video, photography and graphic content.",
+      "Implemented and maintained data backup systems to safeguard company information.",
+      "Compiled and analysed performance reports across digital platforms to inform marketing and operational decisions.",
+    ],
+    stack: ["WordPress", "PHP", "MySQL", "SEO", "Backup systems"],
+  },
+  {
+    company: "Kaysens Group & Kwaaba Foundation",
+    role: "Project Assistant (Contract)",
+    start: "2021-01",
+    end: "2022-03",
+    location: "Ghana",
+    summary:
+      "Project coordination and office operations, with the web and design work that supported them.",
+    highlights: [
+      "Coordinated project plans, timelines and personnel allocation.",
+      "Managed daily project office operations, documentation control and stakeholder communications.",
+      "Stood in for the Project Manager as needed to keep deadlines on track.",
+      "Designed and developed websites and graphic content for project branding.",
+    ],
+    stack: ["Project coordination", "Documentation", "Web design"],
+  },
+  {
+    company: "Origin8 Advertising Ltd.",
+    division: "Creative Department",
+    role: "IT Specialist (National Service)",
+    start: "2020-09",
+    end: "2021-08",
+    location: "Ghana",
+    summary: "Web development and internal IT support inside a creative agency.",
+    highlights: [
+      "Designed and developed websites for client and internal projects.",
+      "Provided IT support for staff, resolving hardware and software issues to minimise downtime.",
+      "Produced creative assets for marketing and advertising campaigns.",
+    ],
+    stack: ["HTML/CSS/JS", "WordPress", "IT support"],
+  },
+  {
+    company: "Volta River Authority",
+    role: "Management Information Systems Intern",
+    start: "2017-09",
+    end: "2018-01",
+    location: "Ghana",
+    summary:
+      "First exposure to enterprise infrastructure, at Ghana's national power utility.",
+    highlights: [
+      "Managed and updated the organisation's website.",
+      "Diagnosed and resolved network connectivity issues and configured staff hardware.",
+      "Installed and configured server and client operating systems.",
+    ],
+    stack: ["Windows Server", "Networking", "Web"],
+  },
+  {
+    company: "RichWorld Mobile Devices",
+    role: "Sales Executive & Hardware Repair Technician",
+    start: "2016-06",
+    end: "2017-09",
+    location: "Ghana",
+    summary:
+      "Hardware diagnostics and repair at component level, plus inventory and customer support.",
+    highlights: [
+      "Diagnosed and repaired mobile hardware faults, extending device lifespan.",
+      "Maintained inventory records and supported customers through selection and after-sales.",
+    ],
+    stack: ["Hardware repair", "Diagnostics", "Inventory"],
   },
 ];
 
 /* -------------------------------------------------------------------------- */
-/*  Skills                                                                    */
+/*  Capabilities                                                              */
 /* -------------------------------------------------------------------------- */
 
 export type SkillGroup = {
   title: string;
-  icon: "cloud" | "network" | "shield" | "code" | "sparkles";
   blurb: string;
-  skills: { name: string; level?: "core" | "working" | "learning" }[];
+  skills: string[];
 };
 
 export const skillGroups: SkillGroup[] = [
   {
-    title: "Cloud & Platform",
-    icon: "cloud",
-    blurb: "Designing and running workloads that survive their own success.",
+    title: "Network administration",
+    blurb: "The core of the current role — multi-site, satellite-backed, hardened.",
     skills: [
-      { name: "AWS", level: "core" },
-      { name: "Azure", level: "working" },
-      { name: "Google Cloud", level: "working" },
-      { name: "Docker", level: "core" },
-      { name: "Kubernetes", level: "learning" },
-      { name: "Terraform", level: "working" },
-      { name: "Vercel", level: "core" },
-      { name: "Linux", level: "core" },
+      "MikroTik RouterOS 7.x",
+      "CCR2004",
+      "Dual-WAN failover",
+      "Bandwidth queuing",
+      "Firewall hardening",
+      "WireGuard VPN",
+      "Starlink deployment",
+      "Fibre troubleshooting",
     ],
   },
   {
-    title: "Networking",
-    icon: "network",
-    blurb: "Routing, switching and the unglamorous work that keeps packets moving.",
+    title: "Systems & ERP",
+    blurb: "Servers, and the business platforms that depend on them.",
     skills: [
-      { name: "MikroTik / RouterOS", level: "core" },
-      { name: "Cisco", level: "working" },
-      { name: "Huawei", level: "working" },
-      { name: "Fibre & FTTH", level: "working" },
-      { name: "VLANs & VPN", level: "core" },
-      { name: "BGP / OSPF", level: "learning" },
-      { name: "Starlink failover", level: "core" },
+      "Frappe / ERPNext",
+      "Odoo",
+      "Server administration",
+      "Windows & Linux",
+      "Backup & recovery",
+      "CCTV / IP camera systems",
+      "Hardware support",
     ],
   },
   {
-    title: "Security",
-    icon: "shield",
-    blurb: "Defensive fundamentals applied to real infrastructure.",
+    title: "Cloud",
+    blurb: "Where the edge of the network meets managed infrastructure.",
     skills: [
-      { name: "Firewall design", level: "core" },
-      { name: "Zero-trust access", level: "working" },
-      { name: "Endpoint hardening", level: "working" },
-      { name: "Network monitoring", level: "core" },
-      { name: "Incident response", level: "learning" },
+      "AWS",
+      "Google Cloud Platform",
+      "Cloudflare Tunnel",
+      "Domain management",
+      "DNS",
     ],
   },
   {
-    title: "Development",
-    icon: "code",
-    blurb: "Shipping products end to end, not just prototypes.",
+    title: "Web & development",
+    blurb: "Building the platforms, not just hosting them.",
     skills: [
-      { name: "TypeScript", level: "core" },
-      { name: "React", level: "core" },
-      { name: "Next.js", level: "core" },
-      { name: "Node.js", level: "working" },
-      { name: "PHP", level: "working" },
-      { name: "WordPress", level: "working" },
-      { name: "PostgreSQL", level: "working" },
-      { name: "Tailwind CSS", level: "core" },
+      "PHP",
+      "MySQL / SQL",
+      ".NET Framework",
+      "HTML5, CSS3, JavaScript",
+      "C++",
+      "WordPress",
+      "Git / GitHub",
+      "SEO",
     ],
   },
   {
-    title: "AI & Automation",
-    icon: "sparkles",
-    blurb: "Using models as tools, with an engineer's scepticism.",
+    title: "Professional",
+    blurb: "The parts that decide whether the technical work lands.",
     skills: [
-      { name: "Prompt engineering", level: "core" },
-      { name: "OpenAI API", level: "working" },
-      { name: "Ollama / local models", level: "working" },
-      { name: "AI-assisted development", level: "core" },
-      { name: "Workflow automation", level: "working" },
+      "Technical documentation",
+      "Project coordination",
+      "Technical interviewing",
+      "IT policy & compliance",
+      "Confidential data handling",
+      "Cross-team collaboration",
+      "Remote work",
     ],
   },
 ];
 
 /* -------------------------------------------------------------------------- */
-/*  Projects — written as miniature case studies                              */
-/* -------------------------------------------------------------------------- */
-
-export type Project = {
-  slug: string;
-  name: string;
-  tagline: string;
-  year: string;
-  featured: boolean;
-  problem: string;
-  solution: string;
-  architecture: string;
-  outcome: { metric: string; label: string }[];
-  stack: string[];
-  links: { live?: string; repo?: string };
-  accent: string;
-};
-
-export const projects: Project[] = [
-  {
-    slug: "niiplants-logistics",
-    name: "Niiplants Logistics",
-    tagline: "Logistics operations platform for a Ghanaian delivery business",
-    year: "2025",
-    featured: true,
-    problem:
-      "Dispatch, driver assignment and customer updates were coordinated over phone calls and spreadsheets. Nobody could answer 'where is my package' without ringing three people, and pricing was recalculated by hand for every job.",
-    solution:
-      "A single operations dashboard where jobs are created once and tracked to delivery: automatic quoting from distance and weight, driver assignment, status timeline, and a customer-facing tracking page that needs no login.",
-    architecture:
-      "Next.js App Router with server components for the read-heavy dashboard, server actions for mutations, PostgreSQL for jobs and routing history, and edge-cached public tracking pages so customer lookups never touch the origin.",
-    outcome: [
-      { metric: "~70%", label: "less time spent on dispatch calls" },
-      { metric: "<1s", label: "median tracking page load" },
-      { metric: "100%", label: "of jobs auditable end to end" },
-    ],
-    stack: ["Next.js", "TypeScript", "PostgreSQL", "Tailwind CSS", "Vercel"],
-    links: { live: "", repo: "" }, // TODO: add links
-    accent: "from-sky-500/20 to-blue-600/5",
-  },
-  {
-    slug: "starlink-mikrotik-failover",
-    name: "Multi-WAN Failover Network",
-    tagline: "Starlink + fibre failover built on MikroTik RouterOS",
-    year: "2025",
-    featured: true,
-    problem:
-      "A business relying on a single fibre link lost connectivity — and revenue — every time the line was cut. Manual switchover to a backup took upwards of thirty minutes and required someone technical on site.",
-    solution:
-      "Dual-WAN routing with recursive gateway checks and netwatch-driven failover. Traffic moves to Starlink within seconds of fibre degrading and returns automatically once the primary link is stable, with no human in the loop.",
-    architecture:
-      "MikroTik RouterOS with policy-based routing, per-WAN health probes, VLAN segmentation for staff/guest/CCTV, IPsec site-to-site tunnel, and centralised logging to a monitoring host.",
-    outcome: [
-      { metric: "<10s", label: "failover time" },
-      { metric: "99.9%", label: "measured uptime" },
-      { metric: "0", label: "manual interventions needed" },
-    ],
-    stack: ["MikroTik", "RouterOS", "Starlink", "IPsec", "VLAN"],
-    links: {},
-    accent: "from-emerald-500/20 to-teal-600/5",
-  },
-  {
-    slug: "cloud-migration",
-    name: "On-Prem to AWS Migration",
-    tagline: "Lifting a small business off ageing hardware",
-    year: "2024",
-    featured: true,
-    problem:
-      "Business-critical services ran on a single ageing server in an office cupboard, with backups nobody had tested. One hardware failure would have ended the company.",
-    solution:
-      "Phased migration to AWS: workloads containerised, storage moved to S3 with lifecycle rules, and automated snapshots with a documented, rehearsed restore procedure.",
-    architecture:
-      "EC2 for compute, RDS for the database, S3 + lifecycle policies for object storage and backups, IAM least-privilege roles, CloudWatch alarms, and infrastructure captured in Terraform.",
-    outcome: [
-      { metric: "0", label: "unplanned outages since cutover" },
-      { metric: "15 min", label: "tested recovery objective" },
-      { metric: "↓", label: "hardware maintenance overhead" },
-    ],
-    stack: ["AWS", "EC2", "RDS", "S3", "Terraform", "Docker"],
-    links: {},
-    accent: "from-orange-500/20 to-amber-600/5",
-  },
-  {
-    slug: "homelab",
-    name: "Homelab & Documentation",
-    tagline: "A permanent laboratory for things that must not break in production",
-    year: "Ongoing",
-    featured: false,
-    problem:
-      "Learning new infrastructure on client systems is a bad idea. Every technique needs somewhere to fail safely first.",
-    solution:
-      "A self-hosted lab running containerised services behind a reverse proxy, with monitoring, automated backups, and written documentation for every service so the setup is reproducible from scratch.",
-    architecture:
-      "Proxmox host, Docker Compose stacks, Nginx Proxy Manager, Uptime Kuma monitoring, Tailscale for remote access, and restic for offsite backups.",
-    outcome: [
-      { metric: "20+", label: "services self-hosted" },
-      { metric: "100%", label: "documented and reproducible" },
-    ],
-    stack: ["Proxmox", "Docker", "Nginx", "Tailscale", "Linux"],
-    links: {},
-    accent: "from-violet-500/20 to-purple-600/5",
-  },
-];
-
-/* -------------------------------------------------------------------------- */
-/*  Education & certifications — verified from source documents               */
+/*  Education & certifications                                                */
 /* -------------------------------------------------------------------------- */
 
 export type Credential = {
@@ -294,14 +261,23 @@ export type Credential = {
   credentialId?: string;
   verifyUrl?: string;
   kind: "degree" | "certification";
+  upcoming?: boolean;
 };
 
 export const credentials: Credential[] = [
   {
+    title: "MSc Computer Science",
+    issuer: "Memorial University of Newfoundland",
+    date: "2026-08-01",
+    detail: "Course-based · focus on network security and intrusion detection",
+    kind: "degree",
+    upcoming: true,
+  },
+  {
     title: "BSc Information Technology",
     issuer: "Kwame Nkrumah University of Science and Technology",
     date: "2024-11-01",
-    detail: "Second Class Honours (Upper Division)",
+    detail: "Second Class Honours, Upper Division",
     kind: "degree",
   },
   {
@@ -335,6 +311,7 @@ export const credentials: Credential[] = [
     title: "HND Information & Communication Technology",
     issuer: "Takoradi Technical University (NABPTEX)",
     date: "2020-10-13",
+    detail: "Second Class, Upper Division",
     kind: "degree",
   },
   {
@@ -352,10 +329,8 @@ export const credentials: Credential[] = [
 /* -------------------------------------------------------------------------- */
 
 export const navLinks = [
-  { href: "#about", label: "About" },
-  { href: "#experience", label: "Experience" },
-  { href: "#skills", label: "Skills" },
-  { href: "#work", label: "Work" },
-  { href: "#credentials", label: "Credentials" },
-  { href: "#contact", label: "Contact" },
+  { href: "#experience", label: "Experience", index: "01" },
+  { href: "#capabilities", label: "Capabilities", index: "02" },
+  { href: "#credentials", label: "Credentials", index: "03" },
+  { href: "#contact", label: "Contact", index: "04" },
 ] as const;
