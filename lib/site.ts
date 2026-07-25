@@ -26,7 +26,7 @@ export const site = {
   summary:
     "Five years administering enterprise network infrastructure, ERP platforms and IT operations across private and public sector organisations in Ghana. MikroTik RouterOS, dual-Starlink failover, Frappe/ERPNext and Odoo, across multi-site environments.",
   availability: "Available in Canada from August 2026",
-  resumeUrl: "/gershon-otinkorang-cv.pdf", // TODO: drop your CV into /public
+  resumeUrl: "/gershon-otinkorang-cv.pdf",
   socials: {
     // TODO: confirm these handles
     github: "https://github.com/gotinkorang1",
