@@ -5,69 +5,113 @@
 /* -------------------------------------------------------------------------- */
 /*  Tokens                                                                    */
 /*                                                                            */
-/*  Near-monochrome by design. One accent, used sparingly, for the few things */
-/*  that genuinely need to be found: the CV button and inline links.          */
+/*  Depth comes from a real surface scale plus layered shadows, not from       */
+/*  decoration. Every surface sits at a defined elevation and carries an       */
+/*  inner highlight along its top edge — the detail that makes a panel read    */
+/*  as a physical object rather than a coloured rectangle.                     */
 /* -------------------------------------------------------------------------- */
 
 :root {
-  --background: oklch(0.985 0.002 90);
-  --foreground: oklch(0.18 0.004 90);
-  --muted-foreground: oklch(0.47 0.006 90);
-  --faint: oklch(0.555 0.006 90);
-  --card: oklch(1 0 0);
-  --rule: oklch(0.18 0.004 90 / 0.14);
-  --rule-strong: oklch(0.18 0.004 90 / 0.28);
-  --accent: oklch(0.48 0.17 28);
-  --accent-quiet: oklch(0.48 0.17 28 / 0.08);
-  --radius: 0.25rem;
+  --surface-0: oklch(0.988 0.002 260);
+  --surface-1: oklch(1 0 0);
+  --surface-2: oklch(1 0 0);
+  --surface-inset: oklch(0.965 0.003 260);
+
+  --foreground: oklch(0.19 0.012 265);
+  --muted-foreground: oklch(0.46 0.012 265);
+  --faint: oklch(0.555 0.012 265);
+
+  --border: oklch(0.19 0.012 265 / 0.10);
+  --border-strong: oklch(0.19 0.012 265 / 0.20);
+  --highlight: oklch(1 0 0 / 0.9);
+
+  --accent: oklch(0.52 0.20 264);
+  --accent-fg: oklch(1 0 0);
+  --accent-quiet: oklch(0.52 0.20 264 / 0.09);
+  --live: oklch(0.540 0.16 152);
+  --warn: oklch(0.575 0.16 62);
+
+  --shadow-sm: 0 1px 2px oklch(0.19 0.012 265 / 0.06);
+  --shadow-md:
+    0 1px 2px oklch(0.19 0.012 265 / 0.05),
+    0 4px 12px -4px oklch(0.19 0.012 265 / 0.08);
+  --shadow-lg:
+    0 1px 2px oklch(0.19 0.012 265 / 0.06),
+    0 12px 32px -12px oklch(0.19 0.012 265 / 0.14);
+  --shadow-glow: 0 0 0 1px var(--accent), 0 6px 20px -6px oklch(0.52 0.20 264 / 0.45);
+
+  --grid: oklch(0.19 0.012 265 / 0.045);
+  --radius: 0.75rem;
 }
 
 .dark {
-  --background: oklch(0.16 0.004 90);
-  --foreground: oklch(0.95 0.002 90);
-  --muted-foreground: oklch(0.70 0.005 90);
-  --faint: oklch(0.585 0.006 90);
-  --card: oklch(0.20 0.004 90);
-  --rule: oklch(0.95 0.002 90 / 0.16);
-  --rule-strong: oklch(0.95 0.002 90 / 0.32);
-  --accent: oklch(0.72 0.15 30);
-  --accent-quiet: oklch(0.72 0.15 30 / 0.12);
+  --surface-0: oklch(0.155 0.008 265);
+  --surface-1: oklch(0.196 0.009 265);
+  --surface-2: oklch(0.232 0.010 265);
+  --surface-inset: oklch(0.135 0.008 265);
+
+  --foreground: oklch(0.965 0.003 265);
+  --muted-foreground: oklch(0.715 0.010 265);
+  --faint: oklch(0.60 0.012 265);
+
+  --border: oklch(1 0 0 / 0.09);
+  --border-strong: oklch(1 0 0 / 0.17);
+  --highlight: oklch(1 0 0 / 0.07);
+
+  --accent: oklch(0.68 0.17 266);
+  --accent-fg: oklch(0.16 0.01 265);
+  --accent-quiet: oklch(0.68 0.17 266 / 0.14);
+  --live: oklch(0.74 0.17 154);
+  --warn: oklch(0.79 0.16 68);
+
+  --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.30);
+  --shadow-md: 0 1px 2px oklch(0 0 0 / 0.35), 0 6px 16px -6px oklch(0 0 0 / 0.45);
+  --shadow-lg: 0 1px 2px oklch(0 0 0 / 0.40), 0 16px 40px -16px oklch(0 0 0 / 0.65);
+  --shadow-glow: 0 0 0 1px var(--accent), 0 8px 28px -8px oklch(0.68 0.17 266 / 0.55);
+
+  --grid: oklch(1 0 0 / 0.045);
 }
 
 @theme inline {
-  --color-background: var(--background);
+  --color-surface-0: var(--surface-0);
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-surface-inset: var(--surface-inset);
   --color-foreground: var(--foreground);
   --color-muted-foreground: var(--muted-foreground);
   --color-faint: var(--faint);
-  --color-card: var(--card);
-  --color-rule: var(--rule);
-  --color-rule-strong: var(--rule-strong);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
   --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
   --color-accent-quiet: var(--accent-quiet);
+  --color-live: var(--live);
+  --color-warn: var(--warn);
 
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
 
-  --radius-sm: var(--radius);
-  --radius-md: var(--radius);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 6px);
+  --radius-2xl: calc(var(--radius) + 12px);
 
-  /* Editorial type scale — a fourth-based ramp, not Tailwind's defaults. */
-  --text-display: clamp(3.25rem, 13vw, 11rem);
-  --text-display--line-height: 0.86;
-  --text-display--letter-spacing: -0.045em;
+  --text-display: clamp(2.75rem, 8.5vw, 6.5rem);
+  --text-display--line-height: 0.92;
+  --text-display--letter-spacing: -0.04em;
 
-  --text-jumbo: clamp(2.25rem, 6vw, 4.5rem);
-  --text-jumbo--line-height: 1;
-  --text-jumbo--letter-spacing: -0.035em;
+  --text-jumbo: clamp(2rem, 4.4vw, 3.25rem);
+  --text-jumbo--line-height: 1.04;
+  --text-jumbo--letter-spacing: -0.03em;
 
-  --text-lede: clamp(1.125rem, 2.1vw, 1.6rem);
-  --text-lede--line-height: 1.42;
-  --text-lede--letter-spacing: -0.015em;
+  --text-lede: clamp(1.0625rem, 1.5vw, 1.3125rem);
+  --text-lede--line-height: 1.5;
+  --text-lede--letter-spacing: -0.011em;
 
   --text-micro: 0.6875rem;
   --text-micro--line-height: 1.2;
-  --text-micro--letter-spacing: 0.13em;
+  --text-micro--letter-spacing: 0.11em;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -77,12 +121,12 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 5rem;
+    scroll-padding-top: 6rem;
     -webkit-tap-highlight-color: transparent;
   }
 
   body {
-    background-color: var(--background);
+    background-color: var(--surface-0);
     color: var(--foreground);
     font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
     font-synthesis-weight: none;
@@ -90,14 +134,12 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  ::selection {
-    background: var(--foreground);
-    color: var(--background);
-  }
+  ::selection { background: var(--accent-quiet); }
 
   :focus-visible {
     outline: 2px solid var(--accent);
-    outline-offset: 3px;
+    outline-offset: 2px;
+    border-radius: 3px;
   }
 
   a { color: inherit; }
@@ -105,8 +147,8 @@
   ::-webkit-scrollbar { width: 11px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb {
-    background: var(--rule-strong);
-    border: 4px solid var(--background);
+    background: var(--border-strong);
+    border: 4px solid var(--surface-0);
     border-radius: 999px;
   }
 }
@@ -121,38 +163,112 @@
 }
 
 /* -------------------------------------------------------------------------- */
-/*  Layout — a real grid, visible where it helps                              */
+/*  Layout                                                                    */
 /* -------------------------------------------------------------------------- */
 
 @utility shell {
   width: 100%;
   margin-inline: auto;
-  max-width: 88rem;
-  padding-inline: 1.5rem;
+  max-width: 78rem;
+  padding-inline: 1.25rem;
 }
 
 @media (min-width: 768px) {
-  .shell { padding-inline: 3rem; }
+  .shell { padding-inline: 2.5rem; }
 }
 
-@utility rule-top {
-  border-top: 1px solid var(--rule);
-}
-
-/* Small monospace label — used for section numbers, dates, metadata. */
 @utility label {
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: var(--text-micro);
   line-height: 1.2;
-  letter-spacing: 0.13em;
+  letter-spacing: 0.11em;
   text-transform: uppercase;
   color: var(--faint);
 }
 
-/* Underline that draws in from the left on hover. */
+/* -------------------------------------------------------------------------- */
+/*  Surfaces                                                                  */
+/*                                                                            */
+/*  .panel is the workhorse. The ::before pseudo-element paints a one-pixel   */
+/*  highlight along the top edge, which is what separates a real surface from */
+/*  a div with a border.                                                       */
+/* -------------------------------------------------------------------------- */
+
+.panel {
+  position: relative;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+}
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent, var(--highlight), transparent);
+  pointer-events: none;
+}
+
+.panel-raised {
+  background: var(--surface-2);
+  box-shadow: var(--shadow-lg);
+}
+
+.panel-inset {
+  background: var(--surface-inset);
+  box-shadow: inset 0 1px 3px oklch(0 0 0 / 0.10);
+}
+.panel-inset::before { display: none; }
+
+/* Interactive panel: lifts and brightens its border on hover. */
+.panel-interactive {
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease;
+}
+.panel-interactive:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Cursor-reactive wash. Elements set --mx/--my from JS. */
+.reactive::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    420px circle at var(--mx, 50%) var(--my, 50%),
+    var(--accent-quiet),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.reactive:hover::after { opacity: 1; }
+
+/* -------------------------------------------------------------------------- */
+/*  Detail                                                                    */
+/* -------------------------------------------------------------------------- */
+
+.grid-field {
+  background-image:
+    linear-gradient(to right, var(--grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.fade-edges {
+  mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+}
+
 .link {
   position: relative;
-  display: inline-block;
   text-decoration: none;
 }
 .link::after {
@@ -173,34 +289,38 @@
   transform-origin: left;
 }
 
-/* Persistent underline that retracts on hover — for already-underlined links. */
-.link-out::after {
-  transform: scaleX(1);
-  transform-origin: left;
+.pulse-dot {
+  position: relative;
+  display: inline-flex;
+  width: 0.5rem;
+  height: 0.5rem;
 }
-.link-out:hover::after {
-  transform: scaleX(0);
-  transform-origin: right;
-}
-
-/* Row that reveals a hairline sweep on hover. Used by the experience list. */
-.row-sweep { position: relative; }
-.row-sweep::after {
+.pulse-dot::before {
   content: "";
   position: absolute;
-  left: 0;
-  bottom: -1px;
-  height: 1px;
-  width: 100%;
-  background: var(--foreground);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  inset: 0;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.75;
+  animation: ping 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
-.row-sweep:hover::after { transform: scaleX(1); }
+.pulse-dot::after {
+  content: "";
+  position: relative;
+  width: 100%;
+  border-radius: 999px;
+  background: currentColor;
+}
 
-/* Hanging figure — big numeral set in the margin. */
-.figure-hang {
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: "tnum";
+@keyframes ping {
+  75%, 100% { transform: scale(2.4); opacity: 0; }
+}
+
+@keyframes dash {
+  to { stroke-dashoffset: -1000; }
+}
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
 }

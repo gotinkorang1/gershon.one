@@ -11,11 +11,16 @@ export function SectionHeading({
 }) {
   return (
     <Reveal>
-      <div className="grid gap-x-12 gap-y-4 md:grid-cols-12">
-        <p className="label md:col-span-2">{index}</p>
-        <h2 className="text-jumbo font-medium md:col-span-5">{title}</h2>
+      <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-12">
+        <div>
+          <p className="label flex items-center gap-3">
+            <span className="inline-block h-px w-6 bg-border-strong" />
+            {index}
+          </p>
+          <h2 className="mt-4 text-jumbo font-semibold">{title}</h2>
+        </div>
         {description && (
-          <p className="max-w-md self-end text-base leading-relaxed text-muted-foreground md:col-span-5">
+          <p className="max-w-sm text-base leading-relaxed text-muted-foreground md:pb-1.5">
             {description}
           </p>
         )}

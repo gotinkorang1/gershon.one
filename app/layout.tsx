@@ -4,6 +4,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { CommandPalette } from "@/components/command-palette";
+import { KeyboardShortcuts } from "@/components/keyboard-shortcuts";
+import { ScrollProgress } from "@/components/scroll-progress";
 import { Analytics } from "@/components/analytics";
 import { site } from "@/lib/site";
 import "./globals.css";
@@ -115,8 +117,10 @@ export default function RootLayout({
     >
       <body className="min-h-dvh antialiased">
         <ThemeProvider>
+          <ScrollProgress />
           <SiteNav />
           <CommandPalette />
+          <KeyboardShortcuts />
           <main id="main">{children}</main>
           <SiteFooter />
         </ThemeProvider>

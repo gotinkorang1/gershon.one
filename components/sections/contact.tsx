@@ -1,64 +1,29 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowUpRight, Check } from "lucide-react";
+import { ArrowUpRight, Check, Copy, Github, Linkedin, Loader2, Mail, Phone } from "lucide-react";
 import { SectionHeading } from "@/components/fx/section-heading";
 import { Reveal } from "@/components/fx/reveal";
+import { Panel } from "@/components/ui/panel";
+import { Button } from "@/components/ui/button";
 import { site } from "@/lib/site";
+import { cn } from "@/lib/utils";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
-function Field({
-  label,
-  name,
-  type = "text",
-  required = false,
-  placeholder,
-  textarea = false,
-}: {
-  label: string;
-  name: string;
-  type?: string;
-  required?: boolean;
-  placeholder?: string;
-  textarea?: boolean;
-}) {
-  const shared =
-    "w-full border-0 border-b border-rule bg-transparent py-3 text-base outline-none transition-colors placeholder:text-faint focus:border-foreground";
-
-  return (
-    <div>
-      <label htmlFor={name} className="label">
-        {label}
-        {required && <span className="ml-1 text-accent">*</span>}
-      </label>
-      {textarea ? (
-        <textarea
-          id={name}
-          name={name}
-          required={required}
-          minLength={10}
-          rows={4}
-          placeholder={placeholder}
-          className={`${shared} mt-1 resize-none`}
-        />
-      ) : (
-        <input
-          id={name}
-          name={name}
-          type={type}
-          required={required}
-          placeholder={placeholder}
-          className={`${shared} mt-1`}
-        />
-      )}
-    </div>
-  );
-}
+const inputClass =
+  "w-full rounded-lg border border-border bg-surface-inset px-3.5 py-2.5 text-sm outline-none transition-colors placeholder:text-faint focus:border-accent/60 focus:bg-surface-1";
 
 export function Contact() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
+  const [copied, setCopied] = useState(false);
+
+  async function copyEmail() {
+    await navigator.clipboard.writeText(site.email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -85,123 +50,169 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="shell scroll-mt-20 py-24 md:py-36">
+    <section id="contact" className="shell scroll-mt-24 py-20 md:py-28">
       <SectionHeading
-        index="04"
-        title="Get in touch"
+        index="04 — Contact"
+        title="Tell me what you're building"
         description={`Available for IT and network administration roles in ${site.relocation.to} from ${site.relocation.when}.`}
       />
 
-      <div className="mt-16 grid gap-x-12 gap-y-12 border-t border-rule pt-10 md:grid-cols-12">
+      <div className="mt-12 grid gap-3 lg:grid-cols-12">
         {/* ------------------------------------------------------- direct */}
-        <div className="md:col-span-4">
-          <dl className="space-y-8">
-            <div>
-              <dt className="label">Email</dt>
-              <dd className="mt-2">
-                <a href={`mailto:${site.email}`} className="link text-lg tracking-tight">
-                  {site.email}
-                </a>
-              </dd>
+        <div className="grid gap-3 lg:col-span-5">
+          <Panel interactive reactive className="p-5">
+            <p className="label flex items-center gap-2">
+              <Mail className="size-3" /> Email
+            </p>
+            <div className="mt-3 flex items-center justify-between gap-3">
+              <a href={`mailto:${site.email}`} className="link truncate text-base font-medium">
+                {site.email}
+              </a>
+              <button
+                type="button"
+                onClick={copyEmail}
+                aria-label="Copy email address"
+                className="grid size-8 shrink-0 place-items-center rounded-md border border-border text-faint transition-colors hover:border-border-strong hover:text-foreground"
+              >
+                {copied ? <Check className="size-3.5 text-live" /> : <Copy className="size-3.5" />}
+              </button>
             </div>
-            <div>
-              <dt className="label">Phone</dt>
-              <dd className="mt-2">
-                <a href={`tel:${site.phoneHref}`} className="link text-lg tracking-tight">
-                  {site.phone}
-                </a>
-              </dd>
-            </div>
-            <div>
-              <dt className="label">Elsewhere</dt>
-              <dd className="mt-2 flex flex-col items-start gap-1.5">
-                <a
-                  href={site.socials.linkedin}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="link inline-flex items-center gap-1 text-base"
-                >
-                  LinkedIn <ArrowUpRight className="size-3.5" />
-                </a>
-                <a
-                  href={site.socials.github}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="link inline-flex items-center gap-1 text-base"
-                >
-                  GitHub <ArrowUpRight className="size-3.5" />
-                </a>
-              </dd>
-            </div>
-            <div>
-              <dt className="label">Location</dt>
-              <dd className="mt-2 text-base text-muted-foreground">
-                {site.location} ({site.timezone})
-                <br />
-                {site.relocation.to} from {site.relocation.when}
-              </dd>
-            </div>
-          </dl>
+          </Panel>
+
+          <Panel interactive reactive className="p-5">
+            <p className="label flex items-center gap-2">
+              <Phone className="size-3" /> Phone
+            </p>
+            <a
+              href={`tel:${site.phoneHref}`}
+              className="link mt-3 inline-block text-base font-medium"
+            >
+              {site.phone}
+            </a>
+          </Panel>
+
+          <div className="grid grid-cols-2 gap-3">
+            {[
+              { href: site.socials.linkedin, label: "LinkedIn", Icon: Linkedin },
+              { href: site.socials.github, label: "GitHub", Icon: Github },
+            ].map(({ href, label, Icon }) => (
+              <a key={label} href={href} target="_blank" rel="noreferrer noopener">
+                <Panel interactive reactive className="flex h-full items-center gap-3 p-5">
+                  <Icon className="size-4 text-faint" />
+                  <span className="text-sm font-medium">{label}</span>
+                  <ArrowUpRight className="ml-auto size-3.5 text-faint" />
+                </Panel>
+              </a>
+            ))}
+          </div>
+
+          <Panel inset className="p-5">
+            <p className="label">Availability</p>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+              Based in {site.location} ({site.timezone}), relocating to{" "}
+              {site.relocation.to} in {site.relocation.when}. Comfortable working across
+              North American and European hours.
+            </p>
+          </Panel>
         </div>
 
         {/* --------------------------------------------------------- form */}
-        <Reveal className="md:col-span-7 md:col-start-6">
-          <form onSubmit={onSubmit} className="space-y-8">
-            <div className="grid gap-8 sm:grid-cols-2">
-              <Field label="Name" name="name" required placeholder="Your name" />
-              <Field
-                label="Email"
-                name="email"
-                type="email"
-                required
-                placeholder="you@company.com"
+        <Reveal className="lg:col-span-7">
+          <Panel className="h-full p-5 sm:p-7">
+            <form onSubmit={onSubmit} className="grid gap-4">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="name" className="label">
+                    Name
+                  </label>
+                  <input
+                    id="name"
+                    name="name"
+                    required
+                    placeholder="Your name"
+                    className={cn(inputClass, "mt-2")}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="label">
+                    Email
+                  </label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    placeholder="you@company.com"
+                    className={cn(inputClass, "mt-2")}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="subject" className="label">
+                  Company or role
+                </label>
+                <input
+                  id="subject"
+                  name="subject"
+                  placeholder="What's this about?"
+                  className={cn(inputClass, "mt-2")}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="message" className="label">
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  required
+                  minLength={10}
+                  rows={5}
+                  placeholder="A few sentences about the role or the problem."
+                  className={cn(inputClass, "mt-2 resize-none")}
+                />
+              </div>
+
+              {/* Honeypot — hidden from humans, catches naive bots. */}
+              <input
+                type="text"
+                name="company"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden
+                className="hidden"
               />
-            </div>
-            <Field label="Company" name="subject" placeholder="Organisation or role" />
-            <Field
-              label="Message"
-              name="message"
-              required
-              textarea
-              placeholder="A few sentences about the role or the problem."
-            />
 
-            {/* Honeypot — hidden from humans, catches naive bots. */}
-            <input
-              type="text"
-              name="company"
-              tabIndex={-1}
-              autoComplete="off"
-              aria-hidden
-              className="hidden"
-            />
+              <div className="flex flex-wrap items-center gap-4">
+                <Button
+                  type="submit"
+                  variant="accent"
+                  size="lg"
+                  disabled={status === "sending" || status === "sent"}
+                >
+                  {status === "sending" && <Loader2 className="animate-spin" />}
+                  {status === "sent" && <Check />}
+                  {status === "sending"
+                    ? "Sending"
+                    : status === "sent"
+                      ? "Message sent"
+                      : "Send message"}
+                  {status === "idle" && <ArrowUpRight />}
+                </Button>
 
-            <div className="flex flex-wrap items-center gap-6">
-              <button
-                type="submit"
-                disabled={status === "sending" || status === "sent"}
-                className="inline-flex items-center gap-2.5 bg-foreground px-6 py-3.5 text-sm font-medium text-background transition-opacity hover:opacity-80 disabled:opacity-50"
-              >
-                {status === "sent" ? "Message sent" : "Send message"}
-                {status === "sent" ? (
-                  <Check className="size-4" />
-                ) : (
-                  <ArrowUpRight className="size-4" />
+                {status === "sent" && (
+                  <p className="text-sm text-live">I&apos;ll reply within a day or two.</p>
                 )}
-              </button>
-
-              {status === "sent" && (
-                <p className="text-sm text-muted-foreground">
-                  Thanks — I&apos;ll reply within a day or two.
-                </p>
-              )}
-              {status === "error" && (
-                <p className="text-sm text-accent" role="alert">
-                  {error}
-                </p>
-              )}
-            </div>
-          </form>
+                {status === "error" && (
+                  <p className="text-sm text-warn" role="alert">
+                    {error}
+                  </p>
+                )}
+              </div>
+            </form>
+          </Panel>
         </Reveal>
       </div>
     </section>
