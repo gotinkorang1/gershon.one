@@ -10,17 +10,30 @@ export function ThemeToggle() {
 
   useEffect(() => setMounted(true), []);
 
+  // `resolvedTheme` is undefined during SSR and on the first client render,
+  // so every attribute derived from it — icon *and* aria-label — has to wait
+  // for mount. Branching on it earlier produces a hydration mismatch.
   const isDark = resolvedTheme === "dark";
 
   return (
     <button
       type="button"
-      aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
+      aria-label={
+        mounted
+          ? isDark
+            ? "Switch to light theme"
+            : "Switch to dark theme"
+          : "Toggle theme"
+      }
       onClick={() => setTheme(isDark ? "light" : "dark")}
       className="relative grid size-9 place-items-center rounded-full border border-border/70 bg-card/60 text-muted-foreground backdrop-blur transition hover:text-foreground hover:border-border"
     >
       {mounted ? (
-        isDark ? <Sun className="size-4" /> : <Moon className="size-4" />
+        isDark ? (
+          <Sun className="size-4" />
+        ) : (
+          <Moon className="size-4" />
+        )
       ) : (
         <span className="size-4" />
       )}
