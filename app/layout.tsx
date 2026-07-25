@@ -6,6 +6,8 @@ import { SiteFooter } from "@/components/site-footer";
 import { CommandPalette } from "@/components/command-palette";
 import { KeyboardShortcuts } from "@/components/keyboard-shortcuts";
 import { ScrollProgress } from "@/components/scroll-progress";
+import { RouteProgress } from "@/components/fx/route-progress";
+import { PageTransition } from "@/components/fx/page-transition";
 import { Analytics } from "@/components/analytics";
 import { site } from "@/lib/site";
 import "./globals.css";
@@ -45,6 +47,7 @@ export const metadata: Metadata = {
   creator: site.name,
   alternates: {
     canonical: "/",
+    languages: { "en-CA": `${siteUrl}/`, "fr-CA": `${siteUrl}/fr` },
     types: { "application/rss+xml": `${siteUrl}/feed.xml` },
   },
   openGraph: {
@@ -121,10 +124,13 @@ export default function RootLayout({
       <body className="min-h-dvh antialiased">
         <ThemeProvider>
           <ScrollProgress />
+          <RouteProgress />
           <SiteNav />
           <CommandPalette />
           <KeyboardShortcuts />
-          <main id="main">{children}</main>
+          <main id="main">
+            <PageTransition>{children}</PageTransition>
+          </main>
           <SiteFooter />
         </ThemeProvider>
         <Analytics />

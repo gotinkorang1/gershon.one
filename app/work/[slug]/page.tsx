@@ -5,6 +5,7 @@ import { ArrowLeft, Clock } from "lucide-react";
 import { caseStudies, getCaseStudy } from "@/lib/case-studies";
 import { Badge } from "@/components/ui/badge";
 import { Panel } from "@/components/ui/panel";
+import { Counter } from "@/components/fx/counter";
 import { site } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -86,7 +87,9 @@ export default async function CaseStudyPage({
         <dl className="mt-10 grid max-w-3xl gap-3 sm:grid-cols-3">
           {study.outcomes.map((o) => (
             <Panel key={o.label} className="p-5">
-              <dd className="text-xl font-semibold tracking-tight">{o.value}</dd>
+              <dd className="text-xl font-semibold tracking-tight">
+                <Counter value={o.value} />
+              </dd>
               <dt className="mt-1.5 text-xs leading-snug text-muted-foreground">
                 {o.label}
               </dt>

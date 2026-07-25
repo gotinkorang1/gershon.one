@@ -26,7 +26,7 @@ export function ThemeToggle() {
           : "Toggle theme"
       }
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="grid size-9 place-items-center border border-rule text-faint transition-colors hover:border-rule-strong hover:text-foreground"
+      className="tap grid size-9 place-items-center rounded-lg border border-border text-faint transition-colors hover:border-border-strong hover:text-foreground"
     >
       {mounted ? (
         isDark ? (

@@ -6,10 +6,13 @@ import { motion } from "motion/react";
 import { Command } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { navLinks, site } from "@/lib/site";
+import { useI18n } from "@/components/locale-provider";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { LanguageToggle } from "@/components/language-toggle";
 import { Button } from "@/components/ui/button";
 
 export function SiteNav() {
+  const { t, locale } = useI18n();
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("");
   const [open, setOpen] = useState(false);
@@ -81,7 +84,7 @@ export function SiteNav() {
                 return (
                   <li key={link.href}>
                     <Link
-                      href={link.href}
+                      href={`${locale === "fr" ? "/fr" : ""}${link.href}`}
                       className={cn(
                         "relative rounded-lg px-3 py-1.5 text-sm transition-colors",
                         isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground",
@@ -94,7 +97,7 @@ export function SiteNav() {
                           transition={{ type: "spring", stiffness: 400, damping: 34 }}
                         />
                       )}
-                      {link.label}
+                      {t.nav[link.key]}
                     </Link>
                   </li>
                 );
@@ -114,6 +117,7 @@ export function SiteNav() {
                 </kbd>
               </button>
 
+              <LanguageToggle />
               <ThemeToggle />
 
               <a href={site.resumeUrl} className="hidden sm:block">
@@ -125,7 +129,7 @@ export function SiteNav() {
                 onClick={() => setOpen((v) => !v)}
                 aria-label={open ? "Close menu" : "Open menu"}
                 aria-expanded={open}
-                className="relative grid size-9 place-items-center rounded-lg border border-border md:hidden"
+                className="tap relative grid size-9 place-items-center rounded-lg border border-border md:hidden"
               >
                 <span
                   className={cn(
@@ -160,7 +164,7 @@ export function SiteNav() {
               className="flex items-baseline gap-4 border-b border-border py-4"
             >
               <span className="label">{link.index}</span>
-              <span className="text-2xl font-medium tracking-tight">{link.label}</span>
+              <span className="text-2xl font-medium tracking-tight">{t.nav[link.key]}</span>
             </Link>
           ))}
           <a href={site.resumeUrl} className="mt-6">

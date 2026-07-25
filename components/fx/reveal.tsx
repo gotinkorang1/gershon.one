@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 
 /**
@@ -16,6 +16,12 @@ export function Reveal({
   delay?: number;
   className?: string;
 }) {
+  const reduced = useReducedMotion();
+
+  // The global CSS reduced-motion rule cannot reach this: Motion writes inline
+  // styles from JS, so the opt-out has to happen here.
+  if (reduced) return <div className={className}>{children}</div>;
+
   return (
     <motion.div
       className={className}

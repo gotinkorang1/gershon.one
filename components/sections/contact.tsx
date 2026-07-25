@@ -7,7 +7,9 @@ import { Reveal } from "@/components/fx/reveal";
 import { Panel } from "@/components/ui/panel";
 import { Button } from "@/components/ui/button";
 import { site } from "@/lib/site";
+import { Booking } from "@/components/booking";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/components/locale-provider";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
@@ -15,6 +17,7 @@ const inputClass =
   "w-full rounded-lg border border-border bg-surface-inset px-3.5 py-2.5 text-sm outline-none transition-colors placeholder:text-faint focus:border-accent/60 focus:bg-surface-1";
 
 export function Contact() {
+  const { t } = useI18n();
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
@@ -53,8 +56,8 @@ export function Contact() {
     <section id="contact" className="shell scroll-mt-24 py-16 md:py-20">
       <SectionHeading
         index="05 — Contact"
-        title="Tell me what you're building"
-        description={`Available for IT and network administration roles in ${site.relocation.to} from ${site.relocation.when}.`}
+        title={t.sections.contactTitle}
+        description={t.sections.contactLede(site.relocation.to, site.relocation.when)}
       />
 
       <div className="mt-10 grid gap-3 lg:grid-cols-12">
@@ -72,7 +75,7 @@ export function Contact() {
                 type="button"
                 onClick={copyEmail}
                 aria-label="Copy email address"
-                className="grid size-8 shrink-0 place-items-center rounded-md border border-border text-faint transition-colors hover:border-border-strong hover:text-foreground"
+                className="tap grid size-8 shrink-0 place-items-center rounded-md border border-border text-faint transition-colors hover:border-border-strong hover:text-foreground"
               >
                 {copied ? <Check className="size-3.5 text-live" /> : <Copy className="size-3.5" />}
               </button>
@@ -106,6 +109,8 @@ export function Contact() {
             ))}
           </div>
 
+          <Booking />
+
           <Panel inset className="p-5">
             <p className="label">Availability</p>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
@@ -129,7 +134,7 @@ export function Contact() {
                     id="name"
                     name="name"
                     required
-                    placeholder="Your name"
+                    placeholder={t.contact.namePlaceholder}
                     className={cn(inputClass, "mt-2")}
                   />
                 </div>
@@ -142,7 +147,7 @@ export function Contact() {
                     name="email"
                     type="email"
                     required
-                    placeholder="you@company.com"
+                    placeholder={t.contact.emailPlaceholder}
                     className={cn(inputClass, "mt-2")}
                   />
                 </div>
@@ -155,7 +160,7 @@ export function Contact() {
                 <input
                   id="subject"
                   name="subject"
-                  placeholder="What's this about?"
+                  placeholder={t.contact.companyPlaceholder}
                   className={cn(inputClass, "mt-2")}
                 />
               </div>
@@ -170,7 +175,7 @@ export function Contact() {
                   required
                   minLength={10}
                   rows={5}
-                  placeholder="A few sentences about the role or the problem."
+                  placeholder={t.contact.messagePlaceholder}
                   className={cn(inputClass, "mt-2 resize-none")}
                 />
               </div>
@@ -195,15 +200,15 @@ export function Contact() {
                   {status === "sending" && <Loader2 className="animate-spin" />}
                   {status === "sent" && <Check />}
                   {status === "sending"
-                    ? "Sending"
+                    ? t.contact.sending
                     : status === "sent"
-                      ? "Message sent"
-                      : "Send message"}
+                      ? t.contact.sent
+                      : t.contact.send}
                   {status === "idle" && <ArrowUpRight />}
                 </Button>
 
                 {status === "sent" && (
-                  <p className="text-sm text-live">I&apos;ll reply within a day or two.</p>
+                  <p className="text-sm text-live">{t.contact.reply}</p>
                 )}
                 {status === "error" && (
                   <p className="text-sm text-warn" role="alert">

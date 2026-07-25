@@ -12,9 +12,11 @@ import {
   Moon,
   Search,
   Sun,
+  Text,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { navLinks, site } from "@/lib/site";
+import { searchDocs, type SearchDoc } from "@/lib/search-index";
 import { cn } from "@/lib/utils";
 
 type Item = {
@@ -127,13 +129,39 @@ export function CommandPalette() {
     return [...nav, ...actions, ...links];
   }, [close, go, resolvedTheme, setTheme]);
 
+  const openDoc = useCallback(
+    (doc: SearchDoc) => {
+      close();
+      if (doc.href.startsWith("#")) {
+        document.querySelector(doc.href)?.scrollIntoView({ behavior: "smooth" });
+      } else {
+        window.location.href = doc.href;
+      }
+    },
+    [close],
+  );
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return items;
-    return items.filter((i) =>
+
+    const commands = items.filter((i) =>
       `${i.label} ${i.group} ${i.keywords ?? ""}`.toLowerCase().includes(q),
     );
-  }, [items, query]);
+
+    // Content matches sit below matching commands, so typing a command name
+    // still puts that command first.
+    const content: Item[] = searchDocs(query).map((doc) => ({
+      id: doc.id,
+      label: doc.title,
+      group: doc.group,
+      icon: <Text className="size-4" />,
+      keywords: doc.subtitle,
+      run: () => openDoc(doc),
+    }));
+
+    return [...commands, ...content];
+  }, [items, query, openDoc]);
 
   const groups = useMemo(() => {
     const map = new Map<string, Item[]>();
@@ -210,7 +238,7 @@ export function CommandPalette() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={onListKey}
-                placeholder="Type a command or search…"
+                placeholder="Search experience, skills, case studies…"
                 className="w-full bg-transparent py-4 text-sm outline-none placeholder:text-muted-foreground"
               />
               <kbd className="rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
@@ -244,8 +272,13 @@ export function CommandPalette() {
                             : "text-muted-foreground",
                         )}
                       >
-                        <span className="text-muted-foreground">{item.icon}</span>
-                        {item.label}
+                        <span className="shrink-0 text-muted-foreground">{item.icon}</span>
+                        <span className="min-w-0 flex-1 truncate">{item.label}</span>
+                        {item.keywords && item.group !== "Actions" && (
+                          <span className="ml-auto shrink-0 truncate pl-3 text-xs text-faint">
+                            {item.keywords}
+                          </span>
+                        )}
                       </button>
                     );
                   })}

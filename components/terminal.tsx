@@ -105,6 +105,66 @@ export function Terminal({ className }: { className?: string }) {
     },
   };
 
+  /**
+   * Not listed in `help`. These are the commands a network engineer types
+   * without thinking, so the terminal answers them rather than erroring.
+   */
+  const hidden: Record<string, () => Line[]> = {
+    sudo: () => [
+      { kind: "err", text: "gershon is not in the sudoers file. This incident has been reported." },
+    ],
+    "sudo su": () => [
+      { kind: "err", text: "Nice try. This incident has also been reported." },
+    ],
+    uptime: () => [
+      {
+        kind: "out",
+        text: ` ${new Date().toTimeString().slice(0, 8)}  up 5 years, 2 users,  load average: 0.42, 0.31, 0.28`,
+      },
+    ],
+    ping: () => [
+      { kind: "out", text: "PING starlink (100.64.0.1): 56 data bytes" },
+      { kind: "out", text: "64 bytes from 100.64.0.1: icmp_seq=0 ttl=54 time=38.2 ms" },
+      { kind: "out", text: "64 bytes from 100.64.0.1: icmp_seq=1 ttl=54 time=41.7 ms" },
+      { kind: "out", text: "--- starlink ping statistics ---" },
+      { kind: "out", text: "2 packets transmitted, 2 received, 0% packet loss" },
+    ],
+    traceroute: () => [
+      { kind: "out", text: "traceroute to opportunity (canada), 4 hops max" },
+      { kind: "out", text: " 1  accra-gh            2.1 ms" },
+      { kind: "out", text: " 2  knust-bsc-2024     18.4 ms" },
+      { kind: "out", text: " 3  aws-ccp-2024       22.9 ms" },
+      { kind: "out", text: " 4  st-johns-nl-2026   ** reachable August 2026 **" },
+    ],
+    neofetch: () => [
+      { kind: "out", text: "       ___        gershon@portfolio" },
+      { kind: "out", text: "      /   \\       -----------------" },
+      { kind: "out", text: "     |  o  |      OS: RouterOS 7.x / Debian" },
+      { kind: "out", text: "     |     |      Role: IT Systems & Network Administrator" },
+      { kind: "out", text: "      \\___/       Uptime: 5 years" },
+      { kind: "out", text: "                  WAN: fibre (primary), Starlink (backup)" },
+      { kind: "out", text: "                  Shell: zsh" },
+      { kind: "out", text: "                  Available: August 2026, St. John's NL" },
+    ],
+    ip: () => [
+      { kind: "out", text: "1: lo    <LOOPBACK,UP>  inet 127.0.0.1/8" },
+      { kind: "out", text: "2: ether1 <UP>          inet 10.0.0.1/24   comment: fibre WAN" },
+      { kind: "out", text: "3: ether2 <UP>          inet 192.168.100.2/24  comment: starlink WAN" },
+      { kind: "out", text: "4: bridge <UP>          inet 10.10.0.1/16  comment: VLAN trunk" },
+    ],
+    "rm -rf /": () => [
+      { kind: "err", text: "Backups exist and have been restore-tested. Nothing to see here." },
+    ],
+    exit: () => [{ kind: "out", text: "There is no exit. Try `contact` instead." }],
+    hire: () => [
+      { kind: "out", text: "Excellent choice." },
+      { kind: "out", text: `  ${site.email}` },
+      { kind: "out", text: `  ${site.phone}` },
+      { kind: "out", text: "  Available in Canada from August 2026." },
+    ],
+    "": () => [],
+  };
+
   function submit(raw: string) {
     const input = raw.trim();
     const next: Line[] = [{ kind: "in", text: input }];
@@ -113,10 +173,15 @@ export function Terminal({ className }: { className?: string }) {
       setHistory((h) => [input, ...h]);
       setCursor(-1);
 
-      const cmd = commands[input.toLowerCase()];
+      const key = input.toLowerCase();
+      const cmd = commands[key];
+      const secret = hidden[key] ?? hidden[key.split(" ")[0]];
+
       if (cmd) {
         const out = cmd.run();
         if (out) next.push(...out);
+      } else if (secret) {
+        next.push(...secret());
       } else {
         next.push({
           kind: "err",

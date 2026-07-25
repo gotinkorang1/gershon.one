@@ -5,6 +5,7 @@ import { ArrowUpRight, Github } from "lucide-react";
 import { Panel } from "@/components/ui/panel";
 import { Tooltip } from "@/components/ui/tooltip";
 import { site } from "@/lib/site";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 
 type Day = { date: string; count: number; level: 0 | 1 | 2 | 3 | 4 };
@@ -97,7 +98,7 @@ export function GitHubActivity() {
                   >
                     <span
                       className={cn(
-                        "size-[10px] rounded-[2px] transition-transform hover:scale-125",
+                        "size-[9px] rounded-[2px] transition-transform sm:size-[10px] sm:hover:scale-125",
                         LEVEL_CLASS[day.level],
                       )}
                     />
@@ -123,7 +124,25 @@ export function GitHubActivity() {
       )}
 
       {!data && (
-        <div className="mt-5 h-20 animate-pulse rounded-md bg-surface-inset" />
+        <div className="mt-5 space-y-3">
+          <div className="flex gap-[3px]">
+            {Array.from({ length: 26 }).map((_, i) => (
+              <div key={i} className="flex flex-col gap-[3px]">
+                {Array.from({ length: 7 }).map((_, j) => (
+                  <Skeleton
+                    key={j}
+                    className="size-[9px] rounded-[2px] sm:size-[10px]"
+                    // Staggered so it reads as loading rather than as a frozen grid.
+                  />
+                ))}
+              </div>
+            ))}
+          </div>
+          <div className="space-y-2 border-t border-border pt-4">
+            <Skeleton className="h-4 w-3/4" />
+            <Skeleton className="h-4 w-2/3" />
+          </div>
+        </div>
       )}
     </Panel>
   );

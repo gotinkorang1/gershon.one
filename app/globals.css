@@ -324,6 +324,21 @@
   transform-origin: left;
 }
 
+/* Expands a control's hit area to the 44px touch minimum without changing
+   how big it looks. WCAG 2.5.5 / Apple HIG. */
+.tap {
+  position: relative;
+}
+.tap::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(100%, 44px);
+  height: max(100%, 44px);
+  transform: translate(-50%, -50%);
+}
+
 .pulse-dot {
   position: relative;
   display: inline-flex;

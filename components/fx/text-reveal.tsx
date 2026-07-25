@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -16,6 +16,22 @@ export function TextReveal({
   className?: string;
   delay?: number;
 }) {
+  const reduced = useReducedMotion();
+
+  // A full line-height slide per line is the clearest possible case for
+  // honouring this preference.
+  if (reduced) {
+    return (
+      <span className={cn("block", className)}>
+        {lines.map((line) => (
+          <span key={line} className="block">
+            {line}
+          </span>
+        ))}
+      </span>
+    );
+  }
+
   return (
     <span className={cn("block", className)}>
       {lines.map((line, i) => (

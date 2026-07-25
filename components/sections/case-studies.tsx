@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowUpRight, Clock } from "lucide-react";
 import { SectionHeading } from "@/components/fx/section-heading";
@@ -5,14 +7,17 @@ import { Reveal } from "@/components/fx/reveal";
 import { Panel } from "@/components/ui/panel";
 import { Badge } from "@/components/ui/badge";
 import { caseStudies } from "@/lib/case-studies";
+import { useI18n } from "@/components/locale-provider";
 
 export function CaseStudies() {
+  const { t } = useI18n();
+
   return (
     <section id="work" className="shell scroll-mt-24 py-16 md:py-20">
       <SectionHeading
         index="02 — Case studies"
-        title="How the work actually went"
-        description="Longer write-ups of problems worth explaining, rather than screenshots that age badly."
+        title={t.sections.workTitle}
+        description={t.sections.workLede}
       />
 
       <div className="mt-10 grid gap-3">
@@ -24,9 +29,9 @@ export function CaseStudies() {
                   <p className="label">{study.period}</p>
                   <p className="label flex items-center gap-1.5">
                     <Clock className="size-3" />
-                    {study.readingMinutes} min
+                    {study.readingMinutes} {t.common.minRead}
                   </p>
-                  {study.draft && <Badge variant="accent">Draft</Badge>}
+                  {study.draft && <Badge variant="accent">{t.common.draft}</Badge>}
                 </div>
 
                 <div className="mt-3 flex items-start justify-between gap-6">

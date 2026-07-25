@@ -1,14 +1,17 @@
 "use client";
 
-import { motion, useScroll, useSpring } from "motion/react";
+import { motion, useScroll, useSpring, useReducedMotion } from "motion/react";
 
 export function ScrollProgress() {
+  const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 160,
     damping: 30,
     restDelta: 0.001,
   });
+
+  if (reduced) return null;
 
   return (
     <motion.div

@@ -46,6 +46,11 @@ export function SiteFooter() {
                   Download CV
                 </a>
               </li>
+              <li>
+                <Link href="/brief" className="link">
+                  Candidate brief
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

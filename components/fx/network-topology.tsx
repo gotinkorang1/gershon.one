@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
+import { useMediaQuery } from "@/lib/use-media-query";
 
 /**
  * The dual-WAN topology from the Greenhouse deployment, drawn to scale of the
@@ -32,6 +33,18 @@ const NODES: Node[] = [
   { id: "guest", label: "Guest", sub: "VLAN 40", x: 87, y: 89, kind: "leaf" },
 ];
 
+// Narrow screens: WANs across the top, router in the middle, VLANs in a row
+// beneath. Same graph, laid out top-to-bottom so nothing overlaps.
+const MOBILE_POSITIONS: Record<string, { x: number; y: number }> = {
+  fibre: { x: 26, y: 8 },
+  starlink: { x: 76, y: 8 },
+  ccr: { x: 50, y: 44 },
+  staff: { x: 13, y: 84 },
+  erp: { x: 38, y: 84 },
+  cctv: { x: 63, y: 84 },
+  guest: { x: 88, y: 84 },
+};
+
 const LINKS: { from: string; to: string; id: string }[] = [
   { id: "fibre-ccr", from: "fibre", to: "ccr" },
   { id: "starlink-ccr", from: "starlink", to: "ccr" },
@@ -44,6 +57,7 @@ const LINKS: { from: string; to: string; id: string }[] = [
 const byId = (id: string) => NODES.find((n) => n.id === id)!;
 
 export function NetworkTopology({ className }: { className?: string }) {
+  const compact = useMediaQuery("(max-width: 640px)");
   const [failed, setFailed] = useState(false);
   const [reduced, setReduced] = useState(false);
   const [elapsed, setElapsed] = useState(0);
@@ -72,6 +86,9 @@ export function NetworkTopology({ className }: { className?: string }) {
   }, [failed]);
 
   const activeWan = failed ? "starlink" : "fibre";
+
+  const pos = (node: Node) =>
+    compact ? (MOBILE_POSITIONS[node.id] ?? { x: node.x, y: node.y }) : { x: node.x, y: node.y };
 
   const description = failed
     ? "Fibre primary WAN is down. Traffic has failed over to the Starlink backup WAN. " +
@@ -111,11 +128,12 @@ export function NetworkTopology({ className }: { className?: string }) {
         aria-hidden
       >
         {LINKS.map((link) => {
-          const a = byId(link.from);
-          const b = byId(link.to);
-          const isWanLink = a.kind === "wan";
-          const isDown = isWanLink && failed && a.id === "fibre";
-          const isCarrying = !isWanLink || a.id === activeWan;
+          const a = pos(byId(link.from));
+          const b = pos(byId(link.to));
+          const aNode = byId(link.from);
+          const isWanLink = aNode.kind === "wan";
+          const isDown = isWanLink && failed && aNode.id === "fibre";
+          const isCarrying = !isWanLink || aNode.id === activeWan;
 
           return (
             <g key={link.id}>
@@ -165,18 +183,18 @@ export function NetworkTopology({ className }: { className?: string }) {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.05 * NODES.indexOf(node) }}
-            style={{ left: `${node.x}%`, top: `${node.y}%` }}
+            style={{ left: `${pos(node).x}%`, top: `${pos(node).y}%` }}
             className="absolute -translate-x-1/2 -translate-y-1/2"
           >
             <div
               className={cn(
-                "panel flex flex-col items-center whitespace-nowrap px-2.5 py-1.5 transition-all duration-500 sm:px-3 sm:py-2",
-                node.kind === "router" && "panel-raised px-3 py-2.5 sm:px-4 sm:py-3",
+                "panel flex flex-col items-center whitespace-nowrap px-2 py-1 transition-all duration-500 sm:px-3 sm:py-2",
+                node.kind === "router" && "panel-raised px-2.5 py-1.5 sm:px-4 sm:py-3",
                 isDown && "opacity-55",
                 isActiveWan && "border-accent/40",
               )}
             >
-              <span className="flex items-center gap-1.5 text-[0.6875rem] font-medium sm:text-xs">
+              <span className="flex items-center gap-1 text-[0.625rem] font-medium sm:gap-1.5 sm:text-xs">
                 {node.kind === "wan" && (
                   <span
                     className={cn(
@@ -187,7 +205,7 @@ export function NetworkTopology({ className }: { className?: string }) {
                 )}
                 {node.label}
               </span>
-              <span className="label mt-0.5 text-[0.5625rem] tracking-[0.08em]">
+              <span className="label mt-0.5 hidden text-[0.5625rem] tracking-[0.08em] sm:block">
                 {isDown ? "Link down" : node.sub}
               </span>
             </div>

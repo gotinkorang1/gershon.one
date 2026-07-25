@@ -9,6 +9,7 @@ import { Panel } from "@/components/ui/panel";
 import { Badge } from "@/components/ui/badge";
 import { experience, type Job } from "@/lib/site";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/components/locale-provider";
 
 function span(job: Job) {
   const from = job.start.slice(0, 4);
@@ -17,6 +18,8 @@ function span(job: Job) {
 }
 
 function Entry({ job, open, onToggle }: { job: Job; open: boolean; onToggle: () => void }) {
+  const { t } = useI18n();
+
   return (
     <Panel reactive className={cn("transition-colors", open && "border-border-strong")}>
       <button
@@ -37,7 +40,7 @@ function Entry({ job, open, onToggle }: { job: Job; open: boolean; onToggle: () 
             <span className="text-lg font-semibold tracking-tight sm:text-xl">
               {job.role}
             </span>
-            {job.end === null && <Badge variant="accent">Current</Badge>}
+            {job.end === null && <Badge variant="accent">{t.common.current}</Badge>}
           </span>
           <span className="mt-1.5 block text-sm text-muted-foreground">
             {job.company}
@@ -93,14 +96,15 @@ function Entry({ job, open, onToggle }: { job: Job; open: boolean; onToggle: () 
 }
 
 export function Experience() {
+  const { t } = useI18n();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
     <section id="experience" className="shell scroll-mt-24 py-16 md:py-20">
       <SectionHeading
         index="01 — Experience"
-        title="Where I've done the work"
-        description="Six roles across engineering, real estate, advertising and Ghana's national power utility."
+        title={t.sections.experienceTitle}
+        description={t.sections.experienceLede}
       />
 
       <div className="mt-10 grid gap-3">

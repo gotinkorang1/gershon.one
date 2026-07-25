@@ -1,3 +1,5 @@
+"use client";
+
 import { Cloud, Code2, Network, Server, Users } from "lucide-react";
 import { SectionHeading } from "@/components/fx/section-heading";
 import { Reveal } from "@/components/fx/reveal";
@@ -6,6 +8,7 @@ import { Terminal } from "@/components/terminal";
 import { GitHubActivity } from "@/components/github-activity";
 import { skillGroups } from "@/lib/site";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/components/locale-provider";
 
 const ICONS = [Network, Server, Cloud, Code2, Users];
 
@@ -19,12 +22,14 @@ const SPANS = [
 ];
 
 export function Skills() {
+  const { t } = useI18n();
+
   return (
     <section id="capabilities" className="shell scroll-mt-24 py-16 md:py-20">
       <SectionHeading
         index="03 — Capabilities"
-        title="What I actually reach for"
-        description="Grouped by use, in rough order of how central each is to the current role."
+        title={t.sections.capabilitiesTitle}
+        description={t.sections.capabilitiesLede}
       />
 
       <div className="mt-10 grid gap-3 lg:grid-cols-12">
