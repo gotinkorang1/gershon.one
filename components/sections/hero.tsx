@@ -5,18 +5,33 @@ import { motion } from "motion/react";
 import { ArrowDown, ArrowUpRight, MapPin } from "lucide-react";
 import { site, facts } from "@/lib/site";
 import { NetworkTopology } from "@/components/fx/network-topology";
+import { TextReveal } from "@/components/fx/text-reveal";
+import { Magnetic } from "@/components/fx/magnetic";
 import { Panel } from "@/components/ui/panel";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+/**
+ * The parent MUST carry its own `variants` to become a variant node — without
+ * it Motion never propagates `animate` to children and they stay stuck in
+ * `hidden`. Child timing lives inside the variant rather than in a
+ * `transition` prop, which would override the stagger.
+ */
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08, delayChildren: 0.06 } },
+};
+
 const rise = {
   hidden: { opacity: 0, y: 16 },
-  show: { opacity: 1, y: 0 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: EASE } },
 };
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pb-16 pt-28 md:pt-32">
+    <section className="relative overflow-hidden pb-10 pt-24 md:pt-28">
       <div className="grid-field fade-edges pointer-events-none absolute inset-0 -z-10" />
       <div
         aria-hidden
@@ -29,33 +44,26 @@ export function Hero() {
 
       <div className="shell">
         <motion.div
+          variants={container}
           initial="hidden"
           animate="show"
-          transition={{ staggerChildren: 0.07, delayChildren: 0.05 }}
-          className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16"
+          className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12"
         >
           {/* ------------------------------------------------------ copy */}
           <div className="lg:col-span-5">
-            <motion.div variants={rise} transition={{ duration: 0.6 }}>
+            <motion.div variants={rise}>
               <Badge variant="live" className="gap-2 px-0">
                 <span className="pulse-dot" />
                 {site.availability}
               </Badge>
             </motion.div>
 
-            <motion.h1
-              variants={rise}
-              transition={{ duration: 0.7 }}
-              className="mt-5 text-display font-semibold"
-            >
-              Gershon
-              <br />
-              Otinkorang
-            </motion.h1>
+            <h1 className="mt-5 text-display font-semibold">
+              <TextReveal lines={["Gershon", "Otinkorang"]} delay={0.15} />
+            </h1>
 
             <motion.p
               variants={rise}
-              transition={{ duration: 0.6 }}
               className="mt-5 text-lede font-medium"
             >
               {site.role}
@@ -63,7 +71,6 @@ export function Hero() {
 
             <motion.p
               variants={rise}
-              transition={{ duration: 0.6 }}
               className="mt-4 max-w-md text-base leading-relaxed text-muted-foreground"
             >
               {site.headline}
@@ -71,26 +78,28 @@ export function Hero() {
 
             <motion.div
               variants={rise}
-              transition={{ duration: 0.6 }}
               className="mt-8 flex flex-wrap items-center gap-3"
             >
-              <a href={site.resumeUrl}>
-                <Button variant="accent" size="lg" className="group">
-                  Download CV
-                  <ArrowDown className="transition-transform group-hover:translate-y-0.5" />
-                </Button>
-              </a>
-              <a href={`mailto:${site.email}`}>
-                <Button variant="outline" size="lg" className="group">
-                  Get in touch
-                  <ArrowUpRight className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </Button>
-              </a>
+              <Magnetic>
+                <a href={site.resumeUrl}>
+                  <Button variant="accent" size="lg" className="group">
+                    Download CV
+                    <ArrowDown className="transition-transform group-hover:translate-y-0.5" />
+                  </Button>
+                </a>
+              </Magnetic>
+              <Magnetic>
+                <a href={`mailto:${site.email}`}>
+                  <Button variant="outline" size="lg" className="group">
+                    Get in touch
+                    <ArrowUpRight className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </Button>
+                </a>
+              </Magnetic>
             </motion.div>
 
             <motion.p
               variants={rise}
-              transition={{ duration: 0.6 }}
               className="mt-6 flex items-center gap-2 text-sm text-muted-foreground"
             >
               <MapPin className="size-3.5 shrink-0 text-faint" />
@@ -101,7 +110,6 @@ export function Hero() {
           {/* -------------------------------------------------- topology */}
           <motion.div
             variants={rise}
-            transition={{ duration: 0.8 }}
             className="lg:col-span-7"
           >
             <Panel className="p-5 sm:p-7">
@@ -119,10 +127,20 @@ export function Hero() {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.5 }}
-          className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+          className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4"
         >
-          {facts.map((f) => (
-            <Panel key={f.label} interactive reactive className="p-5">
+          {facts.map((f, i) => (
+            <Panel key={f.label} interactive reactive className="relative p-5">
+              {/* A hairline of colour per card, brightest on the availability
+                  fact — the one a recruiter is scanning for. */}
+              <span
+                aria-hidden
+                className="absolute inset-x-0 top-0 h-px"
+                style={{
+                  background: i === 2 ? "var(--signal)" : "var(--accent)",
+                  opacity: i === 2 ? 0.9 : 0.28,
+                }}
+              />
               <p className="label">{f.label}</p>
               <p className="mt-2.5 text-xl font-semibold tracking-tight">{f.value}</p>
             </Panel>
@@ -134,17 +152,17 @@ export function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.65 }}
-          className="mt-4 grid gap-4 sm:grid-cols-3"
+          className="mt-3 grid gap-3 sm:grid-cols-3"
         >
-          <Panel className="overflow-hidden sm:col-span-1">
+          <Panel className="portrait-frame relative overflow-hidden sm:col-span-1">
             <Image
               src="/gershon.webp"
               alt={`Portrait of ${site.name}`}
               width={840}
               height={624}
               priority
-              sizes="(max-width: 640px) 100vw, 300px"
-              className="h-full w-full object-cover object-center grayscale transition-all duration-700 hover:grayscale-0"
+              sizes="(max-width: 640px) 100vw, 320px"
+              className="portrait h-full w-full object-cover object-center"
             />
           </Panel>
           <Panel inset className="flex flex-col justify-center gap-2 p-6 sm:col-span-2">

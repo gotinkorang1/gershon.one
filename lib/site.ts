@@ -330,7 +330,8 @@ export const credentials: Credential[] = [
 
 export const navLinks = [
   { href: "#experience", label: "Experience", index: "01" },
-  { href: "#capabilities", label: "Capabilities", index: "02" },
-  { href: "#credentials", label: "Credentials", index: "03" },
-  { href: "#contact", label: "Contact", index: "04" },
+  { href: "#work", label: "Case studies", index: "02" },
+  { href: "#capabilities", label: "Capabilities", index: "03" },
+  { href: "#credentials", label: "Credentials", index: "04" },
+  { href: "#contact", label: "Contact", index: "05" },
 ] as const;

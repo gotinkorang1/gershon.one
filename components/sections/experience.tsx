@@ -96,14 +96,14 @@ export function Experience() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="experience" className="shell scroll-mt-24 py-20 md:py-28">
+    <section id="experience" className="shell scroll-mt-24 py-16 md:py-20">
       <SectionHeading
         index="01 — Experience"
         title="Where I've done the work"
         description="Six roles across engineering, real estate, advertising and Ghana's national power utility."
       />
 
-      <div className="mt-12 grid gap-3">
+      <div className="mt-10 grid gap-3">
         {experience.map((job, i) => (
           <Reveal key={`${job.company}-${job.start}`} delay={0.04 * i}>
             <Entry

@@ -21,14 +21,15 @@ type Node = {
   kind: "wan" | "router" | "leaf";
 };
 
+// Symmetric about y=50 so the fan-out reads as deliberate rather than sketched.
 const NODES: Node[] = [
-  { id: "fibre", label: "Fibre", sub: "Primary WAN", x: 14, y: 20, kind: "wan" },
-  { id: "starlink", label: "Starlink", sub: "Backup WAN", x: 14, y: 76, kind: "wan" },
-  { id: "ccr", label: "CCR2004", sub: "RouterOS 7.x", x: 50, y: 48, kind: "router" },
-  { id: "staff", label: "Staff", sub: "VLAN 10", x: 86, y: 14, kind: "leaf" },
-  { id: "erp", label: "ERP", sub: "VLAN 20", x: 86, y: 38, kind: "leaf" },
-  { id: "cctv", label: "CCTV", sub: "VLAN 30", x: 86, y: 62, kind: "leaf" },
-  { id: "guest", label: "Guest", sub: "VLAN 40", x: 86, y: 86, kind: "leaf" },
+  { id: "fibre", label: "Fibre", sub: "Primary WAN", x: 12, y: 26, kind: "wan" },
+  { id: "starlink", label: "Starlink", sub: "Backup WAN", x: 12, y: 74, kind: "wan" },
+  { id: "ccr", label: "CCR2004", sub: "RouterOS 7.x", x: 47, y: 50, kind: "router" },
+  { id: "staff", label: "Staff", sub: "VLAN 10", x: 87, y: 11, kind: "leaf" },
+  { id: "erp", label: "ERP", sub: "VLAN 20", x: 87, y: 37, kind: "leaf" },
+  { id: "cctv", label: "CCTV", sub: "VLAN 30", x: 87, y: 63, kind: "leaf" },
+  { id: "guest", label: "Guest", sub: "VLAN 40", x: 87, y: 89, kind: "leaf" },
 ];
 
 const LINKS: { from: string; to: string; id: string }[] = [
@@ -72,8 +73,37 @@ export function NetworkTopology({ className }: { className?: string }) {
 
   const activeWan = failed ? "starlink" : "fibre";
 
+  const description = failed
+    ? "Fibre primary WAN is down. Traffic has failed over to the Starlink backup WAN. " +
+      "The CCR2004 router continues to serve four VLANs: staff, ERP, CCTV and guest."
+    : "Fibre is the active primary WAN and Starlink stands by as backup. " +
+      "Both feed a MikroTik CCR2004 running RouterOS 7, which serves four VLANs: " +
+      "staff, ERP, CCTV and guest.";
+
   return (
-    <div className={cn("relative", className)}>
+    <figure
+      className={cn("relative m-0", className)}
+      role="group"
+      aria-label="Dual-WAN network topology"
+    >
+      <figcaption className="sr-only">{description}</figcaption>
+
+      {/* State changes are announced, not just shown. */}
+      <p aria-live="polite" className="sr-only">
+        {failed
+          ? `Fibre link down. Failed over to Starlink after ${elapsed.toFixed(1)} seconds.`
+          : "Both WAN links healthy."}
+      </p>
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 rounded-lg opacity-70"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, var(--grid) 1px, transparent 1px), linear-gradient(to bottom, var(--grid) 1px, transparent 1px)",
+          backgroundSize: "26px 26px",
+        }}
+      />
+
       <svg
         viewBox="0 0 100 100"
         preserveAspectRatio="none"
@@ -170,6 +200,7 @@ export function NetworkTopology({ className }: { className?: string }) {
         <button
           type="button"
           onClick={() => setFailed((v) => !v)}
+          aria-pressed={failed}
           className="panel panel-interactive px-3 py-1.5 text-[0.6875rem] font-medium transition-colors sm:text-xs"
         >
           {failed ? "Restore fibre link" : "Simulate fibre failure"}
@@ -184,6 +215,6 @@ export function NetworkTopology({ className }: { className?: string }) {
           )}
         </p>
       </div>
-    </div>
+    </figure>
   );
 }

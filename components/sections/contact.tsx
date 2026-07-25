@@ -50,14 +50,14 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="shell scroll-mt-24 py-20 md:py-28">
+    <section id="contact" className="shell scroll-mt-24 py-16 md:py-20">
       <SectionHeading
-        index="04 — Contact"
+        index="05 — Contact"
         title="Tell me what you're building"
         description={`Available for IT and network administration roles in ${site.relocation.to} from ${site.relocation.when}.`}
       />
 
-      <div className="mt-12 grid gap-3 lg:grid-cols-12">
+      <div className="mt-10 grid gap-3 lg:grid-cols-12">
         {/* ------------------------------------------------------- direct */}
         <div className="grid gap-3 lg:col-span-5">
           <Panel interactive reactive className="p-5">

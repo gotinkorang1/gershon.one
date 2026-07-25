@@ -12,7 +12,7 @@
 /* -------------------------------------------------------------------------- */
 
 :root {
-  --surface-0: oklch(0.988 0.002 260);
+  --surface-0: oklch(0.975 0.003 260);
   --surface-1: oklch(1 0 0);
   --surface-2: oklch(1 0 0);
   --surface-inset: oklch(0.965 0.003 260);
@@ -21,13 +21,13 @@
   --muted-foreground: oklch(0.46 0.012 265);
   --faint: oklch(0.555 0.012 265);
 
-  --border: oklch(0.19 0.012 265 / 0.10);
-  --border-strong: oklch(0.19 0.012 265 / 0.20);
+  --border: oklch(0.19 0.012 265 / 0.14);
+  --border-strong: oklch(0.19 0.012 265 / 0.30);
   --highlight: oklch(1 0 0 / 0.9);
 
-  --accent: oklch(0.52 0.20 264);
+  --accent: oklch(0.50 0.13 224);
   --accent-fg: oklch(1 0 0);
-  --accent-quiet: oklch(0.52 0.20 264 / 0.09);
+  --accent-quiet: oklch(0.50 0.13 224 / 0.10);
   --live: oklch(0.540 0.16 152);
   --warn: oklch(0.575 0.16 62);
 
@@ -38,38 +38,44 @@
   --shadow-lg:
     0 1px 2px oklch(0.19 0.012 265 / 0.06),
     0 12px 32px -12px oklch(0.19 0.012 265 / 0.14);
-  --shadow-glow: 0 0 0 1px var(--accent), 0 6px 20px -6px oklch(0.52 0.20 264 / 0.45);
+  --shadow-glow: 0 0 0 1px var(--accent), 0 6px 22px -6px oklch(0.50 0.13 224 / 0.50);
 
-  --grid: oklch(0.19 0.012 265 / 0.045);
+  --grid: oklch(0.19 0.012 265 / 0.05);
+  --panel-wash: oklch(1 0 0 / 0.7);
+  --signal: oklch(0.580 0.16 45);
+  --signal-quiet: oklch(0.580 0.16 45 / 0.10);
   --radius: 0.75rem;
 }
 
 .dark {
-  --surface-0: oklch(0.155 0.008 265);
-  --surface-1: oklch(0.196 0.009 265);
-  --surface-2: oklch(0.232 0.010 265);
-  --surface-inset: oklch(0.135 0.008 265);
+  --surface-0: oklch(0.135 0.008 265);
+  --surface-1: oklch(0.205 0.010 265);
+  --surface-2: oklch(0.255 0.011 265);
+  --surface-inset: oklch(0.112 0.007 265);
 
   --foreground: oklch(0.965 0.003 265);
   --muted-foreground: oklch(0.715 0.010 265);
   --faint: oklch(0.60 0.012 265);
 
-  --border: oklch(1 0 0 / 0.09);
-  --border-strong: oklch(1 0 0 / 0.17);
-  --highlight: oklch(1 0 0 / 0.07);
+  --border: oklch(1 0 0 / 0.14);
+  --border-strong: oklch(1 0 0 / 0.28);
+  --highlight: oklch(1 0 0 / 0.18);
 
-  --accent: oklch(0.68 0.17 266);
-  --accent-fg: oklch(0.16 0.01 265);
-  --accent-quiet: oklch(0.68 0.17 266 / 0.14);
+  --accent: oklch(0.78 0.13 205);
+  --accent-fg: oklch(0.14 0.01 225);
+  --accent-quiet: oklch(0.78 0.13 205 / 0.14);
   --live: oklch(0.74 0.17 154);
   --warn: oklch(0.79 0.16 68);
 
   --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.30);
   --shadow-md: 0 1px 2px oklch(0 0 0 / 0.35), 0 6px 16px -6px oklch(0 0 0 / 0.45);
   --shadow-lg: 0 1px 2px oklch(0 0 0 / 0.40), 0 16px 40px -16px oklch(0 0 0 / 0.65);
-  --shadow-glow: 0 0 0 1px var(--accent), 0 8px 28px -8px oklch(0.68 0.17 266 / 0.55);
+  --shadow-glow: 0 0 0 1px var(--accent), 0 8px 30px -8px oklch(0.78 0.13 205 / 0.55);
 
-  --grid: oklch(1 0 0 / 0.045);
+  --grid: oklch(1 0 0 / 0.05);
+  --panel-wash: oklch(1 0 0 / 0.045);
+  --signal: oklch(0.80 0.14 58);
+  --signal-quiet: oklch(0.80 0.14 58 / 0.14);
 }
 
 @theme inline {
@@ -85,6 +91,8 @@
   --color-accent: var(--accent);
   --color-accent-fg: var(--accent-fg);
   --color-accent-quiet: var(--accent-quiet);
+  --color-signal: var(--signal);
+  --color-signal-quiet: var(--signal-quiet);
   --color-live: var(--live);
   --color-warn: var(--warn);
 
@@ -196,7 +204,9 @@
 
 .panel {
   position: relative;
-  background: var(--surface-1);
+  background:
+    linear-gradient(180deg, var(--panel-wash), transparent 42%),
+    var(--surface-1);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow-md);
@@ -206,9 +216,15 @@
   position: absolute;
   inset: 0 0 auto 0;
   height: 1px;
-  border-radius: inherit;
-  background: linear-gradient(90deg, transparent, var(--highlight), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent 8%,
+    var(--highlight) 45%,
+    var(--highlight) 55%,
+    transparent 92%
+  );
   pointer-events: none;
+  z-index: 1;
 }
 
 .panel-raised {
@@ -261,6 +277,25 @@
     linear-gradient(to right, var(--grid) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
   background-size: 48px 48px;
+}
+
+.portrait {
+  filter: grayscale(1) brightness(1.28) contrast(1.12);
+  transition: filter 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.portrait:hover {
+  filter: grayscale(0.15) brightness(1.18) contrast(1.06);
+}
+
+/* Accent bloom behind the portrait so it separates from a dark page. */
+.portrait-frame::before {
+  content: "";
+  position: absolute;
+  inset: -18%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-quiet), transparent 68%);
+  filter: blur(28px);
 }
 
 .fade-edges {

@@ -20,14 +20,14 @@ const SPANS = [
 
 export function Skills() {
   return (
-    <section id="capabilities" className="shell scroll-mt-24 py-20 md:py-28">
+    <section id="capabilities" className="shell scroll-mt-24 py-16 md:py-20">
       <SectionHeading
-        index="02 — Capabilities"
+        index="03 — Capabilities"
         title="What I actually reach for"
         description="Grouped by use, in rough order of how central each is to the current role."
       />
 
-      <div className="mt-12 grid gap-3 lg:grid-cols-12">
+      <div className="mt-10 grid gap-3 lg:grid-cols-12">
         {skillGroups.map((group, i) => {
           const Icon = ICONS[i] ?? Network;
           return (

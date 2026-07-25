@@ -15,14 +15,14 @@ export function Credentials() {
   );
 
   return (
-    <section id="credentials" className="shell scroll-mt-24 py-20 md:py-28">
+    <section id="credentials" className="shell scroll-mt-24 py-16 md:py-20">
       <SectionHeading
-        index="03 — Credentials"
+        index="04 — Credentials"
         title="Education and certification"
         description="Every item is independently verifiable — links go to the issuing body, not a screenshot."
       />
 
-      <div className="mt-12 grid gap-3 md:grid-cols-2">
+      <div className="mt-10 grid gap-3 md:grid-cols-2">
         {sorted.map((c, i) => {
           const Icon = c.kind === "degree" ? GraduationCap : Award;
           const expired = c.expires ? new Date(c.expires) < new Date() : false;
