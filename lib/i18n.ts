@@ -54,6 +54,90 @@ type Dictionary = {
     allCaseStudies: string;
     summary: string;
   };
+  ui: {
+    skipToContent: string;
+    search: string;
+    openPalette: string;
+    commandPalette: string;
+    searchPlaceholder: string;
+    close: string;
+    keyboardShortcuts: string;
+    pressForShortcuts: string;
+    sections: string;
+    candidateBrief: string;
+    terminalInput: string;
+    topologyLabel: string;
+    githubActivity: string;
+    recentEvents: string;
+    githubFallback: string;
+    visit: string;
+    bookCall: string;
+    bookCallBody: string;
+    findTime: string;
+    copyEmail: string;
+    caseStudyEyebrow: string;
+    basedIn: (location: string, timezone: string, city: string, when: string) => string;
+    noResults: (query: string) => string;
+    failedOver: (seconds: string) => string;
+    failedOverAnnounce: (seconds: string) => string;
+    wansHealthy: string;
+    linkDown: string;
+    switchToEnglish: string;
+    switchToFrench: string;
+    terminalIntro: (location: string, city: string, when: string) => string;
+    themeSet: (theme: string) => string;
+    themeDark: string;
+    themeLight: string;
+    switchToLightTheme: string;
+    switchToDarkTheme: string;
+    toggleTheme: string;
+    topologyDescFailed: string;
+    topologyDescHealthy: string;
+    simulateFailure: string;
+    restoreLink: string;
+    somethingWentWrong: string;
+    sendEmail: string;
+    viewCv: string;
+    cvActions: string;
+    openInNewTab: string;
+    downloadPdf: string;
+    cvDialogTitle: string;
+    cvDialogBody: string;
+    viewInBrowser: string;
+    viewInBrowserHint: string;
+    downloadPdfHint: (size: string) => string;
+    downloadStarted: string;
+    cvViewerTitle: string;
+    openInNewTabShort: string;
+    pdfFallback: string;
+    pdfNotShowing: string;
+    loadingPdf: string;
+    shortcuts: {
+      openPalette: string;
+      showHelp: string;
+      goExperience: string;
+      goCapabilities: string;
+      goCredentials: string;
+      goContact: string;
+      goTop: string;
+      toggleDark: string;
+      downloadCv: string;
+      closeOverlay: string;
+    };
+    terminal: {
+      help: string;
+      whoami: string;
+      experience: string;
+      skills: string;
+      certs: string;
+      contact: string;
+      cv: string;
+      theme: string;
+      clear: string;
+      hint: string;
+      notFound: (cmd: string) => string;
+    };
+  };
   contact: {
     name: string;
     email: string;
@@ -128,6 +212,97 @@ const en: Dictionary = {
     minRead: "min read",
     allCaseStudies: "All case studies",
     summary: "Summary",
+  },
+  ui: {
+    skipToContent: "Skip to content",
+    search: "Search",
+    openPalette: "Open command palette",
+    commandPalette: "Command palette",
+    searchPlaceholder: "Search experience, skills, case studies…",
+    close: "Close",
+    keyboardShortcuts: "Keyboard shortcuts",
+    pressForShortcuts: "Press ? for keyboard shortcuts",
+    sections: "Sections",
+    candidateBrief: "Candidate brief",
+    terminalInput: "Terminal input",
+    topologyLabel: "Dual-WAN network topology",
+    githubActivity: "GitHub activity",
+    recentEvents: "Recent public events",
+    githubFallback: "Code and infrastructure notes on GitHub",
+    visit: "Visit",
+    bookCall: "Book a call",
+    bookCallBody:
+      "Skip the back-and-forth — pick a slot that suits you and it lands in both our calendars.",
+    findTime: "Find a time",
+    copyEmail: "Copy email address",
+    caseStudyEyebrow: "CASE STUDY",
+    basedIn: (location, timezone, city, when) =>
+      `Based in ${location} (${timezone}), relocating to ${city} in ${when}. Comfortable working across North American and European hours.`,
+    noResults: (query) => `No results for “${query}”`,
+    failedOver: (seconds) => `Failed over to Starlink · ${seconds}s`,
+    failedOverAnnounce: (seconds) =>
+      `Fibre link down. Failed over to Starlink after ${seconds} seconds.`,
+    wansHealthy: "Live · both WANs healthy",
+    linkDown: "Link down",
+    switchToEnglish: "Switch to English",
+    switchToFrench: "Passer en français",
+    terminalIntro: (location, city, when) =>
+      `${location} · relocating to ${city}, ${when}`,
+    themeSet: (theme) => `Theme set to ${theme}.`,
+    themeDark: "dark",
+    themeLight: "light",
+    switchToLightTheme: "Switch to light theme",
+    switchToDarkTheme: "Switch to dark theme",
+    toggleTheme: "Toggle theme",
+    topologyDescFailed:
+      "Fibre primary WAN is down. Traffic has failed over to the Starlink backup WAN. The CCR2004 router continues to serve four VLANs: staff, ERP, CCTV and guest.",
+    topologyDescHealthy:
+      "Fibre is the active primary WAN and Starlink stands by as backup. Both feed a MikroTik CCR2004 running RouterOS 7, which serves four VLANs: staff, ERP, CCTV and guest.",
+    simulateFailure: "Simulate fibre failure",
+    restoreLink: "Restore fibre link",
+    somethingWentWrong: "Something went wrong.",
+    sendEmail: "Send an email",
+    viewCv: "View CV",
+    cvActions: "CV options",
+    openInNewTab: "Open in a new tab",
+    downloadPdf: "Download PDF",
+    cvDialogTitle: "Curriculum vitae",
+    cvDialogBody: "Read it here, or take a copy with you.",
+    viewInBrowser: "View here",
+    viewInBrowserHint: "Opens in this window",
+    downloadPdfHint: (size) => `PDF · ${size}`,
+    downloadStarted: "Download started",
+    cvViewerTitle: "CV",
+    openInNewTabShort: "New tab",
+    pdfFallback:
+      "If the CV is not visible, your browser may be set to download PDFs rather than display them.",
+    pdfNotShowing: "Not showing?",
+    loadingPdf: "Loading CV…",
+    shortcuts: {
+      openPalette: "Open command palette",
+      showHelp: "Show this help",
+      goExperience: "Go to experience",
+      goCapabilities: "Go to capabilities",
+      goCredentials: "Go to credentials",
+      goContact: "Go to contact",
+      goTop: "Go to top",
+      toggleDark: "Toggle dark mode",
+      downloadCv: "Download CV",
+      closeOverlay: "Close any overlay",
+    },
+    terminal: {
+      help: "List available commands",
+      whoami: "Who I am, briefly",
+      experience: "Employment history",
+      skills: "Technical capabilities",
+      certs: "Education and certifications",
+      contact: "How to reach me",
+      cv: "Download my CV",
+      theme: "Toggle light and dark",
+      clear: "Clear the screen",
+      hint: "Type `help` for available commands.",
+      notFound: (cmd) => `command not found: ${cmd}. Try \`help\`.`,
+    },
   },
   contact: {
     name: "Name",
@@ -204,6 +379,97 @@ const fr: Dictionary = {
     allCaseStudies: "Toutes les études de cas",
     summary: "Résumé",
   },
+  ui: {
+    skipToContent: "Aller au contenu",
+    search: "Rechercher",
+    openPalette: "Ouvrir la palette de commandes",
+    commandPalette: "Palette de commandes",
+    searchPlaceholder: "Rechercher expérience, compétences, études de cas…",
+    close: "Fermer",
+    keyboardShortcuts: "Raccourcis clavier",
+    pressForShortcuts: "Appuyez sur ? pour les raccourcis clavier",
+    sections: "Sections",
+    candidateBrief: "Fiche candidat",
+    terminalInput: "Saisie du terminal",
+    topologyLabel: "Topologie réseau double-WAN",
+    githubActivity: "Activité GitHub",
+    recentEvents: "Activité publique récente",
+    githubFallback: "Code et notes d'infrastructure sur GitHub",
+    visit: "Consulter",
+    bookCall: "Réserver un appel",
+    bookCallBody:
+      "Évitons les allers-retours — choisissez un créneau qui vous convient et il apparaîtra dans nos deux agendas.",
+    findTime: "Trouver un créneau",
+    copyEmail: "Copier l'adresse courriel",
+    caseStudyEyebrow: "ÉTUDE DE CAS",
+    basedIn: (location, timezone, city, when) =>
+      `Basé à ${location} (${timezone}), déménagement à ${city} en ${when}. À l'aise pour travailler sur les fuseaux nord-américains et européens.`,
+    noResults: (query) => `Aucun résultat pour « ${query} »`,
+    failedOver: (seconds) => `Bascule vers Starlink · ${seconds} s`,
+    failedOverAnnounce: (seconds) =>
+      `Lien fibre hors service. Bascule vers Starlink après ${seconds} secondes.`,
+    wansHealthy: "En direct · les deux liens WAN sont sains",
+    linkDown: "Lien hors service",
+    switchToEnglish: "Switch to English",
+    switchToFrench: "Passer en français",
+    terminalIntro: (location, city, when) =>
+      `${location} · déménagement à ${city}, ${when}`,
+    themeSet: (theme) => `Thème réglé sur ${theme}.`,
+    themeDark: "sombre",
+    themeLight: "clair",
+    switchToLightTheme: "Passer au thème clair",
+    switchToDarkTheme: "Passer au thème sombre",
+    toggleTheme: "Changer de thème",
+    topologyDescFailed:
+      "Le lien fibre principal est hors service. Le trafic a basculé vers le lien Starlink de secours. Le routeur CCR2004 continue de desservir quatre VLAN : personnel, ERP, vidéosurveillance et invités.",
+    topologyDescHealthy:
+      "La fibre est le lien WAN principal actif et Starlink reste en secours. Les deux alimentent un MikroTik CCR2004 sous RouterOS 7, qui dessert quatre VLAN : personnel, ERP, vidéosurveillance et invités.",
+    simulateFailure: "Simuler une panne de fibre",
+    restoreLink: "Rétablir le lien fibre",
+    somethingWentWrong: "Une erreur est survenue.",
+    sendEmail: "Envoyer un courriel",
+    viewCv: "Consulter le CV",
+    cvActions: "Options du CV",
+    openInNewTab: "Ouvrir dans un nouvel onglet",
+    downloadPdf: "Télécharger le PDF",
+    cvDialogTitle: "Curriculum vitæ",
+    cvDialogBody: "Consultez-le ici, ou emportez-en une copie.",
+    viewInBrowser: "Consulter ici",
+    viewInBrowserHint: "S'ouvre dans cette fenêtre",
+    downloadPdfHint: (size) => `PDF · ${size}`,
+    downloadStarted: "Téléchargement lancé",
+    cvViewerTitle: "CV",
+    openInNewTabShort: "Nouvel onglet",
+    pdfFallback:
+      "Si le CV ne s'affiche pas, votre navigateur est peut-être configuré pour télécharger les PDF au lieu de les afficher.",
+    pdfNotShowing: "Rien ne s'affiche ?",
+    loadingPdf: "Chargement du CV…",
+    shortcuts: {
+      openPalette: "Ouvrir la palette de commandes",
+      showHelp: "Afficher cette aide",
+      goExperience: "Aller à l'expérience",
+      goCapabilities: "Aller aux compétences",
+      goCredentials: "Aller aux diplômes",
+      goContact: "Aller au contact",
+      goTop: "Revenir en haut",
+      toggleDark: "Basculer le mode sombre",
+      downloadCv: "Télécharger le CV",
+      closeOverlay: "Fermer toute fenêtre",
+    },
+    terminal: {
+      help: "Lister les commandes disponibles",
+      whoami: "Qui je suis, en bref",
+      experience: "Parcours professionnel",
+      skills: "Compétences techniques",
+      certs: "Formation et certifications",
+      contact: "Comment me joindre",
+      cv: "Télécharger mon CV",
+      theme: "Basculer clair et sombre",
+      clear: "Effacer l'écran",
+      hint: "Tapez `help` pour voir les commandes disponibles.",
+      notFound: (cmd) => `commande introuvable : ${cmd}. Essayez \`help\`.`,
+    },
+  },
   contact: {
     name: "Nom",
     email: "Courriel",
@@ -223,6 +489,13 @@ const fr: Dictionary = {
 };
 
 const dictionaries: Record<Locale, Dictionary> = { en, fr };
+
+/** CV path for the active locale. Both live in /public. */
+export function resumeUrlFor(locale: Locale) {
+  return locale === "fr"
+    ? "/gershon-otinkorang-cv-fr.pdf"
+    : "/gershon-otinkorang-cv.pdf";
+}
 
 export function getDictionary(locale: Locale): Dictionary {
   return dictionaries[locale];

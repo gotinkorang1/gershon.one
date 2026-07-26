@@ -43,12 +43,12 @@ export function Contact() {
         body: JSON.stringify(payload),
       });
       const data = (await res.json()) as { ok?: boolean; error?: string };
-      if (!res.ok || !data.ok) throw new Error(data.error ?? "Something went wrong.");
+      if (!res.ok || !data.ok) throw new Error(data.error ?? t.ui.somethingWentWrong);
       setStatus("sent");
       formEl.reset();
     } catch (err) {
       setStatus("error");
-      setError(err instanceof Error ? err.message : "Something went wrong.");
+      setError(err instanceof Error ? err.message : t.ui.somethingWentWrong);
     }
   }
 
@@ -65,7 +65,7 @@ export function Contact() {
         <div className="grid gap-3 lg:col-span-5">
           <Panel interactive reactive className="p-5">
             <p className="label flex items-center gap-2">
-              <Mail className="size-3" /> Email
+              <Mail className="size-3" /> {t.contact.email}
             </p>
             <div className="mt-3 flex items-center justify-between gap-3">
               <a href={`mailto:${site.email}`} className="link truncate text-base font-medium">
@@ -74,7 +74,7 @@ export function Contact() {
               <button
                 type="button"
                 onClick={copyEmail}
-                aria-label="Copy email address"
+                aria-label={t.ui.copyEmail}
                 className="tap grid size-8 shrink-0 place-items-center rounded-md border border-border text-faint transition-colors hover:border-border-strong hover:text-foreground"
               >
                 {copied ? <Check className="size-3.5 text-live" /> : <Copy className="size-3.5" />}
@@ -84,7 +84,7 @@ export function Contact() {
 
           <Panel interactive reactive className="p-5">
             <p className="label flex items-center gap-2">
-              <Phone className="size-3" /> Phone
+              <Phone className="size-3" /> {t.contact.phone}
             </p>
             <a
               href={`tel:${site.phoneHref}`}
@@ -112,11 +112,14 @@ export function Contact() {
           <Booking />
 
           <Panel inset className="p-5">
-            <p className="label">Availability</p>
+            <p className="label">{t.contact.availability}</p>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              Based in {site.location} ({site.timezone}), relocating to{" "}
-              {site.relocation.to} in {site.relocation.when}. Comfortable working across
-              North American and European hours.
+              {t.ui.basedIn(
+                site.location,
+                site.timezone,
+                site.relocation.to,
+                site.relocation.when,
+              )}
             </p>
           </Panel>
         </div>
@@ -128,7 +131,7 @@ export function Contact() {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label htmlFor="name" className="label">
-                    Name
+                    {t.contact.name}
                   </label>
                   <input
                     id="name"
@@ -140,7 +143,7 @@ export function Contact() {
                 </div>
                 <div>
                   <label htmlFor="email" className="label">
-                    Email
+                    {t.contact.email}
                   </label>
                   <input
                     id="email"
@@ -155,7 +158,7 @@ export function Contact() {
 
               <div>
                 <label htmlFor="subject" className="label">
-                  Company or role
+                  {t.contact.company}
                 </label>
                 <input
                   id="subject"
@@ -167,7 +170,7 @@ export function Contact() {
 
               <div>
                 <label htmlFor="message" className="label">
-                  Message
+                  {t.contact.message}
                 </label>
                 <textarea
                   id="message"

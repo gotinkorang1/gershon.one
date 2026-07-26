@@ -2,6 +2,7 @@
 
 import { useRef, type ReactNode } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
+import { cn } from "@/lib/utils";
 
 /**
  * Pulls its child gently toward the cursor. Disabled for coarse pointers and
@@ -43,7 +44,8 @@ export function Magnetic({
       onMouseMove={onMove}
       onMouseLeave={reset}
       style={{ x: springX, y: springY }}
-      className={className}
+      // inline-flex: a block-level wrapper breaks the button row it sits in.
+      className={cn("inline-flex", className)}
     >
       {children}
     </motion.div>

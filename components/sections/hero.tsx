@@ -2,12 +2,14 @@
 
 import Image from "next/image";
 import { motion } from "motion/react";
-import { ArrowDown, ArrowUpRight, MapPin } from "lucide-react";
-import { site, facts } from "@/lib/site";
+import { ArrowUpRight, MapPin } from "lucide-react";
+import { site } from "@/lib/site";
 import { useI18n } from "@/components/locale-provider";
+import { getFacts } from "@/lib/localised-content";
 import { NetworkTopology } from "@/components/fx/network-topology";
 import { TextReveal } from "@/components/fx/text-reveal";
 import { Magnetic } from "@/components/fx/magnetic";
+import { CvButton } from "@/components/cv-button";
 import { Counter } from "@/components/fx/counter";
 import { Parallax } from "@/components/fx/parallax";
 import { ImageReveal } from "@/components/fx/image-reveal";
@@ -34,7 +36,8 @@ const rise = {
 };
 
 export function Hero() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+  const facts = getFacts(locale);
 
   return (
     <section className="relative overflow-hidden pb-10 pt-24 md:pt-28">
@@ -53,10 +56,10 @@ export function Hero() {
           variants={container}
           initial="hidden"
           animate="show"
-          className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12"
+          className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14"
         >
           {/* ------------------------------------------------------ copy */}
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-6">
             <motion.div variants={rise}>
               <Badge variant="live" className="gap-2 px-0">
                 <span className="pulse-dot" />
@@ -64,15 +67,15 @@ export function Hero() {
               </Badge>
             </motion.div>
 
-            <h1 className="mt-5 text-display font-semibold">
+            <h1 className="mt-6 text-display font-semibold text-balance [overflow-wrap:anywhere]">
               <TextReveal lines={["Gershon", "Otinkorang"]} delay={0.15} />
             </h1>
 
             <motion.p
               variants={rise}
-              className="mt-5 text-lede font-medium"
+              className="mt-5 text-lede font-medium text-muted-foreground"
             >
-              {t.hero.role}
+              <span className="text-foreground">{t.hero.role}</span>
             </motion.p>
 
             <motion.p
@@ -84,15 +87,10 @@ export function Hero() {
 
             <motion.div
               variants={rise}
-              className="mt-8 flex flex-wrap items-center gap-3"
+              className="mt-9 flex flex-wrap items-center gap-3"
             >
               <Magnetic>
-                <a href={site.resumeUrl}>
-                  <Button variant="accent" size="lg" className="group">
-                    {t.hero.downloadCv}
-                    <ArrowDown className="transition-transform group-hover:translate-y-0.5" />
-                  </Button>
-                </a>
+                <CvButton />
               </Magnetic>
               <Magnetic>
                 <a href={`mailto:${site.email}`}>
@@ -116,7 +114,7 @@ export function Hero() {
           {/* -------------------------------------------------- topology */}
           <motion.div
             variants={rise}
-            className="lg:col-span-7"
+            className="lg:col-span-6"
           >
             <Parallax distance={22}>
             <Panel className="p-5 sm:p-7">
@@ -150,7 +148,11 @@ export function Hero() {
                 }}
               />
               <p className="label">{f.label}</p>
-              <Counter value={f.value} className="mt-2.5 block text-xl font-semibold tracking-tight" />
+              <Counter
+                value={f.value}
+                animate={f.countable}
+                className="mt-2.5 block text-xl font-semibold tracking-tight"
+              />
             </Panel>
           ))}
         </motion.div>

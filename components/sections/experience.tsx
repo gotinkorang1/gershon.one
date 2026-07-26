@@ -7,9 +7,10 @@ import { SectionHeading } from "@/components/fx/section-heading";
 import { Reveal } from "@/components/fx/reveal";
 import { Panel } from "@/components/ui/panel";
 import { Badge } from "@/components/ui/badge";
-import { experience, type Job } from "@/lib/site";
+import { type Job } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/components/locale-provider";
+import { getExperience } from "@/lib/localised-content";
 
 function span(job: Job) {
   const from = job.start.slice(0, 4);
@@ -96,7 +97,8 @@ function Entry({ job, open, onToggle }: { job: Job; open: boolean; onToggle: () 
 }
 
 export function Experience() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+  const experience = getExperience(locale);
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (

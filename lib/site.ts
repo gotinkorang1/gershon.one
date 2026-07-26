@@ -39,10 +39,12 @@ export const site = {
 /* -------------------------------------------------------------------------- */
 
 export const facts = [
-  { label: "Experience", value: "5+ years" },
-  { label: "Current role", value: "IT Support Officer" },
-  { label: "Available", value: "Aug 2026" },
-  { label: "Based", value: "Accra → St. John's" },
+  // `countable` marks values that are quantities. Dates and place names are
+  // identifiers — animating them produces nonsense like "Aug 1256".
+  { label: "Experience", value: "5+ years", countable: true },
+  { label: "Current role", value: "IT Support Officer", countable: false },
+  { label: "Available", value: "Aug 2026", countable: false },
+  { label: "Based", value: "Accra → St. John's", countable: false },
 ] as const;
 
 /* -------------------------------------------------------------------------- */

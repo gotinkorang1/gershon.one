@@ -4,19 +4,8 @@ import { useCallback, useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { Dialog } from "@/components/ui/dialog";
 import { navLinks, site } from "@/lib/site";
-
-const SHORTCUTS: { keys: string[]; label: string }[] = [
-  { keys: ["⌘", "K"], label: "Open command palette" },
-  { keys: ["?"], label: "Show this help" },
-  { keys: ["G", "then", "E"], label: "Go to experience" },
-  { keys: ["G", "then", "C"], label: "Go to capabilities" },
-  { keys: ["G", "then", "R"], label: "Go to credentials" },
-  { keys: ["G", "then", "T"], label: "Go to contact" },
-  { keys: ["G", "then", "H"], label: "Go to top" },
-  { keys: ["D"], label: "Toggle dark mode" },
-  { keys: ["V"], label: "Download CV" },
-  { keys: ["Esc"], label: "Close any overlay" },
-];
+import { useI18n } from "@/components/locale-provider";
+import { Portal } from "@/components/ui/portal";
 
 const GO_TARGETS: Record<string, string> = {
   e: "#experience",
@@ -30,7 +19,21 @@ const GO_TARGETS: Record<string, string> = {
  * work without colliding with single-key actions.
  */
 export function KeyboardShortcuts() {
+  const { t } = useI18n();
   const [helpOpen, setHelpOpen] = useState(false);
+
+  const SHORTCUTS: { keys: string[]; label: string }[] = [
+    { keys: ["⌘", "K"], label: t.ui.shortcuts.openPalette },
+    { keys: ["?"], label: t.ui.shortcuts.showHelp },
+    { keys: ["G", "then", "E"], label: t.ui.shortcuts.goExperience },
+    { keys: ["G", "then", "C"], label: t.ui.shortcuts.goCapabilities },
+    { keys: ["G", "then", "R"], label: t.ui.shortcuts.goCredentials },
+    { keys: ["G", "then", "T"], label: t.ui.shortcuts.goContact },
+    { keys: ["G", "then", "H"], label: t.ui.shortcuts.goTop },
+    { keys: ["D"], label: t.ui.shortcuts.toggleDark },
+    { keys: ["V"], label: t.ui.shortcuts.downloadCv },
+    { keys: ["Esc"], label: t.ui.shortcuts.closeOverlay },
+  ];
   const [awaitingGo, setAwaitingGo] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
 
@@ -88,16 +91,18 @@ export function KeyboardShortcuts() {
   return (
     <>
       {awaitingGo && (
-        <div className="pointer-events-none fixed bottom-6 left-1/2 z-[65] -translate-x-1/2">
+        <Portal>
+          <div className="pointer-events-none fixed bottom-6 left-1/2 z-[65] -translate-x-1/2">
           <div className="panel panel-raised px-3 py-2">
             <p className="label text-[0.625rem]">
               g … {navLinks.map((l) => l.label[0].toLowerCase()).join(" / ")} / h
-            </p>
+              </p>
+            </div>
           </div>
-        </div>
+        </Portal>
       )}
 
-      <Dialog open={helpOpen} onClose={() => setHelpOpen(false)} title="Keyboard shortcuts">
+      <Dialog open={helpOpen} onClose={() => setHelpOpen(false)} title={t.ui.keyboardShortcuts}>
         <ul className="divide-y divide-border">
           {SHORTCUTS.map((s) => (
             <li key={s.label} className="flex items-center justify-between gap-6 px-5 py-2.5">

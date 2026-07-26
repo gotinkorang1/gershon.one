@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
-import { useMediaQuery } from "@/lib/use-media-query";
+import { useMediaQuery, usePrefersReducedMotion } from "@/lib/use-media-query";
+import { useI18n } from "@/components/locale-provider";
 
 /**
  * The dual-WAN topology from the Greenhouse deployment, drawn to scale of the
@@ -23,14 +24,16 @@ type Node = {
 };
 
 // Symmetric about y=50 so the fan-out reads as deliberate rather than sketched.
+// Three even columns. The previous values bunched the leaves against the right
+// edge and left the lower-left quadrant empty.
 const NODES: Node[] = [
-  { id: "fibre", label: "Fibre", sub: "Primary WAN", x: 12, y: 26, kind: "wan" },
-  { id: "starlink", label: "Starlink", sub: "Backup WAN", x: 12, y: 74, kind: "wan" },
-  { id: "ccr", label: "CCR2004", sub: "RouterOS 7.x", x: 47, y: 50, kind: "router" },
-  { id: "staff", label: "Staff", sub: "VLAN 10", x: 87, y: 11, kind: "leaf" },
-  { id: "erp", label: "ERP", sub: "VLAN 20", x: 87, y: 37, kind: "leaf" },
-  { id: "cctv", label: "CCTV", sub: "VLAN 30", x: 87, y: 63, kind: "leaf" },
-  { id: "guest", label: "Guest", sub: "VLAN 40", x: 87, y: 89, kind: "leaf" },
+  { id: "fibre", label: "Fibre", sub: "Primary WAN", x: 13, y: 30, kind: "wan" },
+  { id: "starlink", label: "Starlink", sub: "Backup WAN", x: 13, y: 70, kind: "wan" },
+  { id: "ccr", label: "CCR2004", sub: "RouterOS 7.x", x: 50, y: 50, kind: "router" },
+  { id: "staff", label: "Staff", sub: "VLAN 10", x: 86, y: 14, kind: "leaf" },
+  { id: "erp", label: "ERP", sub: "VLAN 20", x: 86, y: 38, kind: "leaf" },
+  { id: "cctv", label: "CCTV", sub: "VLAN 30", x: 86, y: 62, kind: "leaf" },
+  { id: "guest", label: "Guest", sub: "VLAN 40", x: 86, y: 86, kind: "leaf" },
 ];
 
 // Narrow screens: WANs across the top, router in the middle, VLANs in a row
@@ -57,25 +60,16 @@ const LINKS: { from: string; to: string; id: string }[] = [
 const byId = (id: string) => NODES.find((n) => n.id === id)!;
 
 export function NetworkTopology({ className }: { className?: string }) {
+  const { t } = useI18n();
   const compact = useMediaQuery("(max-width: 640px)");
   const [failed, setFailed] = useState(false);
-  const [reduced, setReduced] = useState(false);
+  const reduced = usePrefersReducedMotion();
   const [elapsed, setElapsed] = useState(0);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduced(mq.matches);
-    const onChange = () => setReduced(mq.matches);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
 
   // Mirrors the real failover window: detection, then reroute.
   useEffect(() => {
-    if (!failed) {
-      setElapsed(0);
-      return;
-    }
+    if (!failed) return;
+
     const start = Date.now();
     const id = setInterval(() => setElapsed((Date.now() - start) / 1000), 90);
     const stop = setTimeout(() => clearInterval(id), 8000);
@@ -90,26 +84,21 @@ export function NetworkTopology({ className }: { className?: string }) {
   const pos = (node: Node) =>
     compact ? (MOBILE_POSITIONS[node.id] ?? { x: node.x, y: node.y }) : { x: node.x, y: node.y };
 
-  const description = failed
-    ? "Fibre primary WAN is down. Traffic has failed over to the Starlink backup WAN. " +
-      "The CCR2004 router continues to serve four VLANs: staff, ERP, CCTV and guest."
-    : "Fibre is the active primary WAN and Starlink stands by as backup. " +
-      "Both feed a MikroTik CCR2004 running RouterOS 7, which serves four VLANs: " +
-      "staff, ERP, CCTV and guest.";
+  const description = failed ? t.ui.topologyDescFailed : t.ui.topologyDescHealthy;
 
   return (
     <figure
       className={cn("relative m-0", className)}
       role="group"
-      aria-label="Dual-WAN network topology"
+      aria-label={t.ui.topologyLabel}
     >
       <figcaption className="sr-only">{description}</figcaption>
 
       {/* State changes are announced, not just shown. */}
       <p aria-live="polite" className="sr-only">
         {failed
-          ? `Fibre link down. Failed over to Starlink after ${elapsed.toFixed(1)} seconds.`
-          : "Both WAN links healthy."}
+          ? t.ui.failedOverAnnounce(elapsed.toFixed(1))
+          : t.ui.wansHealthy}
       </p>
       <div
         aria-hidden
@@ -206,7 +195,7 @@ export function NetworkTopology({ className }: { className?: string }) {
                 {node.label}
               </span>
               <span className="label mt-0.5 hidden text-[0.5625rem] tracking-[0.08em] sm:block">
-                {isDown ? "Link down" : node.sub}
+                {isDown ? t.ui.linkDown : node.sub}
               </span>
             </div>
           </motion.div>
@@ -217,19 +206,21 @@ export function NetworkTopology({ className }: { className?: string }) {
       <div className="absolute inset-x-0 -bottom-2 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
         <button
           type="button"
-          onClick={() => setFailed((v) => !v)}
+          onClick={() => {
+            // Reset here rather than in an effect watching `failed`.
+            setElapsed(0);
+            setFailed((v) => !v);
+          }}
           aria-pressed={failed}
           className="panel panel-interactive px-3 py-1.5 text-[0.6875rem] font-medium transition-colors sm:text-xs"
         >
-          {failed ? "Restore fibre link" : "Simulate fibre failure"}
+          {failed ? t.ui.restoreLink : t.ui.simulateFailure}
         </button>
         <p className="label text-[0.625rem]">
           {failed ? (
-            <span className="text-live">
-              Failed over to Starlink · {elapsed.toFixed(1)}s
-            </span>
+            <span className="text-live">{t.ui.failedOver(elapsed.toFixed(1))}</span>
           ) : (
-            "Live · both WANs healthy"
+            t.ui.wansHealthy
           )}
         </p>
       </div>

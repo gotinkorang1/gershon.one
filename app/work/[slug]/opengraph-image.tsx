@@ -37,7 +37,7 @@ export default async function Image({
         }}
       >
         <div style={{ display: "flex", fontSize: 22, letterSpacing: 2, color: "#1acfdf" }}>
-          CASE STUDY
+          {"CASE STUDY"}
         </div>
         <div style={{ display: "flex", fontSize: 62, fontWeight: 600, letterSpacing: -2, lineHeight: 1.1 }}>
           {study?.title ?? "Case study"}

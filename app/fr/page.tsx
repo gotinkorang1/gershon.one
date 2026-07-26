@@ -5,7 +5,6 @@ import { CaseStudies } from "@/components/sections/case-studies";
 import { Skills } from "@/components/sections/skills";
 import { Credentials } from "@/components/sections/credentials";
 import { Contact } from "@/components/sections/contact";
-import { LocaleProvider } from "@/components/locale-provider";
 import { getDictionary } from "@/lib/i18n";
 import { site } from "@/lib/site";
 
@@ -30,13 +29,13 @@ export const metadata: Metadata = {
 
 export default function FrenchHome() {
   return (
-    <LocaleProvider locale="fr">
+    <>
       <Hero />
       <Experience />
       <CaseStudies />
       <Skills />
       <Credentials />
       <Contact />
-    </LocaleProvider>
+    </>
   );
 }

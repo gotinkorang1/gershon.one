@@ -4,18 +4,25 @@ import { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 import { site, experience, skillGroups, credentials } from "@/lib/site";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/components/locale-provider";
 
 type Line = { kind: "in" | "out" | "err"; text: string };
 
-const BANNER: Line[] = [
-  { kind: "out", text: `${site.name} — ${site.role}` },
-  { kind: "out", text: `${site.location} · relocating to ${site.relocation.to}, ${site.relocation.when}` },
-  { kind: "out", text: "" },
-  { kind: "out", text: "Type `help` for available commands." },
-];
+
 
 export function Terminal({ className }: { className?: string }) {
-  const [lines, setLines] = useState<Line[]>(BANNER);
+  const { t } = useI18n();
+  const banner: Line[] = [
+    { kind: "out", text: `${site.name} — ${t.hero.role}` },
+    {
+      kind: "out",
+      text: t.ui.terminalIntro(site.location, site.relocation.to, site.relocation.when),
+    },
+    { kind: "out", text: "" },
+    { kind: "out", text: t.ui.terminal.hint },
+  ];
+
+  const [lines, setLines] = useState<Line[]>(() => banner);
   const [value, setValue] = useState("");
   const [history, setHistory] = useState<string[]>([]);
   const [cursor, setCursor] = useState(-1);
@@ -29,7 +36,7 @@ export function Terminal({ className }: { className?: string }) {
 
   const commands: Record<string, { help: string; run: () => Line[] | void }> = {
     help: {
-      help: "List available commands",
+      help: t.ui.terminal.help,
       run: () => [
         { kind: "out", text: "" },
         ...Object.entries(commands).map(([name, c]) => ({
@@ -40,7 +47,7 @@ export function Terminal({ className }: { className?: string }) {
       ],
     },
     whoami: {
-      help: "Who I am, briefly",
+      help: t.ui.terminal.whoami,
       run: () => [
         { kind: "out", text: site.name },
         { kind: "out", text: site.role },
@@ -49,7 +56,7 @@ export function Terminal({ className }: { className?: string }) {
       ],
     },
     experience: {
-      help: "Employment history",
+      help: t.ui.terminal.experience,
       run: () =>
         experience.map((j) => ({
           kind: "out" as const,
@@ -57,7 +64,7 @@ export function Terminal({ className }: { className?: string }) {
         })),
     },
     skills: {
-      help: "Technical capabilities",
+      help: t.ui.terminal.skills,
       run: () =>
         skillGroups.flatMap((g) => [
           { kind: "out" as const, text: "" },
@@ -66,7 +73,7 @@ export function Terminal({ className }: { className?: string }) {
         ]),
     },
     certs: {
-      help: "Education and certifications",
+      help: t.ui.terminal.certs,
       run: () =>
         credentials.map((c) => ({
           kind: "out" as const,
@@ -74,7 +81,7 @@ export function Terminal({ className }: { className?: string }) {
         })),
     },
     contact: {
-      help: "How to reach me",
+      help: t.ui.terminal.contact,
       run: () => [
         { kind: "out", text: `email    ${site.email}` },
         { kind: "out", text: `phone    ${site.phone}` },
@@ -83,22 +90,27 @@ export function Terminal({ className }: { className?: string }) {
       ],
     },
     cv: {
-      help: "Download my CV",
+      help: t.ui.terminal.cv,
       run: () => {
         window.open(site.resumeUrl, "_blank");
         return [{ kind: "out", text: "Opening CV…" }];
       },
     },
     theme: {
-      help: "Toggle light and dark",
+      help: t.ui.terminal.theme,
       run: () => {
         const next = resolvedTheme === "dark" ? "light" : "dark";
         setTheme(next);
-        return [{ kind: "out", text: `Theme set to ${next}.` }];
+        return [
+          {
+            kind: "out",
+            text: t.ui.themeSet(next === "dark" ? t.ui.themeDark : t.ui.themeLight),
+          },
+        ];
       },
     },
     clear: {
-      help: "Clear the screen",
+      help: t.ui.terminal.clear,
       run: () => {
         setLines([]);
       },
@@ -185,7 +197,7 @@ export function Terminal({ className }: { className?: string }) {
       } else {
         next.push({
           kind: "err",
-          text: `command not found: ${input}. Try \`help\`.`,
+          text: t.ui.terminal.notFound(input),
         });
       }
     }
@@ -260,7 +272,7 @@ export function Terminal({ className }: { className?: string }) {
             onKeyDown={onKeyDown}
             spellCheck={false}
             autoComplete="off"
-            aria-label="Terminal input"
+            aria-label={t.ui.terminalInput}
             className="w-full bg-transparent font-mono text-[0.8125rem] text-foreground outline-none"
           />
         </div>

@@ -6,11 +6,13 @@ import { SectionHeading } from "@/components/fx/section-heading";
 import { Reveal } from "@/components/fx/reveal";
 import { Panel } from "@/components/ui/panel";
 import { Badge } from "@/components/ui/badge";
-import { caseStudies } from "@/lib/case-studies";
+
 import { useI18n } from "@/components/locale-provider";
+import { getCaseStudies } from "@/lib/localised-content";
 
 export function CaseStudies() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+  const caseStudies = getCaseStudies(locale);
 
   return (
     <section id="work" className="shell scroll-mt-24 py-16 md:py-20">
@@ -23,7 +25,7 @@ export function CaseStudies() {
       <div className="mt-10 grid gap-3">
         {caseStudies.map((study, i) => (
           <Reveal key={study.slug} delay={0.04 * i}>
-            <Link href={`/work/${study.slug}`} className="block">
+            <Link href={`${locale === "fr" ? "/fr" : ""}/work/${study.slug}`} className="block">
               <Panel interactive reactive className="group p-5 sm:p-6">
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                   <p className="label">{study.period}</p>

@@ -10,10 +10,17 @@ import { animate, useInView } from "motion/react";
  */
 export function Counter({
   value,
+  animate: shouldAnimate = false,
   duration = 1.4,
   className,
 }: {
   value: string;
+  /**
+   * Opt in per value. Counting is only meaningful for quantities — animating
+   * "Aug 2026" walks through "Aug 1256" because a year is an identifier, not
+   * an amount. Default off so a new fact cannot silently acquire nonsense.
+   */
+  animate?: boolean;
   duration?: number;
   className?: string;
 }) {
@@ -23,6 +30,11 @@ export function Counter({
   useEffect(() => {
     const node = ref.current;
     if (!inView || !node) return;
+
+    if (!shouldAnimate) {
+      node.textContent = value;
+      return;
+    }
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       node.textContent = value;
@@ -45,10 +57,30 @@ export function Counter({
       onUpdate: (v) => {
         node.textContent = `${before}${v.toFixed(decimals)}${after}`;
       },
+      onComplete: () => {
+        node.textContent = value;
+      },
     });
 
-    return () => controls.stop();
-  }, [inView, value, duration]);
+    // rAF is throttled in a background tab, so an animation started there
+    // stalls mid-count and displays a number that is simply wrong — "1+ years"
+    // instead of "5+". Snap to the true value whenever the tab is hidden, and
+    // on unmount, so the DOM is never left showing a partial figure.
+    const settle = () => {
+      if (document.visibilityState === "hidden") {
+        controls.stop();
+        node.textContent = value;
+      }
+    };
+    document.addEventListener("visibilitychange", settle);
+    settle();
+
+    return () => {
+      document.removeEventListener("visibilitychange", settle);
+      controls.stop();
+      node.textContent = value;
+    };
+  }, [inView, value, duration, shouldAnimate]);
 
   // Rendered in full so it is correct before hydration and for crawlers.
   return (

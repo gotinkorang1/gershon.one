@@ -3,6 +3,7 @@
 import { CalendarClock, ArrowUpRight } from "lucide-react";
 import { Panel } from "@/components/ui/panel";
 import { Button } from "@/components/ui/button";
+import { useI18n } from "@/components/locale-provider";
 
 /**
  * Cal.com booking link. Renders nothing at all unless
@@ -12,6 +13,7 @@ import { Button } from "@/components/ui/button";
  * use, and it is the slowest thing on a page like this.
  */
 export function Booking() {
+  const { t } = useI18n();
   const link = process.env.NEXT_PUBLIC_CAL_LINK;
   if (!link) return null;
 
@@ -21,15 +23,14 @@ export function Booking() {
     <Panel interactive reactive className="p-5">
       <p className="label flex items-center gap-2">
         <CalendarClock className="size-3" />
-        Book a call
+        {t.ui.bookCall}
       </p>
       <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-        Skip the back-and-forth — pick a slot that suits you and it lands in both
-        our calendars.
+        {t.ui.bookCallBody}
       </p>
       <a href={href} target="_blank" rel="noreferrer noopener" className="mt-4 inline-block">
         <Button variant="outline" size="sm">
-          Find a time
+          {t.ui.findTime}
           <ArrowUpRight />
         </Button>
       </a>

@@ -113,7 +113,7 @@ export default function BriefPage() {
 
       {/* ------------------------------------------------------ target roles */}
       <section className="mt-12">
-        <h2 className="label">Roles I'm a match for</h2>
+        <h2 className="label">Roles I&apos;m a match for</h2>
         <div className="mt-4 flex flex-wrap gap-2">
           {brief.targetRoles.map((r) => (
             <Badge key={r} variant="accent">

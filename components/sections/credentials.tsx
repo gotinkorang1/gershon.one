@@ -5,16 +5,21 @@ import { SectionHeading } from "@/components/fx/section-heading";
 import { Reveal } from "@/components/fx/reveal";
 import { Panel } from "@/components/ui/panel";
 import { Badge } from "@/components/ui/badge";
-import { credentials } from "@/lib/site";
+
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/components/locale-provider";
+import { getCredentials } from "@/lib/localised-content";
 
-function monthYear(iso: string) {
-  return new Date(iso).toLocaleDateString("en-GB", { month: "short", year: "numeric" });
+function monthYear(iso: string, locale: string) {
+  return new Date(iso).toLocaleDateString(locale === "fr" ? "fr-CA" : "en-GB", {
+    month: "short",
+    year: "numeric",
+  });
 }
 
 export function Credentials() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+  const credentials = getCredentials(locale);
   // Oldest first: the point of a timeline is the direction of travel.
   const ordered = [...credentials].sort(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
@@ -65,11 +70,11 @@ export function Credentials() {
 
                 <Panel interactive reactive className="min-w-0 flex-1 p-4 sm:p-5">
                   <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-                    <span className="label">{monthYear(c.date)}</span>
+                    <span className="label">{monthYear(c.date, locale)}</span>
                     {c.upcoming && <Badge variant="accent">{t.common.upcoming}</Badge>}
                     {c.expires && (
                       <span className="label">
-                        {expired ? t.common.expired : t.common.validTo} {monthYear(c.expires)}
+                        {expired ? t.common.expired : t.common.validTo} {monthYear(c.expires, locale)}
                       </span>
                     )}
                   </div>

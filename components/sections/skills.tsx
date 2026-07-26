@@ -6,9 +6,10 @@ import { Reveal } from "@/components/fx/reveal";
 import { Panel } from "@/components/ui/panel";
 import { Terminal } from "@/components/terminal";
 import { GitHubActivity } from "@/components/github-activity";
-import { skillGroups } from "@/lib/site";
+
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/components/locale-provider";
+import { getSkillGroups } from "@/lib/localised-content";
 
 const ICONS = [Network, Server, Cloud, Code2, Users];
 
@@ -22,7 +23,8 @@ const SPANS = [
 ];
 
 export function Skills() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+  const skillGroups = getSkillGroups(locale);
 
   return (
     <section id="capabilities" className="shell scroll-mt-24 py-16 md:py-20">

@@ -3,7 +3,9 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { X } from "lucide-react";
+import { Portal } from "@/components/ui/portal";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/components/locale-provider";
 
 /**
  * Modal built on the native <dialog> semantics we actually need: Escape to
@@ -23,6 +25,7 @@ export function Dialog({
   children: ReactNode;
   className?: string;
 }) {
+  const { t } = useI18n();
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -64,7 +67,8 @@ export function Dialog({
   }, [open, onClose]);
 
   return (
-    <AnimatePresence>
+    <Portal>
+      <AnimatePresence>
       {open && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -94,7 +98,7 @@ export function Dialog({
               <button
                 type="button"
                 onClick={onClose}
-                aria-label="Close"
+                aria-label={t.ui.close}
                 className="tap grid size-7 place-items-center rounded-md text-faint transition-colors hover:bg-surface-2 hover:text-foreground"
               >
                 <X className="size-4" />
@@ -104,6 +108,7 @@ export function Dialog({
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+      </AnimatePresence>
+    </Portal>
   );
 }

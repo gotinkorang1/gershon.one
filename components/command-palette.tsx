@@ -18,6 +18,9 @@ import { useTheme } from "next-themes";
 import { navLinks, site } from "@/lib/site";
 import { searchDocs, type SearchDoc } from "@/lib/search-index";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/components/locale-provider";
+import { resumeUrlFor } from "@/lib/i18n";
+import { Portal } from "@/components/ui/portal";
 
 type Item = {
   id: string;
@@ -29,9 +32,12 @@ type Item = {
 };
 
 export function CommandPalette() {
+  const { t, locale } = useI18n();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [index, setIndex] = useState(0);
+  // The query the highlight belongs to; a mismatch means reset to the top.
+  const [indexQuery, setIndexQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const { resolvedTheme, setTheme } = useTheme();
 
@@ -39,6 +45,7 @@ export function CommandPalette() {
     setOpen(false);
     setQuery("");
     setIndex(0);
+    setIndexQuery("");
   }, []);
 
   const go = useCallback(
@@ -61,7 +68,8 @@ export function CommandPalette() {
     const actions: Item[] = [
       {
         id: "theme",
-        label: resolvedTheme === "dark" ? "Switch to light theme" : "Switch to dark theme",
+        label:
+          resolvedTheme === "dark" ? t.ui.switchToLightTheme : t.ui.switchToDarkTheme,
         group: "Actions",
         icon:
           resolvedTheme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />,
@@ -72,7 +80,7 @@ export function CommandPalette() {
       },
       {
         id: "copy-email",
-        label: "Copy email address",
+        label: t.ui.copyEmail,
         group: "Actions",
         keywords: site.email,
         icon: <Copy className="size-4" />,
@@ -82,12 +90,25 @@ export function CommandPalette() {
         },
       },
       {
-        id: "cv",
-        label: "Download CV",
+        id: "cv-view",
+        label: t.ui.viewCv,
         group: "Actions",
         icon: <FileText className="size-4" />,
         run: () => {
-          window.open(site.resumeUrl, "_blank");
+          window.open(resumeUrlFor(locale), "_blank", "noopener");
+          close();
+        },
+      },
+      {
+        id: "cv-download",
+        label: t.ui.downloadPdf,
+        group: "Actions",
+        icon: <FileText className="size-4" />,
+        run: () => {
+          const a = document.createElement("a");
+          a.href = resumeUrlFor(locale);
+          a.download = "";
+          a.click();
           close();
         },
       },
@@ -116,7 +137,7 @@ export function CommandPalette() {
       },
       {
         id: "email",
-        label: "Send an email",
+        label: t.ui.sendEmail,
         group: "Links",
         icon: <Mail className="size-4" />,
         run: () => {
@@ -127,7 +148,7 @@ export function CommandPalette() {
     ];
 
     return [...nav, ...actions, ...links];
-  }, [close, go, resolvedTheme, setTheme]);
+  }, [close, go, resolvedTheme, setTheme, t, locale]);
 
   const openDoc = useCallback(
     (doc: SearchDoc) => {
@@ -139,6 +160,17 @@ export function CommandPalette() {
       }
     },
     [close],
+  );
+
+  // Derived during render rather than corrected afterwards in an effect.
+  const activeIndex = indexQuery === query ? index : 0;
+
+  const setActiveIndex = useCallback(
+    (next: number) => {
+      setIndex(next);
+      setIndexQuery(query);
+    },
+    [query],
   );
 
   const filtered = useMemo(() => {
@@ -193,25 +225,27 @@ export function CommandPalette() {
     if (open) setTimeout(() => inputRef.current?.focus(), 40);
   }, [open]);
 
-  useEffect(() => setIndex(0), [query]);
 
   const onListKey = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowDown") {
       e.preventDefault();
-      setIndex((i) => (i + 1) % Math.max(filtered.length, 1));
+      setActiveIndex((activeIndex + 1) % Math.max(filtered.length, 1));
     }
     if (e.key === "ArrowUp") {
       e.preventDefault();
-      setIndex((i) => (i - 1 + filtered.length) % Math.max(filtered.length, 1));
+      setActiveIndex(
+        (activeIndex - 1 + filtered.length) % Math.max(filtered.length, 1),
+      );
     }
     if (e.key === "Enter") {
       e.preventDefault();
-      filtered[index]?.run();
+      filtered[activeIndex]?.run();
     }
   };
 
   return (
-    <AnimatePresence>
+    <Portal>
+      <AnimatePresence>
       {open && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -228,7 +262,7 @@ export function CommandPalette() {
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
-            aria-label="Command palette"
+            aria-label={t.ui.commandPalette}
             className="w-full max-w-lg overflow-hidden rounded-2xl border border-border bg-card shadow-2xl"
           >
             <div className="flex items-center gap-3 border-b border-border px-4">
@@ -238,7 +272,7 @@ export function CommandPalette() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={onListKey}
-                placeholder="Search experience, skills, case studies…"
+                placeholder={t.ui.searchPlaceholder}
                 className="w-full bg-transparent py-4 text-sm outline-none placeholder:text-muted-foreground"
               />
               <kbd className="rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
@@ -249,7 +283,7 @@ export function CommandPalette() {
             <div className="max-h-80 overflow-y-auto p-2">
               {filtered.length === 0 && (
                 <p className="px-3 py-8 text-center text-sm text-muted-foreground">
-                  No results for “{query}”
+                  {t.ui.noResults(query)}
                 </p>
               )}
               {groups.map(([group, groupItems]) => (
@@ -263,11 +297,11 @@ export function CommandPalette() {
                       <button
                         key={item.id}
                         type="button"
-                        onMouseEnter={() => setIndex(i)}
+                        onMouseEnter={() => setActiveIndex(i)}
                         onClick={item.run}
                         className={cn(
                           "flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition-colors",
-                          i === index
+                          i === activeIndex
                             ? "bg-muted text-foreground"
                             : "text-muted-foreground",
                         )}
@@ -288,6 +322,7 @@ export function CommandPalette() {
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+      </AnimatePresence>
+    </Portal>
   );
 }

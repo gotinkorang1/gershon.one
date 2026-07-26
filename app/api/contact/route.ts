@@ -1,21 +1,31 @@
 import { NextResponse } from "next/server";
+import { site } from "@/lib/site";
 
 type Payload = {
-  name?: string;
-  email?: string;
-  subject?: string;
-  message?: string;
-  company?: string; // honeypot
+  name?: unknown;
+  email?: unknown;
+  subject?: unknown;
+  message?: unknown;
+  company?: unknown; // honeypot
 };
 
-// Very small in-memory rate limit. Good enough for a personal site on a single
-// serverless region; swap for Upstash/Redis if traffic ever justifies it.
-const hits = new Map<string, { count: number; reset: number }>();
 const LIMIT = 5;
 const WINDOW_MS = 60 * 60 * 1000;
+const MAX_BODY_BYTES = 16 * 1024;
+
+// Small in-memory limiter. Adequate for a personal site on a single region;
+// swap for Upstash if this ever runs across several instances, since each
+// would otherwise keep its own count.
+const hits = new Map<string, { count: number; reset: number }>();
 
 function rateLimited(ip: string) {
   const now = Date.now();
+
+  // Opportunistic sweep so the map cannot grow without bound.
+  if (hits.size > 5000) {
+    for (const [key, entry] of hits) if (now > entry.reset) hits.delete(key);
+  }
+
   const entry = hits.get(ip);
   if (!entry || now > entry.reset) {
     hits.set(ip, { count: 1, reset: now + WINDOW_MS });
@@ -25,10 +35,37 @@ function rateLimited(ip: string) {
   return entry.count > LIMIT;
 }
 
-export async function POST(request: Request) {
-  const ip =
-    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+/**
+ * Strip CR/LF from anything interpolated into an email header. Without this a
+ * crafted name or subject can inject extra headers — a Bcc to an arbitrary
+ * address, for instance — and turn the form into an open relay.
+ */
+function headerSafe(value: string) {
+  return value.replace(/[\r\n]+/g, " ").trim();
+}
 
+function asString(value: unknown): string {
+  return typeof value === "string" ? value : "";
+}
+
+export async function POST(request: Request) {
+  // Only accept submissions originating from this site. Not a defence against
+  // a determined attacker (headers are forgeable outside a browser) but it
+  // stops drive-by cross-origin abuse cheaply.
+  const origin = request.headers.get("origin");
+  const allowed = [process.env.NEXT_PUBLIC_SITE_URL, site.url, "http://localhost:3000"]
+    .filter(Boolean)
+    .map((u) => new URL(u as string).origin);
+
+  if (origin && !allowed.includes(origin)) {
+    return NextResponse.json({ ok: false, error: "Invalid origin." }, { status: 403 });
+  }
+
+  if (request.headers.get("content-type")?.includes("application/json") !== true) {
+    return NextResponse.json({ ok: false, error: "Invalid request." }, { status: 415 });
+  }
+
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
   if (rateLimited(ip)) {
     return NextResponse.json(
       { ok: false, error: "Too many messages. Try again later." },
@@ -36,20 +73,26 @@ export async function POST(request: Request) {
     );
   }
 
+  // Reject oversized bodies before parsing them.
+  const raw = await request.text();
+  if (raw.length > MAX_BODY_BYTES) {
+    return NextResponse.json({ ok: false, error: "Message too large." }, { status: 413 });
+  }
+
   let body: Payload;
   try {
-    body = (await request.json()) as Payload;
+    body = JSON.parse(raw) as Payload;
   } catch {
     return NextResponse.json({ ok: false, error: "Invalid request." }, { status: 400 });
   }
 
-  // Bot filled the hidden field — pretend it worked, drop the message.
-  if (body.company) return NextResponse.json({ ok: true });
+  // Bot filled the hidden field — report success and drop it silently.
+  if (asString(body.company)) return NextResponse.json({ ok: true });
 
-  const name = body.name?.trim();
-  const email = body.email?.trim();
-  const message = body.message?.trim();
-  const subject = body.subject?.trim() || "New message from gershon.one";
+  const name = asString(body.name).trim();
+  const email = asString(body.email).trim();
+  const message = asString(body.message).trim();
+  const subject = asString(body.subject).trim() || "New message from gershon.one";
 
   if (!name || !email || !message) {
     return NextResponse.json(
@@ -57,7 +100,10 @@ export async function POST(request: Request) {
       { status: 400 },
     );
   }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  if (name.length > 120 || subject.length > 200) {
+    return NextResponse.json({ ok: false, error: "That field is too long." }, { status: 400 });
+  }
+  if (email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
     return NextResponse.json(
       { ok: false, error: "That email address doesn't look right." },
       { status: 400 },
@@ -74,13 +120,9 @@ export async function POST(request: Request) {
   const to = process.env.CONTACT_TO_EMAIL;
   const from = process.env.CONTACT_FROM_EMAIL;
 
-  // No mail provider configured — log and succeed so local dev isn't blocked.
   if (!apiKey || !to || !from) {
-    console.info("[contact] Resend not configured; message received:", {
-      name,
-      email,
-      subject,
-    });
+    // Never log the message body — it is someone else's personal data.
+    console.info("[contact] Resend not configured; submission received from", email);
     return NextResponse.json({ ok: true, delivered: false });
   }
 
@@ -94,15 +136,16 @@ export async function POST(request: Request) {
       body: JSON.stringify({
         from,
         to: [to],
-        reply_to: email,
-        subject: `${subject} — from ${name}`,
-        text: `From: ${name} <${email}>\n\n${message}`,
+        reply_to: headerSafe(email),
+        subject: headerSafe(`${subject} — from ${name}`),
+        // Plain text only: no HTML body means no HTML injection surface.
+        text: `From: ${headerSafe(name)} <${headerSafe(email)}>\n\n${message}`,
       }),
+      signal: AbortSignal.timeout(10_000),
     });
 
     if (!res.ok) {
-      const detail = await res.text();
-      console.error("[contact] Resend error:", res.status, detail);
+      console.error("[contact] Resend responded", res.status);
       return NextResponse.json(
         { ok: false, error: "Couldn't send right now. Please email me directly." },
         { status: 502 },
@@ -111,7 +154,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ ok: true, delivered: true });
   } catch (err) {
-    console.error("[contact] Unexpected error:", err);
+    console.error("[contact] Unexpected error:", err instanceof Error ? err.message : err);
     return NextResponse.json(
       { ok: false, error: "Couldn't send right now. Please email me directly." },
       { status: 500 },

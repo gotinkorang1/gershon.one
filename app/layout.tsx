@@ -9,8 +9,10 @@ import { ScrollProgress } from "@/components/scroll-progress";
 import { RouteProgress } from "@/components/fx/route-progress";
 import { PageTransition } from "@/components/fx/page-transition";
 import { Analytics } from "@/components/analytics";
+import { HtmlLang } from "@/components/html-lang";
 import { site } from "@/lib/site";
 import "./globals.css";
+import { serialiseJsonLd } from "@/lib/json-ld";
 
 const sans = Archivo({
   subsets: ["latin"],
@@ -112,16 +114,26 @@ const jsonLd = {
   sameAs: [site.socials.github, site.socials.linkedin],
 };
 
+const websiteLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: site.name,
+  url: siteUrl,
+  inLanguage: ["en-CA", "fr-CA"],
+  author: { "@type": "Person", name: site.name },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
-      lang="en"
+      lang="en-CA"
       suppressHydrationWarning
       className={`${sans.variable} ${mono.variable}`}
     >
       <body className="min-h-dvh antialiased">
+        <HtmlLang />
         <ThemeProvider>
           <ScrollProgress />
           <RouteProgress />
@@ -137,7 +149,12 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           suppressHydrationWarning
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: serialiseJsonLd(jsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: serialiseJsonLd(websiteLd) }}
         />
       </body>
     </html>

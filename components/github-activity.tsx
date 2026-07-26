@@ -7,6 +7,7 @@ import { Tooltip } from "@/components/ui/tooltip";
 import { site } from "@/lib/site";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/components/locale-provider";
 
 type Day = { date: string; count: number; level: 0 | 1 | 2 | 3 | 4 };
 type Event = { id: string; type: string; repo: string; at: string };
@@ -36,6 +37,7 @@ function relative(iso: string) {
 }
 
 export function GitHubActivity() {
+  const { t } = useI18n();
   const [data, setData] = useState<Payload | null>(null);
 
   useEffect(() => {
@@ -51,7 +53,7 @@ export function GitHubActivity() {
       <Panel className="flex items-center justify-between p-5">
         <span className="flex items-center gap-2.5 text-sm text-muted-foreground">
           <Github className="size-4" />
-          Code and infrastructure notes on GitHub
+          {t.ui.githubFallback}
         </span>
         <a
           href={site.socials.github}
@@ -59,7 +61,7 @@ export function GitHubActivity() {
           rel="noreferrer noopener"
           className="link inline-flex items-center gap-1 text-sm font-medium"
         >
-          Visit <ArrowUpRight className="size-3.5" />
+          {t.ui.visit} <ArrowUpRight className="size-3.5" />
         </a>
       </Panel>
     );
@@ -77,12 +79,12 @@ export function GitHubActivity() {
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <h3 className="flex items-center gap-2 text-sm font-medium">
           <Github className="size-4" />
-          GitHub activity
+          {t.ui.githubActivity}
         </h3>
         {data?.total ? (
           <p className="label">{data.total} contributions this year</p>
         ) : (
-          <p className="label">Recent public events</p>
+          <p className="label">{t.ui.recentEvents}</p>
         )}
       </div>
 

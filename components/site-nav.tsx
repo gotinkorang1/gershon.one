@@ -9,7 +9,7 @@ import { navLinks, site } from "@/lib/site";
 import { useI18n } from "@/components/locale-provider";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageToggle } from "@/components/language-toggle";
-import { Button } from "@/components/ui/button";
+import { CvButton } from "@/components/cv-button";
 
 export function SiteNav() {
   const { t, locale } = useI18n();
@@ -56,7 +56,7 @@ export function SiteNav() {
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:left-6 focus:top-6 focus:z-[80] focus:rounded-lg focus:bg-foreground focus:px-4 focus:py-2 focus:text-sm focus:text-surface-0"
       >
-        Skip to content
+        {t.ui.skipToContent}
       </a>
 
       <header className="fixed inset-x-0 top-0 z-50 pt-3">
@@ -108,10 +108,10 @@ export function SiteNav() {
               <button
                 type="button"
                 onClick={() => window.dispatchEvent(new CustomEvent("open-command-palette"))}
-                aria-label="Open command palette"
+                aria-label={t.ui.openPalette}
                 className="hidden items-center gap-2 rounded-lg border border-border bg-surface-1 py-1.5 pl-2.5 pr-2 text-xs text-faint transition-colors hover:border-border-strong hover:text-foreground lg:flex"
               >
-                Search
+                {t.ui.search}
                 <kbd className="flex items-center gap-0.5 rounded border border-border bg-surface-2 px-1 py-0.5 font-mono text-[0.625rem]">
                   <Command className="size-2.5" />K
                 </kbd>
@@ -120,9 +120,7 @@ export function SiteNav() {
               <LanguageToggle />
               <ThemeToggle />
 
-              <a href={site.resumeUrl} className="hidden sm:block">
-                <Button size="sm">CV</Button>
-              </a>
+              <CvButton variant="default" size="sm" label="CV" className="hidden sm:inline-flex" />
 
               <button
                 type="button"
@@ -167,11 +165,9 @@ export function SiteNav() {
               <span className="text-2xl font-medium tracking-tight">{t.nav[link.key]}</span>
             </Link>
           ))}
-          <a href={site.resumeUrl} className="mt-6">
-            <Button variant="accent" size="lg" className="w-full">
-              Download CV
-            </Button>
-          </a>
+          <div className="mt-6" onClick={() => setOpen(false)}>
+            <CvButton size="lg" className="w-full" />
+          </div>
         </nav>
       </div>
     </>
