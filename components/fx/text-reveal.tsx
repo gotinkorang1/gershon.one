@@ -17,14 +17,16 @@ export function TextReveal({
   delay?: number;
 }) {
   const reduced = useReducedMotion();
+  const accessibleText = lines.join(" ");
 
   // A full line-height slide per line is the clearest possible case for
   // honouring this preference.
   if (reduced) {
     return (
       <span className={cn("block", className)}>
+        <span className="sr-only">{accessibleText}</span>
         {lines.map((line) => (
-          <span key={line} className="block">
+          <span key={line} aria-hidden className="block">
             {line}
           </span>
         ))}
@@ -34,8 +36,12 @@ export function TextReveal({
 
   return (
     <span className={cn("block", className)}>
+      {/* Block-level lines produce no whitespace between them, so the
+          accessible name would read "GershonOtinkorang". This carries the
+          spaced version; the visible lines are hidden from the a11y tree. */}
+      <span className="sr-only">{accessibleText}</span>
       {lines.map((line, i) => (
-        <span key={line} className="block overflow-hidden pb-[0.06em]">
+        <span key={line} aria-hidden className="block overflow-hidden pb-[0.06em]">
           <motion.span
             className="block"
             initial={{ y: "108%" }}
