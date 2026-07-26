@@ -17,7 +17,11 @@ export const metadata: Metadata = {
   description: fr.hero.summary,
   alternates: {
     canonical: "/fr",
-    languages: { "en-CA": `${siteUrl}/`, "fr-CA": `${siteUrl}/fr` },
+    languages: {
+      "en-CA": `${siteUrl}/`,
+      "fr-CA": `${siteUrl}/fr`,
+      "x-default": `${siteUrl}/`,
+    },
   },
   openGraph: {
     type: "profile",
@@ -28,6 +32,7 @@ export const metadata: Metadata = {
   },
   // Without this the Twitter card inherits the English values from the root
   // layout, so a shared /fr link previews in the wrong language.
+  keywords: undefined,
   twitter: {
     card: "summary_large_image",
     title: `${site.shortName} — ${fr.hero.role}`,

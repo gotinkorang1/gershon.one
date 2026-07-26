@@ -34,22 +34,22 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: { default: title, template: `%s — ${site.shortName}` },
   description: site.summary,
-  keywords: [
-    "Gershon Otinkorang",
-    "IT Systems Administrator",
-    "Network Administrator",
-    "MikroTik RouterOS",
-    "Starlink",
-    "ERPNext",
-    "Odoo",
-    "IT jobs St. John's Newfoundland",
-    "Network Administrator Canada",
-  ],
+  // meta keywords is ignored by Google and can be read as spam by Bing, so it
+  // is deliberately absent. Relevance comes from the page copy, headings and
+  // structured data instead.
+  applicationName: site.shortName,
+  category: "technology",
+  classification: "Personal portfolio",
   authors: [{ name: site.name, url: siteUrl }],
   creator: site.name,
   alternates: {
     canonical: "/",
-    languages: { "en-CA": `${siteUrl}/`, "fr-CA": `${siteUrl}/fr` },
+    languages: {
+      "en-CA": `${siteUrl}/`,
+      "fr-CA": `${siteUrl}/fr`,
+      // Fallback for any locale not explicitly matched.
+      "x-default": `${siteUrl}/`,
+    },
     types: { "application/rss+xml": `${siteUrl}/feed.xml` },
   },
   openGraph: {
@@ -78,7 +78,16 @@ export const viewport: Viewport = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
+  "@id": `${siteUrl}/#person`,
   name: site.name,
+  givenName: "Gershon",
+  familyName: "Otinkorang",
+  additionalName: "Adjei",
+  nationality: { "@type": "Country", name: "Ghana" },
+  worksFor: {
+    "@type": "Organization",
+    name: "Greenhouse International Development Group Ghana Ltd.",
+  },
   url: siteUrl,
   email: `mailto:${site.email}`,
   telephone: site.phone,
@@ -88,16 +97,53 @@ const jsonLd = {
     {
       "@type": "CollegeOrUniversity",
       name: "Kwame Nkrumah University of Science and Technology",
+      address: { "@type": "PostalAddress", addressCountry: "GH" },
+      sameAs: "https://www.knust.edu.gh/",
     },
-    { "@type": "CollegeOrUniversity", name: "Takoradi Technical University" },
-    { "@type": "CollegeOrUniversity", name: "Memorial University of Newfoundland" },
+    {
+      "@type": "CollegeOrUniversity",
+      name: "Takoradi Technical University",
+      address: { "@type": "PostalAddress", addressCountry: "GH" },
+    },
+    {
+      "@type": "CollegeOrUniversity",
+      name: "Memorial University of Newfoundland",
+      address: { "@type": "PostalAddress", addressCountry: "CA" },
+      sameAs: "https://www.mun.ca/",
+    },
   ],
-  hasCredential: {
-    "@type": "EducationalOccupationalCredential",
-    name: "AWS Certified Cloud Practitioner",
-    credentialCategory: "certification",
-    recognizedBy: { "@type": "Organization", name: "Amazon Web Services" },
-  },
+  hasCredential: [
+    {
+      "@type": "EducationalOccupationalCredential",
+      name: "AWS Certified Cloud Practitioner",
+      credentialCategory: "certification",
+      recognizedBy: { "@type": "Organization", name: "Amazon Web Services" },
+      validIn: { "@type": "AdministrativeArea", name: "Worldwide" },
+      dateCreated: "2024-07-14",
+      expires: "2027-07-14",
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      name: "BSc Information Technology",
+      credentialCategory: "degree",
+      educationalLevel: "Bachelor's degree",
+      recognizedBy: {
+        "@type": "CollegeOrUniversity",
+        name: "Kwame Nkrumah University of Science and Technology",
+      },
+      dateCreated: "2024-11-01",
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      name: "Higher National Diploma, Information & Communication Technology",
+      credentialCategory: "degree",
+      recognizedBy: {
+        "@type": "CollegeOrUniversity",
+        name: "Takoradi Technical University",
+      },
+      dateCreated: "2020-10-13",
+    },
+  ],
   knowsAbout: [
     "Network Administration",
     "MikroTik RouterOS",
@@ -106,10 +152,43 @@ const jsonLd = {
     "Systems Administration",
     "Cloud Computing",
   ],
+  // hasOccupation is the property search engines use to classify a person's
+  // profession. The O*NET code is the standard identifier for network and
+  // computer systems administrators, which removes ambiguity about the role.
+  hasOccupation: {
+    "@type": "Occupation",
+    name: "IT Systems and Network Administrator",
+    occupationalCategory: "15-1244.00",
+    occupationLocation: {
+      "@type": "City",
+      name: "St. John's",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "St. John's",
+        addressRegion: "NL",
+        addressCountry: "CA",
+      },
+    },
+    skills: [
+      "MikroTik RouterOS",
+      "Network administration",
+      "ERP administration",
+      "Server administration",
+      "Satellite networking",
+    ].join(", "),
+  },
+  knowsLanguage: [
+    { "@type": "Language", name: "English", alternateName: "en" },
+    { "@type": "Language", name: "French", alternateName: "fr" },
+  ],
   seeks: {
     "@type": "Demand",
+    name: "IT and network administration roles",
     availabilityStarts: "2026-08-01",
-    areaServed: { "@type": "Place", name: "St. John's, Newfoundland and Labrador, Canada" },
+    areaServed: {
+      "@type": "Place",
+      name: "St. John's, Newfoundland and Labrador, Canada",
+    },
   },
   sameAs: [site.socials.github, site.socials.linkedin],
 };
@@ -117,10 +196,28 @@ const jsonLd = {
 const websiteLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
+  "@id": `${siteUrl}/#website`,
   name: site.name,
   url: siteUrl,
   inLanguage: ["en-CA", "fr-CA"],
-  author: { "@type": "Person", name: site.name },
+  publisher: { "@id": `${siteUrl}/#person` },
+};
+
+/**
+ * ProfilePage is the type Google documents for a page whose primary focus is a
+ * single person. `mainEntity` points at the Person node by @id rather than
+ * repeating it, so the graph has one canonical description of him.
+ */
+const profileLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "@id": `${siteUrl}/#profile`,
+  url: siteUrl,
+  name: `${site.shortName} — ${site.role}`,
+  dateModified: new Date().toISOString().slice(0, 10),
+  inLanguage: "en-CA",
+  mainEntity: { "@id": `${siteUrl}/#person` },
+  isPartOf: { "@id": `${siteUrl}/#website` },
 };
 
 export default function RootLayout({
@@ -155,6 +252,11 @@ export default function RootLayout({
           type="application/ld+json"
           suppressHydrationWarning
           dangerouslySetInnerHTML={{ __html: serialiseJsonLd(websiteLd) }}
+        />
+        <script
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: serialiseJsonLd(profileLd) }}
         />
       </body>
     </html>

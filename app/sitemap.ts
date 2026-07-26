@@ -10,12 +10,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 1,
+      alternates: {
+        languages: {
+          "en-CA": base,
+          "fr-CA": `${base}/fr`,
+          "x-default": base,
+        },
+      },
     },
     {
       url: `${base}/fr`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.9,
+      alternates: {
+        languages: {
+          "en-CA": base,
+          "fr-CA": `${base}/fr`,
+          "x-default": base,
+        },
+      },
     },
     // Drafts are noindex, so listing them only wastes crawl budget.
     ...caseStudies
