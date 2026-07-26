@@ -84,6 +84,13 @@ type Dictionary = {
     yearsExperience: string;
     topologyCaption: string;
     aboutMe: string;
+    relocationWhen: string;
+    present: string;
+    eyebrowExperience: string;
+    eyebrowWork: string;
+    eyebrowCapabilities: string;
+    eyebrowCredentials: string;
+    eyebrowContact: string;
     verified: string;
     proofAws: string;
     proofAwsSub: string;
@@ -260,6 +267,13 @@ const en: Dictionary = {
     topologyCaption:
       "A dual-WAN design I have built and maintain: automatic failover between fibre and satellite. Try cutting the fibre link.",
     aboutMe: "In short",
+    relocationWhen: "August 2026",
+    present: "Present",
+    eyebrowExperience: "01 — Experience",
+    eyebrowWork: "02 — Case studies",
+    eyebrowCapabilities: "03 — Capabilities",
+    eyebrowCredentials: "04 — Credentials",
+    eyebrowContact: "05 — Contact",
     verified: "Verified",
     proofAws: "AWS Certified Cloud Practitioner",
     proofAwsSub: "Valid to July 2027",
@@ -442,6 +456,13 @@ const fr: Dictionary = {
     topologyCaption:
       "Une architecture double-WAN que j'ai conçue et que je maintiens : bascule automatique entre fibre et satellite. Essayez de couper le lien fibre.",
     aboutMe: "En bref",
+    relocationWhen: "août 2026",
+    present: "aujourd'hui",
+    eyebrowExperience: "01 — Expérience",
+    eyebrowWork: "02 — Études de cas",
+    eyebrowCapabilities: "03 — Compétences",
+    eyebrowCredentials: "04 — Diplômes",
+    eyebrowContact: "05 — Contact",
     verified: "Vérifié",
     proofAws: "AWS Certified Cloud Practitioner",
     proofAwsSub: "Valide jusqu'en juillet 2027",

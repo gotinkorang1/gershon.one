@@ -56,9 +56,9 @@ export function Contact() {
   return (
     <section id="contact" className="shell scroll-mt-24 py-14 md:py-16">
       <SectionHeading
-        index="05 — Contact"
+        index={t.ui.eyebrowContact}
         title={t.sections.contactTitle}
-        description={t.sections.contactLede(site.relocation.to, site.relocation.when)}
+        description={t.sections.contactLede(site.relocation.to, t.ui.relocationWhen)}
       />
 
       <div className="mt-10 grid gap-3 lg:grid-cols-12">
@@ -128,7 +128,7 @@ export function Contact() {
                 site.location,
                 site.timezone,
                 site.relocation.to,
-                site.relocation.when,
+                t.ui.relocationWhen,
               )}
             </p>
           </Panel>

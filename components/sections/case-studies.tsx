@@ -17,7 +17,7 @@ export function CaseStudies() {
   return (
     <section id="work" className="shell scroll-mt-24 py-14 md:py-16">
       <SectionHeading
-        index="02 — Case studies"
+        index={t.ui.eyebrowWork}
         title={t.sections.workTitle}
         description={t.sections.workLede}
       />

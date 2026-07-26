@@ -108,7 +108,7 @@ export function Hero() {
               className="mt-7 flex items-center gap-2 text-sm text-muted-foreground"
             >
               <MapPin className="size-3.5 shrink-0 text-faint" />
-              {t.hero.movingTo(site.relocation.to, site.relocation.when)}
+              {t.hero.movingTo(site.relocation.to, t.ui.relocationWhen)}
             </motion.p>
           </div>
 
@@ -134,7 +134,7 @@ export function Hero() {
               <ImageReveal className="portrait-plate overflow-hidden rounded-xl">
                 <Image
                   src="/gershon.webp"
-                  alt={`${site.name} — ${site.role}`}
+                  alt={`${site.name} — ${t.hero.role}`}
                   width={840}
                   height={624}
                   priority

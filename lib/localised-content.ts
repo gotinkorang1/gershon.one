@@ -1,5 +1,12 @@
 import { experience, skillGroups, credentials, facts, type Job, type SkillGroup, type Credential } from "@/lib/site";
-import { experienceFr, skillGroupsFr, credentialsFr, factsFr, issuersFr } from "@/lib/content.fr";
+import {
+  experienceFr,
+  skillGroupsFr,
+  credentialsFr,
+  factsFr,
+  issuersFr,
+  termsFr,
+} from "@/lib/content.fr";
 import type { Locale } from "@/lib/i18n";
 import { caseStudies, type CaseStudy } from "@/lib/case-studies";
 import { caseStudiesFr } from "@/lib/case-studies.fr";
@@ -22,6 +29,7 @@ export function getExperience(locale: Locale): Job[] {
       division: fr.division ?? job.division,
       summary: fr.summary,
       highlights: fr.highlights,
+      stack: job.stack.map((item) => termsFr[item] ?? item),
     };
   });
 }
@@ -31,9 +39,11 @@ export function getSkillGroups(locale: Locale): SkillGroup[] {
 
   return skillGroups.map((group) => {
     const fr = skillGroupsFr[group.title];
-    // Skill names themselves are proper nouns — MikroTik, WireGuard, Odoo —
-    // and stay as they are in both languages.
-    return fr ? { ...group, title: fr.title, blurb: fr.blurb } : group;
+    // Product names stay verbatim; descriptive terms are translated.
+    const skills = group.skills.map((skill) => termsFr[skill] ?? skill);
+    return fr
+      ? { ...group, title: fr.title, blurb: fr.blurb, skills }
+      : { ...group, skills };
   });
 }
 
@@ -72,6 +82,8 @@ export function getCaseStudies(locale: Locale): CaseStudy[] {
       title: fr.title,
       summary: fr.summary,
       role: fr.role,
+      // The period is authored data; only the English word needs replacing.
+      period: study.period.replace(/present/i, "aujourd'hui"),
       sections: fr.sections,
       // Outcome figures are numbers and placeholders; only the labels differ.
       outcomes: study.outcomes.map((o, i) => ({

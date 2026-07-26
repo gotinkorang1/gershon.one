@@ -16,7 +16,7 @@ export function Terminal({ className }: { className?: string }) {
     { kind: "out", text: `${site.name} — ${t.hero.role}` },
     {
       kind: "out",
-      text: t.ui.terminalIntro(site.location, site.relocation.to, site.relocation.when),
+      text: t.ui.terminalIntro(site.location, site.relocation.to, t.ui.relocationWhen),
     },
     { kind: "out", text: "" },
     { kind: "out", text: t.ui.terminal.hint },
@@ -50,7 +50,7 @@ export function Terminal({ className }: { className?: string }) {
       help: t.ui.terminal.whoami,
       run: () => [
         { kind: "out", text: site.name },
-        { kind: "out", text: site.role },
+        { kind: "out", text: t.hero.role },
         { kind: "out", text: "" },
         { kind: "out", text: site.summary },
       ],

@@ -28,7 +28,7 @@ export function Credentials() {
   return (
     <section id="credentials" className="shell scroll-mt-24 py-14 md:py-16">
       <SectionHeading
-        index="04 — Credentials"
+        index={t.ui.eyebrowCredentials}
         title={t.sections.credentialsTitle}
         description={t.sections.credentialsLede}
       />

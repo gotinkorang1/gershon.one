@@ -30,7 +30,7 @@ export function Skills() {
   return (
     <section id="capabilities" className="shell scroll-mt-24 py-14 md:py-16">
       <SectionHeading
-        index="03 — Capabilities"
+        index={t.ui.eyebrowCapabilities}
         title={t.sections.capabilitiesTitle}
         description={t.sections.capabilitiesLede}
       />

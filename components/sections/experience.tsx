@@ -12,9 +12,9 @@ import { cn } from "@/lib/utils";
 import { useI18n } from "@/components/locale-provider";
 import { getExperience } from "@/lib/localised-content";
 
-function span(job: Job) {
+function span(job: Job, present: string) {
   const from = job.start.slice(0, 4);
-  const to = job.end ? job.end.slice(0, 4) : "Present";
+  const to = job.end ? job.end.slice(0, 4) : present;
   return from === to ? from : `${from} — ${to}`;
 }
 
@@ -71,7 +71,7 @@ function Entry({ job, open, onToggle }: { job: Job; open: boolean; onToggle: () 
         </span>
 
         <span className="flex shrink-0 items-center gap-4">
-          <span className="label hidden sm:block">{span(job)}</span>
+          <span className="label hidden sm:block">{span(job, t.ui.present)}</span>
           <ChevronDown
             className={cn(
               "size-4 text-faint transition-transform duration-300",
@@ -94,7 +94,7 @@ function Entry({ job, open, onToggle }: { job: Job; open: boolean; onToggle: () 
                 wide card empty, so the stack moves alongside rather than below. */}
             <div className="grid gap-8 border-t border-border px-5 pb-7 pt-6 sm:px-6 sm:pl-[3.25rem] lg:grid-cols-[minmax(0,1fr)_13rem] lg:gap-12">
               <div>
-                <p className="label sm:hidden">{span(job)}</p>
+                <p className="label sm:hidden">{span(job, t.ui.present)}</p>
                 <p className="measure mt-3 text-sm leading-relaxed text-muted-foreground sm:mt-0">
                   {job.summary}
                 </p>
@@ -145,7 +145,7 @@ export function Experience() {
   return (
     <section id="experience" className="shell scroll-mt-24 py-14 md:py-16">
       <SectionHeading
-        index="01 — Experience"
+        index={t.ui.eyebrowExperience}
         title={t.sections.experienceTitle}
         description={t.sections.experienceLede}
       />

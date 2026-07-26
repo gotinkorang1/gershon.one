@@ -142,3 +142,43 @@ export const issuersFr: Record<string, string> = {
   "Takoradi Technical University (NABPTEX)": "Université technique de Takoradi (NABPTEX)",
   Google: "Google",
 };
+
+/**
+ * Skill and stack terms that are descriptions rather than product names.
+ * MikroTik, Odoo, WireGuard, AWS and similar are proper nouns and stay in
+ * English — translating them would look wrong to a French-speaking engineer.
+ */
+export const termsFr: Record<string, string> = {
+  // Networking
+  "Dual-WAN failover": "Bascule double-WAN",
+  "Bandwidth queuing": "Gestion de bande passante",
+  "Firewall hardening": "Durcissement du pare-feu",
+  "Starlink deployment": "Déploiement Starlink",
+  "Fibre troubleshooting": "Dépannage fibre",
+  // Systems
+  "Server administration": "Administration de serveurs",
+  "Windows & Linux": "Windows et Linux",
+  "Backup & recovery": "Sauvegarde et restauration",
+  "CCTV / IP camera systems": "Vidéosurveillance et caméras IP",
+  "Hardware support": "Support matériel",
+  // Cloud
+  "Domain management": "Gestion de domaines",
+  // Professional
+  "Technical documentation": "Documentation technique",
+  "Project coordination": "Coordination de projets",
+  "Technical interviewing": "Entretiens techniques",
+  "IT policy & compliance": "Politique et conformité informatique",
+  "Confidential data handling": "Traitement de données confidentielles",
+  "Cross-team collaboration": "Collaboration inter-équipes",
+  "Remote work": "Travail à distance",
+  // Stack entries
+  "Backup systems": "Systèmes de sauvegarde",
+  "Documentation": "Documentation",
+  "Web design": "Conception web",
+  "IT support": "Support informatique",
+  "Networking": "Réseaux",
+  "Hardware repair": "Réparation matérielle",
+  "Diagnostics": "Diagnostic",
+  "Inventory": "Gestion des stocks",
+  "Web": "Web",
+};

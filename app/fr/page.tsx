@@ -26,6 +26,13 @@ export const metadata: Metadata = {
     description: fr.hero.summary,
     locale: "fr_CA",
   },
+  // Without this the Twitter card inherits the English values from the root
+  // layout, so a shared /fr link previews in the wrong language.
+  twitter: {
+    card: "summary_large_image",
+    title: `${site.shortName} — ${fr.hero.role}`,
+    description: fr.hero.summary,
+  },
 };
 
 export default function FrenchHome() {
