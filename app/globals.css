@@ -12,14 +12,16 @@
 /* -------------------------------------------------------------------------- */
 
 :root {
-  --surface-0: oklch(0.975 0.003 260);
+  --surface-0: oklch(0.965 0.004 260);
   --surface-1: oklch(1 0 0);
-  --surface-2: oklch(1 0 0);
+  /* Raised sits fractionally cool-tinted rather than identical to surface-1;
+     combined with the stronger shadow this reads as elevation on white. */
+  --surface-2: oklch(0.995 0.002 260);
   --surface-inset: oklch(0.965 0.003 260);
 
   --foreground: oklch(0.19 0.012 265);
   --muted-foreground: oklch(0.46 0.012 265);
-  --faint: oklch(0.555 0.012 265);
+  --faint: oklch(0.540 0.012 265);
 
   --border: oklch(0.19 0.012 265 / 0.14);
   --border-strong: oklch(0.19 0.012 265 / 0.30);
@@ -28,8 +30,8 @@
   --accent: oklch(0.50 0.13 224);
   --accent-fg: oklch(1 0 0);
   --accent-quiet: oklch(0.50 0.13 224 / 0.10);
-  --live: oklch(0.540 0.16 152);
-  --warn: oklch(0.575 0.16 62);
+  --live: oklch(0.515 0.16 152);
+  --warn: oklch(0.550 0.16 62);
 
   --shadow-sm: 0 1px 2px oklch(0.19 0.012 265 / 0.06);
   --shadow-md:
@@ -42,8 +44,8 @@
 
   --grid: oklch(0.19 0.012 265 / 0.05);
   --panel-wash: oklch(1 0 0 / 0.7);
-  --signal: oklch(0.580 0.16 45);
-  --signal-quiet: oklch(0.580 0.16 45 / 0.10);
+  --signal: oklch(0.555 0.16 45);
+  --signal-quiet: oklch(0.555 0.16 45 / 0.10);
   --radius: 0.75rem;
 }
 

@@ -46,7 +46,7 @@ export function Credentials() {
           }}
         />
 
-        {ordered.map((c, i) => {
+        {ordered.map((c) => {
           const Icon = c.kind === "degree" ? GraduationCap : Award;
           const expired = c.expires ? new Date(c.expires) < new Date() : false;
 

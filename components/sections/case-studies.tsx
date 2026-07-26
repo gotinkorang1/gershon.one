@@ -23,7 +23,7 @@ export function CaseStudies() {
       />
 
       <Stagger className="mt-10 grid gap-3">
-        {caseStudies.map((study, i) => (
+        {caseStudies.map((study) => (
           <StaggerItem key={study.slug}>
             <Link href={`${locale === "fr" ? "/fr" : ""}/work/${study.slug}`} className="block">
               <Panel interactive reactive className="group p-5 sm:p-6">
