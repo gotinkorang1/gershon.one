@@ -17,11 +17,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.9,
     },
-    ...caseStudies.map((c) => ({
+    // Drafts are noindex, so listing them only wastes crawl budget.
+    ...caseStudies
+      .filter((c) => !c.draft)
+      .map((c) => ({
       url: `${base}/work/${c.slug}`,
       lastModified: new Date(c.published),
       changeFrequency: "yearly" as const,
-      priority: 0.7,
-    })),
+        priority: 0.7,
+      })),
   ];
 }

@@ -37,6 +37,17 @@ export async function generateMetadata({
         "fr-CA": `${base}/fr/work/${study.slug}`,
       },
     },
+    // A draft's visible text contains TODO placeholders. Indexing that would
+    // put "TODO: your actual VLAN numbering" into search results under his
+    // name. Published studies index normally.
+    robots: study.draft
+      ? { index: false, follow: true }
+      : { index: true, follow: true },
+    twitter: {
+      card: "summary_large_image",
+      title: study.title,
+      description: study.summary,
+    },
     openGraph: {
       type: "article",
       title: study.title,

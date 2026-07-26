@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion } from "motion/react";
 import { Command } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -13,6 +14,12 @@ import { CvButton } from "@/components/cv-button";
 
 export function SiteNav() {
   const { t, locale } = useI18n();
+  const pathname = usePathname();
+  const home = locale === "fr" ? "/fr" : "/";
+  // On a sub-route a bare "#experience" targets a section that does not exist
+  // there, so the link silently does nothing. Prefix with the home path.
+  const onHome = pathname === "/" || pathname === "/fr";
+  const sectionHref = (hash: string) => (onHome ? hash : `${home}${hash}`);
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("");
   const [open, setOpen] = useState(false);
@@ -85,7 +92,7 @@ export function SiteNav() {
                 return (
                   <li key={link.href}>
                     <Link
-                      href={`${locale === "fr" ? "/fr" : ""}${link.href}`}
+                      href={sectionHref(link.href)}
                       className={cn(
                         "relative rounded-lg px-3 py-1.5 text-sm transition-colors",
                         isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground",
@@ -158,7 +165,7 @@ export function SiteNav() {
           {navLinks.map((link) => (
             <Link
               key={link.href}
-              href={link.href}
+              href={sectionHref(link.href)}
               onClick={() => setOpen(false)}
               className="flex items-baseline gap-4 border-b border-border py-4"
             >

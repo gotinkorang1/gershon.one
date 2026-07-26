@@ -1,13 +1,18 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { site, navLinks } from "@/lib/site";
 import { useI18n } from "@/components/locale-provider";
 import { CvButton } from "@/components/cv-button";
 
 export function SiteFooter() {
   const { t, locale } = useI18n();
+  const pathname = usePathname();
   const prefix = locale === "fr" ? "/fr" : "";
+  // From a sub-route a bare hash targets a section that is not on the page.
+  const onHome = pathname === "/" || pathname === "/fr";
+  const sectionHref = (hash: string) => (onHome ? hash : `${prefix || "/"}${hash}`);
 
   return (
     <footer className="border-t border-border">
@@ -27,7 +32,7 @@ export function SiteFooter() {
             <ul className="mt-3.5 space-y-2">
               {navLinks.map((l) => (
                 <li key={l.href}>
-                  <Link href={`${prefix}${l.href}`} className="link text-sm text-muted-foreground">
+                  <Link href={sectionHref(l.href)} className="link text-sm text-muted-foreground">
                     {t.nav[l.key]}
                   </Link>
                 </li>
