@@ -111,9 +111,10 @@
   --text-display--line-height: 0.94;
   --text-display--letter-spacing: -0.035em;
 
-  --text-jumbo: clamp(2rem, 4.4vw, 3.25rem);
-  --text-jumbo--line-height: 1.04;
-  --text-jumbo--letter-spacing: -0.03em;
+  /* Was 3.25rem at the top end, which dwarfed the 1rem body beneath it. */
+  --text-jumbo: clamp(1.75rem, 3.2vw, 2.5rem);
+  --text-jumbo--line-height: 1.1;
+  --text-jumbo--letter-spacing: -0.025em;
 
   --text-lede: clamp(1.0625rem, 1.5vw, 1.3125rem);
   --text-lede--line-height: 1.5;
@@ -131,9 +132,15 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 6rem;
+    /* Clears the fixed nav so an anchored heading is not hidden beneath it. */
+    scroll-padding-top: 5.5rem;
     -webkit-tap-highlight-color: transparent;
   }
+
+  /* Deliberately no scroll-snap. Measured section heights run 0.7 to 1.6
+     viewports, so snap points fall mid-content and would pull a reader away
+     from the paragraph they are on. Snapping only behaves when every section
+     is a uniform viewport tall. */
 
   body {
     background-color: var(--surface-0);
@@ -185,6 +192,25 @@
 
 @media (min-width: 768px) {
   .shell { padding-inline: 2.5rem; }
+}
+
+/* Caps a text block at a readable measure. Typography research puts the
+   comfortable range at 45-75 characters per line; the experience section was
+   running 156 because it inherited the full 1248px shell. */
+/* Hairline that fades at both ends — separates sections without the large
+   empty gap that was doing the job before. */
+@utility section-rule {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+@utility measure {
+  max-width: 68ch;
+}
+
+@utility measure-wide {
+  max-width: 78ch;
 }
 
 @utility label {
@@ -248,9 +274,46 @@
     border-color 0.35s ease;
 }
 .panel-interactive:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   border-color: var(--border-strong);
   box-shadow: var(--shadow-lg);
+}
+
+/* A hairline of accent that wipes across the top edge on hover. Cheap —
+   transform only — and it gives every card a moment of life without moving
+   any layout. */
+.panel-interactive::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  z-index: 2;
+}
+.panel-interactive:hover::after {
+  transform: scaleX(1);
+}
+
+/* Arrow nudges on its parent's hover. */
+.nudge {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.group:hover .nudge {
+  transform: translate(2px, -2px);
+}
+
+/* Underline that grows from the left on row hover. */
+.grow-rule {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.group:hover .grow-rule {
+  transform: scaleX(1);
 }
 
 /* Cursor-reactive wash. Elements set --mx/--my from JS. */
@@ -282,11 +345,21 @@
 }
 
 .portrait {
-  filter: grayscale(1) brightness(1.28) contrast(1.12);
+  filter: grayscale(1) brightness(1.18) contrast(0.94);
   transition: filter 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .portrait:hover {
-  filter: grayscale(0.15) brightness(1.18) contrast(1.06);
+  filter: grayscale(0.1) brightness(1.22) contrast(0.98);
+}
+
+/* Lifts the photograph's black background off the page so the frame reads as
+   an edge rather than dissolving into the canvas. */
+.portrait-plate {
+  background:
+    linear-gradient(180deg, var(--surface-2), var(--surface-1));
+  box-shadow:
+    inset 0 0 0 1px var(--border),
+    var(--shadow-lg);
 }
 
 /* Accent bloom behind the portrait so it separates from a dark page. */

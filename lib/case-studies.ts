@@ -168,8 +168,6 @@ export const caseStudies: CaseStudy[] = [
   },
 ];
 
-export const publishedCaseStudies = caseStudies.filter((c) => !c.draft);
-
 export function getCaseStudy(slug: string) {
   return caseStudies.find((c) => c.slug === slug);
 }

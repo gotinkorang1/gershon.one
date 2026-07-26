@@ -5,6 +5,7 @@ import { SectionHeading } from "@/components/fx/section-heading";
 import { Reveal } from "@/components/fx/reveal";
 import { Panel } from "@/components/ui/panel";
 import { Terminal } from "@/components/terminal";
+import { NetworkTopology } from "@/components/fx/network-topology";
 import { GitHubActivity } from "@/components/github-activity";
 
 import { cn } from "@/lib/utils";
@@ -27,7 +28,7 @@ export function Skills() {
   const skillGroups = getSkillGroups(locale);
 
   return (
-    <section id="capabilities" className="shell scroll-mt-24 py-16 md:py-20">
+    <section id="capabilities" className="shell scroll-mt-24 py-14 md:py-16">
       <SectionHeading
         index="03 — Capabilities"
         title={t.sections.capabilitiesTitle}
@@ -39,7 +40,7 @@ export function Skills() {
           const Icon = ICONS[i] ?? Network;
           return (
             <Reveal key={group.title} delay={0.04 * i} className={cn(SPANS[i])}>
-              <Panel interactive reactive className="h-full p-5 sm:p-6">
+              <Panel interactive reactive className="h-full p-5">
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <h3 className="text-lg font-semibold tracking-tight">{group.title}</h3>
@@ -52,7 +53,7 @@ export function Skills() {
                   </span>
                 </div>
 
-                <ul className="mt-5 flex flex-wrap gap-1.5">
+                <ul className="mt-4 flex flex-wrap gap-1.5">
                   {group.skills.map((skill) => (
                     <li
                       key={skill}
@@ -68,10 +69,22 @@ export function Skills() {
         })}
       </div>
 
+      {/* The topology evidences the network administration group above it —
+          a worked example rather than a decorative header graphic. */}
+      <Reveal delay={0.05}>
+        <Panel className="mt-3 p-5 sm:p-7">
+          <p className="label">{t.hero.topologyMode}</p>
+          <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
+            {t.ui.topologyCaption}
+          </p>
+          <NetworkTopology className="mt-7 h-[18rem] sm:h-[20rem]" />
+        </Panel>
+      </Reveal>
+
       {/* Terminal and GitHub sit here because they evidence the claims above. */}
       <div className="mt-3 grid gap-3 lg:grid-cols-12">
         <Reveal delay={0.05} className="lg:col-span-7">
-          <Terminal className="h-[19rem]" />
+          <Terminal className="h-[17rem]" />
         </Reveal>
         <Reveal delay={0.1} className="lg:col-span-5">
           <GitHubActivity />

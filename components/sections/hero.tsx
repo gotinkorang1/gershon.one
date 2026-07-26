@@ -1,86 +1,91 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "motion/react";
-import { ArrowUpRight, MapPin } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
+import { Award, ArrowUpRight, GraduationCap, MapPin, ShieldCheck } from "lucide-react";
 import { site } from "@/lib/site";
-import { useI18n } from "@/components/locale-provider";
 import { getFacts } from "@/lib/localised-content";
-import { NetworkTopology } from "@/components/fx/network-topology";
-import { TextReveal } from "@/components/fx/text-reveal";
-import { Magnetic } from "@/components/fx/magnetic";
+import { useI18n } from "@/components/locale-provider";
 import { CvButton } from "@/components/cv-button";
-import { Counter } from "@/components/fx/counter";
-import { Parallax } from "@/components/fx/parallax";
-import { ImageReveal } from "@/components/fx/image-reveal";
-import { Panel } from "@/components/ui/panel";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Counter } from "@/components/fx/counter";
+import { ImageReveal } from "@/components/fx/image-reveal";
+import { TextReveal } from "@/components/fx/text-reveal";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-/**
- * The parent MUST carry its own `variants` to become a variant node — without
- * it Motion never propagates `animate` to children and they stay stuck in
- * `hidden`. Child timing lives inside the variant rather than in a
- * `transition` prop, which would override the stagger.
- */
 const container = {
   hidden: {},
   show: { transition: { staggerChildren: 0.08, delayChildren: 0.06 } },
 };
 
 const rise = {
-  hidden: { opacity: 0, y: 16 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: EASE } },
+  hidden: { opacity: 0, y: 14 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
 };
 
 export function Hero() {
   const { t, locale } = useI18n();
   const facts = getFacts(locale);
+  const reduced = useReducedMotion();
+
+  const proof = [
+    { icon: ShieldCheck, title: t.ui.proofAws, sub: t.ui.proofAwsSub },
+    { icon: Award, title: t.ui.proofDegree, sub: t.ui.proofDegreeSub },
+    { icon: GraduationCap, title: t.ui.proofMsc, sub: t.ui.proofMscSub },
+  ];
 
   return (
-    <section className="relative overflow-hidden pb-10 pt-24 md:pt-28">
-      <div className="grid-field fade-edges pointer-events-none absolute inset-0 -z-10" />
+    <section className="relative overflow-hidden pb-4 pt-28 md:pb-6 md:pt-32">
+      {/* Two slow, offset washes. Movement without anything you'd call an
+          effect — the page breathes rather than performs. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[32rem] w-[64rem] -translate-x-1/2 opacity-70"
-        style={{
-          background:
-            "radial-gradient(ellipse at 50% 0%, var(--accent-quiet), transparent 65%)",
-        }}
-      />
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[40rem] overflow-hidden"
+      >
+        <motion.div
+          className="absolute -left-1/4 -top-1/3 size-[42rem] rounded-full blur-[120px]"
+          style={{ background: "radial-gradient(circle, var(--accent-quiet), transparent 68%)" }}
+          animate={reduced ? undefined : { x: [0, 60, 0], y: [0, 34, 0] }}
+          transition={{ duration: 28, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute right-0 top-0 size-[30rem] rounded-full blur-[110px]"
+          style={{ background: "radial-gradient(circle, var(--signal-quiet), transparent 70%)" }}
+          animate={reduced ? undefined : { x: [0, -44, 0], y: [0, 40, 0] }}
+          transition={{ duration: 34, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+        />
+      </div>
 
       <div className="shell">
         <motion.div
           variants={container}
           initial="hidden"
           animate="show"
-          className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14"
+          className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16"
         >
-          {/* ------------------------------------------------------ copy */}
-          <div className="lg:col-span-6">
-            <motion.div variants={rise}>
-              <Badge variant="live" className="gap-2 px-0">
-                <span className="pulse-dot" />
-                {t.hero.availability}
-              </Badge>
-            </motion.div>
-
-            <h1 className="mt-6 text-display font-semibold text-balance [overflow-wrap:anywhere]">
-              <TextReveal lines={["Gershon", "Otinkorang"]} delay={0.15} />
-            </h1>
-
+          {/* ------------------------------------------------------- copy */}
+          <div className="lg:col-span-7">
             <motion.p
               variants={rise}
-              className="mt-5 text-lede font-medium text-muted-foreground"
+              className="flex items-center gap-2.5 text-sm text-muted-foreground"
             >
-              <span className="text-foreground">{t.hero.role}</span>
+              <span className="pulse-dot text-live" />
+              {t.hero.availability}
             </motion.p>
 
+            <h1 className="mt-7 text-display font-semibold tracking-tight">
+              <TextReveal lines={["Gershon", "Otinkorang"]} delay={0.12} />
+            </h1>
+
+            <motion.div variants={rise} className="mt-6 flex items-center gap-4">
+              <span className="h-px w-10 shrink-0 bg-accent/60" />
+              <p className="text-lede font-medium">{t.hero.role}</p>
+            </motion.div>
+
             <motion.p
               variants={rise}
-              className="mt-4 max-w-md text-base leading-relaxed text-muted-foreground"
+              className="mt-5 max-w-lg text-base leading-relaxed text-muted-foreground"
             >
               {t.hero.headline}
             </motion.p>
@@ -89,100 +94,122 @@ export function Hero() {
               variants={rise}
               className="mt-9 flex flex-wrap items-center gap-3"
             >
-              <Magnetic>
-                <CvButton />
-              </Magnetic>
-              <Magnetic>
-                <a href={`mailto:${site.email}`}>
-                  <Button variant="outline" size="lg" className="group">
-                    {t.hero.getInTouch}
-                    <ArrowUpRight className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </Button>
-                </a>
-              </Magnetic>
+              <CvButton />
+              <a href={`mailto:${site.email}`}>
+                <Button variant="outline" size="lg" className="group">
+                  {t.hero.getInTouch}
+                  <ArrowUpRight className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </Button>
+              </a>
             </motion.div>
 
             <motion.p
               variants={rise}
-              className="mt-6 flex items-center gap-2 text-sm text-muted-foreground"
+              className="mt-7 flex items-center gap-2 text-sm text-muted-foreground"
             >
               <MapPin className="size-3.5 shrink-0 text-faint" />
               {t.hero.movingTo(site.relocation.to, site.relocation.when)}
             </motion.p>
           </div>
 
-          {/* -------------------------------------------------- topology */}
-          <motion.div
-            variants={rise}
-            className="lg:col-span-6"
-          >
-            <Parallax distance={22}>
-            <Panel className="p-5 sm:p-7">
-              <div className="flex items-baseline justify-between gap-4">
-                <p className="label">{t.hero.topologyLabel}</p>
-                <p className="label hidden sm:block">{t.hero.topologyMode}</p>
-              </div>
-              <NetworkTopology className="mt-6 h-[19rem] sm:h-[21rem]" />
-            </Panel>
-            </Parallax>
+          {/* --------------------------------------------------- portrait */}
+          <motion.div variants={rise} className="lg:col-span-5">
+            <div className="relative mx-auto w-full max-w-[19rem] lg:ml-auto lg:mr-0">
+              {/* A hairline that traces two corners — quiet framing detail. */}
+              <motion.span
+                aria-hidden
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.9, duration: 0.8 }}
+                className="pointer-events-none absolute -right-3 -top-3 size-16 rounded-tr-xl border-r border-t border-accent/40"
+              />
+              <motion.span
+                aria-hidden
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.05, duration: 0.8 }}
+                className="pointer-events-none absolute -bottom-3 -left-3 size-16 rounded-bl-xl border-b border-l border-accent/40"
+              />
+
+              <ImageReveal className="portrait-plate overflow-hidden rounded-xl">
+                <Image
+                  src="/gershon.webp"
+                  alt={`${site.name} — ${site.role}`}
+                  width={840}
+                  height={624}
+                  priority
+                  sizes="(max-width: 1024px) 76vw, 304px"
+                  className="portrait aspect-4/5 w-full object-cover object-top"
+                />
+              </ImageReveal>
+            </div>
           </motion.div>
         </motion.div>
 
-        {/* ------------------------------------------------------- facts */}
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
+        {/* ------------------------------------------------- credential strip */}
+        <motion.dl
+          initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.5 }}
-          className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4"
+          transition={{ duration: 0.6, delay: 0.5, ease: EASE }}
+          className="mt-16 grid grid-cols-2 gap-x-8 gap-y-8 border-t border-border pt-8 md:mt-20 md:grid-cols-4"
         >
           {facts.map((f, i) => (
-            <Panel key={f.label} interactive reactive className="relative p-5">
-              {/* A hairline of colour per card, brightest on the availability
-                  fact — the one a recruiter is scanning for. */}
-              <span
-                aria-hidden
-                className="absolute inset-x-0 top-0 h-px"
-                style={{
-                  background: i === 2 ? "var(--signal)" : "var(--accent)",
-                  opacity: i === 2 ? 0.9 : 0.28,
-                }}
-              />
-              <p className="label">{f.label}</p>
-              <Counter
-                value={f.value}
-                animate={f.countable}
-                className="mt-2.5 block text-xl font-semibold tracking-tight"
-              />
-            </Panel>
+            <motion.div
+              key={f.label}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 + i * 0.07, ease: EASE }}
+            >
+              <dt className="label">{f.label}</dt>
+              <dd className="mt-2.5 text-base font-medium tracking-tight sm:text-lg">
+                <Counter value={f.value} animate={f.countable} />
+              </dd>
+            </motion.div>
           ))}
-        </motion.div>
+        </motion.dl>
 
-        {/* ------------------------------------------- portrait + terminal cue */}
+        {/* ------------------------------------------------ summary + proof */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.65 }}
-          className="mt-3 grid gap-3 sm:grid-cols-3"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7, ease: EASE }}
+          className="mt-14 grid gap-10 lg:grid-cols-12 lg:gap-16"
         >
-          <Panel className="portrait-frame group relative overflow-hidden sm:col-span-1">
-            <ImageReveal className="h-full">
-              <Image
-                src="/gershon.webp"
-                alt={`Portrait of ${site.name}`}
-                width={840}
-                height={624}
-                priority
-                sizes="(max-width: 640px) 100vw, 320px"
-                className="portrait h-full w-full object-cover object-center transition-transform duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.045]"
-              />
-            </ImageReveal>
-          </Panel>
-          <Panel inset className="flex flex-col justify-center gap-2 p-6 sm:col-span-2">
-            <p className="label">{t.common.summary}</p>
-            <p className="text-base leading-relaxed text-muted-foreground">
-              {t.hero.summary}
-            </p>
-          </Panel>
+          <div className="lg:col-span-7">
+            <p className="label">{t.ui.aboutMe}</p>
+            {/* An accent rule beside the paragraph gives it an anchor; a bare
+                block of muted text in open space is what read as lonely. */}
+            <div className="mt-5 border-l-2 border-accent/40 pl-6">
+              <p className="text-lede leading-relaxed text-muted-foreground">
+                {t.hero.summary}
+              </p>
+            </div>
+          </div>
+
+          <div className="lg:col-span-5">
+            <p className="label">{t.ui.verified}</p>
+            <ul className="mt-5 space-y-1">
+              {proof.map((item, i) => (
+                <motion.li
+                  key={item.title}
+                  initial={{ opacity: 0, x: -8 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: 0.5, delay: i * 0.08, ease: EASE }}
+                  className="group flex items-start gap-3.5 rounded-lg px-3 py-3 transition-colors hover:bg-surface-1"
+                >
+                  <item.icon className="mt-0.5 size-4 shrink-0 text-accent" />
+                  <span className="min-w-0">
+                    <span className="block text-sm font-medium">{item.title}</span>
+                    <span className="mt-0.5 block text-xs text-muted-foreground">
+                      {item.sub}
+                    </span>
+                  </span>
+                </motion.li>
+              ))}
+            </ul>
+          </div>
         </motion.div>
       </div>
     </section>

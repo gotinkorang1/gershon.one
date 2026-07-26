@@ -26,7 +26,6 @@ type Dictionary = {
     downloadCv: string;
     getInTouch: string;
     movingTo: (city: string, when: string) => string;
-    topologyLabel: string;
     topologyMode: string;
   };
   facts: { experience: string; currentRole: string; available: string; based: string };
@@ -64,6 +63,9 @@ type Dictionary = {
     keyboardShortcuts: string;
     pressForShortcuts: string;
     sections: string;
+    mainNav: string;
+    mobileNav: string;
+    footerNav: string;
     candidateBrief: string;
     terminalInput: string;
     topologyLabel: string;
@@ -76,6 +78,19 @@ type Dictionary = {
     findTime: string;
     copyEmail: string;
     caseStudyEyebrow: string;
+    certifiedBy: string;
+    educatedAt: string;
+    currentlyAt: string;
+    yearsExperience: string;
+    topologyCaption: string;
+    aboutMe: string;
+    verified: string;
+    proofAws: string;
+    proofAwsSub: string;
+    proofDegree: string;
+    proofDegreeSub: string;
+    proofMsc: string;
+    proofMscSub: string;
     basedIn: (location: string, timezone: string, city: string, when: string) => string;
     noResults: (query: string) => string;
     failedOver: (seconds: string) => string;
@@ -175,7 +190,6 @@ const en: Dictionary = {
     downloadCv: "Download CV",
     getInTouch: "Get in touch",
     movingTo: (city, when) => `Accra, Ghana — moving to ${city}, ${when}`,
-    topologyLabel: "Production topology · Greenhouse",
     topologyMode: "Dual-WAN failover",
   },
   facts: {
@@ -223,6 +237,9 @@ const en: Dictionary = {
     keyboardShortcuts: "Keyboard shortcuts",
     pressForShortcuts: "Press ? for keyboard shortcuts",
     sections: "Sections",
+    mainNav: "Main",
+    mobileNav: "Mobile menu",
+    footerNav: "Footer",
     candidateBrief: "Candidate brief",
     terminalInput: "Terminal input",
     topologyLabel: "Dual-WAN network topology",
@@ -236,6 +253,20 @@ const en: Dictionary = {
     findTime: "Find a time",
     copyEmail: "Copy email address",
     caseStudyEyebrow: "CASE STUDY",
+    certifiedBy: "AWS Certified",
+    educatedAt: "BSc, KNUST",
+    currentlyAt: "Currently",
+    yearsExperience: "Experience",
+    topologyCaption:
+      "A dual-WAN design I have built and maintain: automatic failover between fibre and satellite. Try cutting the fibre link.",
+    aboutMe: "In short",
+    verified: "Verified",
+    proofAws: "AWS Certified Cloud Practitioner",
+    proofAwsSub: "Valid to July 2027",
+    proofDegree: "BSc Information Technology",
+    proofDegreeSub: "KNUST · Second Class Upper",
+    proofMsc: "MSc Computer Science",
+    proofMscSub: "Memorial University · from 2026",
     basedIn: (location, timezone, city, when) =>
       `Based in ${location} (${timezone}), relocating to ${city} in ${when}. Comfortable working across North American and European hours.`,
     noResults: (query) => `No results for “${query}”`,
@@ -341,7 +372,6 @@ const fr: Dictionary = {
     downloadCv: "Télécharger le CV",
     getInTouch: "Me contacter",
     movingTo: (city, when) => `Accra, Ghana — déménagement à ${city}, ${when}`,
-    topologyLabel: "Topologie en production · Greenhouse",
     topologyMode: "Bascule double-WAN",
   },
   facts: {
@@ -389,6 +419,9 @@ const fr: Dictionary = {
     keyboardShortcuts: "Raccourcis clavier",
     pressForShortcuts: "Appuyez sur ? pour les raccourcis clavier",
     sections: "Sections",
+    mainNav: "Main",
+    mobileNav: "Mobile menu",
+    footerNav: "Footer",
     candidateBrief: "Fiche candidat",
     terminalInput: "Saisie du terminal",
     topologyLabel: "Topologie réseau double-WAN",
@@ -402,6 +435,20 @@ const fr: Dictionary = {
     findTime: "Trouver un créneau",
     copyEmail: "Copier l'adresse courriel",
     caseStudyEyebrow: "ÉTUDE DE CAS",
+    certifiedBy: "Certifié AWS",
+    educatedAt: "Licence, KNUST",
+    currentlyAt: "Actuellement",
+    yearsExperience: "Expérience",
+    topologyCaption:
+      "Une architecture double-WAN que j'ai conçue et que je maintiens : bascule automatique entre fibre et satellite. Essayez de couper le lien fibre.",
+    aboutMe: "En bref",
+    verified: "Vérifié",
+    proofAws: "AWS Certified Cloud Practitioner",
+    proofAwsSub: "Valide jusqu'en juillet 2027",
+    proofDegree: "Licence en technologies de l'information",
+    proofDegreeSub: "KNUST · Mention bien",
+    proofMsc: "Maîtrise en informatique",
+    proofMscSub: "Université Memorial · dès 2026",
     basedIn: (location, timezone, city, when) =>
       `Basé à ${location} (${timezone}), déménagement à ${city} en ${when}. À l'aise pour travailler sur les fuseaux nord-américains et européens.`,
     noResults: (query) => `Aucun résultat pour « ${query} »`,

@@ -99,7 +99,7 @@ export default async function CaseStudyPage({
         </div>
 
         <h1 className="mt-5 text-jumbo font-semibold">{study.title}</h1>
-        <p className="mt-5 text-lede text-muted-foreground">{study.summary}</p>
+        <p className="measure mt-5 text-lede text-muted-foreground">{study.summary}</p>
 
         <p className="mt-6 text-sm text-muted-foreground">
           {study.role} · {study.context}
@@ -128,7 +128,7 @@ export default async function CaseStudyPage({
             {section.body.map((para) => (
               <p
                 key={para.slice(0, 40)}
-                className="mt-4 text-base leading-relaxed text-muted-foreground"
+                className="measure mt-4 text-base leading-relaxed text-muted-foreground"
               >
                 {para}
               </p>

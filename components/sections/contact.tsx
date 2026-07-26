@@ -10,6 +10,7 @@ import { site } from "@/lib/site";
 import { Booking } from "@/components/booking";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/components/locale-provider";
+import { Stagger, StaggerItem } from "@/components/fx/stagger";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
@@ -53,7 +54,7 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="shell scroll-mt-24 py-16 md:py-20">
+    <section id="contact" className="shell scroll-mt-24 py-14 md:py-16">
       <SectionHeading
         index="05 — Contact"
         title={t.sections.contactTitle}
@@ -62,7 +63,8 @@ export function Contact() {
 
       <div className="mt-10 grid gap-3 lg:grid-cols-12">
         {/* ------------------------------------------------------- direct */}
-        <div className="grid gap-3 lg:col-span-5">
+        <Stagger className="grid gap-3 lg:col-span-5">
+          <StaggerItem>
           <Panel interactive reactive className="p-5">
             <p className="label flex items-center gap-2">
               <Mail className="size-3" /> {t.contact.email}
@@ -82,6 +84,9 @@ export function Contact() {
             </div>
           </Panel>
 
+          </StaggerItem>
+
+          <StaggerItem>
           <Panel interactive reactive className="p-5">
             <p className="label flex items-center gap-2">
               <Phone className="size-3" /> {t.contact.phone}
@@ -94,7 +99,9 @@ export function Contact() {
             </a>
           </Panel>
 
-          <div className="grid grid-cols-2 gap-3">
+          </StaggerItem>
+
+          <StaggerItem className="grid grid-cols-2 gap-3">
             {[
               { href: site.socials.linkedin, label: "LinkedIn", Icon: Linkedin },
               { href: site.socials.github, label: "GitHub", Icon: Github },
@@ -107,10 +114,13 @@ export function Contact() {
                 </Panel>
               </a>
             ))}
-          </div>
+          </StaggerItem>
 
-          <Booking />
+          <StaggerItem>
+            <Booking />
+          </StaggerItem>
 
+          <StaggerItem>
           <Panel inset className="p-5">
             <p className="label">{t.contact.availability}</p>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
@@ -122,7 +132,8 @@ export function Contact() {
               )}
             </p>
           </Panel>
-        </div>
+          </StaggerItem>
+        </Stagger>
 
         {/* --------------------------------------------------------- form */}
         <Reveal className="lg:col-span-7">

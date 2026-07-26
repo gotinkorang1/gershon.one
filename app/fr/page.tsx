@@ -7,6 +7,7 @@ import { Credentials } from "@/components/sections/credentials";
 import { Contact } from "@/components/sections/contact";
 import { getDictionary } from "@/lib/i18n";
 import { site } from "@/lib/site";
+import { SectionDivider } from "@/components/fx/section-divider";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? site.url;
 const fr = getDictionary("fr");
@@ -31,10 +32,15 @@ export default function FrenchHome() {
   return (
     <>
       <Hero />
+      <SectionDivider />
       <Experience />
+      <SectionDivider />
       <CaseStudies />
+      <SectionDivider />
       <Skills />
+      <SectionDivider />
       <Credentials />
+      <SectionDivider />
       <Contact />
     </>
   );

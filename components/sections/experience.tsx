@@ -38,14 +38,36 @@ function Entry({ job, open, onToggle }: { job: Job; open: boolean; onToggle: () 
 
         <span className="min-w-0 flex-1">
           <span className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <span className="text-lg font-semibold tracking-tight sm:text-xl">
+            {/* A heading, not a span: screen reader users navigate by heading
+                level, and the employment history is the most important content
+                on the page to be able to jump between. */}
+            <h3 className="text-lg font-semibold tracking-tight sm:text-xl">
               {job.role}
-            </span>
+            </h3>
             {job.end === null && <Badge variant="accent">{t.common.current}</Badge>}
           </span>
           <span className="mt-1.5 block text-sm text-muted-foreground">
             {job.company}
           </span>
+        </span>
+
+        {/* A collapsed row was 18% empty across 1166px. Showing the leading
+            technologies previews what expanding reveals, and lets someone
+            scanning for "MikroTik" find the right role without opening any. */}
+        <span className="hidden min-w-0 shrink items-center gap-1.5 lg:flex">
+          {job.stack.slice(0, 3).map((item) => (
+            <span
+              key={item}
+              className="truncate rounded-md border border-border bg-surface-2/60 px-2 py-1 text-[0.6875rem] text-muted-foreground"
+            >
+              {item}
+            </span>
+          ))}
+          {job.stack.length > 3 && (
+            <span className="text-[0.6875rem] text-faint">
+              +{job.stack.length - 3}
+            </span>
+          )}
         </span>
 
         <span className="flex shrink-0 items-center gap-4">
@@ -68,25 +90,44 @@ function Entry({ job, open, onToggle }: { job: Job; open: boolean; onToggle: () 
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden"
           >
-            <div className="border-t border-border px-5 pb-6 pt-5 sm:px-6 sm:pl-[3.25rem]">
-              <p className="label sm:hidden">{span(job)}</p>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:mt-0">
-                {job.summary}
-              </p>
+            {/* Two columns: the constrained measure leaves the right half of a
+                wide card empty, so the stack moves alongside rather than below. */}
+            <div className="grid gap-8 border-t border-border px-5 pb-7 pt-6 sm:px-6 sm:pl-[3.25rem] lg:grid-cols-[minmax(0,1fr)_13rem] lg:gap-12">
+              <div>
+                <p className="label sm:hidden">{span(job)}</p>
+                <p className="measure mt-3 text-sm leading-relaxed text-muted-foreground sm:mt-0">
+                  {job.summary}
+                </p>
 
-              <ul className="mt-5 grid gap-2.5">
-                {job.highlights.map((h) => (
-                  <li key={h} className="flex gap-3 text-sm leading-relaxed text-muted-foreground">
-                    <span className="mt-[0.4375rem] size-1 shrink-0 rounded-full bg-accent" />
-                    {h}
-                  </li>
-                ))}
-              </ul>
+                <ul className="mt-5 grid gap-2.5">
+                  {job.highlights.map((h) => (
+                    <li
+                      key={h}
+                      className="measure flex gap-3 text-sm leading-relaxed text-muted-foreground"
+                    >
+                      <span className="mt-[0.4375rem] size-1 shrink-0 rounded-full bg-accent" />
+                      {h}
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-              <div className="mt-5 flex flex-wrap gap-1.5">
-                {job.stack.map((s) => (
-                  <Badge key={s}>{s}</Badge>
-                ))}
+              <div className="lg:border-l lg:border-border lg:pl-8">
+                <p className="label">{t.common.stack}</p>
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {job.stack.map((item) => (
+                    <Badge key={item}>{item}</Badge>
+                  ))}
+                </div>
+
+                {job.division && (
+                  <div className="mt-6 hidden lg:block">
+                    <p className="label">{job.location}</p>
+                    <p className="mt-2 text-sm leading-snug text-muted-foreground">
+                      {job.division}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </motion.div>
@@ -102,7 +143,7 @@ export function Experience() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="experience" className="shell scroll-mt-24 py-16 md:py-20">
+    <section id="experience" className="shell scroll-mt-24 py-14 md:py-16">
       <SectionHeading
         index="01 — Experience"
         title={t.sections.experienceTitle}

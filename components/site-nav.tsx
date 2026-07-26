@@ -62,6 +62,7 @@ export function SiteNav() {
       <header className="fixed inset-x-0 top-0 z-50 pt-3">
         <div className="shell">
           <nav
+            aria-label={t.ui.mainNav}
             className={cn(
               "flex h-14 items-center justify-between gap-4 rounded-xl px-3 transition-all duration-300 sm:px-4",
               scrolled
@@ -153,7 +154,7 @@ export function SiteNav() {
           open ? "visible opacity-100" : "invisible opacity-0",
         )}
       >
-        <nav className="shell flex h-full flex-col justify-center gap-2">
+        <nav aria-label={t.ui.mobileNav} className="shell flex h-full flex-col justify-center gap-2">
           {navLinks.map((link) => (
             <Link
               key={link.href}

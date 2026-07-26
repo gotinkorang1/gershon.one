@@ -28,8 +28,9 @@ export const site = {
   availability: "Available in Canada from August 2026",
   resumeUrl: "/gershon-otinkorang-cv.pdf",
   socials: {
-    // TODO: confirm these handles
     github: "https://github.com/gotinkorang1",
+    // TODO: unconfirmed — replace with your real LinkedIn URL, or set to ""
+    // to hide the link entirely. A dead profile link is worse than none.
     linkedin: "https://www.linkedin.com/in/gershonotinkorang",
   },
 } as const;

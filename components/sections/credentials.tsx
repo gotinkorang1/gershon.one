@@ -2,13 +2,13 @@
 
 import { ArrowUpRight, Award, GraduationCap } from "lucide-react";
 import { SectionHeading } from "@/components/fx/section-heading";
-import { Reveal } from "@/components/fx/reveal";
 import { Panel } from "@/components/ui/panel";
 import { Badge } from "@/components/ui/badge";
 
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/components/locale-provider";
 import { getCredentials } from "@/lib/localised-content";
+import { Stagger, StaggerItem } from "@/components/fx/stagger";
 
 function monthYear(iso: string, locale: string) {
   return new Date(iso).toLocaleDateString(locale === "fr" ? "fr-CA" : "en-GB", {
@@ -26,18 +26,20 @@ export function Credentials() {
   );
 
   return (
-    <section id="credentials" className="shell scroll-mt-24 py-16 md:py-20">
+    <section id="credentials" className="shell scroll-mt-24 py-14 md:py-16">
       <SectionHeading
         index="04 — Credentials"
         title={t.sections.credentialsTitle}
         description={t.sections.credentialsLede}
       />
 
-      <ol className="relative mt-10">
+      <Stagger as="ol" className="relative mt-10 md:grid md:grid-cols-2 md:gap-x-10">
         {/* The spine. Fades at the end because the timeline is still running. */}
+        {/* Spine only on the single-column layout; it makes no sense across
+            two columns. */}
         <span
           aria-hidden
-          className="absolute bottom-6 left-[15px] top-2 w-px sm:left-[19px]"
+          className="absolute bottom-6 left-[15px] top-2 w-px md:hidden"
           style={{
             background:
               "linear-gradient(180deg, var(--border-strong), var(--border) 70%, transparent)",
@@ -49,12 +51,11 @@ export function Credentials() {
           const expired = c.expires ? new Date(c.expires) < new Date() : false;
 
           return (
-            <Reveal key={`${c.title}-${c.date}`} delay={0.04 * i}>
-              <li className="relative flex gap-4 pb-3 sm:gap-6">
+            <StaggerItem key={`${c.title}-${c.date}`} as="li" className="relative flex gap-4 pb-3 sm:gap-5">
                 {/* Node on the spine */}
                 <span
                   className={cn(
-                    "relative z-10 mt-1 grid size-8 shrink-0 place-items-center rounded-full border sm:size-10",
+                    "relative z-10 mt-1 grid size-8 shrink-0 place-items-center rounded-full border",
                     c.upcoming
                       ? "border-accent/50 bg-accent-quiet"
                       : "border-border bg-surface-2",
@@ -68,7 +69,7 @@ export function Credentials() {
                   />
                 </span>
 
-                <Panel interactive reactive className="min-w-0 flex-1 p-4 sm:p-5">
+                <Panel interactive reactive className="min-w-0 flex-1 p-4">
                   <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
                     <span className="label">{monthYear(c.date, locale)}</span>
                     {c.upcoming && <Badge variant="accent">{t.common.upcoming}</Badge>}
@@ -98,11 +99,10 @@ export function Credentials() {
                     </a>
                   )}
                 </Panel>
-              </li>
-            </Reveal>
+            </StaggerItem>
           );
         })}
-      </ol>
+      </Stagger>
     </section>
   );
 }

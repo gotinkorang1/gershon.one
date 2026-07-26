@@ -7,8 +7,9 @@ import { useMediaQuery, usePrefersReducedMotion } from "@/lib/use-media-query";
 import { useI18n } from "@/components/locale-provider";
 
 /**
- * The dual-WAN topology from the Greenhouse deployment, drawn to scale of the
- * real thing: two upstreams into a CCR2004, VLAN-segmented downstream.
+ * A dual-WAN topology of the kind described in the experience section: two
+ * upstreams into a CCR2004, VLAN-segmented downstream. Deliberately generic —
+ * no client name, no real addressing, no site-specific detail.
  *
  * Clicking "simulate failure" cuts the fibre link and moves traffic to
  * Starlink — the same behaviour the netwatch script performs in production.

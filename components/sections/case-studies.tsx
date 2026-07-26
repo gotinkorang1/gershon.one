@@ -3,28 +3,28 @@
 import Link from "next/link";
 import { ArrowUpRight, Clock } from "lucide-react";
 import { SectionHeading } from "@/components/fx/section-heading";
-import { Reveal } from "@/components/fx/reveal";
 import { Panel } from "@/components/ui/panel";
 import { Badge } from "@/components/ui/badge";
 
 import { useI18n } from "@/components/locale-provider";
 import { getCaseStudies } from "@/lib/localised-content";
+import { Stagger, StaggerItem } from "@/components/fx/stagger";
 
 export function CaseStudies() {
   const { t, locale } = useI18n();
   const caseStudies = getCaseStudies(locale);
 
   return (
-    <section id="work" className="shell scroll-mt-24 py-16 md:py-20">
+    <section id="work" className="shell scroll-mt-24 py-14 md:py-16">
       <SectionHeading
         index="02 — Case studies"
         title={t.sections.workTitle}
         description={t.sections.workLede}
       />
 
-      <div className="mt-10 grid gap-3">
+      <Stagger className="mt-10 grid gap-3">
         {caseStudies.map((study, i) => (
-          <Reveal key={study.slug} delay={0.04 * i}>
+          <StaggerItem key={study.slug}>
             <Link href={`${locale === "fr" ? "/fr" : ""}/work/${study.slug}`} className="block">
               <Panel interactive reactive className="group p-5 sm:p-6">
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
@@ -41,11 +41,15 @@ export function CaseStudies() {
                     <h3 className="text-lg font-semibold tracking-tight sm:text-xl">
                       {study.title}
                     </h3>
-                    <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+                    <span
+                      aria-hidden
+                      className="grow-rule mt-2 block h-px w-full max-w-[14rem] bg-accent/50"
+                    />
+                    <p className="measure mt-2 text-sm leading-relaxed text-muted-foreground">
                       {study.summary}
                     </p>
                   </div>
-                  <ArrowUpRight className="mt-1 size-4 shrink-0 text-faint transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
+                  <ArrowUpRight className="nudge mt-1 size-4 shrink-0 text-faint transition-colors group-hover:text-accent" />
                 </div>
 
                 <div className="mt-4 flex flex-wrap gap-1.5">
@@ -55,9 +59,9 @@ export function CaseStudies() {
                 </div>
               </Panel>
             </Link>
-          </Reveal>
+          </StaggerItem>
         ))}
-      </div>
+      </Stagger>
     </section>
   );
 }

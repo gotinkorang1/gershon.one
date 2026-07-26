@@ -19,7 +19,7 @@ function doc(d: Omit<SearchDoc, "haystack"> & { body: string }): SearchDoc {
   };
 }
 
-export const searchIndex: SearchDoc[] = [
+const searchIndex: SearchDoc[] = [
   ...experience.map((j) =>
     doc({
       id: `job-${j.company}-${j.start}`,

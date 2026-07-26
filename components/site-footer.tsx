@@ -22,7 +22,7 @@ export function SiteFooter() {
             </p>
           </div>
 
-          <nav className="md:col-span-3">
+          <nav aria-label={t.ui.footerNav} className="md:col-span-3">
             <p className="label">{t.ui.sections}</p>
             <ul className="mt-3.5 space-y-2">
               {navLinks.map((l) => (
