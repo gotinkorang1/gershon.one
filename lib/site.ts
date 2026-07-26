@@ -29,9 +29,7 @@ export const site = {
   resumeUrl: "/gershon-otinkorang-cv.pdf",
   socials: {
     github: "https://github.com/gotinkorang1",
-    // TODO: unconfirmed — replace with your real LinkedIn URL, or set to ""
-    // to hide the link entirely. A dead profile link is worse than none.
-    linkedin: "https://www.linkedin.com/in/gershonotinkorang",
+    linkedin: "https://www.linkedin.com/in/gotinkorang",
   },
 } as const;
 
