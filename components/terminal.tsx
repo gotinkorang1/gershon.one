@@ -92,7 +92,7 @@ export function Terminal({ className }: { className?: string }) {
     cv: {
       help: t.ui.terminal.cv,
       run: () => {
-        window.open(site.resumeUrl, "_blank");
+        window.open(site.resumeUrl, "_blank", "noopener,noreferrer");
         return [{ kind: "out", text: "Opening CV…" }];
       },
     },

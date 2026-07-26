@@ -10,6 +10,8 @@ import { NextResponse } from "next/server";
 
 export const revalidate = 3600;
 
+const FETCH_TIMEOUT_MS = 8000;
+
 type Day = { date: string; count: number; level: 0 | 1 | 2 | 3 | 4 };
 
 type GraphQLResponse = {
@@ -46,9 +48,29 @@ const LEVELS: Record<string, Day["level"]> = {
   FOURTH_QUARTILE: 4,
 };
 
+/**
+ * Deliberately takes no `request` argument.
+ *
+ * Reading headers (for per-IP rate limiting) opts the route into dynamic
+ * rendering, which discards `revalidate` — so every request would reach
+ * GitHub, which is exactly the abuse the rate limit was meant to prevent.
+ * Route-level caching is the stronger control here: it bounds outbound calls
+ * to one per hour regardless of how many requests arrive.
+ */
 export async function GET() {
   const username = process.env.GITHUB_USERNAME;
   const token = process.env.GITHUB_TOKEN;
+
+  // Interpolated into a URL path. GitHub handles are alphanumeric with
+  // hyphens; rejecting anything else prevents a misconfigured value from
+  // altering the request path.
+  if (username && !/^[a-zA-Z0-9](?:[a-zA-Z0-9]|-(?=[a-zA-Z0-9])){0,38}$/.test(username)) {
+    console.error("[github] GITHUB_USERNAME is not a valid handle; ignoring.");
+    return NextResponse.json(
+      { configured: false, reason: "Invalid username configured." },
+      { status: 200 },
+    );
+  }
 
   if (!username) {
     return NextResponse.json(
@@ -71,6 +93,7 @@ export async function GET() {
       const res = await fetch("https://api.github.com/graphql", {
         method: "POST",
         headers: { ...headers, "Content-Type": "application/json" },
+        signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
         body: JSON.stringify({
           query: `query($login:String!){
             user(login:$login){
@@ -110,7 +133,7 @@ export async function GET() {
   try {
     const res = await fetch(
       `https://api.github.com/users/${username}/events/public?per_page=8`,
-      { headers, next: { revalidate } },
+      { headers, next: { revalidate }, signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) },
     );
     if (res.ok) {
       const json = (await res.json()) as GitHubEvent[];

@@ -95,7 +95,7 @@ export function CommandPalette() {
         group: "Actions",
         icon: <FileText className="size-4" />,
         run: () => {
-          window.open(resumeUrlFor(locale), "_blank", "noopener");
+          window.open(resumeUrlFor(locale), "_blank", "noopener,noreferrer");
           close();
         },
       },
@@ -121,7 +121,7 @@ export function CommandPalette() {
         group: "Links",
         icon: <Github className="size-4" />,
         run: () => {
-          window.open(site.socials.github, "_blank", "noopener");
+          window.open(site.socials.github, "_blank", "noopener,noreferrer");
           close();
         },
       },
@@ -131,7 +131,7 @@ export function CommandPalette() {
         group: "Links",
         icon: <Linkedin className="size-4" />,
         run: () => {
-          window.open(site.socials.linkedin, "_blank", "noopener");
+          window.open(site.socials.linkedin, "_blank", "noopener,noreferrer");
           close();
         },
       },
@@ -155,8 +155,13 @@ export function CommandPalette() {
       close();
       if (doc.href.startsWith("#")) {
         document.querySelector(doc.href)?.scrollIntoView({ behavior: "smooth" });
-      } else {
+      } else if (doc.href.startsWith("/") && !doc.href.startsWith("//")) {
+        // Same-origin paths only. Rejecting "//" and absolute URLs keeps this
+        // navigation sink from becoming an open redirect if the index ever
+        // carries external or user-supplied values.
         window.location.href = doc.href;
+      } else {
+        console.warn("[palette] refused non-relative navigation:", doc.href);
       }
     },
     [close],

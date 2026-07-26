@@ -80,7 +80,7 @@ export function KeyboardShortcuts() {
         return;
       }
       if (key === "v") {
-        window.open(site.resumeUrl, "_blank");
+        window.open(site.resumeUrl, "_blank", "noopener,noreferrer");
       }
     };
 

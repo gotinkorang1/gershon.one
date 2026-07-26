@@ -61,6 +61,16 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        // API responses are per-request. A shared cache holding a 429 would
+        // lock out everyone behind that proxy; holding a form result is worse.
+        source: "/api/:path*",
+        headers: [
+          { key: "Cache-Control", value: "no-store, no-cache, must-revalidate" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+        ],
+      },
+      {
         // Static PDFs are framed by the CV viewer, so they must not carry the
         // page-level frame restrictions. Scoped tightly to these two files.
         source: "/:file(gershon-otinkorang-cv(?:-fr)?\\.pdf)",
@@ -90,6 +100,8 @@ const nextConfig: NextConfig = {
           },
           { key: "X-DNS-Prefetch-Control", value: "on" },
           { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
+          // Stops other origins embedding this site's assets as subresources.
+          { key: "Cross-Origin-Resource-Policy", value: "same-origin" },
         ],
       },
     ];
