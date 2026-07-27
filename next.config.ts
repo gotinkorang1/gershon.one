@@ -25,6 +25,8 @@ const scriptSrc = [
   isDev ? "'unsafe-eval'" : "",
   "https://us-assets.i.posthog.com",
   "https://us.i.posthog.com",
+  // Cloudflare Turnstile
+  "https://challenges.cloudflare.com",
 ]
   .filter(Boolean)
   .join(" ");
@@ -40,7 +42,8 @@ const csp = [
   }`,
   "form-action 'self'",
   // Some browsers route inline PDF rendering through a frame.
-  "frame-src 'self'",
+  // Turnstile renders its challenge inside a frame.
+  "frame-src 'self' https://challenges.cloudflare.com",
   // 'self', not 'none': the CV viewer frames a PDF served from this origin.
   // Cross-origin framing — the clickjacking risk — is still refused.
   "frame-ancestors 'self'",

@@ -11,6 +11,7 @@ import { Booking } from "@/components/booking";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/components/locale-provider";
 import { Stagger, StaggerItem } from "@/components/fx/stagger";
+import { Turnstile } from "@/components/turnstile";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
@@ -21,6 +22,8 @@ export function Contact() {
   const { t } = useI18n();
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
+  // Bumped after every attempt so the single-use Turnstile token is refreshed.
+  const [captchaNonce, setCaptchaNonce] = useState(0);
   const [copied, setCopied] = useState(false);
 
   async function copyEmail() {
@@ -47,9 +50,11 @@ export function Contact() {
       if (!res.ok || !data.ok) throw new Error(data.error ?? t.ui.somethingWentWrong);
       setStatus("sent");
       formEl.reset();
+      setCaptchaNonce((n) => n + 1);
     } catch (err) {
       setStatus("error");
       setError(err instanceof Error ? err.message : t.ui.somethingWentWrong);
+      setCaptchaNonce((n) => n + 1);
     }
   }
 
@@ -193,6 +198,9 @@ export function Contact() {
                   className={cn(inputClass, "mt-2 resize-none")}
                 />
               </div>
+
+              {/* Invisible for nearly all visitors; renders nothing without a key. */}
+              <Turnstile resetSignal={captchaNonce} />
 
               {/* Honeypot — hidden from humans, catches naive bots. */}
               <input

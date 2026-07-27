@@ -1,12 +1,63 @@
 import { NextResponse } from "next/server";
 import { site } from "@/lib/site";
 
+/**
+ * Verifies a Turnstile token with Cloudflare.
+ *
+ * The widget on its own proves nothing — anyone can POST directly to this
+ * endpoint and skip the browser entirely. Server-side verification is the
+ * control; the widget is only how a real visitor obtains a token.
+ *
+ * Returns true when no secret is configured, so the form keeps working in
+ * development and in deployments without Turnstile set up.
+ */
+async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+  if (!secret) return true;
+
+  if (!token) return false;
+
+  try {
+    const res = await fetch(
+      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          secret,
+          response: token,
+          // Binding the token to the requesting IP stops a token harvested
+          // elsewhere being replayed from another host.
+          remoteip: ip,
+        }),
+        signal: AbortSignal.timeout(8000),
+      },
+    );
+
+    if (!res.ok) {
+      console.error("[contact] Turnstile siteverify returned", res.status);
+      return false;
+    }
+
+    const data = (await res.json()) as { success?: boolean; "error-codes"?: string[] };
+    if (!data.success) {
+      console.warn("[contact] Turnstile rejected:", data["error-codes"]?.join(", "));
+    }
+    return data.success === true;
+  } catch (err) {
+    // A Cloudflare outage should not silently disable the check.
+    console.error("[contact] Turnstile verification failed:", err);
+    return false;
+  }
+}
+
 type Payload = {
   name?: unknown;
   email?: unknown;
   subject?: unknown;
   message?: unknown;
   company?: unknown; // honeypot
+  turnstileToken?: unknown;
 };
 
 const LIMIT = 5;
@@ -88,6 +139,15 @@ export async function POST(request: Request) {
 
   // Bot filled the hidden field — report success and drop it silently.
   if (asString(body.company)) return NextResponse.json({ ok: true });
+
+  // Checked before validation so a bot learns nothing about field rules.
+  const verified = await verifyTurnstile(asString(body.turnstileToken), ip);
+  if (!verified) {
+    return NextResponse.json(
+      { ok: false, error: "Verification failed. Please reload and try again." },
+      { status: 403 },
+    );
+  }
 
   const name = asString(body.name).trim();
   const email = asString(body.email).trim();
