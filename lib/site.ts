@@ -20,7 +20,10 @@ export const site = {
   email: "contact@gershon.one",
   phone: "+233 (0) 55 466 4733",
   phoneHref: "+233554664733",
-  url: "https://gershon.one",
+  // Must match the host Vercel actually serves. The apex redirects to www, so
+  // www is canonical — every canonical tag, og:url, sitemap entry and the
+  // robots.txt Host directive derive from this one value.
+  url: "https://www.gershon.one",
   headline:
     "I keep networks, servers and ERP systems running for organisations that cannot afford downtime.",
   summary:
