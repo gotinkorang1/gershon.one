@@ -12,7 +12,7 @@ import { site } from "@/lib/site";
  * development and in deployments without Turnstile set up.
  */
 async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
-  const secret = process.env.TURNSTILE_SECRET_KEY;
+  const secret = process.env.TURNSTILE_SECRET;
   if (!secret) return true;
 
   if (!token) return false;

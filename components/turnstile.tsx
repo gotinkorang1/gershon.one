@@ -13,6 +13,7 @@ declare global {
           callback: (token: string) => void;
           "error-callback"?: () => void;
           "expired-callback"?: () => void;
+          action?: string;
           theme?: "light" | "dark" | "auto";
           language?: string;
           appearance?: "always" | "execute" | "interaction-only";
@@ -45,7 +46,12 @@ export function Turnstile({
   resetSignal?: number;
 }) {
   const { locale } = useI18n();
-  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  // The sitekey is public — it is served to every visitor in the page source,
+  // so committing it leaks nothing. Defaulting to the real widget means the
+  // integration works even if the env var is missing at build time, which is
+  // the failure mode that made this render nothing at all.
+  const siteKey =
+    process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "0x4AAAAAAD--g5iiVpNCZD1B";
   const ref = useRef<HTMLDivElement>(null);
   const widgetId = useRef<string | null>(null);
   const [token, setToken] = useState("");
@@ -59,6 +65,8 @@ export function Turnstile({
       if (!window.turnstile || widgetId.current) return;
       widgetId.current = window.turnstile.render(container, {
         sitekey: siteKey,
+        // Aggregate activation telemetry, per the Turnstile Spin skill.
+        action: "turnstile-spin-v2",
         theme: "auto",
         language: locale === "fr" ? "fr" : "en",
         appearance: "interaction-only",
@@ -111,11 +119,26 @@ export function Turnstile({
     }
   }, [resetSignal]);
 
-  if (!siteKey) return null;
+  if (!siteKey) {
+    // Silently rendering nothing made a missing key indistinguishable from a
+    // working widget. In development the absence is now stated plainly; in
+    // production it stays invisible so a visitor never sees configuration
+    // detail, and the server still accepts submissions.
+    if (process.env.NODE_ENV === "development") {
+      return (
+        <p className="text-xs text-warn">
+          Turnstile inactive — NEXT_PUBLIC_TURNSTILE_SITE_KEY is not set.
+        </p>
+      );
+    }
+    return null;
+  }
 
   return (
-    <div>
-      <div ref={ref} className="min-h-0" />
+    <div className="min-h-[65px]">
+      {/* Reserves the widget's height so the form does not shift when the
+          challenge finishes loading. */}
+      <div ref={ref} />
       <input type="hidden" name="turnstileToken" value={token} readOnly />
     </div>
   );
