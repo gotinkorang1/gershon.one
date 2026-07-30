@@ -200,7 +200,7 @@ export const termsFr: Record<string, string> = {
   "POS systems": "Systèmes de caisse",
   "Remote support": "Support à distance",
   // Networking
-  "Dual-WAN failover": "Bascule double-WAN",
+  "Aggregated multi-WAN": "Multi-WAN agrégé",
   "Bandwidth queuing": "Gestion de bande passante",
   "Firewall hardening": "Durcissement du pare-feu",
   "Starlink deployment": "Déploiement Starlink",
