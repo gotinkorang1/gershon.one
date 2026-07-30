@@ -179,6 +179,41 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  /* Any view transition collapses to an instant swap. */
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*  View Transitions                                                          */
+/*                                                                            */
+/*  The theme toggle animates ::view-transition-new(root) itself (a circular  */
+/*  clip expanding from the button), so the browser's default root cross-fade */
+/*  is switched off and the incoming theme is layered above the outgoing one. */
+/*  Named element morphs (e.g. case-study titles) keep their own animation.   */
+/* -------------------------------------------------------------------------- */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) { z-index: 0; }
+::view-transition-new(root) { z-index: 1; }
+
+/* -------------------------------------------------------------------------- */
+/*  Focus                                                                     */
+/*                                                                            */
+/*  One keyboard-focus ring for every interactive element. Only :focus-visible */
+/*  so it never shows on mouse clicks. :where() holds specificity at zero, so  */
+/*  a component can still opt out or restyle. The outline follows each          */
+/*  element's own border-radius and offsets outward, so it never shifts layout. */
+/* -------------------------------------------------------------------------- */
+:where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -279,6 +314,12 @@
   transform: translateY(-3px);
   border-color: var(--border-strong);
   box-shadow: var(--shadow-lg);
+}
+/* Presses back down toward the page on click — a small tactile confirmation
+   that the whole card is the control. */
+.panel-interactive:active {
+  transform: translateY(-1px);
+  transition-duration: 0.1s;
 }
 
 /* A hairline of accent that wipes across the top edge on hover. Cheap —
