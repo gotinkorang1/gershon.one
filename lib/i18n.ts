@@ -100,10 +100,13 @@ type Dictionary = {
     proofMscSub: string;
     basedIn: (location: string, timezone: string, city: string, when: string) => string;
     noResults: (query: string) => string;
-    failedOver: (seconds: string) => string;
-    failedOverAnnounce: (seconds: string) => string;
-    wansHealthy: string;
+    failedOver: (seconds: string, live: string) => string;
+    failedOverAnnounce: (seconds: string, live: string) => string;
+    wansHealthy: (live: string) => string;
     linkDown: string;
+    terminalDown: string;
+    allUplinksDown: string;
+    allUplinksDownAnnounce: string;
     switchToEnglish: string;
     switchToFrench: string;
     terminalIntro: (location: string, city: string, when: string) => string;
@@ -117,6 +120,7 @@ type Dictionary = {
     topologyDescHealthy: string;
     simulateFailure: string;
     restoreLink: string;
+    uplinkCount: (n: string) => string;
     somethingWentWrong: string;
     sendEmail: string;
     viewCv: string;
@@ -199,7 +203,7 @@ const en: Dictionary = {
     downloadCv: "Download CV",
     getInTouch: "Get in touch",
     movingTo: (city, when) => `Accra, Ghana — moving to ${city}, ${when}`,
-    topologyMode: "Dual-WAN failover",
+    topologyMode: "Aggregated multi-WAN",
   },
   facts: {
     experience: "Experience",
@@ -251,7 +255,7 @@ const en: Dictionary = {
     footerNav: "Footer",
     candidateBrief: "Candidate brief",
     terminalInput: "Terminal input",
-    topologyLabel: "Dual-WAN network topology",
+    topologyLabel: "Aggregated multi-WAN network topology",
     githubActivity: "GitHub activity",
     recentEvents: "Recent public events",
     githubFallback: "Code and infrastructure notes on GitHub",
@@ -267,7 +271,7 @@ const en: Dictionary = {
     currentlyAt: "Currently",
     yearsExperience: "Experience",
     topologyCaption:
-      "A dual-WAN design I have built and maintain: automatic failover between fibre and satellite. Try cutting the fibre link.",
+      "A design I built and maintain: eight satellite terminals bonded into one uplink, feeding fibre across a 1,200-acre site. Drop a terminal and watch capacity rebalance instead of cutting over.",
     aboutMe: "In short",
     relocationWhen: "August 2026",
     present: "Present",
@@ -286,11 +290,16 @@ const en: Dictionary = {
     basedIn: (location, timezone, city, when) =>
       `Based in ${location} (${timezone}), relocating to ${city} in ${when}. Comfortable working across North American and European hours.`,
     noResults: (query) => `No results for “${query}”`,
-    failedOver: (seconds) => `Failed over to Starlink · ${seconds}s`,
-    failedOverAnnounce: (seconds) =>
-      `Fibre link down. Failed over to Starlink after ${seconds} seconds.`,
-    wansHealthy: "Live · both WANs healthy",
+    failedOver: (seconds, live) =>
+      `Rebalanced across ${live} uplinks · ${seconds}s`,
+    failedOverAnnounce: (seconds, live) =>
+      `Terminal offline. Traffic rebalanced across ${live} remaining uplinks in ${seconds} seconds.`,
+    wansHealthy: (live) => `Live · ${live} of 8 uplinks healthy`,
     linkDown: "Link down",
+    terminalDown: "Terminal down",
+    allUplinksDown: "All uplinks down · site offline",
+    allUplinksDownAnnounce:
+      "All eight terminals are offline. The site has no upstream connectivity.",
     switchToEnglish: "Switch to English",
     switchToFrench: "Passer en français",
     terminalIntro: (location, city, when) =>
@@ -302,11 +311,12 @@ const en: Dictionary = {
     switchToDarkTheme: "Switch to dark theme",
     toggleTheme: "Toggle theme",
     topologyDescFailed:
-      "Fibre primary WAN is down. Traffic has failed over to the Starlink backup WAN. The CCR2004 router continues to serve four VLANs: staff, ERP, CCTV and guest.",
+      "One satellite terminal is offline. Traffic has rebalanced across the remaining uplinks with no interruption downstream. The MikroTik router continues to feed the core switch, and fibre carries service across the site to factories, CCTV, point of sale and off-site links.",
     topologyDescHealthy:
-      "Fibre is the active primary WAN and Starlink stands by as backup. Both feed a MikroTik CCR2004 running RouterOS 7, which serves four VLANs: staff, ERP, CCTV and guest.",
-    simulateFailure: "Simulate fibre failure",
-    restoreLink: "Restore fibre link",
+      "Eight satellite terminals aggregate into a MikroTik router across eight WAN ports. The router feeds a Huawei core switch, then a GPON distribution layer with one-to-four splitters, which carries fibre across the site to factories, CCTV, point of sale and off-site links.",
+    simulateFailure: "Drop a terminal",
+    restoreLink: "Restore terminal",
+    uplinkCount: (n) => `${n} × WAN`,
     somethingWentWrong: "Something went wrong.",
     sendEmail: "Send an email",
     viewCv: "View CV",
@@ -390,7 +400,7 @@ const fr: Dictionary = {
     downloadCv: "Télécharger le CV",
     getInTouch: "Me contacter",
     movingTo: (city, when) => `Accra, Ghana — déménagement à ${city}, ${when}`,
-    topologyMode: "Bascule double-WAN",
+    topologyMode: "Multi-WAN agrégé",
   },
   facts: {
     experience: "Expérience",
@@ -442,7 +452,7 @@ const fr: Dictionary = {
     footerNav: "Footer",
     candidateBrief: "Fiche candidat",
     terminalInput: "Saisie du terminal",
-    topologyLabel: "Topologie réseau double-WAN",
+    topologyLabel: "Topologie réseau multi-WAN agrégée",
     githubActivity: "Activité GitHub",
     recentEvents: "Activité publique récente",
     githubFallback: "Code et notes d'infrastructure sur GitHub",
@@ -458,7 +468,7 @@ const fr: Dictionary = {
     currentlyAt: "Actuellement",
     yearsExperience: "Expérience",
     topologyCaption:
-      "Une architecture double-WAN que j'ai conçue et que je maintiens : bascule automatique entre fibre et satellite. Essayez de couper le lien fibre.",
+      "Une architecture que j'ai conçue et que je maintiens : huit terminaux satellite agrégés en une seule liaison, alimentant la fibre sur un site de 1 200 acres. Coupez un terminal et observez la capacité se rééquilibrer au lieu de basculer.",
     aboutMe: "En bref",
     relocationWhen: "août 2026",
     present: "aujourd'hui",
@@ -477,11 +487,16 @@ const fr: Dictionary = {
     basedIn: (location, timezone, city, when) =>
       `Basé à ${location} (${timezone}), déménagement à ${city} en ${when}. À l'aise pour travailler sur les fuseaux nord-américains et européens.`,
     noResults: (query) => `Aucun résultat pour « ${query} »`,
-    failedOver: (seconds) => `Bascule vers Starlink · ${seconds} s`,
-    failedOverAnnounce: (seconds) =>
-      `Lien fibre hors service. Bascule vers Starlink après ${seconds} secondes.`,
-    wansHealthy: "En direct · les deux liens WAN sont sains",
+    failedOver: (seconds, live) =>
+      `Rééquilibrage sur ${live} liaisons · ${seconds} s`,
+    failedOverAnnounce: (seconds, live) =>
+      `Terminal hors service. Trafic rééquilibré sur ${live} liaisons restantes en ${seconds} secondes.`,
+    wansHealthy: (live) => `En direct · ${live} liaisons sur 8 sont saines`,
     linkDown: "Lien hors service",
+    terminalDown: "Terminal hors service",
+    allUplinksDown: "Toutes les liaisons hors service · site déconnecté",
+    allUplinksDownAnnounce:
+      "Les huit terminaux sont hors service. Le site n'a plus de connectivité amont.",
     switchToEnglish: "Switch to English",
     switchToFrench: "Passer en français",
     terminalIntro: (location, city, when) =>
@@ -493,11 +508,12 @@ const fr: Dictionary = {
     switchToDarkTheme: "Passer au thème sombre",
     toggleTheme: "Changer de thème",
     topologyDescFailed:
-      "Le lien fibre principal est hors service. Le trafic a basculé vers le lien Starlink de secours. Le routeur CCR2004 continue de desservir quatre VLAN : personnel, ERP, vidéosurveillance et invités.",
+      "Un terminal satellite est hors service. Le trafic s'est rééquilibré sur les liaisons restantes sans interruption en aval. Le routeur MikroTik continue d'alimenter le commutateur central, et la fibre dessert le site : usines, vidéosurveillance, points de vente et liaisons distantes.",
     topologyDescHealthy:
-      "La fibre est le lien WAN principal actif et Starlink reste en secours. Les deux alimentent un MikroTik CCR2004 sous RouterOS 7, qui dessert quatre VLAN : personnel, ERP, vidéosurveillance et invités.",
-    simulateFailure: "Simuler une panne de fibre",
-    restoreLink: "Rétablir le lien fibre",
+      "Huit terminaux satellite sont agrégés sur un routeur MikroTik via huit ports WAN. Le routeur alimente un commutateur central Huawei, puis une couche de distribution GPON avec des répartiteurs un vers quatre, qui achemine la fibre sur le site : usines, vidéosurveillance, points de vente et liaisons distantes.",
+    simulateFailure: "Couper un terminal",
+    restoreLink: "Rétablir le terminal",
+    uplinkCount: (n) => `${n} × WAN`,
     somethingWentWrong: "Une erreur est survenue.",
     sendEmail: "Envoyer un courriel",
     viewCv: "Consulter le CV",
