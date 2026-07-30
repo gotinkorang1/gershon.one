@@ -50,10 +50,15 @@ export function Contact() {
       if (!res.ok || !data.ok) throw new Error(data.error ?? t.ui.somethingWentWrong);
       setStatus("sent");
       formEl.reset();
-      setCaptchaNonce((n) => n + 1);
+      // Deliberately no nonce bump here. Resetting the widget starts a fresh
+      // challenge, and Cloudflare may decide to show the checkbox on that
+      // pass — which surfaced a challenge next to the success message, on a
+      // form that is already disabled. The token is single-use, but there is
+      // nothing left to submit, so nothing needs re-arming.
     } catch (err) {
       setStatus("error");
       setError(err instanceof Error ? err.message : t.ui.somethingWentWrong);
+      // Only re-arm on failure, where the user can genuinely try again.
       setCaptchaNonce((n) => n + 1);
     }
   }
@@ -199,8 +204,11 @@ export function Contact() {
                 />
               </div>
 
-              {/* Invisible for nearly all visitors; renders nothing without a key. */}
-              <Turnstile resetSignal={captchaNonce} />
+              {/* Invisible for nearly all visitors; renders nothing without a key.
+                  Unmounted once the message is sent: a challenge that resolves
+                  after submission has nothing left to guard, and rendering one
+                  beside the success message reads as unfinished work. */}
+              {status !== "sent" && <Turnstile resetSignal={captchaNonce} />}
 
               {/* Honeypot — hidden from humans, catches naive bots. */}
               <input
