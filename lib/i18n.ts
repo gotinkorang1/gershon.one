@@ -51,6 +51,7 @@ type Dictionary = {
     stack: string;
     minRead: string;
     allCaseStudies: string;
+    viewSource: string;
     summary: string;
   };
   ui: {
@@ -238,6 +239,7 @@ const en: Dictionary = {
     stack: "Stack",
     minRead: "min read",
     allCaseStudies: "All case studies",
+    viewSource: "View the source on GitHub",
     summary: "Summary",
   },
   ui: {
@@ -435,6 +437,7 @@ const fr: Dictionary = {
     stack: "Technologies",
     minRead: "min de lecture",
     allCaseStudies: "Toutes les études de cas",
+    viewSource: "Voir le code source sur GitHub",
     summary: "Résumé",
   },
   ui: {

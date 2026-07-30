@@ -35,10 +35,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...caseStudies
       .filter((c) => !c.draft)
       .map((c) => ({
-      url: `${base}/work/${c.slug}`,
-      lastModified: new Date(c.published),
-      changeFrequency: "yearly" as const,
+        url: `${base}/work/${c.slug}`,
+        lastModified: new Date(c.published),
+        changeFrequency: "yearly" as const,
         priority: 0.7,
+        // Each study is published at /work/… and /fr/work/…. Without this the
+        // two read as unrelated pages competing for the same content rather
+        // than as translations of one another.
+        alternates: {
+          languages: {
+            "en-CA": `${base}/work/${c.slug}`,
+            "fr-CA": `${base}/fr/work/${c.slug}`,
+            "x-default": `${base}/work/${c.slug}`,
+          },
+        },
       })),
   ];
 }
