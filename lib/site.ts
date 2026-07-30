@@ -28,6 +28,11 @@ export const site = {
     "I keep the systems people depend on working — from a jammed printer to a fibre backbone across 1,200 acres.",
   summary:
     "IT support specialist with five years keeping users, devices and infrastructure running across a 1,200-acre industrial park and multiple retail sites in Ghana. Day to day that means end-user support, POS and PDA systems, and the servers behind them; it has also meant designing the campus fibre network and the multi-WAN satellite link that carries it. Comfortable at both ends — the helpdesk ticket and the distribution panel.",
+  // Search-snippet length (~155 chars). `summary` above is the on-page bio and
+  // runs far past what Google shows, so the meta description is authored
+  // separately — leading with the strongest hook before the truncation point.
+  metaDescription:
+    "IT support specialist who runs the helpdesk and the fibre backbone — 5 years across a 1,200-acre park in Ghana. Relocating to St. John's, Canada, Aug 2026.",
   availability: "Available in Canada from August 2026",
   /**
    * When the page content last meaningfully changed — bump by hand when you

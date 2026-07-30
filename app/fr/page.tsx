@@ -14,7 +14,9 @@ const fr = getDictionary("fr");
 
 export const metadata: Metadata = {
   title: `${site.shortName} — ${fr.hero.role}`,
-  description: fr.hero.summary,
+  // The on-page bio (fr.hero.summary) runs ~460 chars; the search snippet uses
+  // the purpose-authored 155-char version so the SERP doesn't truncate.
+  description: fr.ui.metaDescription,
   alternates: {
     canonical: "/fr",
     languages: {
@@ -27,7 +29,7 @@ export const metadata: Metadata = {
     type: "profile",
     url: `${siteUrl}/fr`,
     title: `${site.shortName} — ${fr.hero.role}`,
-    description: fr.hero.summary,
+    description: fr.ui.metaDescription,
     locale: "fr_CA",
   },
   // Without this the Twitter card inherits the English values from the root
@@ -36,7 +38,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: `${site.shortName} — ${fr.hero.role}`,
-    description: fr.hero.summary,
+    description: fr.ui.metaDescription,
   },
 };
 
