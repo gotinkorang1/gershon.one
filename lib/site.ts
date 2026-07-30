@@ -383,11 +383,13 @@ export const credentials: Credential[] = [
     kind: "degree",
   },
   {
-    // TODO: confirm the exact course title on this Google certificate
     title: "Google Digital Skills",
     issuer: "Google",
     date: "2020-10-04",
-    verifyUrl: "https://learndigital.withgoogle.com/link/1ar27gu2qdc",
+    // Google retired the Digital Garage certificate validator — every
+    // learndigital.withgoogle.com link now redirects to grow.google — so
+    // "verify" points to the LinkedIn certifications section instead.
+    verifyUrl: "https://www.linkedin.com/in/gotinkorang/details/certifications/",
     kind: "certification",
   },
 ];
