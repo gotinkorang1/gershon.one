@@ -33,7 +33,7 @@ const title = `${site.shortName} — ${site.role}`;
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: { default: title, template: `%s — ${site.shortName}` },
-  description: site.summary,
+  description: site.metaDescription,
   // meta keywords is ignored by Google and can be read as spam by Bing, so it
   // is deliberately absent. Relevance comes from the page copy, headings and
   // structured data instead.
@@ -57,10 +57,10 @@ export const metadata: Metadata = {
     url: siteUrl,
     siteName: site.name,
     title,
-    description: site.summary,
+    description: site.metaDescription,
     locale: "en_CA",
   },
-  twitter: { card: "summary_large_image", title, description: site.summary },
+  twitter: { card: "summary_large_image", title, description: site.metaDescription },
   robots: {
     index: true,
     follow: true,

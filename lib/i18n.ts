@@ -85,6 +85,7 @@ type Dictionary = {
     yearsExperience: string;
     topologyCaption: string;
     aboutMe: string;
+    metaDescription: string;
     relocationWhen: string;
     present: string;
     eyebrowExperience: string;
@@ -275,6 +276,8 @@ const en: Dictionary = {
     topologyCaption:
       "A design I built and maintain: eight satellite terminals bonded into one uplink, feeding fibre across a 1,200-acre site. Drop a terminal and watch capacity rebalance instead of cutting over.",
     aboutMe: "In short",
+    metaDescription:
+      "IT support specialist who runs the helpdesk and the fibre backbone — 5 years across a 1,200-acre park in Ghana. Relocating to St. John's, Canada, Aug 2026.",
     relocationWhen: "August 2026",
     present: "Present",
     eyebrowExperience: "01 — Experience",
@@ -473,6 +476,8 @@ const fr: Dictionary = {
     topologyCaption:
       "Une architecture que j'ai conçue et que je maintiens : huit terminaux satellite agrégés en une seule liaison, alimentant la fibre sur un site de 1 200 acres. Coupez un terminal et observez la capacité se rééquilibrer au lieu de basculer.",
     aboutMe: "En bref",
+    metaDescription:
+      "Spécialiste du support informatique — du helpdesk à la dorsale fibre. 5 ans sur un parc de 1 200 acres au Ghana. Départ pour St. John's, Canada, août 2026.",
     relocationWhen: "août 2026",
     present: "aujourd'hui",
     eyebrowExperience: "01 — Expérience",
