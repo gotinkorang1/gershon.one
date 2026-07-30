@@ -4,10 +4,14 @@ import { caseStudies } from "@/lib/case-studies";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? site.url;
+  // A hand-bumped content date, not `new Date()`. Building at deploy time
+  // stamped every page "changed today" on every deploy, so crawlers learned to
+  // ignore the field. This changes only when the content actually does.
+  const updated = new Date(site.contentUpdated);
   return [
     {
       url: base,
-      lastModified: new Date(),
+      lastModified: updated,
       changeFrequency: "monthly",
       priority: 1,
       alternates: {
@@ -20,7 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${base}/fr`,
-      lastModified: new Date(),
+      lastModified: updated,
       changeFrequency: "monthly" as const,
       priority: 0.9,
       alternates: {
