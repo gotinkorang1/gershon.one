@@ -13,50 +13,55 @@ export const caseStudiesFr: Record<
     outcomes: string[];
   }
 > = {
-  "dual-wan-starlink-failover": {
-    title: "Bascule automatique entre la fibre et Starlink",
+  "campus-network-1200-acres": {
+    title: "Connecter un parc industriel de 1 200 acres",
     summary:
-      "Un lien fibre unique mettait l'entreprise hors ligne à chaque coupure. Le routage double-WAN sous RouterOS bascule le trafic vers Starlink sans intervention humaine.",
+      "Aucune fibre disponible sur place, aucun lien satellite unique suffisamment rapide, et des flux de vidéosurveillance et de caisse à acheminer des usines vers le siège. Huit terminaux Starlink agrégés vers une couche de distribution en fibre optique.",
     role: "Chargé de support informatique",
-    outcomes: ["TODO — temps de bascule mesuré", "TODO — disponibilité depuis le déploiement", "Aucune intervention manuelle requise"],
+    outcomes: [
+      "acres couverts par la dorsale",
+      "terminaux Starlink agrégés",
+      "TODO — débit agrégé mesuré",
+    ],
     sections: [
       {
-        heading: "Le problème",
+        heading: "La contrainte",
         body: [
-          "Le bureau reposait sur une seule connexion fibre. À chaque rupture du câble — assez fréquente pour poser problème — tout s'arrêtait : l'ERP, la messagerie, la liaison de vidéosurveillance et tout travail d'ingénierie dépendant de l'accès aux fichiers.",
-          "La reprise exigeait qu'une personne bascule physiquement vers une connexion de secours. Cette personne, c'était généralement moi, et rarement au bon moment. Le délai entre la panne et sa détection dépassait souvent la bascule elle-même.",
-          "TODO : indiquer la fréquence des pannes et leur coût approximatif en heures de travail perdues. Des chiffres concrets donnent du poids à cette section.",
+          "Un parc industriel de 1 200 acres, avec des usines, des bureaux et un siège répartis sur l'ensemble du site. Chaque bâtiment avait besoin d'un accès internet. Le siège devait recevoir les flux de vidéosurveillance et les données de caisse de tous ces bâtiments. Et aucune fibre terrestre ne desservait le site.",
+          "Cela écarte la solution évidente. Un seul terminal satellite ne peut pas alimenter un parc entier — ni la bande passante cumulée de dizaines de caméras en téléversement continu, ni les transactions de caisse, ni le trafic bureautique ordinaire. Acheter un lien plus rapide n'était pas une option : il n'y en avait aucun à acheter.",
+          "TODO : préciser le nombre approximatif de bâtiments, de caméras et de terminaux de caisse desservis. L'échelle est tout l'intérêt de ce récit et des chiffres précis portent davantage que « des dizaines ».",
         ],
       },
       {
-        heading: "Pourquoi ne pas simplement ajouter une seconde fibre",
+        heading: "Agréger ce qui était disponible",
         body: [
-          "Une seconde liaison fibre chez un autre fournisseur aurait été la réponse classique, mais les deux auraient probablement partagé une partie du tracé physique : une seule pelleteuse pouvait donc couper les deux. C'était aussi l'option la plus coûteuse.",
-          "Starlink élimine complètement le problème du tracé partagé. Une liaison satellite tombe pour des raisons entièrement différentes d'une fibre enterrée, et c'est précisément la propriété recherchée pour un lien de secours.",
+          "Si un terminal ne suffit pas, la question devient de savoir si huit peuvent se comporter comme un seul lien plus large. Starlink fournit une connexion grand public sans agrégation native : le regroupement doit donc se faire au niveau du routeur.",
+          "Huit terminaux sont installés individuellement avec une vue dégagée du ciel et arrivent chacun sur son propre port d'un routeur MikroTik comme WAN distinct. RouterOS répartit le trafic entre eux, de sorte qu'aucun terminal ne supporte seul l'ensemble du site et que la perte de l'un dégrade la capacité sans provoquer de coupure.",
+          "TODO : décrire la méthode de répartition réellement utilisée entre les huit liens — équilibrage PCC, classificateur par connexion, ECMP ou autre — et le comportement en cas de perte d'un terminal. C'est la première question que posera un recruteur technique.",
         ],
       },
       {
-        heading: "Fonctionnement de la bascule",
+        heading: "Traverser 1 200 acres",
         body: [
-          "L'architecture repose sur un MikroTik CCR2004 sous RouterOS 7.x. Les deux WAN se terminent sur des ports distincts ; la fibre transporte tout le trafic par défaut et Starlink reste en attente avec une distance de route supérieure.",
-          "La vérification de l'état du lien est l'élément déterminant. Surveiller l'interface ne suffit pas : une fibre peut rester électriquement active sans transporter le moindre paquet. Le routeur sonde donc une cible située au-delà de l'équipement du fournisseur, afin que le test échoue quand la connectivité réelle échoue, et non uniquement quand le câble est coupé.",
-          "Lorsque les sondes échouent, la route de secours prend le relais et le trafic passe par Starlink. Dès que le lien principal se rétablit durablement, le trafic revient automatiquement.",
-          "TODO : préciser votre intervalle de vérification, le seuil d'échec et la cible sondée. C'est le détail sur lequel un recruteur technique vous interrogera.",
+          "Une bande passante agrégée au siège ne sert à rien si elle n'atteint pas une usine située à un kilomètre. Le sans-fil seul n'aurait pas supporté un téléversement continu de vidéosurveillance à cette distance : le parc avait besoin de fibre.",
+          "Le routeur alimente un commutateur d'entreprise Huawei S5735, qui alimente à son tour un équipement GPON dont les quatre ports fibre rejoignent un panneau de brassage. Chaque port est réparti en 1:4 par des répartiteurs passifs, desservant les bâtiments à travers le parc. Le caractère passif compte : aucune alimentation ni équipement actif sur le terrain, donc un point de défaillance en moins en environnement industriel.",
+          "Le trafic circule dans les deux sens sur la même dorsale : vidéosurveillance et données de caisse vers les serveurs du siège, accès internet redistribué vers les usines.",
+          "TODO : indiquer la longueur approximative des liaisons fibre et s'il s'agit de monomode.",
         ],
       },
       {
-        heading: "Segmentation et priorisation",
+        heading: "Au-delà du périmètre",
         body: [
-          "La bascule seule aurait été une fausse économie. Starlink offre moins de marge que la fibre : basculer l'ensemble du trafic sans priorisation aurait dégradé l'ERP pendant que la vidéosurveillance saturait la liaison.",
-          "Le trafic est réparti sur des VLAN — personnel, ERP, vidéosurveillance et invités — avec des files d'attente qui protègent l'ERP et le trafic du personnel lorsque le réseau fonctionne sur le lien de secours. Les invités et les caméras cèdent la priorité en premier.",
-          "TODO : votre numérotation VLAN réelle et vos limites de file d'attente.",
+          "Tout ce que l'entreprise exploite ne se trouve pas dans les 1 200 acres. Des sites extérieurs doivent accéder aux systèmes du siège, et tirer de la fibre jusqu'à eux n'était pas proportionné.",
+          "Ces sites sont raccordés par liaisons sans fil point à point, avec des tunnels VPN pour le trafic devant atteindre les ressources internes. Un outil différent pour une distance différente : la fibre là où la densité le justifie, le sans-fil ailleurs.",
         ],
       },
       {
         heading: "Ce que je ferais différemment",
         body: [
-          "La configuration réside sur le routeur et fait l'objet de sauvegardes, mais elle n'est ni versionnée ni reproductible à partir de zéro. Si le matériel tombait en panne, la reconstruction consisterait à restaurer un fichier plutôt qu'à appliquer une configuration connue depuis une source.",
-          "La supervision est également plus légère que je le souhaiterais. La bascule fonctionne, mais je l'apprends en le constatant, pas en étant alerté. Une alerte sur changement d'état comblerait cette lacune à peu de frais.",
+          "La supervision est le point faible. Avec huit liens WAN, la dégradation silencieuse de l'un passe facilement inaperçue : le site reste accessible, simplement plus lent, et personne ne signale de panne. Des métriques par lien et une alerte sur changement d'état combleraient cette lacune à peu de frais.",
+          "La configuration réside également sur le routeur plutôt que dans un dépôt versionné. Elle est sauvegardée, mais une reconstruction complète consisterait à restaurer un fichier plutôt qu'à appliquer une configuration connue depuis une source.",
+          "TODO : si vous avez depuis ajouté de la supervision ou modifié la conception, le mentionner ici.",
         ],
       },
     ],

@@ -29,60 +29,61 @@ export type CaseStudy = {
 
 export const caseStudies: CaseStudy[] = [
   {
-    slug: "dual-wan-starlink-failover",
-    title: "Building automatic failover between fibre and Starlink",
+    slug: "campus-network-1200-acres",
+    title: "Bringing a 1,200-acre industrial park online",
     summary:
-      "A single fibre link meant every cut took the business offline. Dual-WAN routing on RouterOS moved traffic to Starlink without anyone touching a router.",
+      "No fibre to the door, no single satellite link fast enough, and CCTV plus point-of-sale data to move from factories to head office. Eight bonded Starlink terminals into a fibre distribution layer.",
     role: "IT Support Officer",
-    context: "Greenhouse International Development Group Ghana Ltd.",
+    context: "Bright Industrial Park, Ghana",
     period: "2024",
     published: "2026-06-10",
-    readingMinutes: 7,
-    tags: ["MikroTik", "RouterOS 7", "Starlink", "Failover", "Networking"],
+    readingMinutes: 8,
+    tags: ["MikroTik", "RouterOS", "Starlink", "GPON", "Fibre", "Networking"],
     outcomes: [
-      { value: "TODO", label: "measured failover time" },
-      { value: "TODO", label: "uptime since deployment" },
-      { value: "0", label: "manual interventions required" },
+      { value: "1,200", label: "acres covered by the backbone" },
+      { value: "8", label: "Starlink terminals aggregated" },
+      { value: "TODO", label: "measured aggregate throughput" },
     ],
     draft: true,
     sections: [
       {
-        heading: "The problem",
+        heading: "The constraint",
         body: [
-          "The office ran on a single fibre connection. When the line was cut — which happened often enough to matter — everything stopped: the ERP system, email, the CCTV uplink, and any engineering work that depended on file access.",
-          "Recovery meant someone physically switching over to a backup connection. That person was usually me, and it was rarely convenient. The gap between a link failing and someone noticing was often longer than the switchover itself.",
-          "TODO: add how frequently outages occurred and roughly what they cost in lost working hours. Concrete numbers make this section land.",
+          "An industrial park of 1,200 acres, with factories, offices and a head office spread across it. Every building needed internet. Head office needed CCTV footage and point-of-sale data flowing back from all of them. And there was no terrestrial fibre reaching the site.",
+          "That rules out the obvious answer. A single satellite terminal cannot carry a whole park — not the aggregate bandwidth of dozens of cameras uploading continuously, plus POS transactions, plus ordinary office traffic. Buying a bigger link was not an option, because there was no bigger link to buy.",
+          "TODO: add roughly how many buildings, cameras and POS terminals the network serves. Scale is the whole point of this story and specific numbers land harder than \"dozens\".",
         ],
       },
       {
-        heading: "Why not just buy a second fibre line",
+        heading: "Aggregating what was available",
         body: [
-          "A second fibre run from a different provider would have been the textbook answer, but both would likely share physical infrastructure for part of the route, so a single backhoe could still take out both. It was also the more expensive option.",
-          "Starlink solved the shared-path problem completely. A satellite uplink fails for entirely different reasons than a buried fibre line does, which is the property you actually want in a backup.",
+          "If one terminal is not enough, the question becomes whether eight can be made to behave like one larger link. Starlink gives you a consumer-grade connection with no native bonding, so the aggregation has to happen at the router.",
+          "Eight terminals are mounted individually with clear sky view and each lands on its own port of a MikroTik router as a separate WAN. RouterOS handles the distribution across them, so no single terminal carries the whole site and losing one degrades capacity rather than causing an outage.",
+          "TODO: describe how you actually distribute traffic across the eight links — PCC load balancing, per-connection classifier, ECMP, or something else — and how you handle a terminal dropping out. This is the first thing a network interviewer will ask, and the answer is what separates this from \"we plugged in eight routers\".",
         ],
       },
       {
-        heading: "How the failover works",
+        heading: "Getting it across 1,200 acres",
         body: [
-          "The design runs on a MikroTik CCR2004 under RouterOS 7.x. Both WANs terminate on separate ports, with the fibre link carrying all traffic by default and Starlink held as a standby route at a higher distance.",
-          "Health checking is the part that matters. Watching whether the interface is up is not enough — a fibre link can stay electrically up while passing no traffic. Instead the router probes a target beyond the ISP's own equipment, so the check fails when real connectivity fails rather than only when the cable is cut.",
-          "When probes fail, the backup route takes over and traffic continues over Starlink. When the primary recovers and stays stable, traffic returns automatically.",
-          "TODO: describe your actual check interval, failure threshold and probe target. This is the detail an interviewer will ask about.",
+          "Aggregated bandwidth at head office is worthless if it cannot reach a factory a kilometre away. Wireless alone would not carry continuous CCTV upload at that distance, so the park needed fibre.",
+          "The router feeds a Huawei S5735 enterprise switch, which feeds a GPON unit whose four fibre ports run to a fibre distribution panel. Each port is split 1:4 through passive splitters, fanning out across the park to the buildings that need service. Passive splitters matter here: no power and no active equipment in the field, which is one less thing to fail in an industrial environment.",
+          "Traffic runs both directions on the same backbone. CCTV and POS data travel inbound to the head office servers; internet service is distributed back outbound to the factories.",
+          "TODO: note the approximate fibre run length and whether it is single-mode. Also worth saying what the splitter ratio means in practice for the link budget.",
         ],
       },
       {
-        heading: "Segmentation and shaping",
+        heading: "Beyond the fence line",
         body: [
-          "Failover alone would have been a false economy. Starlink has less headroom than the fibre line, so moving everything across unshaped would degrade the ERP system while CCTV footage saturated the uplink.",
-          "Traffic is split across VLANs — staff, ERP, CCTV and guest — with queues that protect the ERP and staff traffic when the network is running on the backup link. Guest and camera traffic yield first.",
-          "TODO: your actual VLAN numbering and queue limits.",
+          "Not everything the business runs sits inside the 1,200 acres. Locations outside the boundary still need access to head office systems, and trenching fibre to them was not proportionate.",
+          "Those sites connect over point-to-point wireless links, with VPN tunnels carrying the traffic that needs to reach internal resources. It is a deliberately different tool for a different distance — fibre where the density justifies it, wireless where it does not.",
         ],
       },
       {
         heading: "What I would do differently",
         body: [
-          "The configuration lives on the router and is backed up, but it is not version-controlled or reproducible from scratch. If the hardware died, rebuilding would mean restoring a backup file rather than applying a known-good configuration from source.",
-          "Monitoring is also thinner than I would like. The failover works, but I find out about it by noticing, not by being told. An alert on state change would close that gap cheaply.",
+          "Monitoring is the weakest part. With eight WAN links, one degrading quietly is easy to miss — the site stays up, just slower, and nobody reports a fault. Per-link health metrics and an alert on state change would close that gap cheaply, and it is the first thing I would add.",
+          "The configuration also lives on the router rather than in version control. It is backed up, but rebuilding from scratch would mean restoring a file rather than applying a known-good configuration from source.",
+          "TODO: if you have since added monitoring or changed the design, say so here. A case study that ends with what you learned reads better than one that ends with what you built.",
         ],
       },
     ],
