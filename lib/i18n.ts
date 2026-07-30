@@ -133,6 +133,8 @@ type Dictionary = {
     openInNewTabShort: string;
     pdfFallback: string;
     pdfNotShowing: string;
+    protectedBy: string;
+    verifying: string;
     loadingPdf: string;
     shortcuts: {
       openPalette: string;
@@ -322,6 +324,8 @@ const en: Dictionary = {
     pdfFallback:
       "If the CV is not visible, your browser may be set to download PDFs rather than display them.",
     pdfNotShowing: "Not showing?",
+    protectedBy: "Protected by Cloudflare Turnstile",
+    verifying: "Verifying you're human…",
     loadingPdf: "Loading CV…",
     shortcuts: {
       openPalette: "Open command palette",
@@ -511,6 +515,8 @@ const fr: Dictionary = {
     pdfFallback:
       "Si le CV ne s'affiche pas, votre navigateur est peut-être configuré pour télécharger les PDF au lieu de les afficher.",
     pdfNotShowing: "Rien ne s'affiche ?",
+    protectedBy: "Protégé par Cloudflare Turnstile",
+    verifying: "Vérification en cours…",
     loadingPdf: "Chargement du CV…",
     shortcuts: {
       openPalette: "Ouvrir la palette de commandes",

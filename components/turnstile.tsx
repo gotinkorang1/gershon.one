@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Shield, ShieldCheck } from "lucide-react";
 import { useI18n } from "@/components/locale-provider";
 
 declare global {
@@ -45,7 +46,7 @@ export function Turnstile({
   /** Increment to force a fresh challenge; tokens are single-use. */
   resetSignal?: number;
 }) {
-  const { locale } = useI18n();
+  const { t, locale } = useI18n();
   // The sitekey is public — it is served to every visitor in the page source,
   // so committing it leaks nothing. Defaulting to the real widget means the
   // integration works even if the env var is missing at build time, which is
@@ -135,10 +136,23 @@ export function Turnstile({
   }
 
   return (
-    <div className="min-h-[65px]">
-      {/* Reserves the widget's height so the form does not shift when the
-          challenge finishes loading. */}
+    <div>
+      {/* The widget itself. In interaction-only mode this stays empty for
+          almost every visitor, so it must not reserve fixed height — that
+          left a 65px gap in the form. It grows only if a challenge appears. */}
       <div ref={ref} />
+
+      {/* Verification is otherwise invisible, so state it plainly. A visitor
+          can see the form is protected without a challenge being imposed. */}
+      <p className="flex items-center gap-1.5 text-xs text-faint">
+        {token ? (
+          <ShieldCheck className="size-3 shrink-0 text-live" />
+        ) : (
+          <Shield className="size-3 shrink-0" />
+        )}
+        {token ? t.ui.protectedBy : t.ui.verifying}
+      </p>
+
       <input type="hidden" name="turnstileToken" value={token} readOnly />
     </div>
   );
