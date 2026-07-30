@@ -5,8 +5,7 @@ import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { CommandPalette } from "@/components/command-palette";
 import { KeyboardShortcuts } from "@/components/keyboard-shortcuts";
-import { ScrollProgress } from "@/components/scroll-progress";
-import { RouteProgress } from "@/components/fx/route-progress";
+import { TopProgress } from "@/components/fx/top-progress";
 import { PageTransition } from "@/components/fx/page-transition";
 import { Analytics } from "@/components/analytics";
 import { HtmlLang } from "@/components/html-lang";
@@ -232,8 +231,7 @@ export default function RootLayout({
       <body className="min-h-dvh antialiased">
         <HtmlLang />
         <ThemeProvider>
-          <ScrollProgress />
-          <RouteProgress />
+          <TopProgress />
           <SiteNav />
           <CommandPalette />
           <KeyboardShortcuts />
