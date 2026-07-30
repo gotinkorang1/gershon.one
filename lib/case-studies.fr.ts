@@ -13,6 +13,52 @@ export const caseStudiesFr: Record<
     outcomes: string[];
   }
 > = {
+  "erpnext-bilingual-id-cards": {
+    title: "Des badges que deux langues devaient partager",
+    summary:
+      "ERPNext imprime des documents, pas des badges. Un format d'impression Jinja qui place deux badges d'employé bilingues — recto et verso — sur une seule feuille A4, aux dimensions qu'un agent peut vérifier à l'entrée.",
+    role: "Chargé de support informatique",
+    outcomes: [
+      "badges par feuille A4",
+      "langues sur chaque badge",
+      "publié et réutilisable",
+    ],
+    sections: [
+      {
+        heading: "Pourquoi le développer",
+        body: [
+          "Le personnel avait besoin de badges d'identification. Les dossiers des employés existaient déjà dans ERPNext — noms, photographies, services, intitulés de poste — les données n'étaient donc pas le problème. Les faire figurer sur un support plastique, si.",
+          "Deux options : commander une conception de badge, ce qui implique de payer chaque modification ultérieure et d'attendre qu'un tiers l'exécute, ou un format d'impression qui lit directement l'ERP. Un format d'impression coûte un après-midi, puis ne coûte plus rien. Nouvel employé : on imprime. Changement de service : on imprime. Aucun aller-retour de conception.",
+          "ERPNext est conçu pour imprimer des factures et des bons de commande — des documents qui remplissent une page. Un objet au format carte bancaire avec un recto et un verso n'est pas ce que le moteur d'impression attend, et l'essentiel du travail s'est joué dans cet écart.",
+        ],
+      },
+      {
+        heading: "Deux langues devant rester lisibles",
+        body: [
+          "L'entreprise fonctionne en anglais et en chinois. Un badge que seul un groupe peut lire n'est pas un document d'identification pour la moitié de ceux qui le portent : les deux langues devaient donc figurer sur chaque badge plutôt que d'imprimer deux séries distinctes.",
+          "Chaque libellé porte les deux : 姓名 Name, 工号 ID, 职位 Role, 部门 Dept., 授权签名 Authorized Signature. Le chinois d'abord, l'anglais ensuite, systématiquement — un ordre variable rend le badge plus difficile à parcourir rapidement, ce qui est précisément la qualité première d'un badge.",
+          "C'est cette contrainte qui a déterminé la mise en page. Les libellés bilingues sont environ deux fois plus larges que des libellés monolingues, sur un support qui ne peut pas s'agrandir. Ils occupent une colonne fixe de 80 px afin que les valeurs restent alignées quelle que soit la longueur du libellé, et le corps de texte descend à 11 px pour les données. L'ensemble se lit comme une grille délibérée plutôt que comme un texte qui serait entré de justesse.",
+        ],
+      },
+      {
+        heading: "Faire produire un badge à un navigateur, pas une page",
+        body: [
+          "Le rendu passe par un moteur PDF qui pilote un navigateur : les difficultés relèvent donc de l'impression, un domaine que la mise en page web n'a pas l'habitude d'affronter.",
+          "Tout est exprimé en centimètres, pas en pixels. La page est déclarée A4 sans marge, et chaque badge mesure 9,2 × 5,7 cm — des dimensions qui survivent au passage par le moteur de rendu jusqu'à la feuille physique. Des pixels auraient dépendu des hypothèses du moteur sur la densité d'écran.",
+          "Les photographies ont cédé les premières. Un chemin d'image relatif s'affiche correctement dans l'aperçu du navigateur, puis arrive vide dans le PDF, car le processus de rendu ne partage pas l'origine de la page. Le filtre `abs_url` de Frappe rend le chemin absolu et la photographie apparaît. Une correction d'un seul mot, invisible jusqu'à ce qu'on découvre un rectangle blanc à la place d'un visage sur un badge imprimé.",
+          "Les deux badges par feuille proviennent d'une boucle Jinja qui rend deux fois le même badge, avec `page-break-inside: avoid` pour que la paire ne soit jamais scindée entre deux pages. Recto et verso s'empilent en colonne : une feuille A4 produit donc un badge complet une fois découpé et plastifié — et la bordure en pointillés est un repère de coupe, non un ornement.",
+        ],
+      },
+      {
+        heading: "Ce que je referais autrement",
+        body: [
+          "Le QR code est le point faible. Il est récupéré auprès d'un générateur tiers au moment de l'impression et encode le site de l'entreprise — il est donc identique sur tous les badges, et l'impression dépend de la disponibilité d'un service externe. Il devrait encoder l'identifiant de l'employé et être généré localement. En l'état, c'est un ornement qui ressemble à une fonctionnalité, ce qui est pire que pas de QR code du tout.",
+          "Le badge mesure 9,2 × 5,7 cm, soit légèrement plus que la norme ID-1 sur laquelle sont calés les portefeuilles, les porte-badges et les imprimantes à cartes. Il s'imprime et se découpe correctement sur A4, mais il faudrait l'ajuster avant de l'envoyer vers une imprimante à cartes PVC.",
+          "Le README publié documente par ailleurs un répertoire `src/` qui n'existe pas — les fichiers se trouvent à la racine du dépôt. Quiconque suit les étapes d'installation se heurte à une impasse dès la deuxième. C'est une correction de cinq minutes que je n'ai pas encore faite, et c'est le type d'imprécision qui rend discrètement un travail partagé inutilisable pour celui qui le découvre.",
+        ],
+      },
+    ],
+  },
   "campus-network-1200-acres": {
     title: "Connecter un parc industriel de 1 200 acres",
     summary:

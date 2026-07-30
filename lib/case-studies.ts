@@ -25,9 +25,65 @@ export type CaseStudy = {
   outcomes: { value: string; label: string }[];
   sections: Section[];
   draft: boolean;
+  /** Public repository, when the work is independently inspectable. */
+  repo?: string;
 };
 
 export const caseStudies: CaseStudy[] = [
+  {
+    slug: "erpnext-bilingual-id-cards",
+    title: "ID cards two languages had to agree on",
+    summary:
+      "ERPNext prints documents, not cards. A Jinja print format that puts two bilingual employee ID cards — front and back — on a single A4 sheet, at dimensions a guard can check at a gate.",
+    role: "IT Support Officer",
+    context: "Greenhouse International Development Group Ghana Ltd.",
+    period: "2026",
+    published: "2026-07-30",
+    readingMinutes: 5,
+    tags: ["ERPNext", "Frappe", "Jinja", "CSS", "Print", "HR"],
+    repo: "https://github.com/gotinkorang1/erpnext-id-card-print-format",
+    outcomes: [
+      { value: "2", label: "cards per A4 sheet" },
+      { value: "2", label: "languages on every card" },
+      { value: "MIT", label: "published and reusable" },
+    ],
+    draft: false,
+    sections: [
+      {
+        heading: "Why build this at all",
+        body: [
+          "Staff needed identification cards. The employee records already existed in ERPNext — names, photographs, departments, job titles — so the data was not the problem. Getting it onto a piece of plastic was.",
+          "The options were a commissioned card design, which means paying for every subsequent change and waiting on someone else to make it, or a print format that reads the ERP directly. A print format costs an afternoon and then costs nothing. New employee, print a card. Someone changes department, print a card. No design round-trip.",
+          "ERPNext is built to print invoices and purchase orders — documents that fill a page. A credit-card-sized object with a front and a back is not what the print engine expects, and most of the work was in that gap.",
+        ],
+      },
+      {
+        heading: "Two languages that both had to be readable",
+        body: [
+          "The workplace runs in English and Chinese. A card that only one group can read is not an identification card for half the people holding it, so both languages had to appear on every card rather than printing two separate batches.",
+          "Every field label carries both: 姓名 Name, 工号 ID, 职位 Role, 部门 Dept., 授权签名 Authorized Signature. Chinese first, English second, consistently — an inconsistent order makes a card harder to scan quickly, which is the one thing an ID card must be good at.",
+          "This is the constraint that shaped the layout. Bilingual labels are roughly twice as wide as monolingual ones, on a card that cannot grow. The labels sit in a fixed 80px column so the values align down the card no matter how long the label is, and the type drops to 11px for the data. It reads as a deliberate grid rather than text that happened to fit.",
+        ],
+      },
+      {
+        heading: "Making a browser produce a card, not a page",
+        body: [
+          "The whole thing renders through a PDF engine driving a browser, so the layout problems are print problems that web layout does not usually have to solve.",
+          "Everything is specified in centimetres, not pixels. The page is declared A4 with zero margin, and each card is 9.2 × 5.7cm — dimensions that survive the trip through the renderer to a physical sheet. Pixels would have been at the mercy of whatever the engine assumed about screen density.",
+          "Employee photographs broke first. A relative image path resolves fine in the browser preview and then arrives empty in the PDF, because the rendering process does not share the page's origin. Passing the image through Frappe's `abs_url` filter makes the path absolute and the photograph appears. It is a one-word fix that is invisible until you look at a printed card and find a blank rectangle where a face should be.",
+          "Two cards per sheet comes from a Jinja loop that renders the same card twice, with `page-break-inside: avoid` so the pair is never split across pages. Front and back stack in a column, which means one A4 sheet produces one complete card once cut and laminated — and the dashed border is a cutting guide, not decoration.",
+        ],
+      },
+      {
+        heading: "What I would do differently",
+        body: [
+          "The QR code is the weakest part. It is fetched from a third-party generator at print time and encodes the company website — so it is identical on every card, and printing depends on an external service being reachable. It should encode the employee ID and be generated locally. Right now it is decoration that looks like a feature, which is worse than no QR at all.",
+          "The card is 9.2 × 5.7cm, slightly larger than the ID-1 standard that wallets, badge holders and card printers are built around. It prints and cuts correctly on A4, but anyone feeding it to a PVC card printer would need to adjust it first.",
+          "The published README also documents a `src/` directory that does not exist — the files sit at the repository root. Anyone following the installation steps hits a dead end at the second one. That is a five-minute fix I have not yet made, and it is the kind of small inaccuracy that quietly makes shared work useless to the person who found it.",
+        ],
+      },
+    ],
+  },
   {
     slug: "campus-network-1200-acres",
     title: "Bringing a 1,200-acre industrial park online",

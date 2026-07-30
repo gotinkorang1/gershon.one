@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Clock } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Clock, Github } from "lucide-react";
 import { caseStudies } from "@/lib/case-studies";
 import { getCaseStudy } from "@/lib/localised-content";
 import { getDictionary } from "@/lib/i18n";
@@ -77,6 +77,7 @@ export default async function FrenchCaseStudy({
     inLanguage: "fr-CA",
     author: { "@type": "Person", name: site.name },
     keywords: study.tags.join(", "),
+    ...(study.repo ? { codeRepository: study.repo } : {}),
   };
 
   return (
@@ -101,6 +102,21 @@ export default async function FrenchCaseStudy({
         <p className="mt-6 text-sm text-muted-foreground">
           {study.role} · {study.context}
         </p>
+
+        {/* Most case studies are claims. When the work is public, say so and
+            link it — a reader who can check does not have to take my word. */}
+        {study.repo && (
+          <a
+            href={study.repo}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group mt-5 inline-flex items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm transition-colors hover:border-border-strong hover:bg-surface-1"
+          >
+            <Github className="size-3.5 shrink-0 text-faint" />
+            {t.common.viewSource}
+            <ArrowUpRight className="size-3.5 shrink-0 text-faint transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </a>
+        )}
       </header>
 
       {study.outcomes.length > 0 && (
