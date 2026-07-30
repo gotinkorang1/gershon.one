@@ -28,7 +28,17 @@ export async function generateMetadata({
   return {
     title: study.title,
     description: study.summary,
-    alternates: { canonical: `/work/${study.slug}` },
+    // Both language versions must reference each other, or Google discards the
+    // hreflang annotations entirely. The French page already points back here;
+    // without this block that return link was one-directional and ignored.
+    alternates: {
+      canonical: `/work/${study.slug}`,
+      languages: {
+        "en-CA": `/work/${study.slug}`,
+        "fr-CA": `/fr/work/${study.slug}`,
+        "x-default": `/work/${study.slug}`,
+      },
+    },
     // A draft's visible text contains TODO placeholders. Indexing that would
     // put "TODO: your actual VLAN numbering" into search results under his
     // name. Published studies index normally.
