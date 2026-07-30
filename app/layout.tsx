@@ -214,7 +214,7 @@ const profileLd = {
   "@id": `${siteUrl}/#profile`,
   url: siteUrl,
   name: `${site.shortName} — ${site.role}`,
-  dateModified: new Date().toISOString().slice(0, 10),
+  dateModified: site.contentUpdated,
   inLanguage: "en-CA",
   mainEntity: { "@id": `${siteUrl}/#person` },
   isPartOf: { "@id": `${siteUrl}/#website` },

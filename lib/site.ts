@@ -29,6 +29,15 @@ export const site = {
   summary:
     "IT support specialist with five years keeping users, devices and infrastructure running across a 1,200-acre industrial park and multiple retail sites in Ghana. Day to day that means end-user support, POS and PDA systems, and the servers behind them; it has also meant designing the campus fibre network and the multi-WAN satellite link that carries it. Comfortable at both ends — the helpdesk ticket and the distribution panel.",
   availability: "Available in Canada from August 2026",
+  /**
+   * When the page content last meaningfully changed — bump by hand when you
+   * edit experience, skills or credentials. Deliberately not derived from the
+   * build, which would claim a modification on every redeploy.
+   *
+   * Must be a full ISO 8601 datetime with an offset; Google rejects a
+   * date-only value for schema.org dateModified.
+   */
+  contentUpdated: "2026-07-30T00:00:00+00:00",
   resumeUrl: "/gershon-otinkorang-cv.pdf",
   socials: {
     github: "https://github.com/gotinkorang1",
