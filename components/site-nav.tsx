@@ -57,6 +57,16 @@ export function SiteNav() {
     };
   }, [open]);
 
+  // The mobile menu now persists up to lg. Crossing into the desktop layout
+  // hides the overlay via CSS, but the open state — and its body scroll-lock —
+  // would otherwise linger, leaving the page unscrollable. Close on cross-over.
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const onChange = () => mq.matches && setOpen(false);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
   return (
     <>
       <a
@@ -86,7 +96,7 @@ export function SiteNav() {
               </span>
             </Link>
 
-            <ul className="hidden items-center gap-0.5 md:flex">
+            <ul className="hidden items-center gap-0.5 lg:flex">
               {navLinks.map((link) => {
                 const isActive = active === link.href;
                 return (
@@ -135,7 +145,7 @@ export function SiteNav() {
                 onClick={() => setOpen((v) => !v)}
                 aria-label={open ? "Close menu" : "Open menu"}
                 aria-expanded={open}
-                className="tap relative grid size-9 place-items-center rounded-lg border border-border md:hidden"
+                className="tap relative grid size-9 place-items-center rounded-lg border border-border lg:hidden"
               >
                 <span
                   className={cn(
@@ -157,7 +167,7 @@ export function SiteNav() {
 
       <div
         className={cn(
-          "fixed inset-0 z-40 bg-surface-0/95 backdrop-blur-xl transition-[opacity,visibility] duration-300 md:hidden",
+          "fixed inset-0 z-40 bg-surface-0/95 backdrop-blur-xl transition-[opacity,visibility] duration-300 lg:hidden",
           open ? "visible opacity-100" : "invisible opacity-0",
         )}
       >
