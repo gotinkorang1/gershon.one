@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { useMediaQuery, usePrefersReducedMotion } from "@/lib/use-media-query";
@@ -97,6 +97,22 @@ export function NetworkTopology({ className }: { className?: string }) {
   const [down, setDown] = useState<ReadonlySet<string>>(new Set());
   const [elapsed, setElapsed] = useState(0);
 
+  // The carrying-line dashes animate stroke-dashoffset, which runs on the main
+  // thread rather than the compositor. Pausing them while the figure is off
+  // screen removes ~14 continuous animations' worth of idle CPU and battery.
+  const figureRef = useRef<HTMLElement>(null);
+  const [inView, setInView] = useState(true);
+
+  useEffect(() => {
+    const el = figureRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), {
+      rootMargin: "120px",
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   const failed = down.size > 0;
   const liveCount = SAT_IDS.length - down.size;
 
@@ -135,6 +151,7 @@ export function NetworkTopology({ className }: { className?: string }) {
 
   return (
     <figure
+      ref={figureRef}
       className={cn("relative m-0", className)}
       role="group"
       aria-label={t.ui.topologyLabel}
@@ -205,7 +222,10 @@ export function NetworkTopology({ className }: { className?: string }) {
                   strokeLinecap="round"
                   strokeDasharray="1 14"
                   className="stroke-accent"
-                  style={{ animation: "dash 2.4s linear infinite" }}
+                  style={{
+                    animation: "dash 2.4s linear infinite",
+                    animationPlayState: inView ? "running" : "paused",
+                  }}
                 />
               )}
             </g>
