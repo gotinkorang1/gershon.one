@@ -14,14 +14,22 @@ import { getSkillGroups } from "@/lib/localised-content";
 
 const ICONS = [Network, Server, Cloud, Code2, Users];
 
-// Deliberately uneven so the grid reads as composed rather than tiled.
-const SPANS = [
+/**
+ * Deliberately uneven so the grid reads as composed rather than tiled. The
+ * pattern repeats, so adding a skill group can never leave a card without a
+ * span — the previous fixed-length array silently dropped the sixth group out
+ * of the grid entirely, rendering it as an 86px vertical sliver.
+ */
+const SPAN_PATTERN = [
   "lg:col-span-7",
   "lg:col-span-5",
   "lg:col-span-4",
   "lg:col-span-8",
-  "lg:col-span-12",
-];
+  "lg:col-span-6",
+  "lg:col-span-6",
+] as const;
+
+const spanFor = (index: number) => SPAN_PATTERN[index % SPAN_PATTERN.length];
 
 export function Skills() {
   const { t, locale } = useI18n();
@@ -39,7 +47,7 @@ export function Skills() {
         {skillGroups.map((group, i) => {
           const Icon = ICONS[i] ?? Network;
           return (
-            <Reveal key={group.title} delay={0.04 * i} className={cn(SPANS[i])}>
+            <Reveal key={group.title} delay={0.04 * i} className={cn(spanFor(i))}>
               <Panel interactive reactive className="h-full p-5">
                 <div className="flex items-start justify-between gap-4">
                   <div>
