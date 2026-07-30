@@ -29,7 +29,7 @@
     "eslint": "^9.0.0",
     "eslint-config-next": "^16.0.0",
     "tailwindcss": "^4.0.0",
-    "typescript": "^5.7.0"
+    "typescript": "^7.0.2"
   },
   "//overrides": "Pin patched transitive deps flagged by npm audit (all build/dev-time). Remove an entry once the parent (next, eslint-config-next) ships the fix natively.",
   "overrides": {
