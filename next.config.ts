@@ -13,6 +13,10 @@ import type { NextConfig } from "next";
  */
 const isDev = process.env.NODE_ENV === "development";
 
+// Absolute origin for the CSP reporting endpoint. Reporting-Endpoints wants a
+// URL, not a path, so it must be absolute even though the route is same-origin.
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.gershon.one";
+
 /**
  * React's development build calls eval() to reconstruct stack traces across
  * the server/client boundary, and Turbopack's HMR runtime needs it too. React
@@ -51,6 +55,11 @@ const csp = [
   // The CV viewer embeds a same-origin PDF via <object>; 'none' would
   // silently blank it. Restricted to 'self' rather than opened up.
   "object-src 'self'",
+  // Surface violations. `report-to` names the group defined by the
+  // Reporting-Endpoints header below; `report-uri` is the deprecated form
+  // kept only because Firefox does not yet support report-to for CSP.
+  "report-to csp-endpoint",
+  "report-uri /api/csp-report",
   isDev ? "" : "upgrade-insecure-requests",
 ]
   .filter(Boolean)
@@ -58,6 +67,9 @@ const csp = [
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  // Drop the default `X-Powered-By: Next.js` header — it fingerprints the
+  // framework for no benefit to visitors.
+  poweredByHeader: false,
   images: {
     formats: ["image/avif", "image/webp"],
   },
@@ -85,9 +97,22 @@ const nextConfig: NextConfig = {
         ],
       },
       {
+        // RFC 9116 wants text/plain; be explicit and let clients cache a day.
+        source: "/.well-known/security.txt",
+        headers: [
+          { key: "Content-Type", value: "text/plain; charset=utf-8" },
+          { key: "Cache-Control", value: "public, max-age=86400" },
+        ],
+      },
+      {
         source: "/(.*)",
         headers: [
           { key: "Content-Security-Policy", value: csp },
+          // Defines the `csp-endpoint` group that the CSP report-to references.
+          {
+            key: "Reporting-Endpoints",
+            value: `csp-endpoint="${siteUrl}/api/csp-report"`,
+          },
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           // SAMEORIGIN rather than DENY, for the same reason as

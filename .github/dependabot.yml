@@ -1,0 +1,21 @@
+# Dependency and Actions update monitoring.
+# https://docs.github.com/code-security/dependabot
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    # Fold routine minor/patch bumps into one PR to cut review noise; majors
+    # and security updates still arrive as their own PRs.
+    groups:
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
