@@ -188,11 +188,11 @@ const en: Dictionary = {
     contact: "Contact",
   },
   hero: {
-    role: "IT Systems & Network Administrator",
+    role: "IT Support Specialist",
     headline:
-      "I keep networks, servers and ERP systems running for organisations that cannot afford downtime.",
+      "I keep the systems people depend on working — from a jammed printer to a fibre backbone across 1,200 acres.",
     summary:
-      "Five years administering enterprise network infrastructure, ERP platforms and IT operations across private and public sector organisations in Ghana. MikroTik RouterOS, dual-Starlink failover, Frappe/ERPNext and Odoo, across multi-site environments.",
+      "IT support specialist with five years keeping users, devices and infrastructure running across a 1,200-acre industrial park and multiple retail sites in Ghana. Day to day that means end-user support, POS and PDA systems, and the servers behind them; it has also meant designing the campus fibre network and the multi-WAN satellite link that carries it. Comfortable at both ends — the helpdesk ticket and the distribution panel.",
     availability: "Available in Canada from August 2026",
     downloadCv: "Download CV",
     getInTouch: "Get in touch",
@@ -377,11 +377,11 @@ const fr: Dictionary = {
     contact: "Contact",
   },
   hero: {
-    role: "Administrateur systèmes et réseaux",
+    role: "Spécialiste du support informatique",
     headline:
-      "Je maintiens en service les réseaux, serveurs et systèmes ERP d'organisations qui ne peuvent pas se permettre d'interruption.",
+      "Je maintiens en service les systèmes dont dépendent les utilisateurs — de l'imprimante bloquée à une dorsale fibre sur 1 200 acres.",
     summary:
-      "Cinq ans d'administration d'infrastructures réseau, de plateformes ERP et d'opérations informatiques pour des organisations privées et publiques au Ghana. MikroTik RouterOS, bascule automatique double-WAN avec Starlink, Frappe/ERPNext et Odoo, sur des environnements multi-sites.",
+      "Spécialiste du support informatique comptant cinq ans d'expérience à maintenir en service les utilisateurs, les équipements et les infrastructures d'un parc industriel de 1 200 acres et de plusieurs points de vente au Ghana. Au quotidien : support aux utilisateurs, systèmes de caisse et terminaux portables, et les serveurs qui les sous-tendent. Cela a aussi impliqué la conception de la dorsale fibre du site et de la liaison satellite multi-WAN qui l'alimente.",
     availability: "Disponible au Canada à partir d'août 2026",
     downloadCv: "Télécharger le CV",
     getInTouch: "Me contacter",

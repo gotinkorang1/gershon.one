@@ -15,15 +15,31 @@ export const experienceFr: Record<
     role: "Chargé de support informatique",
     division: "Département ingénierie et conception",
     summary:
-      "Seul administrateur d'un réseau multi-sites, des serveurs de production qui le sous-tendent et de la plateforme ERP dont dépendent les équipes d'ingénierie et d'exploitation.",
+      "Seul responsable du support informatique pour un parc industriel de 1 200 acres et les points de vente de sa filiale — utilisateurs, systèmes de caisse et terminaux portables, serveurs, et le réseau du site qui relie l'ensemble.",
     highlights: [
-      "Administration et sécurisation d'un réseau multi-sites sur routeurs MikroTik CCR2004 — double WAN Starlink avec bascule par port, gestion de bande passante et durcissement du pare-feu sous RouterOS 7.x.",
-      "Maintenance des serveurs de production et de l'ERP de l'entreprise (Frappe/ERPNext, Odoo), en garantissant l'intégrité des données et la disponibilité des flux d'ingénierie et d'exploitation.",
-      "Diagnostic de pannes de connectivité complexes, dont des ruptures de fibre optique et des latences liées au routage, en réduisant les interruptions dans tous les services.",
-      "Conception, déploiement et gestion des systèmes de caméras IP et de vidéosurveillance pour la sécurité du site.",
-      "Remplacement du responsable ingénierie et conception en son absence, avec encadrement du personnel local et des flux de travail.",
-      "Pilotage du recrutement et des entretiens techniques structurés pour les postes d'agent informatique, y compris la rédaction des offres et des guides d'entretien.",
-      "Achat de matériel et de licences logicielles, et application de la politique informatique et de la conformité des licences.",
+      "Premier et unique niveau de support informatique pour le personnel du parc et du siège : matériel, logiciels, imprimantes, comptes et accès, du diagnostic à la résolution.",
+      "Configuration, déploiement et support des systèmes de point de vente de Bright Afrimall sur plusieurs sites commerciaux au Ghana, y compris la formation du personnel et le dépannage à distance.",
+      "Gestion du parc de terminaux portables utilisés pour les stocks et l'exploitation — approvisionnement, déploiement d'applications et résolution des pannes.",
+      "Conception et déploiement de la dorsale en fibre optique du parc, acheminant les flux de vidéosurveillance et les données de caisse depuis les usines et bâtiments distants vers le siège, et redistribuant l'accès internet vers les usines.",
+      "Augmentation de la capacité internet du site en agrégeant huit terminaux Starlink installés individuellement sur un routeur MikroTik comme huit liens WAN, alimentant un commutateur d'entreprise Huawei S5735 puis une couche de distribution GPON avec des répartiteurs 1:4 sur le panneau de brassage.",
+      "Extension de la couverture au-delà du périmètre du parc par liaisons sans fil point à point et tunnels VPN, permettant aux sites distants d'accéder aux ressources du siège.",
+      "Installation et gestion de points d'accès intérieurs et extérieurs avec contrôleurs centralisés, couvrant bureaux, ateliers et espaces ouverts.",
+      "Déploiement et maintenance des services internes sur Proxmox et serveurs Linux via Docker et Portainer — Odoo, OpenMAINT, Tailscale et filtrage DNS des publicités et contenus.",
+      "Gestion du magasin informatique et du parc matériel dans Odoo : inventaire, mouvements de stock et attribution des équipements.",
+      "Appui à l'équipe de géomètres par la conversion de plans CAO en données OpenStreetMap avec JOSM, dotant le parc d'un fond de plan numérique fiable.",
+      "Remplacement du responsable ingénierie et conception en son absence, et conduite des entretiens techniques pour le recrutement d'agents informatiques.",
+    ],
+  },
+  "Nii Plants Group": {
+    role: "Consultant informatique à distance",
+    summary:
+      "Administration et support informatiques à distance de l'infrastructure numérique du groupe, en parallèle de l'emploi principal.",
+    highlights: [
+      "Administration et support technique à distance de l'infrastructure numérique de l'entreprise.",
+      "Gestion des sites web, des domaines, des plateformes d'hébergement, des certificats SSL et de la messagerie d'entreprise.",
+      "Maintenance des sites, mises à jour de sécurité, optimisation des performances et dépannage.",
+      "Support des plateformes numériques utilisées dans l'hôtellerie, le transport, la logistique et l'immobilier.",
+      "Gestion des services en ligne et maintien de la disponibilité des systèmes critiques.",
     ],
   },
   "Prop-Tis GH Limited": {
@@ -83,25 +99,29 @@ export const experienceFr: Record<
 };
 
 export const skillGroupsFr: Record<string, { title: string; blurb: string }> = {
-  "Network administration": {
-    title: "Administration réseau",
-    blurb: "Le cœur du poste actuel — multi-sites, appuyé sur le satellite, durci.",
+  "IT support": {
+    title: "Support informatique",
+    blurb: "Le cœur du poste — les personnes, les postes de travail et tout ce qui ne fonctionne plus.",
   },
-  "Systems & ERP": {
-    title: "Systèmes et ERP",
-    blurb: "Les serveurs, et les plateformes métier qui en dépendent.",
+  "Retail & field systems": {
+    title: "Systèmes de vente et de terrain",
+    blurb: "Caisses et terminaux portables répartis sur plusieurs sites.",
   },
-  Cloud: {
-    title: "Infonuagique",
-    blurb: "Là où la périphérie du réseau rencontre l'infrastructure infogérée.",
+  Networking: {
+    title: "Réseaux",
+    blurb: "Fibre de campus, agrégation multi-WAN et couverture sans fil à grande échelle.",
   },
-  "Web & development": {
-    title: "Web et développement",
-    blurb: "Construire les plateformes, pas seulement les héberger.",
+  "Servers & services": {
+    title: "Serveurs et services",
+    blurb: "Les plateformes derrière le support.",
   },
-  Professional: {
-    title: "Compétences professionnelles",
-    blurb: "Ce qui détermine si le travail technique porte ses fruits.",
+  "Cloud & web": {
+    title: "Infonuagique et web",
+    blurb: "Hébergement, domaines et les sites qui tournent dessus.",
+  },
+  "GIS & other": {
+    title: "SIG et divers",
+    blurb: "Le travail qui ne figurait dans aucune fiche de poste mais qu'il fallait faire.",
   },
 };
 
@@ -128,7 +148,7 @@ export const credentialsFr: Record<string, { title: string; detail?: string }> =
 
 export const factsFr: Record<string, { label: string; value: string }> = {
   Experience: { label: "Expérience", value: "Plus de 5 ans" },
-  "Current role": { label: "Poste actuel", value: "Chargé de support informatique" },
+  "Site supported": { label: "Site couvert", value: "1 200 acres" },
   Available: { label: "Disponible", value: "Août 2026" },
   Based: { label: "Basé à", value: "Accra → St. John's" },
 };
@@ -149,6 +169,36 @@ export const issuersFr: Record<string, string> = {
  * English — translating them would look wrong to a French-speaking engineer.
  */
 export const termsFr: Record<string, string> = {
+  "SSL / TLS": "SSL / TLS",
+  "End-user support": "Support aux utilisateurs",
+  "Hardware diagnostics & repair": "Diagnostic et réparation matériels",
+  "Windows & Linux desktops": "Postes Windows et Linux",
+  "Printers & peripherals": "Imprimantes et périphériques",
+  "Account & access management": "Gestion des comptes et des accès",
+  "Software deployment": "Déploiement logiciel",
+  "User training": "Formation des utilisateurs",
+  "POS configuration & rollout": "Configuration et déploiement de caisses",
+  "PDA / handheld provisioning": "Approvisionnement de terminaux portables",
+  "Multi-site deployment": "Déploiement multi-sites",
+  "Remote fault resolution": "Dépannage à distance",
+  "Asset & inventory control (Odoo)": "Gestion des actifs et stocks (Odoo)",
+  "Multi-WAN aggregation": "Agrégation multi-WAN",
+  "Fibre / GPON distribution": "Distribution fibre / GPON",
+  "Huawei enterprise switching": "Commutation Huawei entreprise",
+  "VLANs & firewall policy": "VLAN et règles de pare-feu",
+  "Point-to-point wireless": "Liaisons sans fil point à point",
+  "Indoor & outdoor APs": "Points d'accès intérieurs et extérieurs",
+  "Proxmox virtualisation": "Virtualisation Proxmox",
+  "Linux server administration": "Administration de serveurs Linux",
+  "DNS filtering": "Filtrage DNS",
+  "Domain & DNS management": "Gestion des domaines et du DNS",
+  "Email hosting": "Hébergement de messagerie",
+  "CAD to GIS conversion": "Conversion CAO vers SIG",
+  "Site mapping support": "Appui à la cartographie du site",
+  "Structured cabling": "Câblage structuré",
+  "Site supported": "Site couvert",
+  "POS systems": "Systèmes de caisse",
+  "Remote support": "Support à distance",
   // Networking
   "Dual-WAN failover": "Bascule double-WAN",
   "Bandwidth queuing": "Gestion de bande passante",
