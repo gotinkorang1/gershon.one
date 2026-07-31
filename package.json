@@ -31,10 +31,11 @@
     "tailwindcss": "^4.0.0",
     "typescript": "^5.7.0"
   },
-  "//overrides": "Pin patched transitive deps flagged by npm audit (all build/dev-time). Remove an entry once the parent (next, eslint-config-next) ships the fix natively.",
+  "//overrides": "Pin patched transitive deps flagged by npm audit (all build/dev-time). typescript is capped to 5.x: a loose transitive range (>=3.3.1) let a clean install resolve TypeScript 7, whose native rewrite drops the compiler API next build needs. Remove an entry once the parent ships the fix natively.",
   "overrides": {
     "brace-expansion": "^5.0.8",
     "postcss": "^8.5.18",
-    "sharp": "^0.35.0"
+    "sharp": "^0.35.0",
+    "typescript": "^5.7.0"
   }
 }
