@@ -215,40 +215,55 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: "erpnext-administration",
-    title: "Keeping ERPNext and Odoo running for an engineering team",
+    title: "Eight thousand HR records, and who can reach them",
     summary:
-      "Administering the ERP platform that engineering and operations depend on — upgrades, data integrity, backups that have actually been restored.",
+      "HR needed one system for employee records, asset assignments, work cards and hostel allocations — real PII for 8,000 workers across four offices. Built on ERPNext, kept off the public internet, with administrator access gated behind a VPN on the MikroTik router.",
     role: "IT Support Officer",
-    context: "Greenhouse International Development Group Ghana Ltd.",
-    period: "2023 — present",
+    context: "Bright Industrial Park, Ghana",
+    period: "2024 — present",
     published: "2026-05-22",
     readingMinutes: 6,
-    tags: ["ERPNext", "Frappe", "Odoo", "Linux", "Backups"],
+    tags: ["ERPNext", "Frappe", "HR", "Data protection", "VPN", "MikroTik"],
     outcomes: [
-      { value: "TODO", label: "users supported" },
-      { value: "TODO", label: "tested recovery time" },
-      { value: "TODO", label: "uptime" },
+      { value: "8,000", label: "workers' records on one system" },
+      { value: "4", label: "HR offices, one per phase" },
+      { value: "0", label: "public-internet exposure" },
     ],
-    draft: true,
+    draft: false,
     sections: [
       {
-        heading: "What the system does",
+        heading: "What HR actually needed",
         body: [
-          "The ERP is where engineering and operations work actually lives — jobs, procurement, and the records that tie them together. When it is unavailable, people stop working rather than work around it.",
-          "TODO: describe which modules are in real use and roughly how many people depend on them daily.",
+          "The park is managed by Greenhouse International Development Group, and its HR department had no single place to keep the things HR runs on: company and employee records, which asset had been issued to whom, work cards, which hostel each worker was housed in, and a good deal of other personal data besides. Spread across a workforce of roughly 8,000 and held in whatever form each office had settled on, that is not a filing problem — it is a data problem waiting to become an incident.",
+          "The answer was one system on ERPNext: a single source of truth for every employee record, structured so an asset issued or a hostel reassigned is recorded once and seen everywhere. Four HR offices, one per phase of the park, all working from the same data rather than four diverging copies.",
         ],
       },
       {
-        heading: "Backups you have actually restored",
+        heading: "Why it never touches the public internet",
         body: [
-          "An untested backup is a guess. The useful question is not whether backups are running but how long a restore takes and whether the restored system is complete.",
-          "TODO: describe your backup schedule, where copies are held, and the last time you performed a full restore. If you have never rehearsed one, that is worth doing before you write this section — and worth doing regardless.",
+          "A database holding the personal data of 8,000 people is a serious thing to be responsible for, and as the only IT person on site who understood what a breach of it would mean, that responsibility was mine to design around.",
+          "So the system is not on the internet at all. It runs on the park intranet, reachable only from inside the network — and the single most effective control against a remote attacker is simply that there is no public door to try. Administration, the only access that reaches it from outside, goes through a VPN configured on the MikroTik router, so even I reach it over an authenticated tunnel rather than an exposed port. An HR system you cannot get to from the internet cannot be breached from the internet.",
         ],
       },
       {
-        heading: "Upgrades without downtime you have to apologise for",
+        heading: "The part that isn't software",
         body: [
-          "TODO: describe how you stage and apply updates, and any upgrade that went badly and what you changed afterwards. Interviewers value the second part more than the first.",
+          "Standing the system up was the easy half. The harder half was that four HR offices full of people now had to use it correctly — and the weakest point in any system holding personal data is rarely the server, it is the people typing into it.",
+          "So I enrolled and trained the HR users across all four offices, and the training was not only which button does what. It was what the data in front of them actually is, and what a leak of it would cost the people it describes. A system that is secure by design still fails if someone emails a spreadsheet of it home; the point of the training was that everyone touching those records understood why the walls around them exist.",
+        ],
+      },
+      {
+        heading: "Linking HR to payroll",
+        body: [
+          "Bright Industrial Park is Chinese-owned, and the finance office runs payroll on WeCom — the enterprise platform most of the company already lives in. HR and payroll describe the same people from two sides, so today each employee is maintained twice: once in ERPNext, once in WeCom.",
+          "The next step is to link the two, so an employee created or updated in the HR system flows through to payroll without being re-keyed. It is the more interesting kind of integration — bridging an open-source ERP and a Chinese enterprise suite that were never built to talk to each other — and the payoff is removing the double entry that quietly produces mismatched records between HR and finance.",
+        ],
+      },
+      {
+        heading: "What I would do differently",
+        body: [
+          "The design's strength is also its risk: access depends on one administrator reachable through one VPN. That is exactly the control I wanted for security, but it is a single point of failure for operations — if I am unavailable and the admin path breaks, no one else can get in to fix it. A second trained administrator and a documented recovery path would keep the security posture without the bus factor.",
+          "The backups deserve the same seriousness as the live system. A copy of an 8,000-person PII database is exactly as sensitive as the original, so it has to be encrypted, access-controlled, and — the part that is easy to skip — actually restore-tested rather than assumed to work.",
         ],
       },
     ],

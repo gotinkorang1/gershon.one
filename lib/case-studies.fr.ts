@@ -174,30 +174,49 @@ export const caseStudiesFr: Record<
     ],
   },
   "erpnext-administration": {
-    title: "Maintenir ERPNext et Odoo pour une équipe d'ingénierie",
+    title: "Huit mille dossiers RH, et qui peut y accéder",
     summary:
-      "Administration de la plateforme ERP dont dépendent l'ingénierie et l'exploitation — mises à jour, intégrité des données, sauvegardes réellement restaurées.",
+      "Les RH avaient besoin d'un système unique pour les dossiers des employés, l'attribution du matériel, les cartes de travail et l'affectation des foyers — des données personnelles réelles pour 8 000 travailleurs répartis sur quatre bureaux. Bâti sur ERPNext, tenu hors de l'internet public, avec un accès administrateur filtré par un VPN configuré sur le routeur MikroTik.",
     role: "Chargé de support informatique",
-    outcomes: ["TODO — utilisateurs pris en charge", "TODO — temps de restauration testé", "TODO — disponibilité"],
+    outcomes: [
+      "dossiers de travailleurs sur un seul système",
+      "bureaux RH, un par phase",
+      "exposition à l'internet public",
+    ],
     sections: [
       {
-        heading: "Rôle du système",
+        heading: "Ce dont les RH avaient réellement besoin",
         body: [
-          "L'ERP est le lieu où vit réellement le travail d'ingénierie et d'exploitation : chantiers, approvisionnement et les registres qui les relient. Quand il est indisponible, les gens s'arrêtent plutôt que de contourner.",
-          "TODO : préciser quels modules sont réellement utilisés et combien de personnes en dépendent quotidiennement.",
+          "Le parc est géré par Greenhouse International Development Group, et son service RH n'avait aucun endroit unique pour conserver ce sur quoi il repose : dossiers de l'entreprise et des employés, quel matériel avait été remis à qui, cartes de travail, foyer d'hébergement de chaque travailleur, et bien d'autres données personnelles encore. Répartis sur un effectif d'environ 8 000 personnes et conservés sous la forme que chaque bureau avait adoptée, ce n'est pas un problème de classement — c'est un problème de données qui n'attend que de devenir un incident.",
+          "La réponse : un système unique sur ERPNext, source de vérité unique pour chaque dossier d'employé, structuré de sorte qu'un matériel attribué ou un foyer réaffecté soit consigné une seule fois et visible partout. Quatre bureaux RH, un par phase du parc, travaillant tous à partir des mêmes données plutôt que de quatre copies divergentes.",
         ],
       },
       {
-        heading: "Des sauvegardes réellement restaurées",
+        heading: "Pourquoi il ne touche jamais l'internet public",
         body: [
-          "Une sauvegarde non testée est une supposition. La question utile n'est pas de savoir si les sauvegardes s'exécutent, mais combien de temps prend une restauration et si le système restauré est complet.",
-          "TODO : décrire votre calendrier de sauvegarde, où sont conservées les copies et la dernière restauration complète effectuée. Si vous n'en avez jamais répété une, cela vaut la peine avant de rédiger cette section — et indépendamment du site web.",
+          "Une base contenant les données personnelles de 8 000 personnes est une lourde responsabilité, et en tant que seule personne informatique sur site à comprendre ce qu'une fuite signifierait, c'était à moi de concevoir en conséquence.",
+          "Le système n'est donc pas du tout sur internet. Il fonctionne sur l'intranet du parc, accessible uniquement depuis l'intérieur du réseau — et le contrôle le plus efficace contre un attaquant distant est simplement qu'il n'existe aucune porte publique à essayer. L'administration, le seul accès qui l'atteint de l'extérieur, passe par un VPN configuré sur le routeur MikroTik : même moi, j'y accède par un tunnel authentifié plutôt que par un port exposé. Un système RH inaccessible depuis internet ne peut pas être compromis depuis internet.",
         ],
       },
       {
-        heading: "Des mises à jour sans excuses à présenter",
+        heading: "La part qui n'est pas logicielle",
         body: [
-          "TODO : décrire votre méthode de préparation et d'application des mises à jour, ainsi qu'une mise à jour qui s'est mal passée et ce que vous avez changé ensuite. Les recruteurs accordent plus de valeur à la seconde partie.",
+          "Mettre le système en place était la moitié facile. La moitié difficile, c'est que quatre bureaux RH remplis de personnes devaient désormais l'utiliser correctement — et le maillon le plus faible d'un système contenant des données personnelles est rarement le serveur, ce sont les gens qui y saisissent.",
+          "J'ai donc inscrit et formé les utilisateurs RH des quatre bureaux, et la formation ne portait pas seulement sur quel bouton fait quoi. Elle portait sur ce que sont réellement ces données, et sur ce qu'une fuite coûterait aux personnes qu'elles décrivent. Un système sûr par conception échoue quand même si quelqu'un s'envoie un tableur chez lui ; l'objectif de la formation était que chacun manipulant ces dossiers comprenne pourquoi les protections existent.",
+        ],
+      },
+      {
+        heading: "Relier les RH à la paie",
+        body: [
+          "Bright Industrial Park est à capitaux chinois, et le service financier gère la paie sur WeCom — la plateforme d'entreprise dans laquelle vit déjà l'essentiel de la société. Les RH et la paie décrivent les mêmes personnes sous deux angles : aujourd'hui, chaque employé est donc tenu à jour deux fois, une fois dans ERPNext, une fois dans WeCom.",
+          "L'étape suivante consiste à relier les deux, afin qu'un employé créé ou modifié dans le système RH soit répercuté vers la paie sans nouvelle saisie. C'est le type d'intégration le plus intéressant — faire dialoguer un ERP open source et une suite d'entreprise chinoise qui n'ont jamais été conçus pour se parler — et le bénéfice est la suppression de la double saisie qui produit discrètement des écarts entre les RH et la finance.",
+        ],
+      },
+      {
+        heading: "Ce que je referais autrement",
+        body: [
+          "La force de la conception est aussi son risque : l'accès dépend d'un seul administrateur joignable par un seul VPN. C'est exactement le contrôle que je voulais pour la sécurité, mais c'est un point de défaillance unique côté exploitation — si je suis indisponible et que le chemin d'administration casse, personne d'autre ne peut entrer pour le réparer. Un second administrateur formé et une procédure de reprise documentée conserveraient la posture de sécurité sans faire reposer toute l'exploitation sur une seule personne.",
+          "Les sauvegardes méritent le même sérieux que le système en production. Une copie d'une base de données personnelles de 8 000 personnes est exactement aussi sensible que l'originale : elle doit être chiffrée, à accès contrôlé, et — la partie facile à négliger — réellement testée en restauration plutôt que supposée fonctionner.",
         ],
       },
     ],
