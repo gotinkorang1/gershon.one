@@ -91,10 +91,15 @@ export function Skills() {
 
       {/* Terminal and GitHub sit here because they evidence the claims above. */}
       <div className="mt-3 grid gap-3 lg:grid-cols-12">
-        <Reveal delay={0.05} className="lg:col-span-7">
+        {/* min-w-0: without it a grid column's automatic minimum size is its
+            content's intrinsic width. The GitHub contribution graph (~53 weeks
+            wide) then forces the column past the viewport instead of scrolling
+            inside its own overflow-x-auto — a mobile horizontal-scroll bug that
+            only surfaces where the graph is configured (production, not local). */}
+        <Reveal delay={0.05} className="min-w-0 lg:col-span-7">
           <Terminal className="h-[17rem]" />
         </Reveal>
-        <Reveal delay={0.1} className="lg:col-span-5">
+        <Reveal delay={0.1} className="min-w-0 lg:col-span-5">
           <GitHubActivity />
         </Reveal>
       </div>
