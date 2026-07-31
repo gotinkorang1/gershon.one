@@ -3,8 +3,11 @@ import { site } from "@/lib/site";
 
 export default function robots(): MetadataRoute.Robots {
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? site.url;
-  // /brief holds unanswered placeholders; /api serves no indexable content.
-  const disallow = ["/brief", "/api/"];
+  // /api serves no indexable content. /brief is kept out of search by a
+  // `noindex` meta tag (see app/brief/page.tsx) rather than a Disallow:
+  // blocking the crawl would stop Google reading that noindex, so a linked
+  // bare URL could still surface. Allowing the crawl lets the noindex win.
+  const disallow = ["/api/"];
 
   return {
     rules: [
