@@ -85,7 +85,76 @@ export const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    slug: "campus-network-1200-acres",
+    slug: "batch-invoice-pdf-processor",
+    title: "The invoice pile that was being retyped by hand",
+    summary:
+      "The commercial team re-keyed machinery and vehicle line items from a folder of scanned invoices into a Word template, one PDF at a time. A Windows batch tool reads each PDF, keeps only the qualifying items, and exports a finished invoice named by its BOE number — with an AI fallback for the scans plain text can't reach.",
+    role: "IT Support Officer",
+    context: "Bright Industrial Park — Commercial Department",
+    period: "2026",
+    published: "2026-07-31",
+    readingMinutes: 7,
+    tags: ["Python", "Automation", "pdfplumber", "python-docx", "Vision AI", "Windows"],
+    repo: "https://github.com/gotinkorang1/batch-invoice-pdf-processor",
+    outcomes: [
+      { value: "3", label: "AI providers for unreadable scans" },
+      { value: "1", label: "clean PDF per source invoice" },
+      { value: "0", label: "values invented when uncertain" },
+    ],
+    draft: true,
+    sections: [
+      {
+        heading: "The job before the script",
+        body: [
+          "The commercial department received customs invoices as a folder of scanned PDFs — one per Bill of Entry, each named with its BOE number. Someone had to open each file, read down the line items, and copy only the machinery and vehicle entries into a fresh copy of a master Word invoice, leaving out parts, spares, accessories and anything ambiguous.",
+          "Then the totals: sum the qualifying lines into an FOB figure, derive freight and insurance from it, and save the finished document as a PDF named after the BOE number. Multiply that by a full folder and it is an afternoon of careful, repetitive copying in which a single mis-keyed amount is a wrong invoice.",
+          "None of it is hard. All of it is slow, and slow work done by hand is where errors live. The task was a machine's job wearing a person's afternoon.",
+        ],
+      },
+      {
+        heading: "Keeping only what qualifies",
+        body: [
+          "The core of the tool is a classifier that decides, line by line, whether an item is machinery or a vehicle. It reads each description against a configurable list of inclusion keywords, and an exclusion list overrides them — so “engine oil” is dropped even though “engine” would have matched.",
+          "It is deliberately conservative. Ambiguous or weakly described items are excluded rather than guessed at. On a commercial invoice a wrong inclusion is a defect someone has to catch downstream, while a missed line is visible and easy to add back — so the tool errs toward leaving things out and being obvious about it.",
+          "The rules live in a JSON file, not in the code, so the vocabulary can be tuned to a new supplier's wording without touching the parser.",
+        ],
+      },
+      {
+        heading: "A fresh template every time",
+        body: [
+          "Every invoice is built from a clean copy of the master Word template rather than by editing the previous output, so nothing leaks from one file into the next. The tool finds the line-items table by its header labels, copies the formatting of a sample row, and fills one row per qualifying item in the source order.",
+          "Metadata and totals go into named placeholders — invoice number, reference, and the three calculated figures: FOB as the sum of line totals, freight at a fixed percentage of FOB, insurance derived from FOB plus freight. The arithmetic is identical every time, which is exactly why a person should not be doing it.",
+          "Export runs through Word itself rather than a PDF library, because the finished invoice has to match the template's layout exactly, and the surest way to guarantee that is to let the application that owns the format produce the PDF.",
+        ],
+      },
+      {
+        heading: "When the PDF is a photograph",
+        body: [
+          "Some invoices arrive as scans — an image with no text layer for the parser to read. Rather than fail on those, the tool can fall back to a vision model, and it treats that as a last resort: it runs the ordinary text parser first and only calls a model when it cannot confidently find qualifying items.",
+          "Three providers are supported — OpenAI, Gemini and Claude — because a department may already pay for one and not the others. The model is asked to return only items it is confident about, each with a readable description, unit total, line total and page number, and to exclude anything uncertain rather than invent a value.",
+          "That last rule is the important one. A tool that guesses at a number on a customs invoice is worse than one that leaves a gap, so the AI path is held to the same conservative standard as the keyword classifier: when in doubt, leave it out and let a human see the gap.",
+        ],
+      },
+      {
+        heading: "Built to be interrupted",
+        body: [
+          "A batch that runs over a large folder, driving Word once per file, will eventually hit one that stalls. If that meant starting the whole folder again, the tool would be a liability on exactly the runs it was built for.",
+          "So it checkpoints. Each source file's state is written to the output folder as it goes — processed, skipped, failed — alongside an append-only event log and a per-file CSV. Rerun against the same folder and it continues from where it stopped: finished files are left alone, failed and interrupted ones are retried, and a flag forces a clean run when you want one.",
+          "It is the unglamorous part, and it is the difference between a demo and something the commercial team can actually leave running.",
+        ],
+      },
+      {
+        heading: "What I would do differently",
+        body: [
+          "The Word dependency ties the tool to a Windows machine with Office installed. That was right for where it runs, but it means the export step cannot move to a server without swapping the engine — and I would isolate that boundary more cleanly so a headless renderer could drop in.",
+          "The classifier is keyword-based, which is transparent and easy to audit but blind to synonyms it has not been told about. The AI fallback quietly compensates for that on the scans; the honest version of the design would apply the same confidence-scored judgement to the text path too, rather than two different mechanisms doing the same job.",
+          "And because uncertain items are excluded by design, the tool still assumes a human reviews what it left out. That is the correct default, but the summary it writes could do more to surface exactly which lines were dropped and why, so the review is a two-minute check rather than a re-read of the original.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "industrial-park-network-1200-acres",
     title: "Bringing a 1,200-acre industrial park online",
     summary:
       "No fibre to the door, no single satellite link fast enough, and CCTV plus point-of-sale data to move from factories to head office. Eight bonded Starlink terminals into a fibre distribution layer.",
@@ -105,7 +174,7 @@ export const caseStudies: CaseStudy[] = [
       {
         heading: "The constraint",
         body: [
-          "An industrial park of 1,200 acres, with factories, offices and a head office spread across it. Every building needed internet. Head office needed CCTV footage and point-of-sale data flowing back from all of them. And there was no terrestrial fibre reaching the site.",
+          "An international industrial park of 1,200 acres at Afienya – Shai Hills, home to many international manufacturers and producers, with factories, offices and a head office spread across it. Every building needed internet. Head office needed CCTV footage and point-of-sale data flowing back from all of them. And there was no terrestrial fibre reaching the site.",
           "That rules out the obvious answer. A single satellite terminal cannot carry a whole park — not the aggregate bandwidth of dozens of cameras uploading continuously, plus POS transactions, plus ordinary office traffic. Buying a bigger link was not an option, because there was no bigger link to buy.",
           "TODO: add roughly how many buildings, cameras and POS terminals the network serves. Scale is the whole point of this story and specific numbers land harder than \"dozens\".",
         ],

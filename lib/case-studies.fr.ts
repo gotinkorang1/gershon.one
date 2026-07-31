@@ -59,7 +59,68 @@ export const caseStudiesFr: Record<
       },
     ],
   },
-  "campus-network-1200-acres": {
+  "batch-invoice-pdf-processor": {
+    title: "La pile de factures que l'on ressaisissait à la main",
+    summary:
+      "L'équipe commerciale ressaisissait les lignes de machines et de véhicules d'un dossier de factures scannées dans un modèle Word, un PDF à la fois. Un outil de traitement par lots sous Windows lit chaque PDF, ne conserve que les lignes admissibles et exporte une facture finalisée nommée d'après son numéro BOE — avec un recours à l'IA pour les scans que le texte brut n'atteint pas.",
+    role: "Chargé de support informatique",
+    outcomes: [
+      "fournisseurs d'IA pour les scans illisibles",
+      "PDF propre par facture source",
+      "valeurs inventées en cas de doute",
+    ],
+    sections: [
+      {
+        heading: "Le travail avant le script",
+        body: [
+          "Le service commercial recevait les factures douanières sous forme d'un dossier de PDF scannés — un par déclaration en douane, chacun nommé d'après son numéro BOE. Il fallait ouvrir chaque fichier, parcourir les lignes et ne recopier que les entrées de machines et de véhicules dans une copie neuve d'une facture Word de référence, en écartant les pièces, les pièces détachées, les accessoires et tout élément ambigu.",
+          "Puis les totaux : additionner les lignes admissibles en un montant FOB, en déduire le fret et l'assurance, et enregistrer le document finalisé en PDF nommé d'après le numéro BOE. Multipliez cela par un dossier entier et c'est un après-midi de recopie minutieuse et répétitive, où un seul montant mal saisi donne une facture erronée.",
+          "Rien de difficile. Tout est lent, et le travail manuel lent est le terreau des erreurs. La tâche était un travail de machine occupant l'après-midi d'une personne.",
+        ],
+      },
+      {
+        heading: "Ne conserver que ce qui est admissible",
+        body: [
+          "Le cœur de l'outil est un classificateur qui décide, ligne par ligne, si un article est une machine ou un véhicule. Il confronte chaque description à une liste configurable de mots-clés d'inclusion, qu'une liste d'exclusion supplante — ainsi « huile moteur » est écartée bien que « moteur » aurait correspondu.",
+          "Il est délibérément prudent. Les articles ambigus ou mal décrits sont exclus plutôt que devinés. Sur une facture commerciale, une inclusion erronée est un défaut que quelqu'un devra rattraper en aval, tandis qu'une ligne manquante est visible et facile à rajouter — l'outil penche donc vers l'omission, et le fait de manière évidente.",
+          "Les règles résident dans un fichier JSON, non dans le code : le vocabulaire peut donc être ajusté aux formulations d'un nouveau fournisseur sans toucher à l'analyseur.",
+        ],
+      },
+      {
+        heading: "Un modèle neuf à chaque fois",
+        body: [
+          "Chaque facture est construite à partir d'une copie propre du modèle Word de référence plutôt qu'en modifiant la sortie précédente, de sorte que rien ne se propage d'un fichier au suivant. L'outil repère le tableau des lignes grâce aux libellés de son en-tête, copie la mise en forme d'une ligne d'exemple et remplit une ligne par article admissible, dans l'ordre d'origine.",
+          "Les métadonnées et les totaux vont dans des marqueurs nommés — numéro de facture, référence, et les trois montants calculés : le FOB comme somme des totaux de lignes, le fret à un pourcentage fixe du FOB, l'assurance déduite du FOB majoré du fret. Le calcul est identique à chaque fois, ce qui est précisément la raison pour laquelle une personne ne devrait pas s'en charger.",
+          "L'export passe par Word lui-même plutôt que par une bibliothèque PDF, car la facture finalisée doit reproduire exactement la mise en page du modèle, et le moyen le plus sûr de le garantir est de laisser l'application qui possède le format produire le PDF.",
+        ],
+      },
+      {
+        heading: "Quand le PDF est une photographie",
+        body: [
+          "Certaines factures arrivent sous forme de scans — une image sans couche de texte que l'analyseur puisse lire. Plutôt que d'échouer sur celles-ci, l'outil peut se rabattre sur un modèle de vision, et il le traite en dernier recours : il exécute d'abord l'analyseur de texte ordinaire et n'appelle un modèle que lorsqu'il ne parvient pas à trouver avec certitude des articles admissibles.",
+          "Trois fournisseurs sont pris en charge — OpenAI, Gemini et Claude — car un service peut déjà payer l'un et non les autres. On demande au modèle de ne renvoyer que les articles dont il est sûr, chacun avec une description lisible, un total unitaire, un total de ligne et un numéro de page, et d'exclure tout élément incertain plutôt que d'inventer une valeur.",
+          "Cette dernière règle est l'essentielle. Un outil qui devine un montant sur une facture douanière est pire qu'un outil qui laisse un vide : le recours à l'IA est donc tenu à la même exigence de prudence que le classificateur par mots-clés — dans le doute, on s'abstient et on laisse un humain voir le vide.",
+        ],
+      },
+      {
+        heading: "Conçu pour être interrompu",
+        body: [
+          "Un lot qui s'exécute sur un dossier volumineux, en pilotant Word pour chaque fichier, finira par en rencontrer un qui bloque. Si cela imposait de reprendre tout le dossier, l'outil serait un handicap précisément sur les traitements pour lesquels il a été conçu.",
+          "Il enregistre donc des points de reprise. L'état de chaque fichier source est écrit dans le dossier de sortie au fur et à mesure — traité, ignoré, échoué — aux côtés d'un journal d'événements en ajout seul et d'un CSV par fichier. Relancez sur le même dossier et il reprend là où il s'était arrêté : les fichiers terminés sont laissés tels quels, ceux en échec ou interrompus sont réessayés, et une option force une exécution propre lorsqu'on le souhaite.",
+          "C'est la partie ingrate, et c'est ce qui distingue une démonstration d'un outil que le service commercial peut réellement laisser tourner.",
+        ],
+      },
+      {
+        heading: "Ce que je referais autrement",
+        body: [
+          "La dépendance à Word lie l'outil à une machine Windows dotée d'Office. C'était le bon choix là où il s'exécute, mais cela signifie que l'étape d'export ne peut migrer vers un serveur sans changer de moteur — j'isolerais cette frontière plus proprement afin qu'un moteur de rendu sans interface puisse s'y substituer.",
+          "Le classificateur repose sur des mots-clés, ce qui est transparent et facile à auditer mais aveugle aux synonymes qu'on ne lui a pas indiqués. Le recours à l'IA compense discrètement ce point sur les scans ; la version honnête de la conception appliquerait le même raisonnement fondé sur un score de confiance au traitement du texte également, plutôt que deux mécanismes distincts pour un même jugement.",
+          "Et comme les articles incertains sont exclus par principe, l'outil suppose toujours qu'un humain vérifie ce qu'il a laissé de côté. C'est le comportement par défaut correct, mais le récapitulatif qu'il produit pourrait mieux faire ressortir quelles lignes ont été écartées et pourquoi, afin que cette vérification soit un contrôle de deux minutes plutôt qu'une relecture de l'original.",
+        ],
+      },
+    ],
+  },
+  "industrial-park-network-1200-acres": {
     title: "Connecter un parc industriel de 1 200 acres",
     summary:
       "Aucune fibre disponible sur place, aucun lien satellite unique suffisamment rapide, et des flux de vidéosurveillance et de caisse à acheminer des usines vers le siège. Huit terminaux Starlink agrégés vers une couche de distribution en fibre optique.",
@@ -73,7 +134,7 @@ export const caseStudiesFr: Record<
       {
         heading: "La contrainte",
         body: [
-          "Un parc industriel de 1 200 acres, avec des usines, des bureaux et un siège répartis sur l'ensemble du site. Chaque bâtiment avait besoin d'un accès internet. Le siège devait recevoir les flux de vidéosurveillance et les données de caisse de tous ces bâtiments. Et aucune fibre terrestre ne desservait le site.",
+          "Un parc industriel international de 1 200 acres à Afienya – Shai Hills, accueillant de nombreux fabricants et producteurs internationaux, avec des usines, des bureaux et un siège répartis sur l'ensemble du site. Chaque bâtiment avait besoin d'un accès internet. Le siège devait recevoir les flux de vidéosurveillance et les données de caisse de tous ces bâtiments. Et aucune fibre terrestre ne desservait le site.",
           "Cela écarte la solution évidente. Un seul terminal satellite ne peut pas alimenter un parc entier — ni la bande passante cumulée de dizaines de caméras en téléversement continu, ni les transactions de caisse, ni le trafic bureautique ordinaire. Acheter un lien plus rapide n'était pas une option : il n'y en avait aucun à acheter.",
           "TODO : préciser le nombre approximatif de bâtiments, de caméras et de terminaux de caisse desservis. L'échelle est tout l'intérêt de ce récit et des chiffres précis portent davantage que « des dizaines ».",
         ],
