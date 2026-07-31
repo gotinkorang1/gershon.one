@@ -1,9 +1,11 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/lib/site";
 import { caseStudies } from "@/lib/case-studies";
+import { getPublishedPosts } from "@/lib/blog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? site.url;
+  const posts = getPublishedPosts();
   // A hand-bumped content date, not `new Date()`. Building at deploy time
   // stamped every page "changed today" on every deploy, so crawlers learned to
   // ignore the field. This changes only when the content actually does.
@@ -54,5 +56,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
           },
         },
       })),
+    // Blog index + published posts (English-only, so no hreflang alternates).
+    {
+      url: `${base}/blog`,
+      lastModified: posts[0] ? new Date(posts[0].date) : updated,
+      changeFrequency: "weekly" as const,
+      priority: 0.6,
+    },
+    ...posts.map((p) => ({
+      url: `${base}/blog/${p.slug}`,
+      lastModified: new Date(p.date),
+      changeFrequency: "yearly" as const,
+      priority: 0.6,
+    })),
   ];
 }

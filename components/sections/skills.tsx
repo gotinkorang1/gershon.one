@@ -4,9 +4,22 @@ import { Cloud, Code2, Network, Server, Users } from "lucide-react";
 import { SectionHeading } from "@/components/fx/section-heading";
 import { Reveal } from "@/components/fx/reveal";
 import { Panel } from "@/components/ui/panel";
-import { Terminal } from "@/components/terminal";
-import { NetworkTopology } from "@/components/fx/network-topology";
+import dynamic from "next/dynamic";
 import { GitHubActivity } from "@/components/github-activity";
+
+// The terminal and the topology are the two heaviest client components on the
+// page and sit well below the fold. Loading them on demand keeps their JS out
+// of the initial bundle and off the first-load main thread (Total Blocking
+// Time). Both have fixed heights, so the placeholders reserve exact space and
+// cause no layout shift.
+const Terminal = dynamic(() => import("@/components/terminal").then((m) => m.Terminal), {
+  ssr: false,
+  loading: () => <div className="panel panel-raised h-[17rem]" aria-hidden />,
+});
+const NetworkTopology = dynamic(
+  () => import("@/components/fx/network-topology").then((m) => m.NetworkTopology),
+  { ssr: false, loading: () => <div className="mt-7 h-[18rem] sm:h-[20rem]" aria-hidden /> },
+);
 
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/components/locale-provider";

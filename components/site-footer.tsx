@@ -37,6 +37,11 @@ export function SiteFooter() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link href="/blog" className="link text-sm text-muted-foreground">
+                  Blog
+                </Link>
+              </li>
             </ul>
           </nav>
 

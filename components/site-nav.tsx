@@ -120,6 +120,19 @@ export function SiteNav() {
                   </li>
                 );
               })}
+              <li>
+                <Link
+                  href="/blog"
+                  className={cn(
+                    "relative rounded-lg px-3 py-1.5 text-sm transition-colors",
+                    pathname.startsWith("/blog")
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  Blog
+                </Link>
+              </li>
             </ul>
 
             <div className="flex items-center gap-2">
@@ -183,6 +196,14 @@ export function SiteNav() {
               <span className="text-2xl font-medium tracking-tight">{t.nav[link.key]}</span>
             </Link>
           ))}
+          <Link
+            href="/blog"
+            onClick={() => setOpen(false)}
+            className="flex items-baseline gap-4 border-b border-border py-4"
+          >
+            <span className="label">06</span>
+            <span className="text-2xl font-medium tracking-tight">Blog</span>
+          </Link>
           <div className="mt-6" onClick={() => setOpen(false)}>
             <CvButton size="lg" className="w-full" />
           </div>
