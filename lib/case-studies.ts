@@ -1,13 +1,11 @@
 /**
  * Technical case studies.
  *
- * ⚠️  IMPORTANT — READ BEFORE PUBLISHING
- *
- * These are drafted from the bullet points on your CV. The shape of each story
- * is right, but the specific figures, model numbers and timings marked with
- * `TODO` are placeholders. Anything published here you must be able to defend
- * in an interview, so replace every TODO with a real number or delete the
- * sentence containing it.
+ * Every study here is written from real, defensible detail — figures, model
+ * numbers and timings the author can stand behind in an interview. When adding
+ * a new one, hold that bar: no invented numbers, and mark anything still
+ * unconfirmed as `draft: true` so it stays out of the sitemap, RSS feed and
+ * search index (and shows a "Draft" badge) until it is real.
  */
 
 export type Section = { heading: string; body: string[] };
@@ -272,37 +270,60 @@ export const caseStudies: CaseStudy[] = [
     slug: "diagnosing-fibre-latency",
     title: "Finding a fault that was not where everyone was looking",
     summary:
-      "Intermittent slowness blamed on the ERP system turned out to be a routing problem. A short piece on diagnosing by layer rather than by suspicion.",
+      "In a park this size, “the internet is slow” almost never means what it says. Fibre barely adds latency; the fault is a dirty connector, a failing SFP, a switching loop, a bent cable. A method for diagnosing by layer instead of by the loudest guess.",
     role: "IT Support Officer",
-    context: "Greenhouse International Development Group Ghana Ltd.",
-    period: "2024",
+    context: "Bright Industrial Park, Ghana",
+    period: "2024 — present",
     published: "2026-04-15",
-    readingMinutes: 5,
-    tags: ["Troubleshooting", "Fibre", "Routing", "Latency"],
+    readingMinutes: 7,
+    tags: ["Troubleshooting", "Fibre optics", "Optical power", "Switching", "MikroTik"],
     outcomes: [
-      { value: "TODO", label: "time to resolution" },
-      { value: "TODO", label: "affected users" },
+      { value: "5 µs", label: "delay fibre adds per km" },
+      { value: "Layer 1", label: "where the fault usually hides" },
+      { value: "0", label: "faults diagnosed by guessing" },
     ],
-    draft: true,
+    draft: false,
     sections: [
       {
-        heading: "The reported symptom",
+        heading: "Why the fibre is almost never the fibre",
         body: [
-          "The complaint was that the ERP system was slow. It usually is the application, so that is where people look first — and where I would have wasted a day if I had started there.",
-          "TODO: describe what users actually reported, and what made you doubt the obvious explanation.",
+          "Optical fibre adds about five microseconds of delay per kilometre. Across a park, that is nothing — the fibre is almost never the cause of a latency complaint, whatever the complaint says. What reaches me is a symptom: “the internet is slow,” “the ERP keeps disconnecting,” “the CCTV freezes every few seconds.” Where the fault actually sits is somewhere else entirely.",
+          "That somewhere is usually the physical layer — a dirty connector, a failing transceiver, a fibre bent too tight or cut by an excavator, a splice that drifts as it heats. Sometimes it is a layer higher: a duplex mismatch, a saturated uplink, a switching loop, a port on the wrong VLAN. The fault is rarely where the complaint points, and the work is to find it without being led there by the loudest guess.",
         ],
       },
       {
-        heading: "Working down the layers",
+        heading: "Working up from the bottom",
         body: [
-          "Application slowness and network latency present identically to a user. The difference shows up as soon as you measure rather than ask.",
-          "TODO: describe the sequence you actually followed — what you measured, what each result ruled out, and the point at which the picture changed.",
+          "The discipline is to diagnose by layer, from the physical layer up, and to measure at each step rather than suspect. The first question is scope — one PC, one building, or the whole park — because that alone rules out half the possibilities before a single tool comes out of the bag.",
+          "After that it is measurement, not opinion. A continuous ping to the gateway separates a local fault from a WAN one and shows whether the loss is steady or spikes under load. The switch's own interface counters — CRC errors, receive drops, interface flaps — point straight at Layer 1 the moment they start climbing. Optical power tells the rest: a healthy receive level sits around -8 to -15 dBm, and a reading of -20 dBm is a light budget quietly falling apart. An iperf run across the LAN separates a bandwidth ceiling from a latency problem. Each measurement rules a layer in or out, so by the time I actually touch the fibre I already know it is the fibre.",
         ],
       },
       {
-        heading: "The actual fault",
+        heading: "The fault a thirty-second clean fixes",
         body: [
-          "TODO: what it turned out to be, how you fixed it, and what you put in place so it would be caught sooner next time.",
+          "One building reports the ERP dropping and the CCTV stuttering. A ping to the gateway runs at one or two milliseconds, then spikes to 350 and times out, then returns to normal — the signature of a link shedding frames, not an application failing. The switch confirms it: CRC errors and receive drops climbing on that one port, which puts the fault at Layer 1 and takes routing and VLANs off the table.",
+          "Optical power reads -20 dBm on receive, well under the healthy window. The cause turns out to be almost boringly common — a dirty LC connector, a speck of dust on a fibre end face a fraction of a hair wide, enough to scatter the light. A one-click cleaner, an inspection under the scope, reconnect, and receive power comes back to -10 dBm with the latency gone. It looked like a software bug for a week and it was a smudge.",
+        ],
+      },
+      {
+        heading: "When you have to find the break",
+        body: [
+          "Not every fault is that gentle. A whole factory goes dark at once — link down, no light on the transceiver at all. That is not degradation, it is a break, and the only question is where. A visual fault locator, a red laser sent down the fibre, shows it glowing halfway along the conduit, where an excavator cutting a road trench had gone through the cable. A fusion splice, a retest, and the factory is back.",
+          "The subtler version is the splice that holds in the morning and fails in the afternoon heat, or a fibre tied hard around a metal pole so its receive power sags and recovers as it flexes. Those never show as a clean break; they show as loss, and an OTDR is what finds them — a 2.4 dB spike at 320 metres where the trace should read a rounding error, pointing at the exact splice to redo.",
+        ],
+      },
+      {
+        heading: "The loop that takes down everything",
+        body: [
+          "The faults that do not stay in one building are the worst. The whole park goes unusable at once, every switch's CPU pinned near the ceiling, the network drowning in broadcast traffic. That pattern has one usual cause — a loop. Someone has patched two switch ports into each other, often while innocently tidying a cabinet, and the network is now forwarding the same frames around a ring with no end.",
+          "Spanning tree gives it away as constant topology changes. Pulling the loop cable ends it, but the real fix is the guard that should have kept one patch lead from becoming a park-wide outage: RSTP with BPDU guard and loop protection, so the switch shuts the offending port instead of letting it take down eight thousand people's network.",
+        ],
+      },
+      {
+        heading: "What I would do differently",
+        body: [
+          "Almost every fault here is visible before a user feels it. A connector does not fail in an instant — its receive power drifts down over days. A splice that gives out in the heat has been marginal for weeks. The single biggest improvement is to monitor the physical layer: optical power and interface error counters, with an alert when a link crosses a threshold, so a port sliding toward -18 dBm raises a ticket before it drops a frame.",
+          "That turns the whole thing from reactive to proactive — instead of diagnosing an outage after the CCTV freezes, you replace a connector on a Tuesday because a graph told you to. The method in this piece is how you find a fault once it has happened; the point of the monitoring is to need it less often.",
         ],
       },
     ],

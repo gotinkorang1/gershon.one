@@ -1,6 +1,8 @@
 /**
- * French case studies. Same TODO warning as the English versions — the figures
- * are placeholders and must be replaced with real numbers before publishing.
+ * French case studies — translations of the English studies in
+ * lib/case-studies.ts. The outcome *values* come from that file; this supplies
+ * the localised title, summary, outcome labels and prose. Same bar: real,
+ * defensible detail only.
  */
 
 export const caseStudiesFr: Record<
@@ -224,28 +226,54 @@ export const caseStudiesFr: Record<
   "diagnosing-fibre-latency": {
     title: "Trouver une panne là où personne ne cherchait",
     summary:
-      "Des lenteurs intermittentes imputées à l'ERP se sont révélées être un problème de routage. Court récit d'un diagnostic par couches plutôt que par intuition.",
+      "Dans un parc de cette taille, « internet est lent » ne veut presque jamais dire ce qu'il annonce. La fibre ajoute une latence infime ; la panne, c'est un connecteur sale, un SFP défaillant, une boucle de commutation, un câble trop courbé. Une méthode pour diagnostiquer par couches plutôt que par l'intuition la plus bruyante.",
     role: "Chargé de support informatique",
-    outcomes: ["TODO — délai de résolution", "TODO — utilisateurs touchés"],
+    outcomes: [
+      "de délai que la fibre ajoute au km",
+      "où se trouve presque toujours la panne",
+      "pannes diagnostiquées à l'intuition",
+    ],
     sections: [
       {
-        heading: "Le symptôme signalé",
+        heading: "Pourquoi la fibre n'est presque jamais la cause",
         body: [
-          "La plainte portait sur la lenteur de l'ERP. C'est généralement l'application en cause, donc c'est là que l'on cherche d'abord — et là où j'aurais perdu une journée si j'avais commencé par là.",
-          "TODO : décrire ce que les utilisateurs ont réellement signalé et ce qui vous a fait douter de l'explication évidente.",
+          "La fibre optique ajoute environ cinq microsecondes de délai par kilomètre. À l'échelle d'un parc, c'est négligeable — la fibre n'est presque jamais la cause d'une plainte de latence, quoi que dise la plainte. Ce qui me parvient, c'est un symptôme : « internet est lent », « l'ERP se déconnecte sans arrêt », « la vidéosurveillance se fige toutes les quelques secondes ». La panne, elle, se trouve tout autre part.",
+          "Ce « tout autre part » est le plus souvent la couche physique — un connecteur sale, un transceiver défaillant, une fibre trop courbée ou sectionnée par une pelleteuse, une soudure qui dérive en chauffant. Parfois c'est une couche au-dessus : un défaut de duplex, un lien saturé, une boucle de commutation, un port sur le mauvais VLAN. La panne est rarement là où pointe la plainte, et le travail consiste à la trouver sans se laisser conduire par l'intuition la plus bruyante.",
         ],
       },
       {
-        heading: "Descendre les couches",
+        heading: "Remonter depuis le bas",
         body: [
-          "Une lenteur applicative et une latence réseau se présentent de façon identique pour l'utilisateur. La différence apparaît dès que l'on mesure au lieu de demander.",
-          "TODO : décrire la séquence réellement suivie — ce que vous avez mesuré, ce que chaque résultat a écarté, et le moment où l'hypothèse a changé.",
+          "La discipline consiste à diagnostiquer par couches, en partant de la couche physique, et à mesurer à chaque étape plutôt qu'à supposer. La première question est celle de l'étendue — un poste, un bâtiment, ou tout le parc — car elle écarte à elle seule la moitié des possibilités avant même de sortir un outil.",
+          "Ensuite, c'est de la mesure, pas de l'opinion. Un ping continu vers la passerelle distingue une panne locale d'un problème WAN et montre si la perte est constante ou survient en charge. Les compteurs d'interface du commutateur — erreurs CRC, paquets rejetés en réception, battements d'interface — désignent la couche 1 dès qu'ils grimpent. La puissance optique dit le reste : un niveau de réception sain se situe autour de -8 à -15 dBm, et une valeur de -20 dBm est un bilan de liaison qui s'effondre discrètement. Un iperf sur le LAN sépare un plafond de bande passante d'un problème de latence. Chaque mesure valide ou écarte une couche, si bien qu'au moment où je touche enfin à la fibre, je sais déjà que c'est la fibre.",
         ],
       },
       {
-        heading: "La panne réelle",
+        heading: "La panne qu'un nettoyage de trente secondes règle",
         body: [
-          "TODO : ce dont il s'agissait, comment vous l'avez corrigée, et ce que vous avez mis en place pour la détecter plus tôt la prochaine fois.",
+          "Un bâtiment signale l'ERP qui décroche et la vidéosurveillance qui saccade. Un ping vers la passerelle affiche une ou deux millisecondes, puis un pic à 350 et un délai dépassé, puis revient à la normale — la signature d'un lien qui perd des trames, non d'une application qui défaille. Le commutateur le confirme : erreurs CRC et rejets en réception qui grimpent sur ce seul port, ce qui place la panne en couche 1 et écarte le routage et les VLAN.",
+          "La puissance optique lit -20 dBm en réception, bien en deçà de la fenêtre saine. La cause se révèle presque banale — un connecteur LC sale, une poussière sur une extrémité de fibre, large d'une fraction de cheveu, suffisante pour diffuser la lumière. Un nettoyeur « one-click », une inspection au microscope, on rebranche, et la puissance de réception remonte à -10 dBm, la latence avec elle. Cela ressemblait à un bug logiciel pendant une semaine, et ce n'était qu'une trace.",
+        ],
+      },
+      {
+        heading: "Quand il faut localiser la rupture",
+        body: [
+          "Toutes les pannes ne sont pas aussi douces. Une usine entière tombe d'un coup — lien coupé, aucune lumière sur le transceiver. Ce n'est pas une dégradation, c'est une rupture, et la seule question est : où ? Un localisateur visuel de défaut, un laser rouge envoyé dans la fibre, la révèle en train de rougeoyer à mi-parcours dans le fourreau, là où une pelleteuse creusant une tranchée de route avait traversé le câble. Une soudure par fusion, un nouveau test, et l'usine est de retour.",
+          "La version plus subtile, c'est la soudure qui tient le matin et lâche dans la chaleur de l'après-midi, ou la fibre serrée fort autour d'un poteau métallique dont la puissance de réception faiblit et se rétablit au gré des flexions. Celles-là n'apparaissent jamais comme une rupture nette ; elles apparaissent comme une perte, et c'est un OTDR qui les trouve — un pic de 2,4 dB à 320 mètres là où la trace devrait afficher une valeur négligeable, désignant la soudure exacte à refaire.",
+        ],
+      },
+      {
+        heading: "La boucle qui fait tout tomber",
+        body: [
+          "Les pannes qui ne restent pas dans un seul bâtiment sont les pires. Le parc entier devient inutilisable d'un coup, le processeur de chaque commutateur collé au plafond, le réseau noyé sous le trafic de diffusion. Ce schéma a une cause habituelle — une boucle. Quelqu'un a relié deux ports de commutateur l'un à l'autre, souvent en rangeant innocemment une armoire, et le réseau fait désormais tourner les mêmes trames en anneau sans fin.",
+          "Le spanning tree la trahit par des changements de topologie incessants. Retirer le câble de la boucle y met fin, mais le vrai correctif est la protection qui aurait dû empêcher un seul cordon de devenir une panne à l'échelle du parc : RSTP avec BPDU guard et protection contre les boucles, pour que le commutateur ferme le port fautif au lieu de laisser un câble faire tomber le réseau de huit mille personnes.",
+        ],
+      },
+      {
+        heading: "Ce que je referais autrement",
+        body: [
+          "Presque toutes ces pannes sont visibles avant que l'utilisateur ne les ressente. Un connecteur ne lâche pas d'un coup — sa puissance de réception dérive vers le bas sur plusieurs jours. Une soudure qui cède à la chaleur est marginale depuis des semaines. La plus grande amélioration serait de superviser la couche physique : puissance optique et compteurs d'erreurs d'interface, avec une alerte lorsqu'un lien franchit un seuil, pour qu'un port glissant vers -18 dBm ouvre un ticket avant de perdre une trame.",
+          "Cela fait passer l'ensemble du réactif au proactif — au lieu de diagnostiquer une panne après que la vidéosurveillance s'est figée, on remplace un connecteur un mardi parce qu'un graphique l'a signalé. La méthode décrite ici sert à trouver une panne une fois qu'elle est survenue ; l'intérêt de la supervision, c'est d'en avoir besoin moins souvent.",
         ],
       },
     ],
