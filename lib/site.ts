@@ -27,7 +27,7 @@ export const site = {
   headline:
     "I keep the systems people depend on working — from a jammed printer to a fibre backbone across 1,200 acres.",
   summary:
-    "IT support specialist with five years keeping users, devices and infrastructure running across a 1,200-acre industrial park and multiple retail sites in Ghana. Day to day that means end-user support, POS and PDA systems, and the servers behind them; it has also meant designing the campus fibre network and the multi-WAN satellite link that carries it. Comfortable at both ends — the helpdesk ticket and the distribution panel.",
+    "IT support specialist with five years keeping users, devices and infrastructure running across a 1,200-acre industrial park and multiple retail sites in Ghana. Day to day that means end-user support, POS and PDA systems, and the servers behind them; it has also meant designing the site-wide fibre network and the multi-WAN satellite link that carries it. Comfortable at both ends — the helpdesk ticket and the distribution panel.",
   // Search-snippet length (~155 chars). `summary` above is the on-page bio and
   // runs far past what Google shows, so the meta description is authored
   // separately — leading with the strongest hook before the truncation point.
@@ -88,7 +88,7 @@ export const experience: Job[] = [
     end: null,
     location: "Bright Industrial Park, Ghana",
     summary:
-      "Sole IT support for a 1,200-acre industrial park and the retail sites of its subsidiary — end users, POS and PDA systems, servers, and the campus network that connects all of it.",
+      "Sole IT support for a 1,200-acre industrial park and the retail sites of its subsidiary — end users, POS and PDA systems, servers, and the site-wide network that connects all of it.",
     highlights: [
       "First and only line of IT support for staff across the park and head office: hardware, software, printers, accounts and access, from triage to resolution.",
       "Configure, deploy and support point-of-sale systems for Bright Afrimall across multiple retail locations in Ghana, including staff training and remote fault resolution.",
@@ -259,7 +259,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     title: "Networking",
-    blurb: "Campus fibre, multi-WAN aggregation and wireless coverage at scale.",
+    blurb: "Site-wide fibre, multi-WAN aggregation and wireless coverage at scale.",
     skills: [
       "MikroTik RouterOS",
       "Multi-WAN aggregation",

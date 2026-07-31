@@ -101,7 +101,7 @@ export const caseStudies: CaseStudy[] = [
       { value: "1", label: "clean PDF per source invoice" },
       { value: "0", label: "values invented when uncertain" },
     ],
-    draft: true,
+    draft: false,
     sections: [
       {
         heading: "The job before the script",

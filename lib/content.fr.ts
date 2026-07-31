@@ -109,7 +109,7 @@ export const skillGroupsFr: Record<string, { title: string; blurb: string }> = {
   },
   Networking: {
     title: "Réseaux",
-    blurb: "Fibre de campus, agrégation multi-WAN et couverture sans fil à grande échelle.",
+    blurb: "Fibre à l'échelle du site, agrégation multi-WAN et couverture sans fil à grande échelle.",
   },
   "Servers & services": {
     title: "Serveurs et services",

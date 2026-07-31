@@ -200,7 +200,7 @@ const en: Dictionary = {
     headline:
       "I keep the systems people depend on working — from a jammed printer to a fibre backbone across 1,200 acres.",
     summary:
-      "IT support specialist with five years keeping users, devices and infrastructure running across a 1,200-acre industrial park and multiple retail sites in Ghana. Day to day that means end-user support, POS and PDA systems, and the servers behind them; it has also meant designing the campus fibre network and the multi-WAN satellite link that carries it. Comfortable at both ends — the helpdesk ticket and the distribution panel.",
+      "IT support specialist with five years keeping users, devices and infrastructure running across a 1,200-acre industrial park and multiple retail sites in Ghana. Day to day that means end-user support, POS and PDA systems, and the servers behind them; it has also meant designing the site-wide fibre network and the multi-WAN satellite link that carries it. Comfortable at both ends — the helpdesk ticket and the distribution panel.",
     availability: "Available in Canada from August 2026",
     downloadCv: "Download CV",
     getInTouch: "Get in touch",
