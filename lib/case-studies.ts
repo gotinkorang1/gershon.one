@@ -157,7 +157,7 @@ export const caseStudies: CaseStudy[] = [
     slug: "industrial-park-network-1200-acres",
     title: "Bringing a 1,200-acre industrial park online",
     summary:
-      "No fibre to the door, no single satellite link fast enough, and CCTV plus point-of-sale data to move from factories to head office. Eight bonded Starlink terminals into a fibre distribution layer.",
+      "No fibre to the door, no single satellite link fast enough, and CCTV plus point-of-sale data to move from factories to head office. Eight Starlink terminals aggregated into a fibre distribution layer.",
     role: "IT Support Officer",
     context: "Bright Industrial Park, Ghana",
     period: "2024",
@@ -165,18 +165,18 @@ export const caseStudies: CaseStudy[] = [
     readingMinutes: 8,
     tags: ["MikroTik", "RouterOS", "Starlink", "GPON", "Fibre", "Networking"],
     outcomes: [
-      { value: "1,200", label: "acres covered by the backbone" },
       { value: "8", label: "Starlink terminals aggregated" },
-      { value: "TODO", label: "measured aggregate throughput" },
+      { value: "2.5 Gbps", label: "aggregate throughput over fibre" },
+      { value: "500+", label: "CCTV cameras carried" },
     ],
-    draft: true,
+    draft: false,
     sections: [
       {
         heading: "The constraint",
         body: [
           "An international industrial park of 1,200 acres at Afienya – Shai Hills, home to many international manufacturers and producers, with factories, offices and a head office spread across it. Every building needed internet. Head office needed CCTV footage and point-of-sale data flowing back from all of them. And there was no terrestrial fibre reaching the site.",
           "That rules out the obvious answer. A single satellite terminal cannot carry a whole park — not the aggregate bandwidth of dozens of cameras uploading continuously, plus POS transactions, plus ordinary office traffic. Buying a bigger link was not an option, because there was no bigger link to buy.",
-          "TODO: add roughly how many buildings, cameras and POS terminals the network serves. Scale is the whole point of this story and specific numbers land harder than \"dozens\".",
+          "The park is built in four phases; this network covers the two that are live. Between them sit twelve factories and eight warehouses, plus the facilities that keep a park of this size running: a hotel, the head office, a hospital, a bank, a supermarket, a shopping mall, a restaurant, a KTV, and hostels for both local and foreign staff. Each factory and warehouse alone carries between 26 and 38 CCTV cameras — well over five hundred streams — and every location runs a point-of-sale terminal. All of it uploads to head office without pause.",
         ],
       },
       {
@@ -184,7 +184,7 @@ export const caseStudies: CaseStudy[] = [
         body: [
           "If one terminal is not enough, the question becomes whether eight can be made to behave like one larger link. Starlink gives you a consumer-grade connection with no native bonding, so the aggregation has to happen at the router.",
           "Eight terminals are mounted individually with clear sky view and each lands on its own port of a MikroTik router as a separate WAN. RouterOS handles the distribution across them, so no single terminal carries the whole site and losing one degrades capacity rather than causing an outage.",
-          "TODO: describe how you actually distribute traffic across the eight links — PCC load balancing, per-connection classifier, ECMP, or something else — and how you handle a terminal dropping out. This is the first thing a network interviewer will ask, and the answer is what separates this from \"we plugged in eight routers\".",
+          "Distribution runs on per-connection classifier — PCC — in RouterOS. Each new connection is hashed to one of the eight terminals and pinned there, so a single download stays on one link while the overall load spreads evenly across all eight. Because the split is per connection rather than per packet, sessions never arrive out of order. When a terminal drops, PCC redistributes its share across the terminals still up: the park slows fractionally instead of losing connectivity, which is the whole reason for bonding eight consumer links rather than trusting one.",
         ],
       },
       {
@@ -193,14 +193,14 @@ export const caseStudies: CaseStudy[] = [
           "Aggregated bandwidth at head office is worthless if it cannot reach a factory a kilometre away. Wireless alone would not carry continuous CCTV upload at that distance, so the park needed fibre.",
           "The router feeds a Huawei S5735 enterprise switch, which feeds a GPON unit whose four fibre ports run to a fibre distribution panel. Each port is split 1:4 through passive splitters, fanning out across the park to the buildings that need service. Passive splitters matter here: no power and no active equipment in the field, which is one less thing to fail in an industrial environment.",
           "Traffic runs both directions on the same backbone. CCTV and POS data travel inbound to the head office servers; internet service is distributed back outbound to the factories.",
-          "TODO: note the approximate fibre run length and whether it is single-mode. Also worth saying what the splitter ratio means in practice for the link budget.",
+          "Across that backbone the fibre carries roughly 2.5 Gbps, and each device on it sees 20–50 Mbps — enough for the hundreds of cameras uploading continuously, plus POS and ordinary office traffic, without them starving one another.",
         ],
       },
       {
-        heading: "Beyond the fence line",
+        heading: "Where fibre stopped, radio took over",
         body: [
-          "Not everything the business runs sits inside the 1,200 acres. Locations outside the boundary still need access to head office systems, and trenching fibre to them was not proportionate.",
-          "Those sites connect over point-to-point wireless links, with VPN tunnels carrying the traffic that needs to reach internal resources. It is a deliberately different tool for a different distance — fibre where the density justifies it, wireless where it does not.",
+          "Fibre earns its cost where the density of factories and warehouses justifies trenching it — the first two phases. Phases three and four sit further out, and there the answer is point-to-point radio instead: around 800 Mbps over the air, with VPN tunnels carrying whatever has to reach internal head-office systems.",
+          "It is a deliberate match of tool to distance — fibre where the density earns it, radio where it does not — and it means the later phases came online without waiting on a trench.",
         ],
       },
       {
@@ -208,7 +208,7 @@ export const caseStudies: CaseStudy[] = [
         body: [
           "Monitoring is the weakest part. With eight WAN links, one degrading quietly is easy to miss — the site stays up, just slower, and nobody reports a fault. Per-link health metrics and an alert on state change would close that gap cheaply, and it is the first thing I would add.",
           "The configuration also lives on the router rather than in version control. It is backed up, but rebuilding from scratch would mean restoring a file rather than applying a known-good configuration from source.",
-          "TODO: if you have since added monitoring or changed the design, say so here. A case study that ends with what you learned reads better than one that ends with what you built.",
+          "The next step is bonding rather than balancing. PCC spreads sessions across the eight terminals but cannot make one session faster than a single link, and failover happens per connection rather than instantly. Moving to a true bonding layer such as SpeedFusion would aggregate the terminals into one logical pipe and fail over sub-second — the upgrade I would make next.",
         ],
       },
     ],

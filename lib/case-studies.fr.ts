@@ -126,9 +126,9 @@ export const caseStudiesFr: Record<
       "Aucune fibre disponible sur place, aucun lien satellite unique suffisamment rapide, et des flux de vidéosurveillance et de caisse à acheminer des usines vers le siège. Huit terminaux Starlink agrégés vers une couche de distribution en fibre optique.",
     role: "Chargé de support informatique",
     outcomes: [
-      "acres couverts par la dorsale",
       "terminaux Starlink agrégés",
-      "TODO — débit agrégé mesuré",
+      "débit agrégé sur la fibre",
+      "caméras de vidéosurveillance transportées",
     ],
     sections: [
       {
@@ -136,7 +136,7 @@ export const caseStudiesFr: Record<
         body: [
           "Un parc industriel international de 1 200 acres à Afienya – Shai Hills, accueillant de nombreux fabricants et producteurs internationaux, avec des usines, des bureaux et un siège répartis sur l'ensemble du site. Chaque bâtiment avait besoin d'un accès internet. Le siège devait recevoir les flux de vidéosurveillance et les données de caisse de tous ces bâtiments. Et aucune fibre terrestre ne desservait le site.",
           "Cela écarte la solution évidente. Un seul terminal satellite ne peut pas alimenter un parc entier — ni la bande passante cumulée de dizaines de caméras en téléversement continu, ni les transactions de caisse, ni le trafic bureautique ordinaire. Acheter un lien plus rapide n'était pas une option : il n'y en avait aucun à acheter.",
-          "TODO : préciser le nombre approximatif de bâtiments, de caméras et de terminaux de caisse desservis. L'échelle est tout l'intérêt de ce récit et des chiffres précis portent davantage que « des dizaines ».",
+          "Le parc est aménagé en quatre phases ; ce réseau couvre les deux qui sont en service. On y trouve douze usines et huit entrepôts, ainsi que les équipements qui font vivre un parc de cette taille : un hôtel, le siège, un hôpital, une banque, un supermarché, un centre commercial, un restaurant, un KTV et des foyers d'hébergement pour le personnel local et étranger. Chaque usine et chaque entrepôt à eux seuls comptent entre 26 et 38 caméras de vidéosurveillance — bien plus de cinq cents flux — et chaque site dispose d'un terminal de point de vente. Tout cela remonte vers le siège en continu.",
         ],
       },
       {
@@ -144,7 +144,7 @@ export const caseStudiesFr: Record<
         body: [
           "Si un terminal ne suffit pas, la question devient de savoir si huit peuvent se comporter comme un seul lien plus large. Starlink fournit une connexion grand public sans agrégation native : le regroupement doit donc se faire au niveau du routeur.",
           "Huit terminaux sont installés individuellement avec une vue dégagée du ciel et arrivent chacun sur son propre port d'un routeur MikroTik comme WAN distinct. RouterOS répartit le trafic entre eux, de sorte qu'aucun terminal ne supporte seul l'ensemble du site et que la perte de l'un dégrade la capacité sans provoquer de coupure.",
-          "TODO : décrire la méthode de répartition réellement utilisée entre les huit liens — équilibrage PCC, classificateur par connexion, ECMP ou autre — et le comportement en cas de perte d'un terminal. C'est la première question que posera un recruteur technique.",
+          "La répartition repose sur le classificateur par connexion — PCC — dans RouterOS. Chaque nouvelle connexion est affectée à l'un des huit terminaux et y reste fixée, de sorte qu'un téléchargement donné emprunte un seul lien tandis que la charge globale se répartit uniformément sur les huit. Comme la répartition se fait par connexion et non par paquet, les sessions n'arrivent jamais dans le désordre. Lorsqu'un terminal tombe, PCC redistribue sa part sur les terminaux encore actifs : le parc ralentit légèrement au lieu de perdre la connectivité — toute la raison d'agréger huit liens grand public plutôt que d'en croire un seul.",
         ],
       },
       {
@@ -153,14 +153,14 @@ export const caseStudiesFr: Record<
           "Une bande passante agrégée au siège ne sert à rien si elle n'atteint pas une usine située à un kilomètre. Le sans-fil seul n'aurait pas supporté un téléversement continu de vidéosurveillance à cette distance : le parc avait besoin de fibre.",
           "Le routeur alimente un commutateur d'entreprise Huawei S5735, qui alimente à son tour un équipement GPON dont les quatre ports fibre rejoignent un panneau de brassage. Chaque port est réparti en 1:4 par des répartiteurs passifs, desservant les bâtiments à travers le parc. Le caractère passif compte : aucune alimentation ni équipement actif sur le terrain, donc un point de défaillance en moins en environnement industriel.",
           "Le trafic circule dans les deux sens sur la même dorsale : vidéosurveillance et données de caisse vers les serveurs du siège, accès internet redistribué vers les usines.",
-          "TODO : indiquer la longueur approximative des liaisons fibre et s'il s'agit de monomode.",
+          "Sur cette dorsale, la fibre achemine environ 2,5 Gbit/s, et chaque appareil y bénéficie de 20 à 50 Mbit/s — de quoi absorber les centaines de caméras en téléversement continu, plus le trafic de caisse et bureautique, sans qu'ils se privent mutuellement de bande passante.",
         ],
       },
       {
-        heading: "Au-delà du périmètre",
+        heading: "Là où la fibre s'arrête, la radio prend le relais",
         body: [
-          "Tout ce que l'entreprise exploite ne se trouve pas dans les 1 200 acres. Des sites extérieurs doivent accéder aux systèmes du siège, et tirer de la fibre jusqu'à eux n'était pas proportionné.",
-          "Ces sites sont raccordés par liaisons sans fil point à point, avec des tunnels VPN pour le trafic devant atteindre les ressources internes. Un outil différent pour une distance différente : la fibre là où la densité le justifie, le sans-fil ailleurs.",
+          "La fibre justifie son coût là où la densité d'usines et d'entrepôts rend le creusement rentable — les deux premières phases. Les phases trois et quatre, plus éloignées, sont desservies par des liaisons radio point à point : environ 800 Mbit/s par voie hertzienne, avec des tunnels VPN pour tout ce qui doit atteindre les systèmes internes du siège.",
+          "C'est une adéquation délibérée de l'outil à la distance — la fibre là où la densité le justifie, la radio ailleurs — et cela a permis de mettre en service les phases ultérieures sans attendre une tranchée.",
         ],
       },
       {
@@ -168,7 +168,7 @@ export const caseStudiesFr: Record<
         body: [
           "La supervision est le point faible. Avec huit liens WAN, la dégradation silencieuse de l'un passe facilement inaperçue : le site reste accessible, simplement plus lent, et personne ne signale de panne. Des métriques par lien et une alerte sur changement d'état combleraient cette lacune à peu de frais.",
           "La configuration réside également sur le routeur plutôt que dans un dépôt versionné. Elle est sauvegardée, mais une reconstruction complète consisterait à restaurer un fichier plutôt qu'à appliquer une configuration connue depuis une source.",
-          "TODO : si vous avez depuis ajouté de la supervision ou modifié la conception, le mentionner ici.",
+          "L'étape suivante, c'est l'agrégation plutôt que l'équilibrage. Le PCC répartit les sessions sur les huit terminaux mais ne peut pas rendre une session plus rapide qu'un seul lien, et le basculement se fait par connexion plutôt qu'instantanément. Passer à une véritable couche d'agrégation comme SpeedFusion réunirait les terminaux en un seul tuyau logique et basculerait en moins d'une seconde — l'amélioration que j'apporterais ensuite.",
         ],
       },
     ],
