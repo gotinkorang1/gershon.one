@@ -21,7 +21,7 @@
 
   --foreground: oklch(0.19 0.012 265);
   --muted-foreground: oklch(0.46 0.012 265);
-  --faint: oklch(0.540 0.012 265);
+  --faint: oklch(0.50 0.012 265);
 
   --border: oklch(0.19 0.012 265 / 0.14);
   --border-strong: oklch(0.19 0.012 265 / 0.30);
@@ -57,7 +57,7 @@
 
   --foreground: oklch(0.965 0.003 265);
   --muted-foreground: oklch(0.715 0.010 265);
-  --faint: oklch(0.60 0.012 265);
+  --faint: oklch(0.66 0.012 265);
 
   --border: oklch(1 0 0 / 0.14);
   --border-strong: oklch(1 0 0 / 0.28);
@@ -482,6 +482,26 @@
 
 @keyframes ping {
   75%, 100% { transform: scale(2.4); opacity: 0; }
+}
+
+/* On-mount staggered entrance for case-study detail intros. The header's meta,
+   title and summary rise in sequence — the same motion the cards use to enter
+   the index — so opening a study reads as a continuation of the card rather
+   than a hard cut. Pure CSS, so it replays on every client navigation; the
+   reduced-motion rule above collapses it to an instant, visible state. */
+[data-reveal-intro] > * {
+  animation: intro-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+[data-reveal-intro] > *:nth-child(1) { animation-delay: 0.04s; }
+[data-reveal-intro] > *:nth-child(2) { animation-delay: 0.11s; }
+[data-reveal-intro] > *:nth-child(3) { animation-delay: 0.18s; }
+[data-reveal-intro] > *:nth-child(4) { animation-delay: 0.25s; }
+[data-reveal-intro] > *:nth-child(5) { animation-delay: 0.32s; }
+[data-reveal-intro] > *:nth-child(6) { animation-delay: 0.39s; }
+
+@keyframes intro-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
 }
 
 @keyframes dash {
