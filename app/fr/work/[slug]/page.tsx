@@ -87,7 +87,7 @@ export default async function FrenchCaseStudy({
         {t.common.allCaseStudies}
       </Link>
 
-      <header className="mt-8 max-w-3xl">
+      <header className="mt-8 max-w-3xl" data-reveal-intro>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
           <p className="label">{study.period}</p>
           <p className="label flex items-center gap-1.5">
