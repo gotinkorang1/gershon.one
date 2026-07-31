@@ -15,7 +15,9 @@ export async function GET() {
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? site.url;
 
   const items = caseStudies
-    .slice()
+    // Drafts carry TODO placeholder text and are noindex; keep them out of the
+    // feed for the same reason the sitemap and llms.txt exclude them.
+    .filter((c) => !c.draft)
     .sort((a, b) => new Date(b.published).getTime() - new Date(a.published).getTime())
     .map(
       (c) => `    <item>

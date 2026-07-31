@@ -35,6 +35,9 @@ export async function generateMetadata({
       languages: {
         "en-CA": `${base}/work/${study.slug}`,
         "fr-CA": `${base}/fr/work/${study.slug}`,
+        // Default to the English version, matching the EN page and the sitemap,
+        // so the whole hreflang cluster is symmetric.
+        "x-default": `${base}/work/${study.slug}`,
       },
     },
     // A draft's visible text contains TODO placeholders. Indexing that would
