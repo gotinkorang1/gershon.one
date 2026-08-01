@@ -133,6 +133,7 @@ type Dictionary = {
     cvDialogBody: string;
     viewInBrowser: string;
     viewInBrowserHint: string;
+    viewInBrowserHintMobile: string;
     downloadPdfHint: (size: string) => string;
     downloadStarted: string;
     cvViewerTitle: string;
@@ -332,6 +333,7 @@ const en: Dictionary = {
     cvDialogBody: "Read it here, or take a copy with you.",
     viewInBrowser: "View here",
     viewInBrowserHint: "Opens in this window",
+    viewInBrowserHintMobile: "Opens the PDF in a new tab",
     downloadPdfHint: (size) => `PDF · ${size}`,
     downloadStarted: "Download started",
     cvViewerTitle: "CV",
@@ -532,6 +534,7 @@ const fr: Dictionary = {
     cvDialogBody: "Consultez-le ici, ou emportez-en une copie.",
     viewInBrowser: "Consulter ici",
     viewInBrowserHint: "S'ouvre dans cette fenêtre",
+    viewInBrowserHintMobile: "Ouvre le PDF dans un nouvel onglet",
     downloadPdfHint: (size) => `PDF · ${size}`,
     downloadStarted: "Téléchargement lancé",
     cvViewerTitle: "CV",

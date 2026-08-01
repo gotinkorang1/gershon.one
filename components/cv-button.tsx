@@ -38,7 +38,21 @@ export function CvButton({
   const [stage, setStage] = useState<Stage>("closed");
   const [downloaded, setDownloaded] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  // Mobile browsers (iOS Safari, Android Chrome) refuse to render PDFs inside an
+  // <iframe> — the frame comes up blank or the file is forced to download. So on
+  // those devices "View here" opens the PDF directly instead of the dead viewer.
+  const [inlinePdf, setInlinePdf] = useState(true);
   const frameRef = useRef<HTMLIFrameElement>(null);
+
+  useEffect(() => {
+    const coarse = window.matchMedia("(pointer: coarse)").matches;
+    const narrow = window.matchMedia("(max-width: 640px)").matches;
+    setInlinePdf(!(coarse || narrow));
+  }, []);
+
+  const openDirect = useCallback(() => {
+    window.open(href, "_blank", "noopener,noreferrer");
+  }, [href]);
 
   const download = useCallback(() => {
     const anchor = document.createElement("a");
@@ -95,16 +109,29 @@ export function CvButton({
           <div className="mt-5 grid gap-2.5">
             <button
               type="button"
-              onClick={() => setStage("viewing")}
+              onClick={() => {
+                // On phones the inline iframe viewer stays blank, so open the
+                // PDF directly in the device's own reader instead.
+                if (inlinePdf) {
+                  setStage("viewing");
+                } else {
+                  openDirect();
+                  close();
+                }
+              }}
               className="panel panel-interactive flex items-center gap-3.5 p-4 text-left"
             >
               <span className="panel-inset grid size-10 shrink-0 place-items-center rounded-lg">
-                <Eye className="size-4 text-accent" />
+                {inlinePdf ? (
+                  <Eye className="size-4 text-accent" />
+                ) : (
+                  <ArrowUpRight className="size-4 text-accent" />
+                )}
               </span>
               <span className="min-w-0 flex-1">
                 <span className="block text-sm font-medium">{t.ui.viewInBrowser}</span>
                 <span className="mt-0.5 block text-xs text-muted-foreground">
-                  {t.ui.viewInBrowserHint}
+                  {inlinePdf ? t.ui.viewInBrowserHint : t.ui.viewInBrowserHintMobile}
                 </span>
               </span>
             </button>
