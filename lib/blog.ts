@@ -127,8 +127,11 @@ export function getAllPostTags(): string[] {
 /** Lightweight post shape for the index — everything but the (heavy) body. */
 export type PostCard = Omit<Post, "content">;
 
-export function toCard({ content: _content, ...rest }: Post): PostCard {
-  return rest;
+export function toCard(post: Post): PostCard {
+  // Strip the heavy Markdown body; the index only needs metadata. Listing the
+  // fields explicitly keeps the type in sync and avoids an unused-var warning.
+  const { slug, title, date, summary, cover, tags, draft, readingMinutes } = post;
+  return { slug, title, date, summary, cover, tags, draft, readingMinutes };
 }
 
 /**
