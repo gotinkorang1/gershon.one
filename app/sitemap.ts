@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/lib/site";
 import { caseStudies } from "@/lib/case-studies";
-import { getPublishedPosts } from "@/lib/blog";
+import { getPublishedPosts, getTagSlugs } from "@/lib/blog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? site.url;
@@ -68,6 +68,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(p.date),
       changeFrequency: "yearly" as const,
       priority: 0.6,
+    })),
+    // Tag archive pages.
+    ...getTagSlugs().map(({ slug }) => ({
+      url: `${base}/blog/tag/${slug}`,
+      lastModified: posts[0] ? new Date(posts[0].date) : updated,
+      changeFrequency: "weekly" as const,
+      priority: 0.4,
     })),
   ];
 }

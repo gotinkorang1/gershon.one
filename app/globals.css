@@ -643,3 +643,110 @@
   font-weight: 600;
   background: var(--surface-inset);
 }
+
+/* Figures / image captions */
+.prose figure {
+  margin: 0;
+}
+.prose figcaption {
+  margin-top: 0.6em;
+  text-align: center;
+  font-size: 0.85em;
+  color: var(--faint);
+}
+
+/* Syntax highlighting — coloured from the theme tokens, so it follows
+   light/dark automatically without shipping a highlight.js theme. */
+.prose pre code.hljs {
+  color: var(--foreground);
+}
+.hljs-comment,
+.hljs-quote {
+  color: var(--faint);
+  font-style: italic;
+}
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-meta,
+.hljs-doctag {
+  color: var(--accent);
+}
+.hljs-string,
+.hljs-regexp,
+.hljs-addition {
+  color: var(--live);
+}
+.hljs-number,
+.hljs-symbol,
+.hljs-attr,
+.hljs-attribute,
+.hljs-variable,
+.hljs-template-variable {
+  color: var(--signal);
+}
+.hljs-title,
+.hljs-name,
+.hljs-section,
+.hljs-built_in,
+.hljs-type,
+.hljs-selector-id,
+.hljs-selector-class {
+  color: var(--warn);
+}
+.hljs-deletion {
+  color: var(--warn);
+}
+.hljs-emphasis {
+  font-style: italic;
+}
+.hljs-strong {
+  font-weight: 600;
+}
+
+/* Callout / admonition boxes (> [!NOTE] etc.) */
+.callout {
+  margin: 1.6em 0;
+  border-left: 3px solid var(--accent);
+  border-radius: 0.5rem;
+  background: var(--surface-inset);
+  padding: 1rem 1.15rem;
+}
+.callout > * + * {
+  margin-top: 0.6em;
+}
+.callout-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--foreground);
+}
+.callout-title svg {
+  width: 1rem;
+  height: 1rem;
+}
+.callout-tip {
+  border-color: var(--live);
+}
+.callout-tip .callout-title {
+  color: var(--live);
+}
+.callout-warning,
+.callout-caution {
+  border-color: var(--warn);
+}
+.callout-warning .callout-title,
+.callout-caution .callout-title {
+  color: var(--warn);
+}
+.callout-important {
+  border-color: var(--signal);
+}
+.callout-important .callout-title {
+  color: var(--signal);
+}

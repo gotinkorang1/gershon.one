@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Rss } from "lucide-react";
 import { getPublishedPosts, getAllPostTags, toCard } from "@/lib/blog";
 import { site } from "@/lib/site";
 import { BlogIndex } from "@/components/blog/blog-index";
@@ -43,6 +44,13 @@ export default function BlogIndexPage() {
         </p>
         <h1 className="mt-4 text-jumbo font-semibold tracking-tight">Blog</h1>
         <p className="mt-4 text-lede text-muted-foreground">{description}</p>
+        <a
+          href="/feed.xml"
+          className="tap mt-6 inline-flex items-center gap-2 rounded-full border border-border px-3.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-border-strong hover:text-foreground"
+        >
+          <Rss className="size-3.5" />
+          Subscribe via RSS
+        </a>
       </header>
 
       {posts.length === 0 ? (

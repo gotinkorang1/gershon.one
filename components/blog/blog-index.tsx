@@ -96,7 +96,7 @@ function Featured({ post, index }: { post: PostCard; index: number }) {
 }
 
 /** Compact row with the small side thumbnail. */
-function PostRow({ post, index }: { post: PostCard; index: number }) {
+export function PostRow({ post, index }: { post: PostCard; index: number }) {
   return (
     <Link href={`/blog/${post.slug}`} className="block">
       <Panel interactive reactive className="group flex items-start gap-4 p-5 sm:gap-6 sm:p-6">

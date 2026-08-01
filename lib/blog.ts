@@ -193,3 +193,26 @@ export function getRelatedPosts(slug: string, limit = 3): Post[] {
   const withShared = ranked.filter((r) => r.shared > 0);
   return (withShared.length ? withShared : ranked).slice(0, limit).map((r) => r.post);
 }
+
+/** Newer/older neighbours of a post, for prev/next navigation. */
+export function getAdjacentPosts(slug: string): { newer?: Post; older?: Post } {
+  const published = getPublishedPosts(); // newest first
+  const i = published.findIndex((p) => p.slug === slug);
+  if (i === -1) return {};
+  return { newer: published[i - 1], older: published[i + 1] };
+}
+
+/** Published posts carrying a tag whose slug matches `tagSlug`. */
+export function getPostsByTag(tagSlug: string): Post[] {
+  return getPublishedPosts().filter((p) => p.tags.some((t) => slugify(t) === tagSlug));
+}
+
+/** Every published tag with its URL slug, de-duplicated by slug. */
+export function getTagSlugs(): { tag: string; slug: string }[] {
+  const bySlug = new Map<string, string>();
+  for (const tag of getPublishedPosts().flatMap((p) => p.tags)) {
+    const slug = slugify(tag);
+    if (!bySlug.has(slug)) bySlug.set(slug, tag);
+  }
+  return [...bySlug.entries()].map(([slug, tag]) => ({ tag, slug }));
+}
