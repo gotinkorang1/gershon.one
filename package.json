@@ -33,9 +33,8 @@
     "tailwindcss": "^4.0.0",
     "typescript": "^5.7.0"
   },
-  "//overrides": "Pin patched transitive deps flagged by npm audit (all build/dev-time). typescript is capped to 5.x: a loose transitive range (>=3.3.1) let a clean install resolve TypeScript 7, whose native rewrite drops the compiler API next build needs. Remove an entry once the parent ships the fix natively.",
+  "//overrides": "Pin patched transitive deps. typescript is capped to 5.x because a loose transitive range (>=3.3.1) let a clean install resolve TypeScript 7, whose native rewrite drops the compiler API next build needs. NOTE: do NOT blanket-override brace-expansion — it ships multiple major lines and ESLint's minimatch@3 needs the 1.x line, so forcing 5.x crashes ESLint (expand is not a function). Its advisory is dev-only and excluded by `npm audit --omit=dev`.",
   "overrides": {
-    "brace-expansion": "^5.0.8",
     "postcss": "^8.5.18",
     "sharp": "^0.35.0",
     "typescript": "^5.7.0"
