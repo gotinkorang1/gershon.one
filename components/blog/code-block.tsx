@@ -29,7 +29,7 @@ export function CodeBlock({ children }: { children: ReactNode }) {
         type="button"
         onClick={copy}
         aria-label={copied ? "Copied" : "Copy code"}
-        className="tap absolute right-2 top-2 z-10 grid size-8 place-items-center rounded-md border border-border bg-surface-1/80 text-faint opacity-0 backdrop-blur transition-opacity hover:text-foreground focus-visible:opacity-100 group-hover/code:opacity-100"
+        className="tap absolute right-2 top-2 z-10 grid size-8 place-items-center rounded-md border border-border bg-surface-1/80 text-faint backdrop-blur transition-opacity hover:text-foreground focus-visible:opacity-100 md:opacity-0 md:group-hover/code:opacity-100"
       >
         {copied ? <Check className="size-3.5 text-live" /> : <Copy className="size-3.5" />}
       </button>

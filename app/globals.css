@@ -524,6 +524,9 @@
   color: var(--muted-foreground);
   font-size: 1rem;
   line-height: 1.75;
+  /* Long URLs, file paths and unbreakable tokens must wrap rather than push the
+     page wide on small screens. */
+  overflow-wrap: break-word;
 }
 .prose > * + * { margin-top: 1.25em; }
 .prose > *:first-child { margin-top: 0; }
@@ -583,6 +586,7 @@
   border: 1px solid var(--border);
   border-radius: 0.375rem;
   padding: 0.1em 0.35em;
+  overflow-wrap: break-word;
 }
 .prose pre {
   background: var(--surface-inset);
@@ -729,6 +733,7 @@
 .callout-title svg {
   width: 1rem;
   height: 1rem;
+  flex-shrink: 0;
 }
 .callout-tip {
   border-color: var(--live);
