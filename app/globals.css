@@ -151,6 +151,10 @@
     font-synthesis-weight: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+    /* Safety net: nothing may create a horizontal scrollbar. `clip` (not
+       `hidden`) avoids turning the body into a scroll container, so sticky
+       positioning elsewhere keeps working. */
+    overflow-x: clip;
   }
 
   ::selection { background: var(--accent-quiet); }
