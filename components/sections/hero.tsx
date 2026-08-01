@@ -76,7 +76,7 @@ export function Hero() {
           className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16"
         >
           {/* ------------------------------------------------------- copy */}
-          <div className="lg:col-span-7">
+          <div className="min-w-0 lg:col-span-7">
             <motion.p
               variants={rise}
               className="flex items-center gap-2.5 text-sm text-muted-foreground"
@@ -103,7 +103,7 @@ export function Hero() {
               {t.hero.headline}
             </motion.p>
 
-            <motion.div variants={rise} className="mt-7 max-w-lg">
+            <motion.div variants={rise} className="mt-7 w-full min-w-0 max-w-lg">
               <p className="label mb-2.5">{t.hero.stackLabel}</p>
               <StackTicker items={site.heroStack} />
             </motion.div>

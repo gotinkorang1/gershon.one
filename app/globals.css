@@ -137,6 +137,10 @@
     /* Clears the fixed nav so an anchored heading is not hidden beneath it. */
     scroll-padding-top: 5.5rem;
     -webkit-tap-highlight-color: transparent;
+    /* The horizontal-overflow guard has to live on html: when a child exceeds
+       the viewport the scroll happens on the root element, so clipping only the
+       body leaves html free to scroll sideways. `clip` keeps sticky working. */
+    overflow-x: clip;
   }
 
   /* Deliberately no scroll-snap. Measured section heights run 0.7 to 1.6

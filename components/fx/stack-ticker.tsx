@@ -45,7 +45,7 @@ export function StackTicker({ items }: { items: readonly string[] }) {
 
   return (
     <div
-      className="group/ticker relative overflow-hidden text-sm text-muted-foreground"
+      className="group/ticker relative w-full min-w-0 max-w-full overflow-hidden text-sm text-muted-foreground"
       style={{
         maskImage: "linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)",
         WebkitMaskImage:
