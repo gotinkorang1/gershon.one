@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { ThemePortrait } from "@/components/theme-portrait";
 import { motion, useReducedMotion } from "motion/react";
 import { Award, ArrowUpRight, GraduationCap, MapPin, ShieldCheck } from "lucide-react";
 import { site } from "@/lib/site";
@@ -132,14 +132,14 @@ export function Hero() {
               />
 
               <ImageReveal className="portrait-plate overflow-hidden rounded-xl">
-                <Image
-                  src="/gershon.webp"
+                <ThemePortrait
                   alt={`${site.name} — ${t.hero.role}`}
                   width={840}
                   height={624}
                   priority
                   sizes="(max-width: 1024px) 76vw, 304px"
-                  className="portrait aspect-4/5 w-full object-cover object-top"
+                  className="aspect-4/5 w-full"
+                  imgClassName="aspect-4/5 w-full object-cover object-top"
                 />
               </ImageReveal>
             </div>

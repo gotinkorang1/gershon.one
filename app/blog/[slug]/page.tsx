@@ -25,6 +25,7 @@ import { Badge } from "@/components/ui/badge";
 import { Panel } from "@/components/ui/panel";
 import { site } from "@/lib/site";
 import { serialiseJsonLd } from "@/lib/json-ld";
+import { ThemePortrait } from "@/components/theme-portrait";
 import { TableOfContents } from "@/components/blog/table-of-contents";
 import { ShareBar } from "@/components/blog/share-bar";
 import { CodeBlock } from "@/components/blog/code-block";
@@ -201,12 +202,12 @@ export default async function BlogPostPage({
             <p className="measure mt-5 text-lede text-muted-foreground">{post.summary}</p>
 
             <div className="mt-7 flex items-center gap-3">
-              <Image
-                src="/gershon.webp"
+              <ThemePortrait
                 alt=""
                 width={40}
                 height={40}
-                className="size-10 shrink-0 rounded-full border border-border object-cover object-top"
+                className="size-10 shrink-0 overflow-hidden rounded-full border border-border"
+                imgClassName="object-cover object-top"
               />
               <div className="text-sm leading-tight">
                 <p className="font-medium text-foreground">{site.shortName}</p>
