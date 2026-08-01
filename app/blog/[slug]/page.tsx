@@ -141,6 +141,13 @@ export default async function BlogPostPage({
   const related = getRelatedPosts(post.slug);
   const { newer, older } = getAdjacentPosts(post.slug);
 
+  // The cover if the post has one, otherwise the auto-generated card at
+  // /blog/<slug>/opengraph-image so the article node always has an image.
+  const image = post.cover
+    ? new URL(post.cover, base).toString()
+    : `${url}/opengraph-image`;
+  const wordCount = post.content.trim().split(/\s+/).filter(Boolean).length;
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -148,11 +155,15 @@ export default async function BlogPostPage({
     url,
     headline: post.title,
     description: post.summary,
+    image,
     datePublished: post.date,
+    dateModified: post.date,
+    wordCount,
     inLanguage: "en-CA",
     keywords: post.tags.join(", "),
     author: { "@type": "Person", name: site.name, url: base },
     publisher: { "@id": `${base}/#person` },
+    isPartOf: { "@id": `${base}/blog#blog` },
     mainEntityOfPage: url,
   };
 

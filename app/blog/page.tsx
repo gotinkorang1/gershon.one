@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Rss } from "lucide-react";
 import { getPublishedPosts, getAllPostTags, toCard } from "@/lib/blog";
 import { site } from "@/lib/site";
+import { serialiseJsonLd } from "@/lib/json-ld";
 import { BlogIndex } from "@/components/blog/blog-index";
 
 const description =
@@ -23,6 +24,41 @@ export const metadata: Metadata = {
 export default function BlogIndexPage() {
   const posts = getPublishedPosts().map(toCard);
   const tags = getAllPostTags();
+  const base = process.env.NEXT_PUBLIC_SITE_URL ?? site.url;
+
+  // Marks the page as a Blog and lists its posts so search engines read it as a
+  // listing, not a loose page. `blogPost` entries are lightweight pointers; each
+  // post carries its own full BlogPosting node (with the same @id) on its page.
+  const blogLd = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "@id": `${base}/blog#blog`,
+    url: `${base}/blog`,
+    name: `${site.shortName} — Writing`,
+    description,
+    inLanguage: "en-CA",
+    author: { "@id": `${base}/#person` },
+    publisher: { "@id": `${base}/#person` },
+    isPartOf: { "@id": `${base}/#website` },
+    blogPost: posts.map((p) => ({
+      "@type": "BlogPosting",
+      "@id": `${base}/blog/${p.slug}`,
+      url: `${base}/blog/${p.slug}`,
+      headline: p.title,
+      description: p.summary,
+      datePublished: p.date,
+      keywords: p.tags.join(", "),
+    })),
+  };
+
+  const breadcrumbs = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: base },
+      { "@type": "ListItem", position: 2, name: "Blog", item: `${base}/blog` },
+    ],
+  };
 
   return (
     <div className="shell relative pb-24 pt-28 md:pt-32">
@@ -58,6 +94,19 @@ export default function BlogIndexPage() {
       ) : (
         <BlogIndex posts={posts} tags={tags} />
       )}
+
+      {posts.length > 0 && (
+        <script
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: serialiseJsonLd(blogLd) }}
+        />
+      )}
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: serialiseJsonLd(breadcrumbs) }}
+      />
     </div>
   );
 }
