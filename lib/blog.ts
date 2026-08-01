@@ -123,3 +123,70 @@ export function getPost(slug: string): Post | undefined {
 export function getAllPostTags(): string[] {
   return [...new Set(getPublishedPosts().flatMap((p) => p.tags))].sort();
 }
+
+/** Lightweight post shape for the index — everything but the (heavy) body. */
+export type PostCard = Omit<Post, "content">;
+
+export function toCard({ content: _content, ...rest }: Post): PostCard {
+  return rest;
+}
+
+/**
+ * URL-safe id from heading text. Kept deliberately simple (no dependency); the
+ * same function generates the table-of-contents ids and the ids assigned to
+ * the rendered headings, so they always match.
+ */
+export function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+export type Heading = { level: number; text: string; id: string };
+
+/** Extract the h2/h3 headings from a post's Markdown for its table of contents. */
+export function getHeadings(content: string): Heading[] {
+  const headings: Heading[] = [];
+  let inFence = false;
+
+  for (const line of content.split(/\r?\n/)) {
+    if (/^\s*```/.test(line)) {
+      inFence = !inFence;
+      continue;
+    }
+    if (inFence) continue;
+
+    const match = line.match(/^(#{2,3})\s+(.+?)\s*#*$/);
+    if (match) {
+      const text = match[2].replace(/[*_`]/g, "").trim();
+      headings.push({ level: match[1].length, text, id: slugify(text) });
+    }
+  }
+  return headings;
+}
+
+/**
+ * Posts related to `slug`, ranked by shared tags then recency. Falls back to
+ * the most recent posts when nothing shares a tag, so the section is never empty.
+ */
+export function getRelatedPosts(slug: string, limit = 3): Post[] {
+  const published = getPublishedPosts();
+  const current = published.find((p) => p.slug === slug);
+  if (!current) return [];
+
+  const ranked = published
+    .filter((p) => p.slug !== slug)
+    .map((p) => ({ post: p, shared: p.tags.filter((t) => current.tags.includes(t)).length }))
+    .sort(
+      (a, b) =>
+        b.shared - a.shared ||
+        new Date(b.post.date).getTime() - new Date(a.post.date).getTime(),
+    );
+
+  const withShared = ranked.filter((r) => r.shared > 0);
+  return (withShared.length ? withShared : ranked).slice(0, limit).map((r) => r.post);
+}
