@@ -10,6 +10,16 @@ export const site = {
   shortName: "Gershon Otinkorang",
   initials: "GO",
   role: "IT Support Specialist",
+  // Rotated one at a time in the hero. The first entry is the primary title and
+  // is what non-animating (reduced-motion) visitors see. Order = emphasis.
+  roles: [
+    "IT Support Specialist",
+    "Network Technician",
+    "ERP Specialist",
+    "Infrastructure Engineer",
+    "IT Operations Technician",
+    "Website Developer",
+  ],
   location: "Accra, Ghana",
   relocation: {
     to: "St. John's, NL, Canada",

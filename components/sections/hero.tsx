@@ -1,6 +1,7 @@
 "use client";
 
 import { ThemePortrait } from "@/components/theme-portrait";
+import { RoleRotator } from "@/components/fx/role-rotator";
 import { motion, useReducedMotion } from "motion/react";
 import { Award, ArrowUpRight, GraduationCap, MapPin, ShieldCheck } from "lucide-react";
 import { site } from "@/lib/site";
@@ -80,7 +81,9 @@ export function Hero() {
 
             <motion.div variants={rise} className="mt-6 flex items-center gap-4">
               <span className="h-px w-10 shrink-0 bg-accent/60" />
-              <p className="text-lede font-medium">{t.hero.role}</p>
+              <p className="text-lede font-medium">
+                <RoleRotator roles={site.roles} />
+              </p>
             </motion.div>
 
             <motion.p
