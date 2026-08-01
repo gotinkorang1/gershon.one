@@ -2,8 +2,18 @@
 
 import { ThemePortrait } from "@/components/theme-portrait";
 import { RoleRotator } from "@/components/fx/role-rotator";
+import { StackTicker } from "@/components/fx/stack-ticker";
+import { Tilt } from "@/components/fx/tilt";
 import { motion, useReducedMotion } from "motion/react";
-import { Award, ArrowUpRight, GraduationCap, MapPin, ShieldCheck } from "lucide-react";
+import {
+  Award,
+  ArrowUpRight,
+  Github,
+  GraduationCap,
+  Linkedin,
+  MapPin,
+  ShieldCheck,
+} from "lucide-react";
 import { site } from "@/lib/site";
 import { getFacts } from "@/lib/localised-content";
 import { useI18n } from "@/components/locale-provider";
@@ -93,26 +103,64 @@ export function Hero() {
               {t.hero.headline}
             </motion.p>
 
-            <motion.div
-              variants={rise}
-              className="mt-9 flex flex-wrap items-center gap-3"
-            >
-              <CvButton />
-              <a href={`mailto:${site.email}`}>
-                <Button variant="outline" size="lg" className="group">
-                  {t.hero.getInTouch}
-                  <ArrowUpRight className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </Button>
-              </a>
+            <motion.div variants={rise} className="mt-7 max-w-lg">
+              <p className="label mb-2.5">{t.hero.stackLabel}</p>
+              <StackTicker items={site.heroStack} />
             </motion.div>
 
-            <motion.p
+            <motion.div
               variants={rise}
-              className="mt-7 flex items-center gap-2 text-sm text-muted-foreground"
+              className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
             >
-              <MapPin className="size-3.5 shrink-0 text-faint" />
-              {t.hero.movingTo(site.relocation.to, t.ui.relocationWhen)}
-            </motion.p>
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                <CvButton className="w-full sm:w-auto" />
+                <a href={`mailto:${site.email}`} className="w-full sm:w-auto">
+                  <Button variant="outline" size="lg" className="group w-full sm:w-auto">
+                    {t.hero.getInTouch}
+                    <ArrowUpRight className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </Button>
+                </a>
+              </div>
+
+              {/* Recruiters look for these immediately; keep them at hand next
+                  to the primary actions rather than only in the footer. */}
+              <div className="flex items-center gap-1">
+                <a
+                  href={site.socials.github}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  aria-label="GitHub"
+                  className="tap grid size-10 place-items-center rounded-lg border border-border text-muted-foreground transition-colors hover:border-border-strong hover:text-foreground"
+                >
+                  <Github className="size-4" />
+                </a>
+                <a
+                  href={site.socials.linkedin}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  aria-label="LinkedIn"
+                  className="tap grid size-10 place-items-center rounded-lg border border-border text-muted-foreground transition-colors hover:border-border-strong hover:text-foreground"
+                >
+                  <Linkedin className="size-4" />
+                </a>
+              </div>
+            </motion.div>
+
+            <motion.div variants={rise} className="mt-7 space-y-2.5 text-sm text-muted-foreground">
+              <p className="flex items-start gap-2">
+                <span className="pulse-dot mt-1.5 shrink-0 text-live" />
+                <span className="min-w-0">
+                  <span className="label mr-2 !text-live/90">{t.hero.currentlyLabel}</span>
+                  <span className="align-baseline">{t.hero.currently}</span>
+                </span>
+              </p>
+              <p className="flex items-start gap-2">
+                <MapPin className="mt-0.5 size-3.5 shrink-0 text-faint" />
+                <span className="min-w-0">
+                  {t.hero.movingTo(site.relocation.to, t.ui.relocationWhen)}
+                </span>
+              </p>
+            </motion.div>
           </div>
 
           {/* --------------------------------------------------- portrait */}
@@ -134,17 +182,19 @@ export function Hero() {
                 className="pointer-events-none absolute -bottom-3 -left-3 size-16 rounded-bl-xl border-b border-l border-accent/40"
               />
 
-              <ImageReveal className="portrait-plate overflow-hidden rounded-xl">
-                <ThemePortrait
-                  alt={`${site.name} — ${t.hero.role}`}
-                  width={840}
-                  height={624}
-                  priority
-                  sizes="(max-width: 1024px) 76vw, 304px"
-                  className="aspect-4/5 w-full"
-                  imgClassName="aspect-4/5 w-full object-cover object-top"
-                />
-              </ImageReveal>
+              <Tilt className="group/tilt relative">
+                <ImageReveal className="portrait-plate overflow-hidden rounded-xl">
+                  <ThemePortrait
+                    alt={`${site.name} — ${t.hero.role}`}
+                    width={840}
+                    height={624}
+                    priority
+                    sizes="(max-width: 1024px) 76vw, 304px"
+                    className="aspect-4/5 w-full"
+                    imgClassName="aspect-4/5 w-full object-cover object-top"
+                  />
+                </ImageReveal>
+              </Tilt>
             </div>
           </motion.div>
         </motion.div>

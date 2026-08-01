@@ -27,6 +27,9 @@ type Dictionary = {
     getInTouch: string;
     movingTo: (city: string, when: string) => string;
     topologyMode: string;
+    currentlyLabel: string;
+    currently: string;
+    stackLabel: string;
   };
   facts: { experience: string; currentRole: string; available: string; based: string };
   sections: {
@@ -207,6 +210,9 @@ const en: Dictionary = {
     getInTouch: "Get in touch",
     movingTo: (city, when) => `Accra, Ghana — moving to ${city}, ${when}`,
     topologyMode: "Aggregated multi-WAN",
+    currentlyLabel: "Currently",
+    currently: "Sole IT for a 1,200-acre industrial park",
+    stackLabel: "Stack",
   },
   facts: {
     experience: "Experience",
@@ -408,6 +414,9 @@ const fr: Dictionary = {
     getInTouch: "Me contacter",
     movingTo: (city, when) => `Accra, Ghana — déménagement à ${city}, ${when}`,
     topologyMode: "Multi-WAN agrégé",
+    currentlyLabel: "En poste",
+    currently: "Seul responsable IT d'un parc industriel de 1 200 acres",
+    stackLabel: "Stack",
   },
   facts: {
     experience: "Expérience",

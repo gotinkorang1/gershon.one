@@ -387,6 +387,17 @@
   background-size: 48px 48px;
 }
 
+/* Hero tech-stack marquee. Two copies of the list sit end to end; shifting the
+   track by half its width loops seamlessly. Duration is generous so it reads as
+   a slow drift, not a scroll. */
+@keyframes ticker-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+.ticker-track {
+  animation: ticker-scroll 34s linear infinite;
+}
+
 .portrait {
   filter: grayscale(1) brightness(1.18) contrast(0.94);
   transition: filter 0.7s cubic-bezier(0.22, 1, 0.36, 1);

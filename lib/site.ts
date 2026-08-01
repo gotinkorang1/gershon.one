@@ -21,6 +21,22 @@ export const site = {
     "Website Developer",
   ],
   location: "Accra, Ghana",
+  // Ticker of real tools shown under the hero summary. Kept short and true —
+  // every item appears in the experience section's stacks.
+  heroStack: [
+    "MikroTik RouterOS",
+    "Starlink",
+    "GPON / fibre",
+    "Huawei S5735",
+    "Proxmox",
+    "Docker",
+    "Odoo",
+    "Ubiquiti",
+    "Tailscale",
+    "Linux",
+    "CCTV",
+    "GIS / JOSM",
+  ],
   relocation: {
     to: "St. John's, NL, Canada",
     when: "August 2026",
