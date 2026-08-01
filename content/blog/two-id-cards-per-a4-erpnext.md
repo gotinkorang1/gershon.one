@@ -10,6 +10,8 @@ Staff needed identification cards, and the employee records already existed in E
 
 So I built it into ERPNext itself: a print format that reads an employee's record and lays out a complete ID card — front and back — ready to print, cut, and laminate. New hire, print a card. Someone changes department, print a card. No design round-trip.
 
+![A generated ID card, front](/sample-id-1.webp) ![A generated ID card, back](/sample-id-2.webp)
+
 ## What it produces
 
 Each card carries what someone at a gate actually needs to check, pulled live from the employee record:
