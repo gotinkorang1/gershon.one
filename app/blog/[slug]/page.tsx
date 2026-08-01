@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ComponentPropsWithoutRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Clock } from "lucide-react";
 import ReactMarkdown from "react-markdown";
@@ -37,8 +38,14 @@ export async function generateMetadata({
       publishedTime: post.date,
       authors: [site.name],
       tags: post.tags,
+      ...(post.cover ? { images: [post.cover] } : {}),
     },
-    twitter: { card: "summary_large_image", title: post.title, description: post.summary },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.summary,
+      ...(post.cover ? { images: [post.cover] } : {}),
+    },
   };
 }
 
@@ -108,6 +115,20 @@ export default async function BlogPostPage({
         <h1 className="mt-5 text-jumbo font-semibold tracking-tight">{post.title}</h1>
         <p className="measure mt-5 text-lede text-muted-foreground">{post.summary}</p>
       </header>
+
+      {post.cover && (
+        <div className="mt-8 max-w-3xl overflow-hidden rounded-xl border border-border">
+          <Image
+            src={post.cover}
+            alt={post.title}
+            width={768}
+            height={512}
+            priority
+            sizes="(max-width: 768px) 100vw, 768px"
+            className="w-full"
+          />
+        </div>
+      )}
 
       <div className="prose mt-12">
         <ReactMarkdown

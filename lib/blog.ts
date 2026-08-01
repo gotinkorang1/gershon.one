@@ -26,6 +26,8 @@ export type Post = {
   /** ISO date, e.g. "2026-08-01". */
   date: string;
   summary: string;
+  /** Optional cover image path under /public, e.g. "/my-cover.jpg". */
+  cover?: string;
   tags: string[];
   draft: boolean;
   /** Raw Markdown body (frontmatter stripped). */
@@ -96,6 +98,7 @@ export function getAllPosts(): Post[] {
         title: asString(data.title) || file.replace(/\.md$/, ""),
         date: asString(data.date),
         summary: asString(data.summary),
+        cover: asString(data.cover) || undefined,
         tags: Array.isArray(data.tags) ? data.tags : [],
         draft: data.draft === true,
         content,

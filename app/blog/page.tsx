@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUpRight, Clock } from "lucide-react";
 import { getPublishedPosts } from "@/lib/blog";
 import { site } from "@/lib/site";
@@ -49,6 +50,18 @@ export default function BlogIndex() {
             <StaggerItem key={post.slug}>
               <Link href={`/blog/${post.slug}`} className="block">
                 <Panel interactive reactive className="group p-5 sm:p-6">
+                  {post.cover && (
+                    <div className="mb-5 overflow-hidden rounded-lg border border-border">
+                      <Image
+                        src={post.cover}
+                        alt=""
+                        width={768}
+                        height={512}
+                        sizes="(max-width: 768px) 100vw, 720px"
+                        className="aspect-3/2 w-full object-cover"
+                      />
+                    </div>
+                  )}
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                     <p className="label">{formatDate(post.date)}</p>
                     <p className="label flex items-center gap-1.5">

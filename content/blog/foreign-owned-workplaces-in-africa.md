@@ -2,6 +2,7 @@
 title: The reality of foreign-owned workplaces in Africa
 date: 2026-02-07
 summary: Foreign investment across Africa brings real jobs and real skills — and real hardship. An honest look at both sides, and why the debate that matters is about power and accountability, not nationality.
+cover: /foreign-owned-workplaces-in-africa.jpg
 tags: [Africa, Career, Workplace Culture]
 draft: false
 ---
