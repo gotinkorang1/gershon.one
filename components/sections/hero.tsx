@@ -110,17 +110,15 @@ export function Hero() {
 
             <motion.div
               variants={rise}
-              className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
+              className="mt-9 flex flex-wrap items-center gap-3"
             >
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                <CvButton className="w-full sm:w-auto" />
-                <a href={`mailto:${site.email}`} className="w-full sm:w-auto">
-                  <Button variant="outline" size="lg" className="group w-full sm:w-auto">
-                    {t.hero.getInTouch}
-                    <ArrowUpRight className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </Button>
-                </a>
-              </div>
+              <CvButton />
+              <a href={`mailto:${site.email}`}>
+                <Button variant="outline" size="lg" className="group">
+                  {t.hero.getInTouch}
+                  <ArrowUpRight className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </Button>
+              </a>
 
               {/* Recruiters look for these immediately; keep them at hand next
                   to the primary actions rather than only in the footer. */}
@@ -150,8 +148,10 @@ export function Hero() {
               <p className="flex items-start gap-2">
                 <span className="pulse-dot mt-1.5 shrink-0 text-live" />
                 <span className="min-w-0">
-                  <span className="label mr-2 !text-live/90">{t.hero.currentlyLabel}</span>
-                  <span className="align-baseline">{t.hero.currently}</span>
+                  <span className="label mr-2 block !text-live/90 sm:inline">
+                    {t.hero.currentlyLabel}
+                  </span>
+                  <span>{t.hero.currently}</span>
                 </span>
               </p>
               <p className="flex items-start gap-2">
