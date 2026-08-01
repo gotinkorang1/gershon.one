@@ -41,13 +41,21 @@ export function CvButton({
   // Mobile browsers (iOS Safari, Android Chrome) refuse to render PDFs inside an
   // <iframe> — the frame comes up blank or the file is forced to download. So on
   // those devices "View here" opens the PDF directly instead of the dead viewer.
-  const [inlinePdf, setInlinePdf] = useState(true);
+  // Computed lazily (no setState-in-effect). It's only read on click — never
+  // during first paint, and the dialog it affects is closed at hydration — so a
+  // server/client difference here can't produce a visible mismatch.
+  const canInlinePdf = () =>
+    typeof window === "undefined" ||
+    !window.matchMedia("(pointer: coarse), (max-width: 640px)").matches;
+  const [inlinePdf, setInlinePdf] = useState(canInlinePdf);
   const frameRef = useRef<HTMLIFrameElement>(null);
 
+  // Keep it accurate if the viewport/pointer changes (e.g. rotate, resize).
   useEffect(() => {
-    const coarse = window.matchMedia("(pointer: coarse)").matches;
-    const narrow = window.matchMedia("(max-width: 640px)").matches;
-    setInlinePdf(!(coarse || narrow));
+    const mq = window.matchMedia("(pointer: coarse), (max-width: 640px)");
+    const update = () => setInlinePdf(!mq.matches);
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
   }, []);
 
   const openDirect = useCallback(() => {
