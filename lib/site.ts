@@ -378,6 +378,15 @@ export const credentials: Credential[] = [
     kind: "degree",
   },
   {
+    title: "Foundations of Cybersecurity",
+    issuer: "Google (Coursera)",
+    date: "2026-08-02",
+    detail: "Part of the Google Cybersecurity Professional Certificate — security controls, SIEM, network and cyber-attack analysis",
+    credentialId: "KVMKSBBS97UR",
+    verifyUrl: "https://www.coursera.org/account/accomplishments/verify/KVMKSBBS97UR",
+    kind: "certification",
+  },
+  {
     title: "AWS Certified Cloud Practitioner",
     issuer: "Amazon Web Services",
     date: "2024-07-14",

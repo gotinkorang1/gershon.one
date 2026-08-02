@@ -134,6 +134,10 @@ export const credentialsFr: Record<string, { title: string; detail?: string }> =
     title: "Baccalauréat en technologies de l'information",
     detail: "Mention bien, division supérieure",
   },
+  "Foundations of Cybersecurity": {
+    title: "Fondements de la cybersécurité",
+    detail: "Extrait du certificat professionnel Google Cybersecurity — contrôles de sécurité, SIEM, analyse réseau et des cyberattaques",
+  },
   "AWS Certified Cloud Practitioner": {
     title: "AWS Certified Cloud Practitioner",
   },

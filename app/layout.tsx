@@ -114,6 +114,14 @@ const jsonLd = {
   hasCredential: [
     {
       "@type": "EducationalOccupationalCredential",
+      name: "Foundations of Cybersecurity",
+      credentialCategory: "certificate",
+      recognizedBy: { "@type": "Organization", name: "Google" },
+      dateCreated: "2026-08-02",
+      url: "https://www.coursera.org/account/accomplishments/verify/KVMKSBBS97UR",
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
       name: "AWS Certified Cloud Practitioner",
       credentialCategory: "certification",
       recognizedBy: { "@type": "Organization", name: "Amazon Web Services" },
