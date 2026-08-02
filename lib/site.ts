@@ -54,6 +54,9 @@ export const site = {
     "I keep the systems people depend on working — from a jammed printer to a fibre backbone across 1,200 acres.",
   summary:
     "IT support specialist with five years keeping users, devices and infrastructure running across a 1,200-acre industrial park and multiple retail sites in Ghana. Day to day that means end-user support, POS and PDA systems, and the servers behind them; it has also meant designing the site-wide fibre network and the multi-WAN satellite link that carries it. Comfortable at both ends — the helpdesk ticket and the distribution panel.",
+  // Professional statement for security-focused positioning
+  securityStatement:
+    "I help organizations protect their infrastructure without sacrificing velocity. With hands-on experience in cloud security, compliance operations, and SOC monitoring, I believe security works best when it enables teams to move fast. I design layered defenses that catch threats early, keep systems compliant, and let people do their jobs. Whether building secure cloud architectures, operationalizing threat detection, or bridging security and engineering teams, I focus on outcomes: reduced risk, faster incident response, and sustainable security culture.",
   // Search-snippet length (~155 chars). `summary` above is the on-page bio and
   // runs far past what Google shows, so the meta description is authored
   // separately — leading with the strongest hook before the truncation point.
