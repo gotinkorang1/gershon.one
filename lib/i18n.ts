@@ -61,7 +61,6 @@ type Dictionary = {
     searchPlaceholder: string;
     close: string;
     keyboardShortcuts: string;
-    pressForShortcuts: string;
     sections: string;
     mainNav: string;
     mobileNav: string;
@@ -149,6 +148,7 @@ type Dictionary = {
       goCapabilities: string;
       goCredentials: string;
       goContact: string;
+      goBlog: string;
       goTop: string;
       toggleDark: string;
       downloadCv: string;
@@ -254,7 +254,6 @@ const en: Dictionary = {
     searchPlaceholder: "Search experience, skills, case studies…",
     close: "Close",
     keyboardShortcuts: "Keyboard shortcuts",
-    pressForShortcuts: "Press ? for keyboard shortcuts",
     sections: "Sections",
     mainNav: "Main",
     mobileNav: "Mobile menu",
@@ -353,6 +352,7 @@ const en: Dictionary = {
       goCapabilities: "Go to capabilities",
       goCredentials: "Go to credentials",
       goContact: "Go to contact",
+      goBlog: "Go to blog",
       goTop: "Go to top",
       toggleDark: "Toggle dark mode",
       downloadCv: "Download CV",
@@ -458,7 +458,6 @@ const fr: Dictionary = {
     searchPlaceholder: "Rechercher expérience, compétences, études de cas…",
     close: "Fermer",
     keyboardShortcuts: "Raccourcis clavier",
-    pressForShortcuts: "Appuyez sur ? pour les raccourcis clavier",
     sections: "Sections",
     mainNav: "Main",
     mobileNav: "Mobile menu",
@@ -557,6 +556,7 @@ const fr: Dictionary = {
       goCapabilities: "Aller aux compétences",
       goCredentials: "Aller aux diplômes",
       goContact: "Aller au contact",
+      goBlog: "Aller au blog",
       goTop: "Revenir en haut",
       toggleDark: "Basculer le mode sombre",
       downloadCv: "Télécharger le CV",

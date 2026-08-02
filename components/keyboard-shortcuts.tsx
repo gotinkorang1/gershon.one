@@ -1,11 +1,18 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { Dialog } from "@/components/ui/dialog";
-import { navLinks, site } from "@/lib/site";
+import { navLinks } from "@/lib/site";
 import { useI18n } from "@/components/locale-provider";
 import { Portal } from "@/components/ui/portal";
+
+/** Fired by the "V" shortcut so the CV chooser (View / Download) opens rather
+ *  than raw-opening the PDF and bypassing the mobile-aware flow. */
+export const CV_OPEN_EVENT = "cv:open";
+/** Lets any element (e.g. the footer hint) open the shortcuts help dialog. */
+export const SHORTCUTS_HELP_EVENT = "shortcuts:open";
 
 const GO_TARGETS: Record<string, string> = {
   e: "#experience",
@@ -14,12 +21,18 @@ const GO_TARGETS: Record<string, string> = {
   t: "#contact",
 };
 
+// `G then B` routes rather than scrolls — the blog is its own page.
+const GO_ROUTES: Record<string, string> = {
+  b: "/blog",
+};
+
 /**
  * Global shortcut layer. Uses a short-lived `g` prefix so Vim-style sequences
  * work without colliding with single-key actions.
  */
 export function KeyboardShortcuts() {
   const { t } = useI18n();
+  const router = useRouter();
   const [helpOpen, setHelpOpen] = useState(false);
 
   const SHORTCUTS: { keys: string[]; label: string }[] = [
@@ -29,6 +42,7 @@ export function KeyboardShortcuts() {
     { keys: ["G", "then", "C"], label: t.ui.shortcuts.goCapabilities },
     { keys: ["G", "then", "R"], label: t.ui.shortcuts.goCredentials },
     { keys: ["G", "then", "T"], label: t.ui.shortcuts.goContact },
+    { keys: ["G", "then", "B"], label: t.ui.shortcuts.goBlog },
     { keys: ["G", "then", "H"], label: t.ui.shortcuts.goTop },
     { keys: ["D"], label: t.ui.shortcuts.toggleDark },
     { keys: ["V"], label: t.ui.shortcuts.downloadCv },
@@ -36,6 +50,13 @@ export function KeyboardShortcuts() {
   ];
   const [awaitingGo, setAwaitingGo] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
+
+  // Let other components open this dialog (e.g. the footer shortcuts hint).
+  useEffect(() => {
+    const open = () => setHelpOpen(true);
+    window.addEventListener(SHORTCUTS_HELP_EVENT, open);
+    return () => window.removeEventListener(SHORTCUTS_HELP_EVENT, open);
+  }, []);
 
   const scrollTo = useCallback((hash: string) => {
     document.querySelector(hash)?.scrollIntoView({ behavior: "smooth" });
@@ -62,6 +83,7 @@ export function KeyboardShortcuts() {
         e.preventDefault();
         setAwaitingGo(false);
         if (key === "h") window.scrollTo({ top: 0, behavior: "smooth" });
+        else if (GO_ROUTES[key]) router.push(GO_ROUTES[key]);
         else if (GO_TARGETS[key]) scrollTo(GO_TARGETS[key]);
         return;
       }
@@ -80,13 +102,15 @@ export function KeyboardShortcuts() {
         return;
       }
       if (key === "v") {
-        window.open(site.resumeUrl, "_blank", "noopener,noreferrer");
+        // Open the CV chooser (View / Download) instead of raw-opening the PDF,
+        // so the shortcut matches the button's mobile-aware behaviour.
+        window.dispatchEvent(new Event(CV_OPEN_EVENT));
       }
     };
 
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [awaitingGo, resolvedTheme, setTheme, scrollTo]);
+  }, [awaitingGo, resolvedTheme, setTheme, scrollTo, router]);
 
   return (
     <>
@@ -95,7 +119,7 @@ export function KeyboardShortcuts() {
           <div className="pointer-events-none fixed bottom-6 left-1/2 z-[65] -translate-x-1/2">
           <div className="panel panel-raised px-3 py-2">
             <p className="label text-[0.625rem]">
-              g … {navLinks.map((l) => l.label[0].toLowerCase()).join(" / ")} / h
+              g … {navLinks.map((l) => l.label[0].toLowerCase()).join(" / ")} / b / h
               </p>
             </div>
           </div>

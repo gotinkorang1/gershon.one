@@ -8,6 +8,7 @@ import { resumeUrlFor } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { Portal } from "@/components/ui/portal";
+import { CV_OPEN_EVENT } from "@/components/keyboard-shortcuts";
 import { cn } from "@/lib/utils";
 
 type Stage = "closed" | "choose" | "viewing";
@@ -27,11 +28,15 @@ export function CvButton({
   size = "lg",
   label,
   className,
+  respondToShortcut = false,
 }: {
   variant?: "accent" | "outline" | "default" | "ghost";
   size?: "default" | "sm" | "lg";
   label?: string;
   className?: string;
+  /** When true, the global "V" shortcut opens this instance's chooser. Only one
+   *  CvButton on the page should set this, or the shortcut opens two dialogs. */
+  respondToShortcut?: boolean;
 }) {
   const { t, locale } = useI18n();
   const href = resumeUrlFor(locale);
@@ -57,6 +62,16 @@ export function CvButton({
     mq.addEventListener("change", update);
     return () => mq.removeEventListener("change", update);
   }, []);
+
+  // The "V" keyboard shortcut opens the chooser through this event, so it shares
+  // the button's View/Download flow rather than raw-opening the PDF. Only the
+  // opted-in instance listens, so the shortcut never opens two dialogs.
+  useEffect(() => {
+    if (!respondToShortcut) return;
+    const open = () => setStage("choose");
+    window.addEventListener(CV_OPEN_EVENT, open);
+    return () => window.removeEventListener(CV_OPEN_EVENT, open);
+  }, [respondToShortcut]);
 
   const openDirect = useCallback(() => {
     window.open(href, "_blank", "noopener,noreferrer");

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { site, navLinks } from "@/lib/site";
 import { useI18n } from "@/components/locale-provider";
 import { CvButton } from "@/components/cv-button";
+import { SHORTCUTS_HELP_EVENT } from "@/components/keyboard-shortcuts";
 
 export function SiteFooter() {
   const { t, locale } = useI18n();
@@ -59,7 +60,7 @@ export function SiteFooter() {
                 </a>
               </li>
               <li>
-                <CvButton variant="ghost" size="sm" className="-ml-3" />
+                <CvButton variant="ghost" size="sm" className="-ml-3" respondToShortcut />
               </li>
               <li>
                 <Link href="/brief" className="link">
@@ -74,9 +75,16 @@ export function SiteFooter() {
           <p className="label">
             © {new Date().getFullYear()} {site.name}
           </p>
-          <p className="label">
-            {t.ui.pressForShortcuts}
-          </p>
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new Event(SHORTCUTS_HELP_EVENT))}
+            className="label tap inline-flex items-center gap-1.5 text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <kbd className="rounded border border-border bg-surface-2 px-1.5 py-0.5 font-mono text-[0.625rem] not-italic">
+              ?
+            </kbd>
+            {t.ui.keyboardShortcuts}
+          </button>
         </div>
       </div>
     </footer>
