@@ -34,6 +34,15 @@
     "tailwindcss": "^4.0.0",
     "typescript": "^5.7.0"
   },
+  "//browserslist": "Modern target so Next/SWC stops shipping polyfills for Array.prototype.at, Object.hasOwn, String.prototype.trimStart and similar Baseline-2022 features (~14KB of dead JS on the critical path). These browser versions all support them natively; the coverage query keeps real-world reach wide while excluding the ancient engines that forced the transpile.",
+  "browserslist": [
+    "chrome >= 111",
+    "edge >= 111",
+    "firefox >= 111",
+    "safari >= 16.4",
+    "ios_saf >= 16.4",
+    "not dead"
+  ],
   "//overrides": "Pin patched transitive deps. typescript is capped to 5.x because a loose transitive range (>=3.3.1) let a clean install resolve TypeScript 7, whose native rewrite drops the compiler API next build needs. NOTE: do NOT blanket-override brace-expansion — it ships multiple major lines and ESLint's minimatch@3 needs the 1.x line, so forcing 5.x crashes ESLint (expand is not a function). Its advisory is dev-only and excluded by `npm audit --omit=dev`.",
   "overrides": {
     "postcss": "^8.5.18",
