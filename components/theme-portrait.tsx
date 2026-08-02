@@ -31,25 +31,28 @@ export function ThemePortrait({
   const common = {
     width,
     height,
-    priority,
     sizes,
     className: cn("size-full", imgClassName),
   } as const;
 
   return (
     <div className={cn("relative", className)}>
-      {/* Light theme image — hidden when .dark is on the html element. */}
+      {/* Light theme image — hidden when .dark is on the html element. Only this
+          one carries `priority`: preloading both would put a second, never-shown
+          image on the LCP critical path. The dark copy loads eagerly-but-normal. */}
       <Image
-        src="/gershon-light.png"
+        src="/gershon-light.webp"
         alt={alt}
+        priority={priority}
         {...common}
         className={cn(common.className, "dark:hidden")}
       />
       {/* Dark theme image — a decorative duplicate, shown only under .dark. */}
       <Image
-        src="/gershon-dark.png"
+        src="/gershon-dark.webp"
         alt=""
         aria-hidden
+        loading="eager"
         {...common}
         className={cn(common.className, "hidden dark:block")}
       />
