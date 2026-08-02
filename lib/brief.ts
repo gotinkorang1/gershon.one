@@ -1,9 +1,10 @@
 /**
  * Content for the recruiter brief at /brief.
  *
- * ⚠️  Every TODO below is a question a Canadian screener will ask in the first
- * call. Leaving them blank on the page is better than guessing, but answering
- * them is what shortens the process — so fill these in before you share the link.
+ * These are the facts a Canadian screener asks in the first call. Keep the
+ * work-authorisation, notice and compensation values current — re-check the
+ * permit hour limits and the CAD range against Job Bank before each round of
+ * applications so nothing here goes stale.
  */
 
 export const brief = {
@@ -23,8 +24,8 @@ export const brief = {
     },
     {
       label: "Notice period",
-      value: "TODO — e.g. one month", // TODO
-      note: "From current role at Greenhouse",
+      value: "One month",
+      note: "From current role at Greenhouse · available in Canada from August 2026",
     },
     {
       label: "Location",
@@ -33,10 +34,10 @@ export const brief = {
     },
   ],
 
-  // TODO: adjust to the range you actually want. Canadian postings often
-  // require a stated expectation; refusing to give one slows things down.
+  // Target range in CAD. Canadian postings usually expect a stated figure;
+  // the note keeps it open to negotiation on scope and level.
   compensation: {
-    value: "TODO — target range in CAD",
+    value: "CAD 45,000–60,000",
     note: "Open to discussing based on scope and level",
   },
 
