@@ -79,7 +79,15 @@ export default function BriefPage() {
 
         <Panel inset className="mt-3 p-5">
           <p className="label">Compensation expectation</p>
-          <p className="mt-2 text-base font-medium">{brief.compensation.value}</p>
+          <p
+            className={
+              brief.compensation.value.startsWith("TODO")
+                ? "mt-2 text-base font-medium text-signal"
+                : "mt-2 text-base font-medium"
+            }
+          >
+            {brief.compensation.value}
+          </p>
           <p className="mt-1 text-xs text-muted-foreground">{brief.compensation.note}</p>
         </Panel>
       </section>

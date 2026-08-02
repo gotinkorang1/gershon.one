@@ -12,16 +12,14 @@ export const brief = {
     {
       label: "Available from",
       value: "August 2026",
-      note: "Arriving in St. John's for an MSc at Memorial University",
+      note: "Arriving in St. John's August 2026 for an MSc at Memorial University",
     },
     {
       label: "Work authorisation",
-      // TODO: replace with your actual status — e.g. "Study permit with
-      // on-campus/off-campus work eligibility" or "Post-Graduation Work Permit
-      // eligible on completion". This is the single most common screening
-      // question for an international candidate; leaving it vague costs you calls.
-      value: "TODO — confirm your permit status",
-      note: "Study permit / PGWP eligibility",
+      // Canadian study permit approved (S-1, valid to Dec 2028). Verify the exact
+      // hour limits against your permit's printed conditions before sharing.
+      value: "Canadian study permit (from Aug 2026)",
+      note: "Off-campus work up to 24 hrs/week in term, full-time in scheduled breaks · PGWP-eligible on completion",
     },
     {
       label: "Notice period",
@@ -44,7 +42,7 @@ export const brief = {
 
   // What you'd want a screener to read out to a hiring manager.
   pitch:
-    "Five years running network and server infrastructure end to end — MikroTik RouterOS, dual-WAN failover with Starlink, ERPNext and Odoo administration, and the IT support function around all of it. Currently sole administrator for a multi-site network in Ghana. Moving to St. John's in August 2026 for an MSc in Computer Science focused on network security and intrusion detection.",
+    "Five years running network and server infrastructure end to end — MikroTik RouterOS, dual-WAN failover with Starlink, ERPNext and Odoo administration, and the IT support function around all of it. Currently sole administrator for a multi-site network in Ghana. Arriving in St. John's in August 2026 for an MSc in Computer Science focused on network security and intrusion detection.",
 
   // Ranked for a screener matching against a job description.
   strengths: [

@@ -208,7 +208,7 @@ const en: Dictionary = {
     availability: "Available in Canada from August 2026",
     downloadCv: "Download CV",
     getInTouch: "Get in touch",
-    movingTo: (city, when) => `Accra, Ghana — moving to ${city}, ${when}`,
+    movingTo: (city, when) => `Accra, Ghana — arriving in ${city}, ${when}`,
     topologyMode: "Aggregated multi-WAN",
     currentlyLabel: "Currently",
     currently: "Sole IT for a 1,200-acre industrial park",
@@ -284,7 +284,7 @@ const en: Dictionary = {
       "A design I built and maintain: eight satellite terminals bonded into one uplink, feeding fibre across a 1,200-acre site. Drop a terminal and watch capacity rebalance instead of cutting over.",
     aboutMe: "In short",
     metaDescription:
-      "IT support specialist who runs the helpdesk and the fibre backbone — 5 years across a 1,200-acre park in Ghana. Relocating to St. John's, Canada, Aug 2026.",
+      "IT support specialist who runs the helpdesk and the fibre backbone — 5 years across a 1,200-acre park in Ghana. Arriving in St. John's, Canada, Aug 2026.",
     relocationWhen: "August 2026",
     present: "Present",
     eyebrowExperience: "01 — Experience",
@@ -300,7 +300,7 @@ const en: Dictionary = {
     proofMsc: "MSc Computer Science",
     proofMscSub: "Memorial University · from 2026",
     basedIn: (location, timezone, city, when) =>
-      `Based in ${location} (${timezone}), relocating to ${city} in ${when}. Comfortable working across North American and European hours.`,
+      `Based in ${location} (${timezone}), arriving in ${city} ${when}. Comfortable working across North American and European hours.`,
     noResults: (query) => `No results for “${query}”`,
     failedOver: (seconds, live) =>
       `Rebalanced across ${live} uplinks · ${seconds}s`,
@@ -315,7 +315,7 @@ const en: Dictionary = {
     switchToEnglish: "Switch to English",
     switchToFrench: "Passer en français",
     terminalIntro: (location, city, when) =>
-      `${location} · relocating to ${city}, ${when}`,
+      `${location} · arriving ${city}, ${when}`,
     themeSet: (theme) => `Theme set to ${theme}.`,
     themeDark: "dark",
     themeLight: "light",
@@ -412,7 +412,7 @@ const fr: Dictionary = {
     availability: "Disponible au Canada à partir d'août 2026",
     downloadCv: "Télécharger le CV",
     getInTouch: "Me contacter",
-    movingTo: (city, when) => `Accra, Ghana — déménagement à ${city}, ${when}`,
+    movingTo: (city, when) => `Accra, Ghana — arrivée à ${city}, ${when}`,
     topologyMode: "Multi-WAN agrégé",
     currentlyLabel: "En poste",
     currently: "Seul responsable IT d'un parc industriel de 1 200 acres",
@@ -488,7 +488,7 @@ const fr: Dictionary = {
       "Une architecture que j'ai conçue et que je maintiens : huit terminaux satellite agrégés en une seule liaison, alimentant la fibre sur un site de 1 200 acres. Coupez un terminal et observez la capacité se rééquilibrer au lieu de basculer.",
     aboutMe: "En bref",
     metaDescription:
-      "Spécialiste du support informatique — du helpdesk à la dorsale fibre. 5 ans sur un parc de 1 200 acres au Ghana. Départ pour St. John's, Canada, août 2026.",
+      "Spécialiste du support informatique — du helpdesk à la dorsale fibre. 5 ans sur un parc de 1 200 acres au Ghana. Arrivée à St. John's, Canada, août 2026.",
     relocationWhen: "août 2026",
     present: "aujourd'hui",
     eyebrowExperience: "01 — Expérience",
@@ -504,7 +504,7 @@ const fr: Dictionary = {
     proofMsc: "Maîtrise en informatique",
     proofMscSub: "Université Memorial · dès 2026",
     basedIn: (location, timezone, city, when) =>
-      `Basé à ${location} (${timezone}), déménagement à ${city} en ${when}. À l'aise pour travailler sur les fuseaux nord-américains et européens.`,
+      `Basé à ${location} (${timezone}), arrivée à ${city} en ${when}. À l'aise pour travailler sur les fuseaux nord-américains et européens.`,
     noResults: (query) => `Aucun résultat pour « ${query} »`,
     failedOver: (seconds, live) =>
       `Rééquilibrage sur ${live} liaisons · ${seconds} s`,
@@ -519,7 +519,7 @@ const fr: Dictionary = {
     switchToEnglish: "Switch to English",
     switchToFrench: "Passer en français",
     terminalIntro: (location, city, when) =>
-      `${location} · déménagement à ${city}, ${when}`,
+      `${location} · arrivée à ${city}, ${when}`,
     themeSet: (theme) => `Thème réglé sur ${theme}.`,
     themeDark: "sombre",
     themeLight: "clair",

@@ -40,7 +40,7 @@ export const site = {
   relocation: {
     to: "St. John's, NL, Canada",
     when: "August 2026",
-    note: "Relocating for an MSc at Memorial University",
+    note: "Arriving August 2026 for an MSc at Memorial University",
   },
   timezone: "GMT",
   email: "contact@gershon.one",
@@ -58,7 +58,7 @@ export const site = {
   // runs far past what Google shows, so the meta description is authored
   // separately — leading with the strongest hook before the truncation point.
   metaDescription:
-    "IT support specialist who runs the helpdesk and the fibre backbone — 5 years across a 1,200-acre park in Ghana. Relocating to St. John's, Canada, Aug 2026.",
+    "IT support specialist who runs the helpdesk and the fibre backbone — 5 years across a 1,200-acre park in Ghana. Arriving in St. John's, Canada, Aug 2026.",
   availability: "Available in Canada from August 2026",
   /**
    * When the page content last meaningfully changed — bump by hand when you
