@@ -406,14 +406,6 @@
   animation: ticker-scroll 34s linear infinite;
 }
 
-.portrait {
-  filter: grayscale(1) brightness(1.18) contrast(0.94);
-  transition: filter 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.portrait:hover {
-  filter: grayscale(0.1) brightness(1.22) contrast(0.98);
-}
-
 /* Lifts the photograph's black background off the page so the frame reads as
    an edge rather than dissolving into the canvas. */
 .portrait-plate {
@@ -422,21 +414,6 @@
   box-shadow:
     inset 0 0 0 1px var(--border),
     var(--shadow-lg);
-}
-
-/* Accent bloom behind the portrait so it separates from a dark page. */
-.portrait-frame::before {
-  content: "";
-  position: absolute;
-  inset: -18%;
-  z-index: -1;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--accent-quiet), transparent 68%);
-  filter: blur(28px);
-}
-
-.fade-edges {
-  mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
 }
 
 .link {
@@ -525,11 +502,6 @@
 
 @keyframes dash {
   to { stroke-dashoffset: -1000; }
-}
-
-@keyframes blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
 }
 
 /* -------------------------------------------------------------------------- */
