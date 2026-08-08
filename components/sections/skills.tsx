@@ -1,6 +1,6 @@
 "use client";
 
-import { Cloud, Code2, Network, Server, Users } from "lucide-react";
+import { Cloud, LifeBuoy, Map, Network, Server, ShieldCheck, Store } from "lucide-react";
 import { SectionHeading } from "@/components/fx/section-heading";
 import { Reveal } from "@/components/fx/reveal";
 import { Panel } from "@/components/ui/panel";
@@ -25,7 +25,11 @@ import { cn } from "@/lib/utils";
 import { useI18n } from "@/components/locale-provider";
 import { getSkillGroups } from "@/lib/localised-content";
 
-const ICONS = [Network, Server, Cloud, Code2, Users];
+// One icon per capability group, in the same order as `skillGroups` in
+// lib/site.ts: IT support, Retail & field, Networking, Security, Servers,
+// Cloud & web, GIS & other. Kept here rather than in the data file so the
+// content layer stays free of UI-library imports.
+const ICONS = [LifeBuoy, Store, Network, ShieldCheck, Server, Cloud, Map];
 
 /**
  * Deliberately uneven so the grid reads as composed rather than tiled. The
@@ -61,7 +65,7 @@ export function Skills() {
           const Icon = ICONS[i] ?? Network;
           return (
             <Reveal key={group.title} delay={0.04 * i} className={cn(spanFor(i))}>
-              <Panel interactive reactive className="h-full p-5">
+              <Panel interactive reactive className="group h-full p-5">
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <h3 className="text-lg font-semibold tracking-tight">{group.title}</h3>
@@ -69,8 +73,8 @@ export function Skills() {
                       {group.blurb}
                     </p>
                   </div>
-                  <span className="panel-inset grid size-9 shrink-0 place-items-center rounded-lg">
-                    <Icon className="size-4 text-accent" />
+                  <span className="panel-inset grid size-9 shrink-0 place-items-center rounded-lg transition-colors duration-300 group-hover:bg-accent-quiet">
+                    <Icon aria-hidden className="size-4 text-accent" />
                   </span>
                 </div>
 
@@ -78,7 +82,7 @@ export function Skills() {
                   {group.skills.map((skill) => (
                     <li
                       key={skill}
-                      className="rounded-md border border-border bg-surface-2 px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:border-border-strong hover:text-foreground"
+                      className="rounded-md border border-border bg-surface-2 px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:border-accent/40 hover:text-foreground"
                     >
                       {skill}
                     </li>

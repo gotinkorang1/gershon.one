@@ -130,7 +130,7 @@ export function Hero() {
                   aria-label="GitHub"
                   className="tap grid size-10 place-items-center rounded-lg border border-border text-muted-foreground transition-colors hover:border-border-strong hover:text-foreground"
                 >
-                  <Github className="size-4" />
+                  <Github aria-hidden className="size-4" />
                 </a>
                 <a
                   href={site.socials.linkedin}
@@ -139,7 +139,7 @@ export function Hero() {
                   aria-label="LinkedIn"
                   className="tap grid size-10 place-items-center rounded-lg border border-border text-muted-foreground transition-colors hover:border-border-strong hover:text-foreground"
                 >
-                  <Linkedin className="size-4" />
+                  <Linkedin aria-hidden className="size-4" />
                 </a>
               </div>
             </motion.div>
@@ -155,7 +155,7 @@ export function Hero() {
                 </span>
               </p>
               <p className="flex items-start gap-2">
-                <MapPin className="mt-0.5 size-3.5 shrink-0 text-faint" />
+                <MapPin aria-hidden className="mt-0.5 size-3.5 shrink-0 text-faint" />
                 <span className="min-w-0">
                   {t.hero.movingTo(site.relocation.to, t.ui.relocationWhen)}
                 </span>
