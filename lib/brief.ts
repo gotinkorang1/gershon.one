@@ -65,5 +65,6 @@ export const brief = {
     "IT Support Analyst",
     "Systems Analyst",
     "Infrastructure Technician",
+    "Network Security Analyst",
   ],
 } as const;

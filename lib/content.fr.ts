@@ -111,6 +111,11 @@ export const skillGroupsFr: Record<string, { title: string; blurb: string }> = {
     title: "Réseaux",
     blurb: "Fibre à l'échelle du site, agrégation multi-WAN et couverture sans fil à grande échelle.",
   },
+  Security: {
+    title: "Sécurité",
+    blurb:
+      "Garder l'infrastructure et les données défendables — le côté pratiqué, et les fondations sur lesquelles la maîtrise s'appuie.",
+  },
   "Servers & services": {
     title: "Serveurs et services",
     blurb: "Les plateformes derrière le support.",
@@ -209,6 +214,15 @@ export const termsFr: Record<string, string> = {
   "Firewall hardening": "Durcissement du pare-feu",
   "Starlink deployment": "Déploiement Starlink",
   "Fibre troubleshooting": "Dépannage fibre",
+  // Security
+  "Network segmentation (VLANs)": "Segmentation réseau (VLAN)",
+  "Firewall policy & hardening": "Politique et durcissement du pare-feu",
+  "VPN-gated admin access": "Accès admin protégé par VPN",
+  "DNS content filtering": "Filtrage de contenu DNS",
+  "PII & data protection": "Protection des données personnelles",
+  "Access & identity management": "Gestion des accès et des identités",
+  "Security monitoring (SIEM) fundamentals": "Bases de la surveillance de sécurité (SIEM)",
+  "Threat & attack analysis": "Analyse des menaces et des attaques",
   // Systems
   "Server administration": "Administration de serveurs",
   "Windows & Linux": "Windows et Linux",

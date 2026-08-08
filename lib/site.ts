@@ -302,6 +302,21 @@ export const skillGroups: SkillGroup[] = [
     ],
   },
   {
+    title: "Security",
+    blurb:
+      "Keeping infrastructure and data defensible — the practised side, and the foundations the MSc builds on.",
+    skills: [
+      "Network segmentation (VLANs)",
+      "Firewall policy & hardening",
+      "VPN-gated admin access",
+      "DNS content filtering",
+      "PII & data protection",
+      "Access & identity management",
+      "Security monitoring (SIEM) fundamentals",
+      "Threat & attack analysis",
+    ],
+  },
+  {
     title: "Servers & services",
     blurb: "The platforms behind the support desk.",
     skills: [

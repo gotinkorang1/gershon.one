@@ -293,7 +293,7 @@ const en: Dictionary = {
     proofDegree: "BSc Information Technology",
     proofDegreeSub: "KNUST · Second Class Upper",
     proofMsc: "MSc Computer Science",
-    proofMscSub: "Memorial University · from 2026",
+    proofMscSub: "Memorial University · network security focus",
     basedIn: (location, timezone, city, when) =>
       `Based in ${location} (${timezone}), arriving in ${city} ${when}. Comfortable working across North American and European hours.`,
     noResults: (query) => `No results for “${query}”`,
@@ -497,7 +497,7 @@ const fr: Dictionary = {
     proofDegree: "Licence en technologies de l'information",
     proofDegreeSub: "KNUST · Mention bien",
     proofMsc: "Maîtrise en informatique",
-    proofMscSub: "Université Memorial · dès 2026",
+    proofMscSub: "Université Memorial · axe sécurité réseau",
     basedIn: (location, timezone, city, when) =>
       `Basé à ${location} (${timezone}), arrivée à ${city} en ${when}. À l'aise pour travailler sur les fuseaux nord-américains et européens.`,
     noResults: (query) => `Aucun résultat pour « ${query} »`,

@@ -158,6 +158,8 @@ const jsonLd = {
     "ERP Administration",
     "Systems Administration",
     "Cloud Computing",
+    "Network Security",
+    "Cybersecurity",
   ],
   // hasOccupation is the property search engines use to classify a person's
   // profession. The O*NET code is the standard identifier for network and
