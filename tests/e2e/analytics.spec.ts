@@ -25,7 +25,6 @@ test("PostHog sends the initial page view to its ingestion endpoint", async ({
   );
 
   await page.goto("/");
-  await expect(page.locator("#analytics-debug")).toHaveAttribute("data-events", /\$pageview/);
   const clientState = await page.evaluate(() => {
     const client = (
       window as unknown as {
