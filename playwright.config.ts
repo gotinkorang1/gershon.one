@@ -27,6 +27,11 @@ export default defineConfig({
       ? `npm run start -- --hostname 127.0.0.1 --port ${port}`
       : `npm run dev -- --hostname 127.0.0.1 --port ${port}`,
     url: baseURL,
+    env: {
+      NEXT_PUBLIC_POSTHOG_KEY:
+        "phx_0000000000000000000000000000000000000000000000000000000000000000",
+      NEXT_PUBLIC_POSTHOG_HOST: "https://us.i.posthog.com",
+    },
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
   },

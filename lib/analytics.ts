@@ -1,3 +1,7 @@
+"use client";
+
+import type { PostHog } from "posthog-js";
+
 export type AnalyticsProperties = Record<
   string,
   string | number | boolean | null | undefined
@@ -22,14 +26,7 @@ export type AnalyticsEvent =
   | "candidate details copied"
   | "contact card downloaded";
 
-export type PostHogClient = {
-  init: (key: string, options: Record<string, unknown>) => void;
-  capture: (
-    event: string,
-    properties?: AnalyticsProperties,
-    options?: { transport?: "sendBeacon"; send_instantly?: boolean },
-  ) => void;
-};
+type PostHogClient = PostHog;
 
 type PendingEvent = {
   event: AnalyticsEvent;
@@ -44,8 +41,10 @@ const MAX_PENDING_EVENTS = 40;
 const debugListeners = new Set<(item: AnalyticsDebugEvent) => void>();
 
 function postHogClient(): PostHogClient | undefined {
-  if (typeof window === "undefined") return undefined;
-  return (window as unknown as { posthog?: PostHogClient }).posthog;
+  if (typeof window === "undefined" || !process.env.NEXT_PUBLIC_POSTHOG_KEY) return undefined;
+  const client = (window as unknown as { posthog?: PostHogClient }).posthog;
+  if (!client?.__loaded) return undefined;
+  return client;
 }
 
 function contextualProperties(properties: AnalyticsProperties): AnalyticsProperties {
