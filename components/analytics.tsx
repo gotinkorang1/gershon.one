@@ -4,16 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import {
   captureAnalyticsEvent,
-  flushAnalyticsEvents,
   subscribeAnalyticsDebug,
   type AnalyticsDebugEvent,
-  type PostHogClient,
 } from "@/lib/analytics";
 
-/**
- * PostHog is loaded lazily and only when a key is present, so the site runs
- * fine with no analytics configured. Add NEXT_PUBLIC_POSTHOG_KEY to enable.
- */
 export function Analytics() {
   const pathname = usePathname();
   const completedBlogPath = useRef<string | null>(null);
@@ -26,32 +20,6 @@ export function Analytics() {
       }),
     [],
   );
-
-  useEffect(() => {
-    const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
-    if (!key || typeof window === "undefined") return;
-
-    const host = process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com";
-    const script = document.createElement("script");
-    script.src = `${host}/static/array.js`;
-    script.async = true;
-    script.onload = () => {
-      const ph = (window as unknown as { posthog?: PostHogClient }).posthog;
-      ph?.init(key, {
-        api_host: host,
-        capture_pageview: false,
-        autocapture: false,
-        disable_session_recording: true,
-        person_profiles: "identified_only",
-      });
-      flushAnalyticsEvents();
-    };
-    document.head.appendChild(script);
-
-    return () => {
-      script.remove();
-    };
-  }, []);
 
   useEffect(() => {
     captureAnalyticsEvent("$pageview", { $current_url: window.location.href });

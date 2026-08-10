@@ -44,6 +44,7 @@ const csp = [
   `connect-src 'self' https://api.github.com https://us.i.posthog.com https://us-assets.i.posthog.com${
     isDev ? " ws: http://localhost:*" : ""
   }`,
+  "worker-src 'self' blob:",
   "form-action 'self'",
   // Some browsers route inline PDF rendering through a frame.
   // Turnstile renders its challenge inside a frame.
