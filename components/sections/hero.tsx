@@ -11,12 +11,11 @@ import { motion } from "motion/react";
 import {
   Award,
   ArrowUpRight,
-  Github,
   GraduationCap,
-  Linkedin,
   MapPin,
   ShieldCheck,
 } from "lucide-react";
+import { Github, Linkedin } from "@/components/ui/brand-icons";
 import { site } from "@/lib/site";
 import { getFacts, getRoleFocusProfiles } from "@/lib/localised-content";
 import { useI18n } from "@/components/locale-provider";

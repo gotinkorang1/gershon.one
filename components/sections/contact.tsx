@@ -7,12 +7,11 @@ import {
   ContactRound,
   Copy,
   Download,
-  Github,
-  Linkedin,
   Loader2,
   Mail,
   Phone,
 } from "lucide-react";
+import { Github, Linkedin } from "@/components/ui/brand-icons";
 import { SectionHeading } from "@/components/fx/section-heading";
 import { Reveal } from "@/components/fx/reveal";
 import { Panel } from "@/components/ui/panel";

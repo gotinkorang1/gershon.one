@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowUpRight, Clock, Github } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Clock } from "lucide-react";
+import { Github } from "@/components/ui/brand-icons";
 import { caseStudies, getCaseStudy } from "@/lib/case-studies";
 import { Badge } from "@/components/ui/badge";
 import { Panel } from "@/components/ui/panel";

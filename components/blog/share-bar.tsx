@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Check, Link2, Linkedin } from "lucide-react";
+import { Check, Link2 } from "lucide-react";
+import { Linkedin } from "@/components/ui/brand-icons";
 
 /**
  * Share controls for a post: X and LinkedIn intents, plus copy-to-clipboard.

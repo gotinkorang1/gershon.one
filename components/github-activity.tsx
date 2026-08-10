@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowUpRight, Github } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import { Github } from "@/components/ui/brand-icons";
 import { Panel } from "@/components/ui/panel";
 import { Tooltip } from "@/components/ui/tooltip";
 import { site } from "@/lib/site";

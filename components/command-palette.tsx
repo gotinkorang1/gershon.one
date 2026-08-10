@@ -7,14 +7,13 @@ import {
   ContactRound,
   Copy,
   FileText,
-  Github,
-  Linkedin,
   Mail,
   Moon,
   Search,
   Sun,
   Text,
 } from "lucide-react";
+import { Github, Linkedin } from "@/components/ui/brand-icons";
 import { useTheme } from "next-themes";
 import { navLinks, site } from "@/lib/site";
 import { searchDocs, type SearchDoc } from "@/lib/search-index";
