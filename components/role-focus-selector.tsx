@@ -5,6 +5,7 @@ import { useI18n } from "@/components/locale-provider";
 import { useRoleFocus } from "@/components/role-focus-provider";
 import { getRoleFocusProfiles } from "@/lib/localised-content";
 import { cn } from "@/lib/utils";
+import { captureAnalyticsEvent } from "@/lib/analytics";
 
 export function RoleFocusSelector() {
   const { t, locale } = useI18n();
@@ -28,6 +29,7 @@ export function RoleFocusSelector() {
           href={prefix || "/"}
           scroll={false}
           aria-current={focus === null ? "page" : undefined}
+          onClick={() => captureAnalyticsEvent("role_focus_selected", { role_focus: "overview" })}
           className={cn(
             "tap shrink-0 rounded-[0.2rem_0.55rem_0.2rem_0.55rem] border px-3 py-2 text-xs font-medium transition-colors",
             focus === null
@@ -46,6 +48,9 @@ export function RoleFocusSelector() {
               href={`${prefix}/for/${profile.id}`}
               scroll={false}
               aria-current={active ? "page" : undefined}
+              onClick={() =>
+                captureAnalyticsEvent("role_focus_selected", { role_focus: profile.id })
+              }
               className={cn(
                 "tap shrink-0 rounded-[0.2rem_0.55rem_0.2rem_0.55rem] border px-3 py-2 text-xs font-medium transition-colors",
                 active

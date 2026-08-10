@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Check, Link2, Linkedin } from "lucide-react";
+import { captureAnalyticsEvent } from "@/lib/analytics";
 
 /**
  * Share controls for a post: X and LinkedIn intents, plus copy-to-clipboard.
@@ -16,6 +17,7 @@ export function ShareBar({ url, title }: { url: string; title: string }) {
   async function copy() {
     try {
       await navigator.clipboard.writeText(url);
+      captureAnalyticsEvent("blog_post_shared", { method: "copy_link" });
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
@@ -29,7 +31,16 @@ export function ShareBar({ url, title }: { url: string; title: string }) {
   return (
     <div className="flex items-center gap-2">
       <span className="label mr-1">Share</span>
-      <a href={xHref} target="_blank" rel="noreferrer noopener" aria-label="Share on X" className={btn}>
+      <a
+        href={xHref}
+        target="_blank"
+        rel="noreferrer noopener"
+        aria-label="Share on X"
+        onClick={() =>
+          captureAnalyticsEvent("blog_post_shared", { method: "x" }, { immediate: true })
+        }
+        className={btn}
+      >
         <svg viewBox="0 0 24 24" className="size-4" fill="currentColor" aria-hidden="true">
           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
         </svg>
@@ -39,6 +50,9 @@ export function ShareBar({ url, title }: { url: string; title: string }) {
         target="_blank"
         rel="noreferrer noopener"
         aria-label="Share on LinkedIn"
+        onClick={() =>
+          captureAnalyticsEvent("blog_post_shared", { method: "linkedin" }, { immediate: true })
+        }
         className={btn}
       >
         <Linkedin className="size-4" />

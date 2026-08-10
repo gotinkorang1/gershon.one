@@ -13,6 +13,7 @@ import { useI18n } from "@/components/locale-provider";
 import { getExperience } from "@/lib/localised-content";
 import { useRoleFocus } from "@/components/role-focus-provider";
 import { getRoleFocus, isTopMatch, prioritizeByKeys } from "@/lib/role-focus";
+import { captureAnalyticsEvent } from "@/lib/analytics";
 
 function span(job: Job, present: string) {
   const from = job.start.slice(0, 4);
@@ -31,7 +32,7 @@ function Entry({
   index: number;
   matched: boolean;
   open: boolean;
-  onToggle: () => void;
+  onToggle: (isOpening: boolean) => void;
 }) {
   const { t } = useI18n();
 
@@ -46,7 +47,7 @@ function Entry({
     >
       <button
         type="button"
-        onClick={onToggle}
+        onClick={() => onToggle(!open)}
         aria-expanded={open}
         className="flex w-full items-start gap-5 p-5 text-left sm:p-6"
       >
@@ -186,7 +187,12 @@ export function Experience() {
               index={i}
               matched={isTopMatch(job.company, focusProfile?.experience)}
               open={openCompany === job.company}
-              onToggle={() => setOpenCompany(openCompany === job.company ? null : job.company)}
+              onToggle={(isOpening) => {
+                if (isOpening) {
+                  captureAnalyticsEvent("experience_expanded", { experience_index: i + 1 });
+                }
+                setOpenCompany(isOpening ? job.company : null);
+              }}
             />
           </Reveal>
         ))}
