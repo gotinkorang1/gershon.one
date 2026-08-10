@@ -2,6 +2,7 @@
 
 import { useRef, useState, type ReactNode } from "react";
 import { Check, Copy } from "lucide-react";
+import { captureAnalyticsEvent } from "@/lib/analytics";
 
 /**
  * Wraps a rendered code block (with its syntax-highlighted children) and adds a
@@ -16,6 +17,7 @@ export function CodeBlock({ children }: { children: ReactNode }) {
     const text = ref.current?.innerText ?? "";
     try {
       await navigator.clipboard.writeText(text);
+      captureAnalyticsEvent("code_block_copied", { source: "blog_code_block" });
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {

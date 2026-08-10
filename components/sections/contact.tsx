@@ -162,7 +162,19 @@ export function Contact() {
               { href: site.socials.linkedin, label: "LinkedIn", Icon: Linkedin },
               { href: site.socials.github, label: "GitHub", Icon: Github },
             ].map(({ href, label, Icon }) => (
-              <a key={label} href={href} target="_blank" rel="noreferrer noopener">
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noreferrer noopener"
+                onClick={() =>
+                  captureAnalyticsEvent(
+                    "social_profile_opened",
+                    { profile: label.toLowerCase(), source: "contact_section" },
+                    { immediate: true },
+                  )
+                }
+              >
                 <Panel interactive reactive className="trace-panel flex h-full items-center gap-3 p-5">
                   <Icon aria-hidden className="size-4 text-faint" />
                   <span className="text-sm font-medium">{label}</span>

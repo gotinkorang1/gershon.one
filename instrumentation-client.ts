@@ -8,26 +8,28 @@ declare global {
 }
 
 const projectKey = process.env.NEXT_PUBLIC_POSTHOG_KEY;
+const host = process.env.NEXT_PUBLIC_POSTHOG_HOST;
 
-if (projectKey) {
+if (!projectKey || !host) {
+  if (process.env.NODE_ENV === "development") {
+    const missingVariable = projectKey
+      ? "NEXT_PUBLIC_POSTHOG_HOST"
+      : "NEXT_PUBLIC_POSTHOG_KEY";
+    throw new Error(
+      `${missingVariable} variable required by PostHog is missing or un-configured, this causes events to be silently missed. This error stops appearing once ${missingVariable} is configured`,
+    );
+  }
+} else {
   // The instrumentation entry and React app are separate Turbopack entries.
   // Share the initialized client explicitly so every event helper uses this
   // instance rather than an uninitialized duplicate of the SDK module.
   window.posthog = posthog;
   posthog.init(projectKey, {
-    api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com",
+    api_host: host,
     defaults: "2026-05-30",
+    // Pageviews are captured by the existing route-aware analytics component.
     capture_pageview: false,
-    capture_pageleave: true,
-    request_batching: false,
-    autocapture: false,
-    disable_session_recording: true,
-    disable_surveys: true,
-    disable_product_tours: true,
-    disable_conversations: true,
-    disable_external_dependency_loading: true,
-    advanced_disable_flags: true,
-    person_profiles: "identified_only",
+    capture_exceptions: true,
     loaded: () => queueMicrotask(flushAnalyticsEvents),
   });
 }
