@@ -146,13 +146,13 @@ export default async function CaseStudyPage({
       {study.outcomes.length > 0 && (
         <dl className="mt-10 grid max-w-3xl gap-3 sm:grid-cols-3">
           {study.outcomes.map((o) => (
-            <Panel key={o.label} className="p-5">
-              <dd className="text-xl font-semibold tracking-tight">
-                <Counter value={o.value} animate />
-              </dd>
-              <dt className="mt-1.5 text-xs leading-snug text-muted-foreground">
+            <Panel key={o.label} className="flex flex-col p-5">
+              <dt className="order-2 mt-1.5 text-xs leading-snug text-muted-foreground">
                 {o.label}
               </dt>
+              <dd className="order-1 text-xl font-semibold tracking-tight">
+                <Counter value={o.value} animate />
+              </dd>
             </Panel>
           ))}
         </dl>

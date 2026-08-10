@@ -120,7 +120,7 @@ export default function BriefPage() {
                 >
                   {item.value}
                 </dd>
-                <p className="mt-1.5 text-xs text-muted-foreground">{item.note}</p>
+                <dd className="mt-1.5 text-xs text-muted-foreground">{item.note}</dd>
               </Panel>
             );
           })}
