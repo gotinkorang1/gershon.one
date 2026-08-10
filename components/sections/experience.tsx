@@ -13,6 +13,7 @@ import { useI18n } from "@/components/locale-provider";
 import { getExperience } from "@/lib/localised-content";
 import { useRoleFocus } from "@/components/role-focus-provider";
 import { getRoleFocus, isTopMatch, prioritizeByKeys } from "@/lib/role-focus";
+import { captureAnalyticsEvent } from "@/lib/analytics";
 
 function span(job: Job, present: string) {
   const from = job.start.slice(0, 4);
@@ -46,7 +47,15 @@ function Entry({
     >
       <button
         type="button"
-        onClick={onToggle}
+        onClick={() => {
+          if (!open) {
+            captureAnalyticsEvent("experience_entry_expanded", {
+              company: job.company,
+              source: "experience_section",
+            });
+          }
+          onToggle();
+        }}
         aria-expanded={open}
         className="flex w-full items-start gap-5 p-5 text-left sm:p-6"
       >
