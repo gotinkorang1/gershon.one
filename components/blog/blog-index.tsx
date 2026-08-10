@@ -3,12 +3,13 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { ArrowUpRight, Clock, Search, X } from "lucide-react";
 import { Panel } from "@/components/ui/panel";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import type { PostCard } from "@/lib/blog";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-GB", {

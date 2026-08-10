@@ -12,7 +12,11 @@ export function SiteFooter() {
   const pathname = usePathname();
   const prefix = locale === "fr" ? "/fr" : "";
   // From a sub-route a bare hash targets a section that is not on the page.
-  const onHome = pathname === "/" || pathname === "/fr";
+  const onHome =
+    pathname === "/" ||
+    pathname === "/fr" ||
+    pathname.startsWith("/for/") ||
+    pathname.startsWith("/fr/for/");
   const sectionHref = (hash: string) => (onHome ? hash : `${prefix || "/"}${hash}`);
 
   return (

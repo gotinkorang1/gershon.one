@@ -1,7 +1,8 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 /**
  * Masked line reveal — each line slides up from behind its own clip box, which
@@ -11,17 +12,19 @@ export function TextReveal({
   lines,
   className,
   delay = 0,
+  animate = true,
 }: {
   lines: string[];
   className?: string;
   delay?: number;
+  animate?: boolean;
 }) {
   const reduced = useReducedMotion();
   const accessibleText = lines.join(" ");
 
   // A full line-height slide per line is the clearest possible case for
   // honouring this preference.
-  if (reduced) {
+  if (reduced || !animate) {
     return (
       <span className={cn("block", className)}>
         <span className="sr-only">{accessibleText}</span>

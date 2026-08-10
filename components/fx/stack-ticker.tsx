@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment } from "react";
-import { useReducedMotion } from "motion/react";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 /**
  * A quiet, seamless marquee of tool names for the hero.

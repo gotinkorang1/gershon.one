@@ -1,4 +1,14 @@
-import { experience, skillGroups, credentials, facts, type Job, type SkillGroup, type Credential } from "@/lib/site";
+import {
+  experience,
+  skillGroups,
+  credentials,
+  facts,
+  roleFocusProfiles,
+  type Job,
+  type SkillGroup,
+  type Credential,
+  type RoleFocusProfile,
+} from "@/lib/site";
 import {
   experienceFr,
   skillGroupsFr,
@@ -6,6 +16,7 @@ import {
   factsFr,
   issuersFr,
   termsFr,
+  roleFocusFr,
 } from "@/lib/content.fr";
 import type { Locale } from "@/lib/i18n";
 import { caseStudies, type CaseStudy } from "@/lib/case-studies";
@@ -96,4 +107,13 @@ export function getCaseStudies(locale: Locale): CaseStudy[] {
 
 export function getCaseStudy(locale: Locale, slug: string): CaseStudy | undefined {
   return getCaseStudies(locale).find((c) => c.slug === slug);
+}
+
+export function getRoleFocusProfiles(locale: Locale): RoleFocusProfile[] {
+  if (locale === "en") return [...roleFocusProfiles];
+
+  return roleFocusProfiles.map((profile) => ({
+    ...profile,
+    ...roleFocusFr[profile.id],
+  }));
 }

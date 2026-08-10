@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import {
   ArrowRight,
+  ContactRound,
   Copy,
   FileText,
   Github,
@@ -21,6 +22,7 @@ import { cn } from "@/lib/utils";
 import { useI18n } from "@/components/locale-provider";
 import { resumeUrlFor } from "@/lib/i18n";
 import { Portal } from "@/components/ui/portal";
+import { captureAnalyticsEvent } from "@/lib/analytics";
 
 type Item = {
   id: string;
@@ -109,6 +111,25 @@ export function CommandPalette() {
           a.href = resumeUrlFor(locale);
           a.download = "";
           a.click();
+          close();
+        },
+      },
+      {
+        id: "save-contact",
+        label: site.contactCard.labels[locale].save,
+        group: "Actions",
+        keywords: `${site.name} vCard phone email`,
+        icon: <ContactRound className="size-4" />,
+        run: () => {
+          captureAnalyticsEvent(
+            "contact card downloaded",
+            { source: "command_palette" },
+            { immediate: true },
+          );
+          const anchor = document.createElement("a");
+          anchor.href = site.contactCard.url;
+          anchor.download = site.contactCard.fileName;
+          anchor.click();
           close();
         },
       },

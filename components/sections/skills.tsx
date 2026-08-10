@@ -6,6 +6,7 @@ import { Reveal } from "@/components/fx/reveal";
 import { Panel } from "@/components/ui/panel";
 import dynamic from "next/dynamic";
 import { GitHubActivity } from "@/components/github-activity";
+import { Badge } from "@/components/ui/badge";
 
 // The terminal and the topology are the two heaviest client components on the
 // page and sit well below the fold. Loading them on demand keeps their JS out
@@ -24,6 +25,9 @@ const NetworkTopology = dynamic(
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/components/locale-provider";
 import { getSkillGroups } from "@/lib/localised-content";
+import { skillGroups as sourceSkillGroups } from "@/lib/site";
+import { useRoleFocus } from "@/components/role-focus-provider";
+import { getRoleFocus, isTopMatch, prioritizeByKeys } from "@/lib/role-focus";
 
 // One icon per capability group, in the same order as `skillGroups` in
 // lib/site.ts: IT support, Retail & field, Networking, Security, Servers,
@@ -51,9 +55,15 @@ const spanFor = (index: number) => SPAN_PATTERN[index % SPAN_PATTERN.length];
 export function Skills() {
   const { t, locale } = useI18n();
   const skillGroups = getSkillGroups(locale);
+  const focusProfile = getRoleFocus(useRoleFocus());
+  const orderedGroups = prioritizeByKeys(
+    skillGroups.map((group, sourceIndex) => ({ group, sourceIndex })),
+    focusProfile?.skillGroups,
+    ({ sourceIndex }) => sourceSkillGroups[sourceIndex]?.title ?? "",
+  );
 
   return (
-    <section id="capabilities" className="shell scroll-mt-24 py-14 md:py-16">
+    <section id="capabilities" className="section-band shell scroll-mt-24 py-14 md:py-16">
       <SectionHeading
         index={t.ui.eyebrowCapabilities}
         title={t.sections.capabilitiesTitle}
@@ -61,11 +71,22 @@ export function Skills() {
       />
 
       <div className="mt-10 grid gap-3 lg:grid-cols-12">
-        {skillGroups.map((group, i) => {
-          const Icon = ICONS[i] ?? Network;
+        {orderedGroups.map(({ group, sourceIndex }, i) => {
+          const Icon = ICONS[sourceIndex] ?? Network;
+          const sourceTitle = sourceSkillGroups[sourceIndex]?.title ?? group.title;
+          const matched = isTopMatch(sourceTitle, focusProfile?.skillGroups);
           return (
             <Reveal key={group.title} delay={0.04 * i} className={cn(spanFor(i))}>
-              <Panel interactive reactive className="group h-full p-5">
+              <Panel
+                reactive
+                className={cn("trace-panel group h-full p-5", matched && "focus-match")}
+              >
+                <div className="mb-4 flex items-center justify-between gap-3">
+                  <span aria-hidden className="trace-id">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  {matched && <Badge variant="accent">{t.ui.focusMatch}</Badge>}
+                </div>
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <h3 className="text-lg font-semibold tracking-tight">{group.title}</h3>
@@ -82,7 +103,7 @@ export function Skills() {
                   {group.skills.map((skill) => (
                     <li
                       key={skill}
-                      className="rounded-md border border-border bg-surface-2 px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:border-accent/40 hover:text-foreground"
+                      className="skill-chip rounded-[0.2rem_0.5rem_0.2rem_0.5rem] border border-border bg-surface-2 px-2.5 py-1 text-[0.6875rem] text-muted-foreground transition-colors hover:border-accent/40 hover:text-foreground"
                     >
                       {skill}
                     </li>
@@ -97,7 +118,7 @@ export function Skills() {
       {/* The topology evidences the network administration group above it —
           a worked example rather than a decorative header graphic. */}
       <Reveal delay={0.05}>
-        <Panel className="mt-3 p-5 sm:p-7">
+        <Panel className="trace-panel mt-3 p-5 sm:p-7">
           <p className="label">{t.hero.topologyMode}</p>
           <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
             {t.ui.topologyCaption}

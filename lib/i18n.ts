@@ -64,7 +64,14 @@ type Dictionary = {
     sections: string;
     mainNav: string;
     mobileNav: string;
+    openMenu: string;
+    closeMenu: string;
     footerNav: string;
+    portfolioFocus: string;
+    focusPrompt: string;
+    focusHint: string;
+    focusOverview: string;
+    focusMatch: string;
     candidateBrief: string;
     terminalInput: string;
     topologyLabel: string;
@@ -257,7 +264,14 @@ const en: Dictionary = {
     sections: "Sections",
     mainNav: "Main",
     mobileNav: "Mobile menu",
+    openMenu: "Open menu",
+    closeMenu: "Close menu",
     footerNav: "Footer",
+    portfolioFocus: "Role-focused portfolio views",
+    focusPrompt: "View for a target role",
+    focusHint: "Relevant evidence moves first. Nothing is hidden.",
+    focusOverview: "Overview",
+    focusMatch: "Best match",
     candidateBrief: "Candidate brief",
     terminalInput: "Terminal input",
     topologyLabel: "Aggregated multi-WAN network topology",
@@ -459,9 +473,16 @@ const fr: Dictionary = {
     close: "Fermer",
     keyboardShortcuts: "Raccourcis clavier",
     sections: "Sections",
-    mainNav: "Main",
-    mobileNav: "Mobile menu",
-    footerNav: "Footer",
+    mainNav: "Navigation principale",
+    mobileNav: "Menu mobile",
+    openMenu: "Ouvrir le menu",
+    closeMenu: "Fermer le menu",
+    footerNav: "Pied de page",
+    portfolioFocus: "Vues du portfolio par métier",
+    focusPrompt: "Voir pour un poste cible",
+    focusHint: "Les éléments les plus pertinents passent en premier. Rien n'est masqué.",
+    focusOverview: "Vue d'ensemble",
+    focusMatch: "Meilleure correspondance",
     candidateBrief: "Fiche candidat",
     terminalInput: "Saisie du terminal",
     topologyLabel: "Topologie réseau multi-WAN agrégée",

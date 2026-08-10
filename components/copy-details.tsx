@@ -3,42 +3,50 @@
 import { useState } from "react";
 import { Check, ClipboardCopy } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { site } from "@/lib/site";
-import { brief } from "@/lib/brief";
+import { captureAnalyticsEvent } from "@/lib/analytics";
+import { cn } from "@/lib/utils";
 
 /**
  * Screeners paste candidate details into an ATS by hand. This hands them the
  * whole block in one click, in the order those forms usually ask for it.
  */
-export function CopyDetails() {
-  const [copied, setCopied] = useState(false);
+type CopyDetailsProps = {
+  className?: string;
+  content: string;
+  labels: {
+    idle: string;
+    copied: string;
+    error: string;
+  };
+};
 
-  const block = [
-    site.name,
-    site.role,
-    "",
-    `Email: ${site.email}`,
-    `Phone: ${site.phone}`,
-    `LinkedIn: ${site.socials.linkedin}`,
-    `Portfolio: ${site.url}`,
-    "",
-    ...brief.eligibility.map((e) => `${e.label}: ${e.value}`),
-    `Compensation: ${brief.compensation.value}`,
-    "",
-    "Summary:",
-    brief.pitch,
-  ].join("\n");
+export function CopyDetails({ className, content, labels }: CopyDetailsProps) {
+  const [status, setStatus] = useState<"idle" | "copied" | "error">("idle");
 
   async function copy() {
-    await navigator.clipboard.writeText(block);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2200);
+    try {
+      await navigator.clipboard.writeText(content);
+      captureAnalyticsEvent("candidate details copied", { source: "candidate_brief" });
+      setStatus("copied");
+    } catch {
+      setStatus("error");
+    }
+    setTimeout(() => setStatus("idle"), 2200);
   }
 
   return (
-    <Button variant="outline" onClick={copy} aria-live="polite">
-      {copied ? <Check className="text-live" /> : <ClipboardCopy />}
-      {copied ? "Copied" : "Copy all details"}
+    <Button
+      variant="outline"
+      onClick={copy}
+      aria-live="polite"
+      className={cn("min-h-11 w-full sm:w-auto", className)}
+    >
+      {status === "copied" ? <Check className="text-live" /> : <ClipboardCopy />}
+      {status === "copied"
+        ? labels.copied
+        : status === "error"
+          ? labels.error
+          : labels.idle}
     </Button>
   );
 }

@@ -1,8 +1,9 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 /**
  * Clip-path wipe on entry, with a slow counter-scale so the image settles
@@ -13,14 +14,16 @@ export function ImageReveal({
   children,
   className,
   delay = 0,
+  animate = true,
 }: {
   children: ReactNode;
   className?: string;
   delay?: number;
+  animate?: boolean;
 }) {
   const reduced = useReducedMotion();
 
-  if (reduced) return <div className={className}>{children}</div>;
+  if (reduced || !animate) return <div className={className}>{children}</div>;
 
   return (
     <motion.div

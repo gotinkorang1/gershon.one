@@ -1,7 +1,8 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import type { ReactNode } from "react";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 /**
  * A short, low-travel fade. Editorial layouts fall apart when elements slide

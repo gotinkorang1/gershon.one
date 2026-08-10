@@ -18,7 +18,11 @@ export function SiteNav() {
   const home = locale === "fr" ? "/fr" : "/";
   // On a sub-route a bare "#experience" targets a section that does not exist
   // there, so the link silently does nothing. Prefix with the home path.
-  const onHome = pathname === "/" || pathname === "/fr";
+  const onHome =
+    pathname === "/" ||
+    pathname === "/fr" ||
+    pathname.startsWith("/for/") ||
+    pathname.startsWith("/fr/for/");
   const sectionHref = (hash: string) => (onHome ? hash : `${home}${hash}`);
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("");
@@ -52,8 +56,22 @@ export function SiteNav() {
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
+    const pageRegions = document.querySelectorAll<HTMLElement>("main, footer");
+    pageRegions.forEach((region) => {
+      region.toggleAttribute("inert", open);
+    });
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    if (open) document.addEventListener("keydown", onKeyDown);
+
     return () => {
       document.body.style.overflow = "";
+      pageRegions.forEach((region) => {
+        region.removeAttribute("inert");
+      });
+      document.removeEventListener("keydown", onKeyDown);
     };
   }, [open]);
 
@@ -80,15 +98,16 @@ export function SiteNav() {
         <div className="shell">
           <nav
             aria-label={t.ui.mainNav}
+            data-scrolled={scrolled}
             className={cn(
-              "flex h-14 items-center justify-between gap-4 rounded-xl px-3 transition-all duration-300 sm:px-4",
+              "site-nav-shell flex h-14 items-center justify-between gap-4 px-3 transition-all duration-300 sm:px-4",
               scrolled
                 ? "border border-border bg-surface-1/80 shadow-[var(--shadow-md)] backdrop-blur-xl"
                 : "border border-transparent",
             )}
           >
-            <Link href="/" className="flex items-center gap-2.5">
-              <span className="grid size-7 place-items-center rounded-md bg-foreground text-[0.625rem] font-bold text-surface-0">
+            <Link href={home} className="flex items-center gap-2.5">
+              <span className="identity-mark grid size-7 place-items-center bg-foreground text-[0.625rem] font-bold text-surface-0">
                 {site.initials}
               </span>
               <span className="hidden text-sm font-medium tracking-tight sm:inline">
@@ -156,8 +175,9 @@ export function SiteNav() {
               <button
                 type="button"
                 onClick={() => setOpen((v) => !v)}
-                aria-label={open ? "Close menu" : "Open menu"}
+                aria-label={open ? t.ui.closeMenu : t.ui.openMenu}
                 aria-expanded={open}
+                aria-controls="mobile-navigation"
                 className="tap relative grid size-9 place-items-center rounded-lg border border-border lg:hidden"
               >
                 <span
@@ -184,7 +204,11 @@ export function SiteNav() {
           open ? "visible opacity-100" : "invisible opacity-0",
         )}
       >
-        <nav aria-label={t.ui.mobileNav} className="shell flex h-full flex-col justify-center gap-2">
+        <nav
+          id="mobile-navigation"
+          aria-label={t.ui.mobileNav}
+          className="shell flex h-full flex-col justify-center gap-2"
+        >
           {navLinks.map((link) => (
             <Link
               key={link.href}

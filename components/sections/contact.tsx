@@ -1,7 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowUpRight, Check, Copy, Github, Linkedin, Loader2, Mail, Phone } from "lucide-react";
+import {
+  ArrowUpRight,
+  Check,
+  ContactRound,
+  Copy,
+  Download,
+  Github,
+  Linkedin,
+  Loader2,
+  Mail,
+  Phone,
+} from "lucide-react";
 import { SectionHeading } from "@/components/fx/section-heading";
 import { Reveal } from "@/components/fx/reveal";
 import { Panel } from "@/components/ui/panel";
@@ -12,6 +23,8 @@ import { cn } from "@/lib/utils";
 import { useI18n } from "@/components/locale-provider";
 import { Stagger, StaggerItem } from "@/components/fx/stagger";
 import { Turnstile } from "@/components/turnstile";
+import { captureAnalyticsEvent } from "@/lib/analytics";
+import { AnalyticsLink } from "@/components/analytics-link";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
@@ -19,7 +32,7 @@ const inputClass =
   "w-full rounded-lg border border-border bg-surface-inset px-3.5 py-2.5 text-sm outline-none transition-colors placeholder:text-faint focus:border-accent/60 focus:bg-surface-1";
 
 export function Contact() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
   // Bumped after every attempt so the single-use Turnstile token is refreshed.
@@ -28,6 +41,7 @@ export function Contact() {
 
   async function copyEmail() {
     await navigator.clipboard.writeText(site.email);
+    captureAnalyticsEvent("contact copied", { channel: "email" });
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }
@@ -48,6 +62,7 @@ export function Contact() {
       });
       const data = (await res.json()) as { ok?: boolean; error?: string };
       if (!res.ok || !data.ok) throw new Error(data.error ?? t.ui.somethingWentWrong);
+      captureAnalyticsEvent("contact form sent", { form: "portfolio_contact" });
       setStatus("sent");
       formEl.reset();
       // Deliberately no nonce bump here. Resetting the widget starts a fresh
@@ -64,7 +79,7 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="shell scroll-mt-24 py-14 md:py-16">
+    <section id="contact" className="section-band shell scroll-mt-24 py-14 md:py-16">
       <SectionHeading
         index={t.ui.eyebrowContact}
         title={t.sections.contactTitle}
@@ -75,9 +90,9 @@ export function Contact() {
         {/* ------------------------------------------------------- direct */}
         <Stagger className="grid gap-3 lg:col-span-5">
           <StaggerItem>
-          <Panel interactive reactive className="p-5">
+          <Panel reactive className="trace-panel p-5">
             <p className="label flex items-center gap-2">
-              <Mail className="size-3" /> {t.contact.email}
+              <Mail aria-hidden className="size-3" /> {t.contact.email}
             </p>
             <div className="mt-3 flex items-center justify-between gap-3">
               <a href={`mailto:${site.email}`} className="link truncate text-base font-medium">
@@ -89,7 +104,11 @@ export function Contact() {
                 aria-label={t.ui.copyEmail}
                 className="tap grid size-8 shrink-0 place-items-center rounded-md border border-border text-faint transition-colors hover:border-border-strong hover:text-foreground"
               >
-                {copied ? <Check className="size-3.5 text-live" /> : <Copy className="size-3.5" />}
+                {copied ? (
+                  <Check aria-hidden className="size-3.5 text-live" />
+                ) : (
+                  <Copy aria-hidden className="size-3.5" />
+                )}
               </button>
             </div>
           </Panel>
@@ -97,9 +116,9 @@ export function Contact() {
           </StaggerItem>
 
           <StaggerItem>
-          <Panel interactive reactive className="p-5">
+          <Panel reactive className="trace-panel p-5">
             <p className="label flex items-center gap-2">
-              <Phone className="size-3" /> {t.contact.phone}
+              <Phone aria-hidden className="size-3" /> {t.contact.phone}
             </p>
             <a
               href={`tel:${site.phoneHref}`}
@@ -111,16 +130,43 @@ export function Contact() {
 
           </StaggerItem>
 
+          <StaggerItem>
+            <AnalyticsLink
+              href={site.contactCard.url}
+              download={site.contactCard.fileName}
+              analyticsEvent="contact card downloaded"
+              analyticsProperties={{ source: "contact_section" }}
+              className="block"
+            >
+              <Panel
+                interactive
+                reactive
+                className="trace-panel flex min-h-16 items-center gap-3 p-5"
+              >
+                <ContactRound aria-hidden className="size-4 text-faint" />
+                <span className="min-w-0 flex-1">
+                  <span className="block text-sm font-medium">
+                    {site.contactCard.labels[locale].save}
+                  </span>
+                  <span className="mt-0.5 block text-xs text-muted-foreground">
+                    {site.contactCard.labels[locale].description}
+                  </span>
+                </span>
+                <Download aria-hidden className="size-3.5 shrink-0 text-faint" />
+              </Panel>
+            </AnalyticsLink>
+          </StaggerItem>
+
           <StaggerItem className="grid grid-cols-2 gap-3">
             {[
               { href: site.socials.linkedin, label: "LinkedIn", Icon: Linkedin },
               { href: site.socials.github, label: "GitHub", Icon: Github },
             ].map(({ href, label, Icon }) => (
               <a key={label} href={href} target="_blank" rel="noreferrer noopener">
-                <Panel interactive reactive className="flex h-full items-center gap-3 p-5">
-                  <Icon className="size-4 text-faint" />
+                <Panel interactive reactive className="trace-panel flex h-full items-center gap-3 p-5">
+                  <Icon aria-hidden className="size-4 text-faint" />
                   <span className="text-sm font-medium">{label}</span>
-                  <ArrowUpRight className="ml-auto size-3.5 text-faint" />
+                  <ArrowUpRight aria-hidden className="ml-auto size-3.5 text-faint" />
                 </Panel>
               </a>
             ))}
@@ -147,7 +193,7 @@ export function Contact() {
 
         {/* --------------------------------------------------------- form */}
         <Reveal className="lg:col-span-7">
-          <Panel className="h-full p-5 sm:p-7">
+          <Panel className="trace-panel h-full p-5 sm:p-7">
             <form onSubmit={onSubmit} className="grid gap-4">
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
@@ -226,19 +272,22 @@ export function Contact() {
                   variant="accent"
                   size="lg"
                   disabled={status === "sending" || status === "sent"}
+                  aria-busy={status === "sending"}
                 >
-                  {status === "sending" && <Loader2 className="animate-spin" />}
-                  {status === "sent" && <Check />}
+                  {status === "sending" && <Loader2 aria-hidden className="animate-spin" />}
+                  {status === "sent" && <Check aria-hidden />}
                   {status === "sending"
                     ? t.contact.sending
                     : status === "sent"
                       ? t.contact.sent
                       : t.contact.send}
-                  {status === "idle" && <ArrowUpRight />}
+                  {status === "idle" && <ArrowUpRight aria-hidden />}
                 </Button>
 
                 {status === "sent" && (
-                  <p className="text-sm text-live">{t.contact.reply}</p>
+                  <p className="text-sm text-live" role="status">
+                    {t.contact.reply}
+                  </p>
                 )}
                 {status === "error" && (
                   <p className="text-sm text-warn" role="alert">

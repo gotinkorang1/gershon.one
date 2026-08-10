@@ -28,6 +28,11 @@ Open http://localhost:3000.
 | `npm start` | Serve the production build |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | TypeScript, no emit |
+| `npm run test:e2e` | Responsive Playwright smoke tests |
+
+The responsive suite runs the critical portfolio journeys at 320px, 768px and
+1440px. Local runs use the installed stable Chrome browser; CI installs a
+pinned Chromium build and tests the completed production build.
 
 ---
 
@@ -113,7 +118,21 @@ validated and logged server-side, and the form still reports success. Add the
 key plus `CONTACT_TO_EMAIL` and `CONTACT_FROM_EMAIL` to deliver for real.
 
 **PostHog** — set `NEXT_PUBLIC_POSTHOG_KEY` and the script loads lazily. Absent,
-`components/analytics.tsx` is a no-op and ships no third-party JS.
+`components/analytics.tsx` is a no-op and ships no third-party JS. Tracking is
+anonymous and deliberately limited to custom events; DOM autocapture and
+session recording are disabled. The useful conversion events are:
+
+- `role view opened`
+- `case study opened`
+- `cv viewed` / `cv downloaded`
+- `contact clicked` / `contact copied` / `contact form sent`
+- `booking opened`
+- `blog post opened` / `blog post completed`
+- `language changed`
+
+In PostHog, create a funnel using `role view opened` → `case study opened` →
+`cv downloaded` → either `contact clicked` or `contact form sent`. Break down
+the first step by `role_focus` to see which targeted portfolio view converts.
 
 **Supabase** — variables reserved for future features (guestbook, view counts).
 Nothing reads them yet.

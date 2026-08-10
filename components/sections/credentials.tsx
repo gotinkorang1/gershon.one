@@ -8,7 +8,10 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/components/locale-provider";
 import { getCredentials } from "@/lib/localised-content";
+import { credentials as sourceCredentials } from "@/lib/site";
 import { Stagger, StaggerItem } from "@/components/fx/stagger";
+import { useRoleFocus } from "@/components/role-focus-provider";
+import { getRoleFocus, isTopMatch } from "@/lib/role-focus";
 
 function monthYear(iso: string, locale: string) {
   return new Date(iso).toLocaleDateString(locale === "fr" ? "fr-CA" : "en-GB", {
@@ -20,13 +23,17 @@ function monthYear(iso: string, locale: string) {
 export function Credentials() {
   const { t, locale } = useI18n();
   const credentials = getCredentials(locale);
+  const focusProfile = getRoleFocus(useRoleFocus());
   // Oldest first: the point of a timeline is the direction of travel.
-  const ordered = [...credentials].sort(
-    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-  );
+  const ordered = credentials
+    .map((credential, sourceIndex) => ({ credential, sourceIndex }))
+    .sort(
+      (a, b) =>
+        new Date(a.credential.date).getTime() - new Date(b.credential.date).getTime(),
+    );
 
   return (
-    <section id="credentials" className="shell scroll-mt-24 py-14 md:py-16">
+    <section id="credentials" className="section-band shell scroll-mt-24 py-14 md:py-16">
       <SectionHeading
         index={t.ui.eyebrowCredentials}
         title={t.sections.credentialsTitle}
@@ -46,9 +53,11 @@ export function Credentials() {
           }}
         />
 
-        {ordered.map((c) => {
+        {ordered.map(({ credential: c, sourceIndex }) => {
           const Icon = c.kind === "degree" ? GraduationCap : Award;
           const expired = c.expires ? new Date(c.expires) < new Date() : false;
+          const sourceTitle = sourceCredentials[sourceIndex]?.title ?? c.title;
+          const matched = isTopMatch(sourceTitle, focusProfile?.credentials);
 
           return (
             <StaggerItem key={`${c.title}-${c.date}`} as="li" className="relative flex gap-4 pb-3 sm:gap-5">
@@ -62,6 +71,7 @@ export function Credentials() {
                   )}
                 >
                   <Icon
+                    aria-hidden
                     className={cn(
                       "size-3.5 sm:size-4",
                       c.upcoming ? "text-accent" : "text-muted-foreground",
@@ -69,10 +79,17 @@ export function Credentials() {
                   />
                 </span>
 
-                <Panel interactive reactive className="min-w-0 flex-1 p-4">
+                <Panel
+                  reactive
+                  className={cn(
+                    "trace-panel min-w-0 flex-1 p-4",
+                    matched && "focus-match",
+                  )}
+                >
                   <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
                     <span className="label">{monthYear(c.date, locale)}</span>
                     {c.upcoming && <Badge variant="accent">{t.common.upcoming}</Badge>}
+                    {matched && <Badge variant="accent">{t.ui.focusMatch}</Badge>}
                     {c.expires && (
                       <span className="label">
                         {expired ? t.common.expired : t.common.validTo} {monthYear(c.expires, locale)}
@@ -95,7 +112,7 @@ export function Credentials() {
                       rel="noreferrer noopener"
                       className="link mt-3 inline-flex items-center gap-1 text-xs font-medium text-accent"
                     >
-                      {t.common.verify} <ArrowUpRight className="size-3" />
+                      {t.common.verify} <ArrowUpRight aria-hidden className="size-3" />
                     </a>
                   )}
                 </Panel>

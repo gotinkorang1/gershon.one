@@ -12,6 +12,8 @@ yarn-error.log*
 .vercel
 next-env.d.ts
 *.tsbuildinfo
+playwright-report/
+test-results/
 
 # Personal documents — never commit
 docs/credentials/

@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -54,24 +55,27 @@ export function RoleRotator({
   }
 
   return (
-    <span
-      className={`relative inline-grid ${className ?? ""}`}
-      // The grid overlays each word in the same cell, so height is driven by the
-      // tallest single line and never collapses mid-swap.
-      aria-live="polite"
-    >
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.span
-          key={roles[index]}
-          initial={{ opacity: 0, y: "0.5em", filter: "blur(4px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          exit={{ opacity: 0, y: "-0.5em", filter: "blur(4px)" }}
-          transition={{ duration: 0.42, ease: EASE }}
-          className="col-start-1 row-start-1 text-accent"
-        >
-          {roles[index]}
-        </motion.span>
-      </AnimatePresence>
-    </span>
+    <>
+      <span
+        aria-hidden
+        className={`relative inline-grid ${className ?? ""}`}
+        // The grid overlays each word in the same cell, so height is driven by the
+        // tallest single line and never collapses mid-swap.
+      >
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.span
+            key={roles[index]}
+            initial={{ opacity: 0, y: "0.5em", filter: "blur(4px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: "-0.5em", filter: "blur(4px)" }}
+            transition={{ duration: 0.42, ease: EASE }}
+            className="col-start-1 row-start-1 text-accent"
+          >
+            {roles[index]}
+          </motion.span>
+        </AnimatePresence>
+      </span>
+      <span className="sr-only">{roles[0]}</span>
+    </>
   );
 }

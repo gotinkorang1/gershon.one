@@ -42,7 +42,9 @@
     0 12px 32px -12px oklch(0.19 0.012 265 / 0.14);
   --shadow-glow: 0 0 0 1px var(--accent), 0 6px 22px -6px oklch(0.50 0.13 224 / 0.50);
 
-  --grid: oklch(0.19 0.012 265 / 0.05);
+  --grid: oklch(0.19 0.012 265 / 0.03);
+  --trace: oklch(0.50 0.13 224 / 0.16);
+  --trace-strong: oklch(0.50 0.13 224 / 0.42);
   --panel-wash: oklch(1 0 0 / 0.7);
   --signal: oklch(0.555 0.16 45);
   --signal-quiet: oklch(0.555 0.16 45 / 0.10);
@@ -74,7 +76,9 @@
   --shadow-lg: 0 1px 2px oklch(0 0 0 / 0.40), 0 16px 40px -16px oklch(0 0 0 / 0.65);
   --shadow-glow: 0 0 0 1px var(--accent), 0 8px 30px -8px oklch(0.78 0.13 205 / 0.55);
 
-  --grid: oklch(1 0 0 / 0.05);
+  --grid: oklch(1 0 0 / 0.028);
+  --trace: oklch(0.78 0.13 205 / 0.14);
+  --trace-strong: oklch(0.78 0.13 205 / 0.42);
   --panel-wash: oklch(1 0 0 / 0.045);
   --signal: oklch(0.80 0.14 58);
   --signal-quiet: oklch(0.80 0.14 58 / 0.14);
@@ -150,6 +154,11 @@
 
   body {
     background-color: var(--surface-0);
+    background-image:
+      linear-gradient(90deg, transparent 0, transparent calc(100% - 1px), var(--grid) calc(100% - 1px)),
+      linear-gradient(180deg, transparent 0, transparent calc(100% - 1px), var(--grid) calc(100% - 1px));
+    background-size: 72px 72px;
+    background-position: center top;
     color: var(--foreground);
     font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
     font-synthesis-weight: none;
@@ -281,7 +290,7 @@
     linear-gradient(180deg, var(--panel-wash), transparent 42%),
     var(--surface-1);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: 0.3rem var(--radius) 0.3rem var(--radius);
   box-shadow: var(--shadow-md);
 }
 .panel::before {
@@ -321,7 +330,9 @@
 .panel-interactive:hover {
   transform: translateY(-3px);
   border-color: var(--border-strong);
-  box-shadow: var(--shadow-lg);
+  box-shadow:
+    inset 3px 0 0 var(--trace-strong),
+    var(--shadow-lg);
 }
 /* Presses back down toward the page on click — a small tactile confirmation
    that the whole card is the control. */
@@ -333,22 +344,6 @@
 /* A hairline of accent that wipes across the top edge on hover. Cheap —
    transform only — and it gives every card a moment of life without moving
    any layout. */
-.panel-interactive::after {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-  pointer-events: none;
-  z-index: 2;
-}
-.panel-interactive:hover::after {
-  transform: scaleX(1);
-}
-
 /* Arrow nudges on its parent's hover. */
 .nudge {
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
@@ -393,6 +388,221 @@
     linear-gradient(to right, var(--grid) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
   background-size: 48px 48px;
+}
+
+/* Network-field-journal language. Section framing and cards share the same
+   trace geometry so the page feels authored for an infrastructure specialist,
+   not assembled from unrelated dashboard components. */
+.section-band {
+  position: relative;
+  isolation: isolate;
+}
+.section-band::before {
+  content: "";
+  position: absolute;
+  inset: 1.25rem auto 1.25rem 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, var(--trace-strong) 12%, var(--border) 72%, transparent);
+  pointer-events: none;
+}
+.section-band::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 3.75rem;
+  width: 0.375rem;
+  height: 0.375rem;
+  border: 1px solid var(--accent);
+  background: var(--surface-0);
+  transform: translateX(-0.1875rem) rotate(45deg);
+  pointer-events: none;
+}
+
+.section-heading {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1rem;
+  align-items: end;
+}
+.section-index {
+  min-width: 3.75rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: clamp(2.6rem, 6vw, 5.25rem);
+  font-weight: 600;
+  line-height: 0.78;
+  letter-spacing: -0.08em;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--border-strong);
+  user-select: none;
+}
+.section-heading-copy {
+  position: relative;
+  padding-bottom: 0.15rem;
+}
+.section-heading-copy::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.8rem;
+  height: 1px;
+  background: linear-gradient(90deg, var(--trace-strong), var(--border) 42%, transparent 82%);
+}
+
+.trace-panel::before {
+  background: linear-gradient(
+    90deg,
+    var(--accent) 0 2.75rem,
+    var(--highlight) 2.75rem 42%,
+    transparent 78%
+  );
+}
+.trace-panel {
+  background-image:
+    linear-gradient(135deg, var(--trace) 0 1px, transparent 1px),
+    linear-gradient(180deg, var(--panel-wash), transparent 42%);
+  background-size: 14px 14px, auto;
+  background-position: right top, 0 0;
+  background-repeat: no-repeat;
+}
+.trace-id {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.625rem;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  color: var(--faint);
+}
+.trace-id::before {
+  content: "";
+  width: 0.35rem;
+  height: 0.35rem;
+  border: 1px solid var(--trace-strong);
+  transform: rotate(45deg);
+}
+
+.focus-match {
+  border-color: var(--trace-strong);
+  box-shadow:
+    inset 3px 0 0 var(--accent),
+    var(--shadow-md);
+}
+
+.focus-strip {
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+}
+.focus-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.skill-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+}
+.skill-chip::before {
+  content: "";
+  width: 0.22rem;
+  height: 0.22rem;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: var(--trace-strong);
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+}
+.skill-chip:hover::before {
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-quiet);
+}
+
+.hero-field::before {
+  content: "";
+  position: absolute;
+  inset: 5rem 0 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, transparent 0 49.96%, var(--trace) 50%, transparent 50.04%),
+    radial-gradient(circle at 14% 24%, var(--accent-quiet), transparent 24rem),
+    radial-gradient(circle at 82% 34%, var(--signal-quiet), transparent 22rem);
+  mask-image: linear-gradient(180deg, #000 0 72%, transparent 100%);
+  pointer-events: none;
+}
+.portrait-node {
+  isolation: isolate;
+}
+.portrait-node::before {
+  content: "";
+  position: absolute;
+  inset: -1.35rem;
+  z-index: -1;
+  background-image:
+    linear-gradient(to right, var(--grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+  background-size: 1.5rem 1.5rem;
+  mask-image: radial-gradient(circle, #000 0 36%, transparent 74%);
+  pointer-events: none;
+}
+
+.site-nav-shell {
+  position: relative;
+  border-radius: 0.25rem var(--radius) 0.25rem var(--radius);
+}
+.site-nav-shell::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 1.25rem;
+  width: 2.75rem;
+  height: 1px;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.site-nav-shell[data-scrolled="true"]::after {
+  opacity: 1;
+}
+.identity-mark {
+  position: relative;
+  border-radius: 0.2rem 0.55rem 0.2rem 0.55rem;
+  box-shadow: 0 0 0 1px var(--border);
+}
+.identity-mark::after {
+  content: "";
+  position: absolute;
+  right: -0.2rem;
+  bottom: -0.2rem;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  border: 1px solid var(--surface-0);
+  background: var(--live);
+}
+
+@media (min-width: 768px) {
+  .section-heading {
+    grid-template-columns: 5.5rem minmax(0, 1fr) minmax(16rem, 24rem);
+    gap: 1.75rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .section-band::before,
+  .section-band::after {
+    display: none;
+  }
+  .section-index {
+    min-width: 2.8rem;
+    font-size: 2.75rem;
+  }
+  .hero-field::before {
+    background:
+      radial-gradient(circle at 12% 18%, var(--accent-quiet), transparent 18rem),
+      radial-gradient(circle at 92% 50%, var(--signal-quiet), transparent 16rem);
+  }
 }
 
 /* Hero tech-stack marquee. Two copies of the list sit end to end; shifting the
@@ -745,4 +955,72 @@
 }
 .callout-important .callout-title {
   color: var(--signal);
+}
+
+/* The recruiter brief doubles as a clean, browser-native PDF. Keeping this
+   print path in CSS avoids shipping a PDF renderer or maintaining a second
+   document that can drift out of sync with the site. */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 10mm 12mm;
+  }
+
+  body:has(.candidate-brief) > header,
+  body:has(.candidate-brief) > footer,
+  body:has(.candidate-brief) > a,
+  body:has(.candidate-brief) [data-site-progress] {
+    display: none !important;
+  }
+
+  body:has(.candidate-brief) {
+    background: #fff !important;
+    color: #111 !important;
+  }
+
+  .candidate-brief {
+    max-width: none !important;
+    padding: 0 !important;
+    font-size: 9pt;
+    color: #111 !important;
+  }
+
+  .candidate-brief .brief-header {
+    margin-top: 0 !important;
+  }
+
+  .candidate-brief .brief-title {
+    margin-top: 4mm !important;
+    font-size: 24pt !important;
+    line-height: 1 !important;
+  }
+
+  .candidate-brief .brief-section {
+    margin-top: 5mm !important;
+  }
+
+  .candidate-brief .brief-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 2mm !important;
+  }
+
+  .candidate-brief .panel {
+    break-inside: avoid;
+    border-color: #d8d8d8 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .candidate-brief .brief-panel {
+    padding: 3mm !important;
+  }
+
+  .candidate-brief .brief-skills > div {
+    padding: 1.8mm 3mm !important;
+  }
+
+  .candidate-brief a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
 }

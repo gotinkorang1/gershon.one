@@ -10,16 +10,6 @@ export const site = {
   shortName: "Gershon Otinkorang",
   initials: "GO",
   role: "IT Support Specialist",
-  // Rotated one at a time in the hero. The first entry is the primary title and
-  // is what non-animating (reduced-motion) visitors see. Order = emphasis.
-  roles: [
-    "IT Support Specialist",
-    "Network Technician",
-    "ERP Specialist",
-    "Infrastructure Engineer",
-    "IT Operations Technician",
-    "Website Developer",
-  ],
   location: "Accra, Ghana",
   // Ticker of real tools shown under the hero summary. Kept short and true —
   // every item appears in the experience section's stacks.
@@ -73,11 +63,206 @@ export const site = {
    */
   contentUpdated: "2026-07-30T00:00:00+00:00",
   resumeUrl: "/gershon-otinkorang-cv.pdf",
+  contactCard: {
+    url: "/gershon-otinkorang.vcf",
+    fileName: "gershon-otinkorang.vcf",
+    labels: {
+      en: {
+        save: "Save contact",
+        description: "Add my details to your contacts",
+      },
+      fr: {
+        save: "Enregistrer le contact",
+        description: "Ajouter mes coordonnées à vos contacts",
+      },
+    },
+  },
+  briefActions: {
+    print: "Print / save PDF",
+    share: "Share brief",
+    linkCopied: "Link copied",
+    copyDetails: "Copy all details",
+    detailsCopied: "Details copied",
+    copyFailed: "Could not copy",
+    shareTitle: "Gershon Otinkorang — candidate brief",
+    shareText:
+      "Availability, work authorisation, experience and core skills for Gershon Otinkorang.",
+    detailsLabels: {
+      email: "Email",
+      phone: "Phone",
+      linkedin: "LinkedIn",
+      portfolio: "Portfolio",
+      compensation: "Compensation",
+      summary: "Summary",
+    },
+  },
   socials: {
     github: "https://github.com/gotinkorang1",
     linkedin: "https://www.linkedin.com/in/gotinkorang",
   },
 } as const;
+
+/* -------------------------------------------------------------------------- */
+/*  Role-focused portfolio views                                               */
+/* -------------------------------------------------------------------------- */
+
+export type RoleFocusId =
+  | "it-support"
+  | "network"
+  | "erp"
+  | "infrastructure"
+  | "it-operations"
+  | "web";
+
+export type RoleFocusProfile = {
+  id: RoleFocusId;
+  title: string;
+  shortTitle: string;
+  description: string;
+  experience: readonly string[];
+  skillGroups: readonly string[];
+  caseStudies: readonly string[];
+  credentials: readonly string[];
+};
+
+/**
+ * Each view changes emphasis, never the underlying claims. Arrays are ordered
+ * strongest match first and use stable content keys so the same rules work for
+ * the English and French versions of the portfolio.
+ */
+export const roleFocusProfiles = [
+  {
+    id: "it-support",
+    title: "IT Support Specialist",
+    shortTitle: "IT Support",
+    description:
+      "End-user support, hardware, accounts, POS and handheld systems, troubleshooting and practical service ownership across multiple sites.",
+    experience: [
+      "Greenhouse International Development Group Ghana Ltd.",
+      "Origin8 Advertising Ltd.",
+      "Volta River Authority",
+      "RichWorld Mobile Devices",
+    ],
+    skillGroups: ["IT support", "Retail & field systems", "Servers & services"],
+    caseStudies: [
+      "diagnosing-fibre-latency",
+      "batch-invoice-pdf-processor",
+      "erpnext-administration",
+    ],
+    credentials: [
+      "BSc Information Technology",
+      "AWS Certified Cloud Practitioner",
+      "HND Information & Communication Technology",
+    ],
+  },
+  {
+    id: "network",
+    title: "Network Technician",
+    shortTitle: "Network",
+    description:
+      "Fibre, GPON, MikroTik, multi-WAN aggregation, enterprise switching, wireless coverage and fault isolation at industrial-site scale.",
+    experience: [
+      "Greenhouse International Development Group Ghana Ltd.",
+      "Volta River Authority",
+    ],
+    skillGroups: ["Networking", "Security", "Servers & services"],
+    caseStudies: ["industrial-park-network-1200-acres", "diagnosing-fibre-latency"],
+    credentials: [
+      "AWS Certified Cloud Practitioner",
+      "MSc Computer Science",
+      "Foundations of Cybersecurity",
+    ],
+  },
+  {
+    id: "erp",
+    title: "ERP Specialist",
+    shortTitle: "ERP",
+    description:
+      "ERPNext, Frappe and Odoo administration, HR data, print formats, asset control, access management and process automation.",
+    experience: [
+      "Greenhouse International Development Group Ghana Ltd.",
+      "Prop-Tis GH Limited",
+    ],
+    skillGroups: ["Servers & services", "Retail & field systems", "IT support"],
+    caseStudies: [
+      "erpnext-bilingual-id-cards",
+      "erpnext-administration",
+      "batch-invoice-pdf-processor",
+    ],
+    credentials: [
+      "BSc Information Technology",
+      "AWS Certified Cloud Practitioner",
+      "Foundations of Cybersecurity",
+    ],
+  },
+  {
+    id: "infrastructure",
+    title: "Infrastructure Engineer",
+    shortTitle: "Infrastructure",
+    description:
+      "Servers, virtualisation, Linux, containers, cloud, network security and resilient connectivity for distributed operations.",
+    experience: [
+      "Greenhouse International Development Group Ghana Ltd.",
+      "Volta River Authority",
+      "Nii Plants Group",
+    ],
+    skillGroups: ["Servers & services", "Networking", "Security", "Cloud & web"],
+    caseStudies: [
+      "industrial-park-network-1200-acres",
+      "diagnosing-fibre-latency",
+      "erpnext-administration",
+    ],
+    credentials: [
+      "AWS Certified Cloud Practitioner",
+      "MSc Computer Science",
+      "Foundations of Cybersecurity",
+    ],
+  },
+  {
+    id: "it-operations",
+    title: "IT Operations Technician",
+    shortTitle: "IT Operations",
+    description:
+      "Day-to-day ownership across users, devices, vendors, assets, business systems, documentation and distributed locations.",
+    experience: [
+      "Greenhouse International Development Group Ghana Ltd.",
+      "Nii Plants Group",
+      "Prop-Tis GH Limited",
+    ],
+    skillGroups: ["IT support", "Servers & services", "Retail & field systems", "Cloud & web"],
+    caseStudies: [
+      "batch-invoice-pdf-processor",
+      "erpnext-administration",
+      "industrial-park-network-1200-acres",
+    ],
+    credentials: [
+      "BSc Information Technology",
+      "AWS Certified Cloud Practitioner",
+      "HND Information & Communication Technology",
+    ],
+  },
+  {
+    id: "web",
+    title: "Website Developer",
+    shortTitle: "Web",
+    description:
+      "Websites, hosting, DNS, email, WordPress, PHP and MySQL, SEO, maintenance and front-end implementation for working organisations.",
+    experience: [
+      "Nii Plants Group",
+      "Prop-Tis GH Limited",
+      "Kaysens Group & Kwaaba Foundation",
+      "Origin8 Advertising Ltd.",
+      "Volta River Authority",
+    ],
+    skillGroups: ["Cloud & web", "IT support"],
+    caseStudies: ["erpnext-bilingual-id-cards", "batch-invoice-pdf-processor"],
+    credentials: [
+      "BSc Information Technology",
+      "Google Digital Skills",
+      "HND Information & Communication Technology",
+    ],
+  },
+] as const satisfies readonly RoleFocusProfile[];
 
 /* -------------------------------------------------------------------------- */
 /*  Facts — the scannable strip a recruiter reads first                       */

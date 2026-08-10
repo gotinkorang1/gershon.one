@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useScroll, useSpring, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useScroll, useSpring } from "motion/react";
 import { usePathname } from "next/navigation";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 /**
  * The single top-edge progress bar.
@@ -73,6 +74,7 @@ export function TopProgress() {
       {!reduced && (
         <motion.div
           aria-hidden
+          data-site-progress
           style={{ scaleX, opacity: loading ? 0 : 1 }}
           className="fixed inset-x-0 top-0 z-[60] h-0.5 origin-left bg-accent transition-opacity duration-200"
         />
@@ -83,6 +85,7 @@ export function TopProgress() {
         {loading && (
           <motion.div
             aria-hidden
+            data-site-progress
             className="fixed inset-x-0 top-0 z-[70] h-0.5 origin-left bg-accent"
             initial={{ scaleX: 0, opacity: 1 }}
             animate={

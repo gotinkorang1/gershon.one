@@ -2,8 +2,10 @@
 
 import { CalendarClock, ArrowUpRight } from "lucide-react";
 import { Panel } from "@/components/ui/panel";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { useI18n } from "@/components/locale-provider";
+import { captureAnalyticsEvent } from "@/lib/analytics";
+import { cn } from "@/lib/utils";
 
 /**
  * Cal.com booking link. Renders nothing at all unless
@@ -20,19 +22,25 @@ export function Booking() {
   const href = link.startsWith("http") ? link : `https://cal.com/${link}`;
 
   return (
-    <Panel interactive reactive className="p-5">
+    <Panel reactive className="p-5">
       <p className="label flex items-center gap-2">
-        <CalendarClock className="size-3" />
+        <CalendarClock aria-hidden className="size-3" />
         {t.ui.bookCall}
       </p>
       <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
         {t.ui.bookCallBody}
       </p>
-      <a href={href} target="_blank" rel="noreferrer noopener" className="mt-4 inline-block">
-        <Button variant="outline" size="sm">
-          {t.ui.findTime}
-          <ArrowUpRight />
-        </Button>
+      <a
+        href={href}
+        target="_blank"
+        rel="noreferrer noopener"
+        onClick={() =>
+          captureAnalyticsEvent("booking opened", { provider: "cal.com" }, { immediate: true })
+        }
+        className={cn("mt-4", buttonVariants({ variant: "outline", size: "sm" }))}
+      >
+        {t.ui.findTime}
+        <ArrowUpRight aria-hidden />
       </a>
     </Panel>
   );

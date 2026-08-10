@@ -250,3 +250,42 @@ export const termsFr: Record<string, string> = {
   "Inventory": "Gestion des stocks",
   "Web": "Web",
 };
+
+export const roleFocusFr = {
+  "it-support": {
+    title: "Spécialiste du support informatique",
+    shortTitle: "Support IT",
+    description:
+      "Support aux utilisateurs, matériel, comptes, systèmes de caisse et terminaux portables, dépannage et gestion opérationnelle sur plusieurs sites.",
+  },
+  network: {
+    title: "Technicien réseau",
+    shortTitle: "Réseau",
+    description:
+      "Fibre, GPON, MikroTik, agrégation multi-WAN, commutation d'entreprise, couverture sans fil et localisation de pannes à l'échelle d'un site industriel.",
+  },
+  erp: {
+    title: "Spécialiste ERP",
+    shortTitle: "ERP",
+    description:
+      "Administration d'ERPNext, Frappe et Odoo, données RH, formats d'impression, gestion des actifs, contrôle des accès et automatisation.",
+  },
+  infrastructure: {
+    title: "Ingénieur infrastructure",
+    shortTitle: "Infrastructure",
+    description:
+      "Serveurs, virtualisation, Linux, conteneurs, cloud, sécurité réseau et connectivité résiliente pour des opérations distribuées.",
+  },
+  "it-operations": {
+    title: "Technicien des opérations IT",
+    shortTitle: "Opérations IT",
+    description:
+      "Gestion quotidienne des utilisateurs, appareils, fournisseurs, actifs, systèmes métier, documentation et sites distribués.",
+  },
+  web: {
+    title: "Développeur web",
+    shortTitle: "Web",
+    description:
+      "Sites web, hébergement, DNS, messagerie, WordPress, PHP et MySQL, SEO, maintenance et intégration front-end.",
+  },
+} as const;

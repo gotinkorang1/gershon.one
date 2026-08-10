@@ -2,13 +2,14 @@
   "name": "gershon-one",
   "version": "1.0.0",
   "private": true,
-  "description": "Personal portfolio of Gershon Adjei Otinkorang \u2014 Cloud, Network & Software Engineering.",
+  "description": "Personal portfolio of Gershon Adjei Otinkorang — Cloud, Network & Software Engineering.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
@@ -25,6 +26,7 @@
     "tailwind-merge": "^3.0.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.62.1",
     "@tailwindcss/postcss": "^4.0.0",
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",

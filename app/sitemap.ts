@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { site } from "@/lib/site";
+import { roleFocusProfiles, site } from "@/lib/site";
 import { caseStudies } from "@/lib/case-studies";
 import { getPublishedPosts, getTagSlugs } from "@/lib/blog";
 
@@ -37,6 +37,29 @@ export default function sitemap(): MetadataRoute.Sitemap {
         },
       },
     },
+    ...roleFocusProfiles.flatMap((profile) => {
+      const english = `${base}/for/${profile.id}`;
+      const french = `${base}/fr/for/${profile.id}`;
+      const alternates = {
+        languages: { "en-CA": english, "fr-CA": french, "x-default": english },
+      };
+      return [
+        {
+          url: english,
+          lastModified: updated,
+          changeFrequency: "monthly" as const,
+          priority: 0.8,
+          alternates,
+        },
+        {
+          url: french,
+          lastModified: updated,
+          changeFrequency: "monthly" as const,
+          priority: 0.7,
+          alternates,
+        },
+      ];
+    }),
     // Drafts are noindex, so listing them only wastes crawl budget.
     ...caseStudies
       .filter((c) => !c.draft)

@@ -11,6 +11,8 @@ import { type Job } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/components/locale-provider";
 import { getExperience } from "@/lib/localised-content";
+import { useRoleFocus } from "@/components/role-focus-provider";
+import { getRoleFocus, isTopMatch, prioritizeByKeys } from "@/lib/role-focus";
 
 function span(job: Job, present: string) {
   const from = job.start.slice(0, 4);
@@ -18,23 +20,39 @@ function span(job: Job, present: string) {
   return from === to ? from : `${from} — ${to}`;
 }
 
-function Entry({ job, open, onToggle }: { job: Job; open: boolean; onToggle: () => void }) {
+function Entry({
+  job,
+  index,
+  matched,
+  open,
+  onToggle,
+}: {
+  job: Job;
+  index: number;
+  matched: boolean;
+  open: boolean;
+  onToggle: () => void;
+}) {
   const { t } = useI18n();
 
   return (
-    <Panel reactive className={cn("transition-colors", open && "border-border-strong")}>
+    <Panel
+      reactive
+      className={cn(
+        "trace-panel transition-colors",
+        open && "border-border-strong",
+        matched && "focus-match",
+      )}
+    >
       <button
         type="button"
         onClick={onToggle}
         aria-expanded={open}
         className="flex w-full items-start gap-5 p-5 text-left sm:p-6"
       >
-        <span
-          className={cn(
-            "mt-1.5 hidden size-2 shrink-0 rounded-full transition-colors sm:block",
-            job.end === null ? "bg-live" : "bg-border-strong",
-          )}
-        />
+        <span aria-hidden className="trace-id mt-1.5 w-8 shrink-0">
+          {String(index + 1).padStart(2, "0")}
+        </span>
 
         <span className="min-w-0 flex-1">
           <span className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
@@ -45,6 +63,7 @@ function Entry({ job, open, onToggle }: { job: Job; open: boolean; onToggle: () 
               {job.role}
             </h3>
             {job.end === null && <Badge variant="accent">{t.common.current}</Badge>}
+            {matched && <Badge variant="accent">{t.ui.focusMatch}</Badge>}
           </span>
           <span className="mt-1.5 block text-sm text-muted-foreground">
             {job.company}
@@ -73,6 +92,7 @@ function Entry({ job, open, onToggle }: { job: Job; open: boolean; onToggle: () 
         <span className="flex shrink-0 items-center gap-4">
           <span className="label hidden sm:block">{span(job, t.ui.present)}</span>
           <ChevronDown
+            aria-hidden
             className={cn(
               "size-4 text-faint transition-transform duration-300",
               open && "rotate-180",
@@ -140,10 +160,18 @@ function Entry({ job, open, onToggle }: { job: Job; open: boolean; onToggle: () 
 export function Experience() {
   const { t, locale } = useI18n();
   const experience = getExperience(locale);
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const focusProfile = getRoleFocus(useRoleFocus());
+  const orderedExperience = prioritizeByKeys(
+    experience,
+    focusProfile?.experience,
+    (job) => job.company,
+  );
+  const [openCompany, setOpenCompany] = useState<string | null>(
+    orderedExperience[0]?.company ?? null,
+  );
 
   return (
-    <section id="experience" className="shell scroll-mt-24 py-14 md:py-16">
+    <section id="experience" className="section-band shell scroll-mt-24 py-14 md:py-16">
       <SectionHeading
         index={t.ui.eyebrowExperience}
         title={t.sections.experienceTitle}
@@ -151,12 +179,14 @@ export function Experience() {
       />
 
       <div className="mt-10 grid gap-3">
-        {experience.map((job, i) => (
+        {orderedExperience.map((job, i) => (
           <Reveal key={`${job.company}-${job.start}`} delay={0.04 * i}>
             <Entry
               job={job}
-              open={openIndex === i}
-              onToggle={() => setOpenIndex(openIndex === i ? null : i)}
+              index={i}
+              matched={isTopMatch(job.company, focusProfile?.experience)}
+              open={openCompany === job.company}
+              onToggle={() => setOpenCompany(openCompany === job.company ? null : job.company)}
             />
           </Reveal>
         ))}

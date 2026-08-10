@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, Download, Mail, Phone } from "lucide-react";
+import { ArrowLeft, ContactRound, Download, Mail, Phone } from "lucide-react";
 import { site, experience, credentials } from "@/lib/site";
 import { brief } from "@/lib/brief";
 import { Panel } from "@/components/ui/panel";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { CopyDetails } from "@/components/copy-details";
+import { AnalyticsLink } from "@/components/analytics-link";
+import { BriefActions } from "@/components/brief-actions";
 
 export const metadata: Metadata = {
   title: "Candidate brief",
@@ -20,9 +22,24 @@ export default function BriefPage() {
   const current = experience[0];
   const certs = credentials.filter((c) => c.kind === "certification");
   const degrees = credentials.filter((c) => c.kind === "degree");
+  const details = [
+    site.name,
+    site.role,
+    "",
+    `${site.briefActions.detailsLabels.email}: ${site.email}`,
+    `${site.briefActions.detailsLabels.phone}: ${site.phone}`,
+    `${site.briefActions.detailsLabels.linkedin}: ${site.socials.linkedin}`,
+    `${site.briefActions.detailsLabels.portfolio}: ${site.url}`,
+    "",
+    ...brief.eligibility.map((item) => `${item.label}: ${item.value}`),
+    `${site.briefActions.detailsLabels.compensation}: ${brief.compensation.value}`,
+    "",
+    `${site.briefActions.detailsLabels.summary}:`,
+    brief.pitch,
+  ].join("\n");
 
   return (
-    <div className="shell max-w-4xl pb-24 pt-28 md:pt-32">
+    <div className="candidate-brief shell max-w-4xl pb-24 pt-28 md:pt-32">
       <Link
         href="/"
         className="link inline-flex items-center gap-2 text-sm text-muted-foreground print:hidden"
@@ -31,36 +48,68 @@ export default function BriefPage() {
         Full site
       </Link>
 
-      <header className="mt-8">
+      <header className="brief-header mt-8">
         <p className="label">Candidate brief</p>
-        <h1 className="mt-4 text-jumbo font-semibold">{site.name}</h1>
+        <h1 className="brief-title mt-4 text-jumbo font-semibold">{site.name}</h1>
         <p className="mt-3 text-lede text-muted-foreground">{site.role}</p>
 
-        <div className="mt-7 flex flex-wrap items-center gap-3 print:hidden">
-          <a href={site.resumeUrl}>
-            <Button variant="accent">
-              <Download />
-              Download CV
-            </Button>
-          </a>
-          <CopyDetails />
-          <a href={`mailto:${site.email}`}>
-            <Button variant="outline">
-              <Mail />
-              {site.email}
-            </Button>
+        <div className="mt-7 grid w-full gap-2 min-[420px]:grid-cols-2 sm:flex sm:flex-wrap sm:items-center print:hidden">
+          <AnalyticsLink
+            href={site.resumeUrl}
+            download
+            analyticsEvent="cv downloaded"
+            analyticsProperties={{ source: "candidate_brief", document_locale: "en" }}
+            className={buttonVariants({
+              variant: "accent",
+              className: "min-h-11 w-full sm:w-auto",
+            })}
+          >
+            <Download aria-hidden />
+            Download CV
+          </AnalyticsLink>
+          <BriefActions shareUrl={`${site.url}/brief`} labels={site.briefActions} />
+          <AnalyticsLink
+            href={site.contactCard.url}
+            download={site.contactCard.fileName}
+            analyticsEvent="contact card downloaded"
+            analyticsProperties={{ source: "candidate_brief" }}
+            className={buttonVariants({
+              variant: "outline",
+              className: "min-h-11 w-full sm:w-auto",
+            })}
+          >
+            <ContactRound aria-hidden />
+            {site.contactCard.labels.en.save}
+          </AnalyticsLink>
+          <CopyDetails
+            content={details}
+            labels={{
+              idle: site.briefActions.copyDetails,
+              copied: site.briefActions.detailsCopied,
+              error: site.briefActions.copyFailed,
+            }}
+          />
+          <a
+            href={`mailto:${site.email}`}
+            className={buttonVariants({
+              variant: "outline",
+              className: "min-h-11 w-full sm:w-auto",
+            })}
+          >
+            <Mail aria-hidden />
+            {site.email}
           </a>
         </div>
       </header>
 
       {/* ------------------------------------------------------ eligibility */}
-      <section className="mt-12">
+      <section className="brief-section mt-12">
         <h2 className="label">Eligibility and availability</h2>
-        <dl className="mt-4 grid gap-3 sm:grid-cols-2">
+        <dl className="brief-grid mt-4 grid gap-3 sm:grid-cols-2">
           {brief.eligibility.map((item) => {
             const unanswered = item.value.startsWith("TODO");
             return (
-              <Panel key={item.label} className="p-5">
+              <Panel key={item.label} className="brief-panel p-5">
                 <dt className="label">{item.label}</dt>
                 <dd
                   className={
@@ -77,7 +126,7 @@ export default function BriefPage() {
           })}
         </dl>
 
-        <Panel inset className="mt-3 p-5">
+        <Panel inset className="brief-panel mt-3 p-5">
           <p className="label">Compensation expectation</p>
           <p
             className={
@@ -93,7 +142,7 @@ export default function BriefPage() {
       </section>
 
       {/* ------------------------------------------------------------ pitch */}
-      <section className="mt-12">
+      <section className="brief-section mt-12">
         <h2 className="label">In one paragraph</h2>
         <p className="mt-4 text-lede leading-relaxed text-muted-foreground">
           {brief.pitch}
@@ -101,9 +150,9 @@ export default function BriefPage() {
       </section>
 
       {/* -------------------------------------------------------- strengths */}
-      <section className="mt-12">
+      <section className="brief-section mt-12">
         <h2 className="label">Core skills, ranked</h2>
-        <Panel className="mt-4 divide-y divide-border">
+        <Panel className="brief-skills mt-4 divide-y divide-border">
           {brief.strengths.map((s) => (
             <div
               key={s.skill}
@@ -120,7 +169,7 @@ export default function BriefPage() {
       </section>
 
       {/* ------------------------------------------------------ target roles */}
-      <section className="mt-12">
+      <section className="brief-section mt-12">
         <h2 className="label">Roles I&apos;m a match for</h2>
         <div className="mt-4 flex flex-wrap gap-2">
           {brief.targetRoles.map((r) => (
@@ -132,9 +181,9 @@ export default function BriefPage() {
       </section>
 
       {/* ---------------------------------------------------------- current */}
-      <section className="mt-12">
+      <section className="brief-section mt-12">
         <h2 className="label">Current role</h2>
-        <Panel className="mt-4 p-5">
+        <Panel className="brief-panel mt-4 p-5">
           <p className="text-lg font-semibold tracking-tight">{current.role}</p>
           <p className="mt-1 text-sm text-muted-foreground">{current.company}</p>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
@@ -144,10 +193,10 @@ export default function BriefPage() {
       </section>
 
       {/* ------------------------------------------------------ credentials */}
-      <section className="mt-12">
+      <section className="brief-section mt-12">
         <h2 className="label">Education and certification</h2>
-        <div className="mt-4 grid gap-3 sm:grid-cols-2">
-          <Panel className="p-5">
+        <div className="brief-grid mt-4 grid gap-3 sm:grid-cols-2">
+          <Panel className="brief-panel p-5">
             <p className="label">Education</p>
             <ul className="mt-3 space-y-2.5">
               {degrees.map((d) => (
@@ -160,7 +209,7 @@ export default function BriefPage() {
               ))}
             </ul>
           </Panel>
-          <Panel className="p-5">
+          <Panel className="brief-panel p-5">
             <p className="label">Certifications</p>
             <ul className="mt-3 space-y-2.5">
               {certs.map((c) => (
@@ -177,9 +226,9 @@ export default function BriefPage() {
       </section>
 
       {/* ---------------------------------------------------------- contact */}
-      <section className="mt-12">
+      <section className="brief-section mt-12">
         <h2 className="label">Contact</h2>
-        <Panel className="mt-4 flex flex-wrap gap-x-10 gap-y-4 p-5">
+        <Panel className="brief-panel mt-4 flex flex-wrap gap-x-10 gap-y-4 p-5">
           <a href={`mailto:${site.email}`} className="link inline-flex items-center gap-2 text-sm">
             <Mail className="size-3.5 text-faint" />
             {site.email}

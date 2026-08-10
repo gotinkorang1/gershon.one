@@ -5,11 +5,13 @@ import { ArrowUpRight, Check, Download, Eye, FileText, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useI18n } from "@/components/locale-provider";
 import { resumeUrlFor } from "@/lib/i18n";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { Portal } from "@/components/ui/portal";
 import { CV_OPEN_EVENT } from "@/components/keyboard-shortcuts";
 import { cn } from "@/lib/utils";
+import { captureAnalyticsEvent } from "@/lib/analytics";
+import { useHasMounted, useMediaQuery } from "@/lib/use-media-query";
 
 type Stage = "closed" | "choose" | "viewing";
 
@@ -43,6 +45,7 @@ export function CvButton({
   const [stage, setStage] = useState<Stage>("closed");
   const [downloaded, setDownloaded] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const hydrated = useHasMounted();
   // Mobile browsers (iOS Safari, Android Chrome) refuse to render PDFs inside an
   // <iframe> — the frame comes up blank or the file is forced to download. So on
   // those devices "View here" opens the PDF directly instead of the dead viewer.
@@ -51,17 +54,9 @@ export function CvButton({
   // the dialog subtree (icon + hint) is in the DOM at hydration even while
   // closed, so reading matchMedia during the initial render caused a hydration
   // mismatch (React #418) on phones. The real value is resolved after mount.
-  const [inlinePdf, setInlinePdf] = useState(true);
+  const useDeviceReader = useMediaQuery("(pointer: coarse), (max-width: 640px)");
+  const inlinePdf = !useDeviceReader;
   const frameRef = useRef<HTMLIFrameElement>(null);
-
-  // Resolve once after hydration, then track viewport/pointer changes.
-  useEffect(() => {
-    const mq = window.matchMedia("(pointer: coarse), (max-width: 640px)");
-    const update = (e: MediaQueryList | MediaQueryListEvent) => setInlinePdf(!e.matches);
-    update(mq);
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
 
   // The "V" keyboard shortcut opens the chooser through this event, so it shares
   // the button's View/Download flow rather than raw-opening the PDF. Only the
@@ -74,10 +69,23 @@ export function CvButton({
   }, [respondToShortcut]);
 
   const openDirect = useCallback(() => {
+    captureAnalyticsEvent(
+      "cv viewed",
+      { method: "device_reader", document_locale: locale },
+      { immediate: true },
+    );
     window.open(href, "_blank", "noopener,noreferrer");
-  }, [href]);
+  }, [href, locale]);
 
   const download = useCallback(() => {
+    captureAnalyticsEvent(
+      "cv downloaded",
+      {
+        document_locale: locale,
+        source: stage === "viewing" ? "viewer" : "chooser",
+      },
+      { immediate: true },
+    );
     const anchor = document.createElement("a");
     anchor.href = href;
     // Empty value keeps the server-provided filename.
@@ -88,7 +96,7 @@ export function CvButton({
 
     setDownloaded(true);
     setTimeout(() => setDownloaded(false), 2600);
-  }, [href]);
+  }, [href, locale, stage]);
 
   const close = useCallback(() => {
     setStage("closed");
@@ -110,6 +118,7 @@ export function CvButton({
         type="button"
         variant={variant}
         size={size}
+        disabled={!hydrated}
         onClick={() => setStage("choose")}
         className={cn("group", className)}
       >
@@ -136,6 +145,10 @@ export function CvButton({
                 // On phones the inline iframe viewer stays blank, so open the
                 // PDF directly in the device's own reader instead.
                 if (inlinePdf) {
+                  captureAnalyticsEvent("cv viewed", {
+                    method: "inline_viewer",
+                    document_locale: locale,
+                  });
                   setStage("viewing");
                 } else {
                   openDirect();
@@ -211,11 +224,21 @@ export function CvButton({
                 <h2 className="text-sm font-medium">{t.ui.cvViewerTitle}</h2>
 
                 <div className="flex items-center gap-1.5">
-                  <a href={href} target="_blank" rel="noreferrer noopener">
-                    <Button variant="ghost" size="sm">
-                      <ArrowUpRight />
-                      <span className="hidden sm:inline">{t.ui.openInNewTabShort}</span>
-                    </Button>
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    onClick={() =>
+                      captureAnalyticsEvent(
+                        "cv viewed",
+                        { method: "new_tab", document_locale: locale },
+                        { immediate: true },
+                      )
+                    }
+                    className={buttonVariants({ variant: "ghost", size: "sm" })}
+                  >
+                    <ArrowUpRight />
+                    <span className="hidden sm:inline">{t.ui.openInNewTabShort}</span>
                   </a>
                   <Button variant="ghost" size="sm" onClick={download}>
                     {downloaded ? <Check className="text-live" /> : <Download />}

@@ -45,3 +45,9 @@ jobs:
         run: npm run build
         env:
           NEXT_PUBLIC_SITE_URL: https://gershon.one
+
+      - name: Install browser for responsive tests
+        run: npx playwright install --with-deps chromium
+
+      - name: Responsive smoke tests
+        run: npm run test:e2e
