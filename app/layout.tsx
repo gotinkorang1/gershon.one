@@ -8,6 +8,7 @@ import { KeyboardShortcuts } from "@/components/keyboard-shortcuts";
 import { TopProgress } from "@/components/fx/top-progress";
 import { PageTransition } from "@/components/fx/page-transition";
 import { Analytics } from "@/components/analytics";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 import { HtmlLang } from "@/components/html-lang";
 import { site } from "@/lib/site";
 import "./globals.css";
@@ -251,6 +252,7 @@ export default function RootLayout({
           <SiteFooter />
         </ThemeProvider>
         <Analytics />
+        <VercelAnalytics />
         <script
           type="application/ld+json"
           suppressHydrationWarning
