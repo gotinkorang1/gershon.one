@@ -5,6 +5,7 @@ import { Experience } from "@/components/sections/experience";
 import { CaseStudies } from "@/components/sections/case-studies";
 import { Skills } from "@/components/sections/skills";
 import { Credentials } from "@/components/sections/credentials";
+import { References } from "@/components/sections/references";
 import { Contact } from "@/components/sections/contact";
 import { SectionDivider } from "@/components/fx/section-divider";
 
@@ -21,6 +22,9 @@ export function PortfolioHome({ focus = null }: { focus?: RoleFocusId | null }) 
       <SectionDivider />
       <Credentials />
       <SectionDivider />
+      {/* Self-hides until real references exist; when present it owns its own
+          trailing divider so the section rhythm stays intact. */}
+      <References />
       <Contact />
     </RoleFocusProvider>
   );

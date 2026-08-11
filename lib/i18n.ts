@@ -37,6 +37,9 @@ type Dictionary = {
     capabilitiesLede: string;
     credentialsTitle: string;
     credentialsLede: string;
+    referencesEyebrow: string;
+    referencesTitle: string;
+    referencesLede: string;
     contactTitle: string;
     contactLede: (city: string, when: string) => string;
   };
@@ -236,6 +239,9 @@ const en: Dictionary = {
     credentialsTitle: "Education and certification",
     credentialsLede:
       "In order, from the first diploma to the MSc that starts in 2026. Every item links to the issuing body.",
+    referencesEyebrow: "References",
+    referencesTitle: "What people I've worked with say",
+    referencesLede: "People who managed or worked alongside me, in their own words.",
     contactTitle: "Tell me what you're building",
     contactLede: (city, when) =>
       `Available for IT and network administration roles in ${city} from ${when}.`,
@@ -447,6 +453,9 @@ const fr: Dictionary = {
     credentialsTitle: "Formation et certifications",
     credentialsLede:
       "Dans l'ordre, du premier diplôme jusqu'à la maîtrise qui débute en 2026. Chaque élément renvoie à l'organisme émetteur.",
+    referencesEyebrow: "Références",
+    referencesTitle: "Ce que disent mes collègues et responsables",
+    referencesLede: "Des personnes qui m'ont encadré ou avec qui j'ai travaillé, dans leurs propres mots.",
     contactTitle: "Parlez-moi de votre projet",
     contactLede: (city, when) =>
       `Disponible pour des postes en administration systèmes et réseaux à ${city} à partir d'${when}.`,

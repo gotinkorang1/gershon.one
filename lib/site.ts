@@ -633,6 +633,36 @@ export const credentials: Credential[] = [
 ];
 
 /* -------------------------------------------------------------------------- */
+/*  References                                                                 */
+/*                                                                            */
+/*  Real quotes only. The section self-hides while this array is empty, so    */
+/*  nothing fabricated ever ships. Add a reference by copying the shape below  */
+/*  — ideally with a `link` to the person's public LinkedIn recommendation so  */
+/*  a recruiter can verify it.                                                 */
+/* -------------------------------------------------------------------------- */
+
+export type Reference = {
+  /** The quote, in the referee's own words. */
+  quote: string;
+  /** Who said it. */
+  name: string;
+  /** Their role and organisation, e.g. "Engineering Manager, Greenhouse Intl.". */
+  title: string;
+  /** Optional link to the public recommendation (LinkedIn, email screenshot, etc.). */
+  link?: string;
+};
+
+export const references: Reference[] = [
+  // {
+  //   quote:
+  //     "Gershon designed and ran the entire site network single-handedly — and was the person everyone called when anything broke.",
+  //   name: "Full Name",
+  //   title: "Engineering & Design Manager, Greenhouse International",
+  //   link: "https://www.linkedin.com/in/…",
+  // },
+];
+
+/* -------------------------------------------------------------------------- */
 /*  Navigation                                                                */
 /* -------------------------------------------------------------------------- */
 

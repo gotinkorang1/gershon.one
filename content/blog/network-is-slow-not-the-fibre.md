@@ -2,6 +2,7 @@
 title: Your network is slow, and it's probably not the fibre
 date: 2026-08-01
 summary: A short field note on why latency complaints in a large network almost never point at the fibre — and the order I actually check things in.
+cover: /network-latency-cover.webp
 tags: [Networking, Fibre, Troubleshooting]
 draft: false
 ---

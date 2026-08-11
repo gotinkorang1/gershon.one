@@ -2,6 +2,7 @@
 title: Two ID cards per A4 sheet, straight from ERPNext
 date: 2026-08-02
 summary: A print format that turns ERPNext employee records into finished, front-and-back staff ID cards — two to a sheet — with no external design tool in the loop.
+cover: /erpnext-id-cards-cover.webp
 tags: [ERPNext, Jinja, HR, Print]
 draft: false
 ---
