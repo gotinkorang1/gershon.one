@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { motion } from "motion/react";
 import { Command } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { navLinks, site } from "@/lib/site";
+import { navLinks, portfolioFeatures, site } from "@/lib/site";
 import { useI18n } from "@/components/locale-provider";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageToggle } from "@/components/language-toggle";
@@ -75,11 +75,11 @@ export function SiteNav() {
     };
   }, [open]);
 
-  // The mobile menu now persists up to lg. Crossing into the desktop layout
+  // The mobile menu now persists up to xl. Crossing into the desktop layout
   // hides the overlay via CSS, but the open state — and its body scroll-lock —
   // would otherwise linger, leaving the page unscrollable. Close on cross-over.
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1024px)");
+    const mq = window.matchMedia("(min-width: 1280px)");
     const onChange = () => mq.matches && setOpen(false);
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);
@@ -115,7 +115,7 @@ export function SiteNav() {
               </span>
             </Link>
 
-            <ul className="hidden items-center gap-0.5 lg:flex">
+            <ul className="hidden items-center gap-0.5 xl:flex">
               {navLinks.map((link) => {
                 const isActive = active === link.href;
                 return (
@@ -141,6 +141,19 @@ export function SiteNav() {
               })}
               <li>
                 <Link
+                  href="/lab"
+                  className={cn(
+                    "relative rounded-lg px-3 py-1.5 text-sm transition-colors",
+                    pathname.startsWith("/lab")
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  {portfolioFeatures.navigation.lab}
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/blog"
                   className={cn(
                     "relative rounded-lg px-3 py-1.5 text-sm transition-colors",
@@ -149,7 +162,7 @@ export function SiteNav() {
                       : "text-muted-foreground hover:text-foreground",
                   )}
                 >
-                  Blog
+                  {portfolioFeatures.navigation.blog}
                 </Link>
               </li>
             </ul>
@@ -159,7 +172,7 @@ export function SiteNav() {
                 type="button"
                 onClick={() => window.dispatchEvent(new CustomEvent("open-command-palette"))}
                 aria-label={t.ui.openPalette}
-                className="hidden items-center gap-2 rounded-lg border border-border bg-surface-1 py-1.5 pl-2.5 pr-2 text-xs text-faint transition-colors hover:border-border-strong hover:text-foreground lg:flex"
+                className="hidden items-center gap-2 rounded-lg border border-border bg-surface-1 py-1.5 pl-2.5 pr-2 text-xs text-faint transition-colors hover:border-border-strong hover:text-foreground xl:flex"
               >
                 {t.ui.search}
                 <kbd className="flex items-center gap-0.5 rounded border border-border bg-surface-2 px-1 py-0.5 font-mono text-[0.625rem]">
@@ -178,7 +191,7 @@ export function SiteNav() {
                 aria-label={open ? t.ui.closeMenu : t.ui.openMenu}
                 aria-expanded={open}
                 aria-controls="mobile-navigation"
-                className="tap relative grid size-9 place-items-center rounded-lg border border-border lg:hidden"
+                className="tap relative grid size-9 place-items-center rounded-lg border border-border xl:hidden"
               >
                 <span
                   className={cn(
@@ -200,14 +213,14 @@ export function SiteNav() {
 
       <div
         className={cn(
-          "fixed inset-0 z-40 bg-surface-0/95 backdrop-blur-xl transition-[opacity,visibility] duration-300 lg:hidden",
+          "fixed inset-0 z-40 bg-surface-0/95 backdrop-blur-xl transition-[opacity,visibility] duration-300 xl:hidden",
           open ? "visible opacity-100" : "invisible opacity-0",
         )}
       >
         <nav
           id="mobile-navigation"
           aria-label={t.ui.mobileNav}
-          className="shell flex h-full flex-col justify-center gap-2"
+          className="shell flex h-full flex-col gap-2 overflow-y-auto py-24 sm:justify-center"
         >
           {navLinks.map((link) => (
             <Link
@@ -221,12 +234,20 @@ export function SiteNav() {
             </Link>
           ))}
           <Link
-            href="/blog"
+            href="/lab"
             onClick={() => setOpen(false)}
             className="flex items-baseline gap-4 border-b border-border py-4"
           >
             <span className="label">06</span>
-            <span className="text-2xl font-medium tracking-tight">Blog</span>
+            <span className="text-2xl font-medium tracking-tight">{portfolioFeatures.lab.title}</span>
+          </Link>
+          <Link
+            href="/blog"
+            onClick={() => setOpen(false)}
+            className="flex items-baseline gap-4 border-b border-border py-4"
+          >
+            <span className="label">07</span>
+            <span className="text-2xl font-medium tracking-tight">{portfolioFeatures.navigation.blog}</span>
           </Link>
           <div className="mt-6" onClick={() => setOpen(false)}>
             <CvButton size="lg" className="w-full" />

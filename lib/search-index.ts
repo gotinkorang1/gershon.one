@@ -1,4 +1,4 @@
-import { experience, skillGroups, credentials, site } from "@/lib/site";
+import { experience, skillGroups, credentials, portfolioFeatures, roleFocusProfiles, site } from "@/lib/site";
 import { caseStudies } from "@/lib/case-studies";
 
 export type SearchDoc = {
@@ -66,6 +66,24 @@ const searchIndex: SearchDoc[] = [
     }),
   ),
 
+  doc({
+    id: "page-lab",
+    title: portfolioFeatures.lab.title,
+    subtitle: portfolioFeatures.lab.lede,
+    group: "Pages",
+    href: "/lab",
+    body: "interactive troubleshooting simulator evidence skills architecture systems professional activity",
+  }),
+  ...roleFocusProfiles.map((profile) =>
+    doc({
+      id: `page-pack-${profile.id}`,
+      title: `${profile.title} recruiter pack`,
+      subtitle: portfolioFeatures.recruiterPack.lede,
+      group: "Pages",
+      href: `/pack/${profile.id}`,
+      body: `${profile.description} ${profile.skillGroups.join(" ")} ${profile.experience.join(" ")}`,
+    }),
+  ),
   doc({
     id: "page-brief",
     title: "Candidate brief",

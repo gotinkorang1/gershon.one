@@ -38,6 +38,8 @@ export function Analytics() {
 
     const blogPost = pathname.match(/^\/blog\/([^/]+)$/)?.[1];
     if (blogPost) captureAnalyticsEvent("blog post opened", { post_slug: blogPost });
+
+    if (pathname === "/lab") captureAnalyticsEvent("systems lab opened", { tab: "troubleshoot" });
   }, [pathname]);
 
   useEffect(() => {

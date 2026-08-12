@@ -20,6 +20,7 @@ import {
   getRelatedPosts,
   getAdjacentPosts,
   slugify,
+  toCard,
 } from "@/lib/blog";
 import { Badge } from "@/components/ui/badge";
 import { Panel } from "@/components/ui/panel";
@@ -30,6 +31,7 @@ import { TableOfContents } from "@/components/blog/table-of-contents";
 import { ShareBar } from "@/components/blog/share-bar";
 import { CodeBlock } from "@/components/blog/code-block";
 import { BackToTop } from "@/components/blog/back-to-top";
+import { ReadingTools } from "@/components/blog/reading-tools";
 
 export function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }));
@@ -179,7 +181,7 @@ export default async function BlogPostPage({
   };
 
   return (
-    <article className="shell pb-24 pt-28 md:pt-32">
+    <article className="shell pb-24 pt-28 md:pt-32" data-reading-article>
       <Link
         href="/blog"
         className="link inline-flex items-center gap-2 text-sm text-muted-foreground"
@@ -201,18 +203,21 @@ export default async function BlogPostPage({
             <h1 className="mt-5 text-jumbo font-semibold tracking-tight">{post.title}</h1>
             <p className="measure mt-5 text-lede text-muted-foreground">{post.summary}</p>
 
-            <div className="mt-7 flex items-center gap-3">
-              <ThemePortrait
-                alt=""
-                width={40}
-                height={40}
-                className="size-10 shrink-0 overflow-hidden rounded-full border border-border"
-                imgClassName="object-cover object-top"
-              />
-              <div className="text-sm leading-tight">
-                <p className="font-medium text-foreground">{site.shortName}</p>
-                <p className="text-muted-foreground">{site.role}</p>
+            <div className="mt-7 flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <ThemePortrait
+                  alt=""
+                  width={40}
+                  height={40}
+                  className="size-10 shrink-0 overflow-hidden rounded-full border border-border"
+                  imgClassName="object-cover object-top"
+                />
+                <div className="text-sm leading-tight">
+                  <p className="font-medium text-foreground">{site.shortName}</p>
+                  <p className="text-muted-foreground">{site.role}</p>
+                </div>
               </div>
+              <ReadingTools post={toCard(post)} />
             </div>
           </header>
 

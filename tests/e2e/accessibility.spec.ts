@@ -7,6 +7,8 @@ const representativeRoutes = [
   "/for/network",
   "/fr/for/network",
   "/brief",
+  "/lab",
+  "/pack/network",
   "/work/industrial-park-network-1200-acres",
   "/fr/work/industrial-park-network-1200-acres",
   "/blog",

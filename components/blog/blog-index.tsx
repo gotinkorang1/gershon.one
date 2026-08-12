@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import type { PostCard } from "@/lib/blog";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
+import { ReadingShelf } from "@/components/blog/reading-shelf";
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-GB", {
@@ -168,8 +169,9 @@ export function BlogIndex({ posts, tags }: { posts: PostCard[]; tags: string[] }
 
   return (
     <div className="mt-12">
+      <ReadingShelf posts={posts} />
       {/* Controls */}
-      <div className="flex flex-col gap-4">
+      <div className="mt-10 flex flex-col gap-4">
         <div className="relative max-w-md">
           <Search className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-faint" />
           <input

@@ -81,6 +81,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       })),
     // Blog index + published posts (English-only, so no hreflang alternates).
     {
+      url: `${base}/lab`,
+      lastModified: updated,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    },
+    {
       url: `${base}/blog`,
       lastModified: posts[0] ? new Date(posts[0].date) : updated,
       changeFrequency: "weekly" as const,

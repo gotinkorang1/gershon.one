@@ -51,11 +51,14 @@ export function GitHubActivity() {
   // Nothing configured — render the link rather than an empty box.
   if (data && !data.configured) {
     return (
-      <Panel className="flex items-center justify-between p-5">
-        <span className="flex items-center gap-2.5 text-sm text-muted-foreground">
-          <Github className="size-4" />
-          {t.ui.githubFallback}
-        </span>
+      <Panel className="flex flex-wrap items-center justify-between gap-4 p-5">
+        <div>
+          <h3 className="flex items-center gap-2.5 text-sm font-medium">
+            <Github className="size-4" />
+            {t.ui.githubActivity}
+          </h3>
+          <p className="mt-1.5 text-sm text-muted-foreground">{t.ui.githubFallback}</p>
+        </div>
         <a
           href={site.socials.github}
           target="_blank"

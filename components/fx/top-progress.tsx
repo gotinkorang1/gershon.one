@@ -52,12 +52,17 @@ export function TopProgress() {
       if (href.startsWith("http") && !href.startsWith(window.location.origin)) return;
       if (href === pathname) return;
 
-      setDepartedFrom(pathname);
-
-      // If navigation stalls or is cancelled the pathname never changes, so
-      // release the bar rather than leaving it stuck.
+      // Let the browser finish the click's default action before React updates
+      // state. A synchronous state update here can cancel navigation for a
+      // native same-origin <a>, because this listener runs on `document`.
       clearTimeout(timeout.current);
-      timeout.current = setTimeout(() => setDepartedFrom(null), 8000);
+      timeout.current = setTimeout(() => {
+        setDepartedFrom(pathname);
+
+        // If navigation stalls or is cancelled the pathname never changes, so
+        // release the bar rather than leaving it stuck.
+        timeout.current = setTimeout(() => setDepartedFrom(null), 8000);
+      }, 0);
     };
 
     document.addEventListener("click", onClick);

@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { site, navLinks } from "@/lib/site";
+import { site, navLinks, portfolioFeatures } from "@/lib/site";
 import { useI18n } from "@/components/locale-provider";
 import { CvButton } from "@/components/cv-button";
 import { SHORTCUTS_HELP_EVENT } from "@/components/keyboard-shortcuts";
+import { PwaController } from "@/components/pwa-controller";
 
 export function SiteFooter() {
   const { t, locale } = useI18n();
@@ -43,8 +44,13 @@ export function SiteFooter() {
                 </li>
               ))}
               <li>
+                <Link href="/lab" className="link text-sm text-muted-foreground">
+                  {portfolioFeatures.lab.title}
+                </Link>
+              </li>
+              <li>
                 <Link href="/blog" className="link text-sm text-muted-foreground">
-                  Blog
+                  {portfolioFeatures.navigation.blog}
                 </Link>
               </li>
             </ul>
@@ -70,6 +76,9 @@ export function SiteFooter() {
                 <Link href="/brief" className="link">
                   {t.ui.candidateBrief}
                 </Link>
+              </li>
+              <li>
+                <PwaController />
               </li>
             </ul>
           </div>

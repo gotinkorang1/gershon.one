@@ -24,7 +24,10 @@ export type AnalyticsEvent =
   | "candidate brief printed"
   | "candidate brief shared"
   | "candidate details copied"
-  | "contact card downloaded";
+  | "contact card downloaded"
+  | "article saved"
+  | "portfolio installed"
+  | "systems lab opened";
 
 type PostHogClient = PostHog;
 

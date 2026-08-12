@@ -48,6 +48,16 @@ const LEVELS: Record<string, Day["level"]> = {
   FOURTH_QUARTILE: 4,
 };
 
+async function readJson<T>(response: Response): Promise<T | undefined> {
+  const body = await response.text();
+  if (!body.trim()) return undefined;
+  try {
+    return JSON.parse(body) as T;
+  } catch {
+    return undefined;
+  }
+}
+
 /**
  * Deliberately takes no `request` argument.
  *
@@ -111,8 +121,8 @@ export async function GET() {
       });
 
       if (res.ok) {
-        const json = (await res.json()) as GraphQLResponse;
-        const cal = json.data?.user?.contributionsCollection?.contributionCalendar;
+        const json = await readJson<GraphQLResponse>(res);
+        const cal = json?.data?.user?.contributionsCollection?.contributionCalendar;
         if (cal) {
           total = cal.totalContributions;
           days = cal.weeks.flatMap((w) =>
@@ -136,13 +146,15 @@ export async function GET() {
       { headers, next: { revalidate }, signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) },
     );
     if (res.ok) {
-      const json = (await res.json()) as GitHubEvent[];
-      events = json.map((e) => ({
-        id: e.id,
-        type: e.type.replace(/Event$/, ""),
-        repo: e.repo.name,
-        at: e.created_at,
-      }));
+      const json = await readJson<GitHubEvent[]>(res);
+      if (Array.isArray(json)) {
+        events = json.map((e) => ({
+          id: e.id,
+          type: e.type.replace(/Event$/, ""),
+          repo: e.repo.name,
+          at: e.created_at,
+        }));
+      }
     }
   } catch (err) {
     console.error("[github] events failed:", err);
