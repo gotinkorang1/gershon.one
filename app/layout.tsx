@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import dynamic from "next/dynamic";
 import { Archivo, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteNav } from "@/components/site-nav";
@@ -10,21 +9,10 @@ import { Analytics } from "@/components/analytics";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 import { HtmlLang } from "@/components/html-lang";
 import { PostHogBoot } from "@/components/posthog-boot";
+import { DeferredInteractions } from "@/components/deferred-interactions";
 import { site } from "@/lib/site";
 import "./globals.css";
 import { serialiseJsonLd } from "@/lib/json-ld";
-
-// Deferred after hydration — these are invisible by default and only needed
-// for keyboard / command-palette interactions. Splitting them removes their
-// parse + init cost from Total Blocking Time.
-const CommandPalette = dynamic(
-  () => import("@/components/command-palette").then((m) => ({ default: m.CommandPalette })),
-  { ssr: false },
-);
-const KeyboardShortcuts = dynamic(
-  () => import("@/components/keyboard-shortcuts").then((m) => ({ default: m.KeyboardShortcuts })),
-  { ssr: false },
-);
 
 const sans = Archivo({
   subsets: ["latin"],
@@ -256,8 +244,7 @@ export default function RootLayout({
         <ThemeProvider>
           <TopProgress />
           <SiteNav />
-          <CommandPalette />
-          <KeyboardShortcuts />
+          <DeferredInteractions />
           <main id="main">
             <PageTransition>{children}</PageTransition>
           </main>
