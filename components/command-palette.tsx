@@ -22,6 +22,11 @@ import { useI18n } from "@/components/locale-provider";
 import { resumeUrlFor } from "@/lib/i18n";
 import { Portal } from "@/components/ui/portal";
 import { captureAnalyticsEvent } from "@/lib/analytics";
+import {
+  COMMAND_PALETTE_EVENT,
+  clearPendingCommandPalette,
+  consumePendingCommandPalette,
+} from "@/lib/command-palette-bus";
 
 type Item = {
   id: string;
@@ -236,13 +241,23 @@ export function CommandPalette() {
       }
       if (e.key === "Escape") close();
     };
-    const onOpen = () => setOpen(true);
+    const onOpen = () => {
+      clearPendingCommandPalette();
+      setOpen(true);
+    };
 
     window.addEventListener("keydown", onKey);
-    window.addEventListener("open-command-palette", onOpen);
+    window.addEventListener(COMMAND_PALETTE_EVENT, onOpen);
+
+    // This component is code-split and mounts after hydration, so a trigger
+    // fired in that gap dispatched its event before this listener existed.
+    // Replay the latched request so the click is never dropped. The microtask
+    // keeps the setState out of the synchronous effect body.
+    if (consumePendingCommandPalette()) queueMicrotask(() => setOpen(true));
+
     return () => {
       window.removeEventListener("keydown", onKey);
-      window.removeEventListener("open-command-palette", onOpen);
+      window.removeEventListener(COMMAND_PALETTE_EVENT, onOpen);
     };
   }, [close]);
 

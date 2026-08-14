@@ -25,26 +25,34 @@ test("PostHog sends the initial page view to its ingestion endpoint", async ({
   );
 
   await page.goto("/");
-  const clientState = await page.evaluate(() => {
-    const client = (
-      window as unknown as {
-        posthog?: {
-          __loaded?: boolean;
-          is_capturing?: () => boolean;
-          config?: { api_host?: string; token?: string };
-        };
-      }
-    ).posthog;
 
-    return {
-      exists: Boolean(client),
-      loaded: Boolean(client?.__loaded),
-      capturing: client?.is_capturing?.() ?? false,
-      host: client?.config?.api_host,
-      tokenPrefix: client?.config?.token?.slice(0, 4),
-    };
-  });
-  expect(clientState).toEqual({
+  const readClientState = () =>
+    page.evaluate(() => {
+      const client = (
+        window as unknown as {
+          posthog?: {
+            __loaded?: boolean;
+            is_capturing?: () => boolean;
+            config?: { api_host?: string; token?: string };
+          };
+        }
+      ).posthog;
+
+      return {
+        exists: Boolean(client),
+        loaded: Boolean(client?.__loaded),
+        capturing: client?.is_capturing?.() ?? false,
+        host: client?.config?.api_host,
+        tokenPrefix: client?.config?.token?.slice(0, 4),
+      };
+    });
+
+  // PostHog boots lazily on requestIdleCallback (up to a 4s timeout) so its
+  // parse + init cost stays off the critical path. Wait for it to load before
+  // asserting rather than reading synchronously right after navigation.
+  await expect.poll(async () => (await readClientState()).loaded, { timeout: 8_000 }).toBe(true);
+
+  expect(await readClientState()).toEqual({
     exists: true,
     loaded: true,
     capturing: true,
