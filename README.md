@@ -28,11 +28,21 @@ Open http://localhost:3000.
 | `npm start` | Serve the production build |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | TypeScript, no emit |
-| `npm run test:e2e` | Responsive Playwright smoke tests |
+| `npm run test:unit` | Vitest — pure logic in `lib/` |
+| `npm run test:e2e` | Responsive + accessibility Playwright tests |
 
-The responsive suite runs the critical portfolio journeys at 320px, 768px and
-1440px. Local runs use the installed stable Chrome browser; CI installs a
-pinned Chromium build and tests the completed production build.
+### Testing
+
+- **Unit** (`tests/unit`, Vitest) covers the pure logic in `lib/` — slug
+  generation, table-of-contents heading extraction, role-focus ranking, search
+  scoring, JSON-LD escaping, and i18n dictionary resolution. Fast; no browser.
+- **End-to-end** (`tests/e2e`, Playwright) runs the critical portfolio journeys
+  at 320px, 768px and 1440px, plus an `@axe-core` WCAG pass. Local runs use the
+  installed stable Chrome; CI installs a pinned Chromium and tests the completed
+  production build.
+
+Every push and pull request runs the full gate in CI (audit → typecheck → lint
+→ unit → build → e2e). See [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ---
 
@@ -166,4 +176,7 @@ Deliberately left out of v1 to keep the first build fast and dependency-light:
 
 ---
 
-© Gershon Adjei Otinkorang
+## License
+
+© Gershon Adjei Otinkorang. All rights reserved. The source is published for
+reference; the content is personal. See [`LICENSE`](LICENSE) for terms.
