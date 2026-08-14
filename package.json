@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
+    "test:unit": "vitest run",
     "test:e2e": "playwright test"
   },
   "dependencies": {
@@ -37,7 +38,8 @@
     "eslint": "^9.0.0",
     "eslint-config-next": "^16.3.0",
     "tailwindcss": "^4.0.0",
-    "typescript": "^5.7.0"
+    "typescript": "^5.7.0",
+    "vitest": "^4.1.10"
   },
   "//browserslist": "Modern floors so Next/SWC stops shipping polyfills for Array.prototype.at, Object.hasOwn, String.prototype.trimStart, Object.fromEntries, Array.flat/flatMap, Math.trunc and similar Baseline-2022 features (~14KB of dead JS on the critical path). Versions are set at the point where every one of those is natively supported (Object.hasOwn is the newest — Chrome/Edge 93, Firefox 92, Safari 15.4). IMPORTANT: no additive query like `not dead` — browserslist ORs its entries, so `not dead` would union old engines back in and re-enable the polyfills. Only version floors here.",
   "browserslist": [
