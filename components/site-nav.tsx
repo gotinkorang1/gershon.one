@@ -11,6 +11,7 @@ import { useI18n } from "@/components/locale-provider";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageToggle } from "@/components/language-toggle";
 import { CvButton } from "@/components/cv-button";
+import { requestCommandPalette } from "@/lib/command-palette-bus";
 
 export function SiteNav() {
   const { t, locale } = useI18n();
@@ -170,7 +171,7 @@ export function SiteNav() {
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                onClick={() => window.dispatchEvent(new CustomEvent("open-command-palette"))}
+                onClick={() => requestCommandPalette()}
                 aria-label={t.ui.openPalette}
                 className="hidden items-center gap-2 rounded-lg border border-border bg-surface-1 py-1.5 pl-2.5 pr-2 text-xs text-faint transition-colors hover:border-border-strong hover:text-foreground xl:flex"
               >
