@@ -32,9 +32,11 @@ export function Tooltip({
       <span
         role="tooltip"
         className={cn(
-          "pointer-events-none absolute left-1/2 z-50 -translate-x-1/2 whitespace-nowrap rounded-md border border-border bg-surface-2 px-2 py-1 text-xs text-foreground shadow-[var(--shadow-lg)] transition-all duration-150",
-          side === "top" ? "bottom-full mb-2" : "top-full mt-2",
-          open ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-1 opacity-0",
+          "pointer-events-none absolute left-1/2 z-50 -translate-x-1/2 whitespace-nowrap rounded-md border border-border bg-surface-2 px-2 py-1 text-xs text-foreground shadow-[var(--shadow-lg)] transition-[opacity,transform] duration-150 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          // Scale in from the edge nearest the trigger — a popover appears from
+          // where it is anchored, not from its own centre.
+          side === "top" ? "bottom-full mb-2 origin-bottom" : "top-full mt-2 origin-top",
+          open ? "scale-100 opacity-100" : "scale-95 opacity-0",
           className,
         )}
       >
