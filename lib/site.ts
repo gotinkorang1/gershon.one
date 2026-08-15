@@ -653,13 +653,13 @@ export type Reference = {
 };
 
 export const references: Reference[] = [
-  // {
-  //   quote:
-  //     "Gershon designed and ran the entire site network single-handedly — and was the person everyone called when anything broke.",
-  //   name: "Full Name",
-  //   title: "Engineering & Design Manager, Greenhouse International",
-  //   link: "https://www.linkedin.com/in/…",
-  // },
+  {
+    quote:
+      "Gershon has been a great asset to my companies in every aspect of our digital space.",
+    name: "Theophilus",
+    title: "CEO, Nii Plants Group",
+  },
+  // Add more here as { quote, name, title, link? }.
 ];
 
 /**
