@@ -10,6 +10,7 @@ import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 import { HtmlLang } from "@/components/html-lang";
 import { PostHogBoot } from "@/components/posthog-boot";
 import { DeferredInteractions } from "@/components/deferred-interactions";
+import { Toaster } from "@/components/toaster";
 import { site } from "@/lib/site";
 import "./globals.css";
 import { serialiseJsonLd } from "@/lib/json-ld";
@@ -249,6 +250,7 @@ export default function RootLayout({
             <PageTransition>{children}</PageTransition>
           </main>
           <SiteFooter />
+          <Toaster />
         </ThemeProvider>
         <Analytics />
         <VercelAnalytics />

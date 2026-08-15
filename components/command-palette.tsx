@@ -14,6 +14,7 @@ import {
   Text,
 } from "lucide-react";
 import { Github, Linkedin } from "@/components/ui/brand-icons";
+import { toast } from "sonner";
 import { useTheme } from "next-themes";
 import { navLinks, site } from "@/lib/site";
 import { searchDocs, type SearchDoc } from "@/lib/search-index";
@@ -91,7 +92,11 @@ export function CommandPalette() {
         keywords: site.email,
         icon: <Copy className="size-4" />,
         run: () => {
-          void navigator.clipboard.writeText(site.email);
+          // The palette closes on run, so an inline "copied" state is
+          // impossible here — a toast is the honest way to confirm it worked.
+          void navigator.clipboard
+            .writeText(site.email)
+            .then(() => toast.success(t.ui.emailCopied));
           close();
         },
       },
