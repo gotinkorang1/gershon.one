@@ -113,6 +113,19 @@ test("desktop command palette includes recruiter actions", async ({ page }, test
   await expect(page.getByRole("button", { name: "Save contact", exact: true })).toBeVisible();
 });
 
+test("copying the email from the palette confirms with a toast", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop-1440", "Command trigger is desktop-only");
+
+  await page.goto("/");
+  await page.getByRole("button", { name: "Open command palette", exact: true }).click();
+  const palette = page.getByRole("dialog", { name: "Command palette" });
+  await expect(palette).toBeVisible();
+  // Scope to the palette — a page icon button shares the same accessible name.
+  await palette.getByRole("button", { name: "Copy email address", exact: true }).click();
+  // The palette closes on the action, so the toast is the only confirmation.
+  await expect(page.getByText("Email address copied")).toBeVisible();
+});
+
 test("French navigation keeps the translated contact action", async ({ page }) => {
   await page.goto("/fr");
   await expect(page.getByRole("link", { name: /Enregistrer le contact/ })).toHaveAttribute(

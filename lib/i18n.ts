@@ -86,6 +86,7 @@ type Dictionary = {
     bookCallBody: string;
     findTime: string;
     copyEmail: string;
+    emailCopied: string;
     caseStudyEyebrow: string;
     certifiedBy: string;
     educatedAt: string;
@@ -290,6 +291,7 @@ const en: Dictionary = {
       "Skip the back-and-forth — pick a slot that suits you and it lands in both our calendars.",
     findTime: "Find a time",
     copyEmail: "Copy email address",
+    emailCopied: "Email address copied",
     caseStudyEyebrow: "CASE STUDY",
     certifiedBy: "AWS Certified",
     educatedAt: "BSc, KNUST",
@@ -504,6 +506,7 @@ const fr: Dictionary = {
       "Évitons les allers-retours — choisissez un créneau qui vous convient et il apparaîtra dans nos deux agendas.",
     findTime: "Trouver un créneau",
     copyEmail: "Copier l'adresse courriel",
+    emailCopied: "Adresse courriel copiée",
     caseStudyEyebrow: "ÉTUDE DE CAS",
     certifiedBy: "Certifié AWS",
     educatedAt: "Licence, KNUST",
