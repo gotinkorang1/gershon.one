@@ -658,6 +658,7 @@ export const references: Reference[] = [
       "Gershon has been a great asset to my companies in every aspect of our digital space.",
     name: "Theophilus",
     title: "CEO, Nii Plants Group",
+    link: "https://www.linkedin.com/in/theo-ayitey-adjin-b1b87030/",
   },
   {
     quote:
