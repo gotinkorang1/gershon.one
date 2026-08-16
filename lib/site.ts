@@ -665,6 +665,7 @@ export const references: Reference[] = [
       "Gershon has a solution to all your digital needs. He is multitalented in IT, and I have worked with him for many years.",
     name: "Michael Donkor",
     title: "IS Analyst, Avenue Living",
+    link: "https://www.linkedin.com/in/michael-boansi-donkor/",
   },
   // Add more here as { quote, name, title, link? }.
 ];
