@@ -12,25 +12,24 @@ export const brief = {
   eligibility: [
     {
       label: "Available from",
-      value: "August 2026",
-      note: "Arriving in St. John's August 2026 for an MSc at Memorial University",
+      value: "Immediately",
+      note: "Based in St. John's, NL · MSc student at Memorial University (2026–2028)",
     },
     {
       label: "Work authorisation",
-      // Canadian study permit approved (S-1, valid to Dec 2028). Verify the exact
-      // hour limits against your permit's printed conditions before sharing.
-      value: "Canadian study permit (from Aug 2026)",
-      note: "Off-campus work up to 24 hrs/week in term, full-time in scheduled breaks · PGWP-eligible on completion",
+      // Canadian study permit approved (S-1, valid to Dec 2028).
+      value: "Canadian study permit (valid to 2028)",
+      note: "Off-campus work up to 24 hrs/week in term, full-time in scheduled breaks · PGWP-eligible upon graduation",
     },
     {
       label: "Notice period",
-      value: "One month",
-      note: "From current role at Greenhouse · available in Canada from August 2026",
+      value: "Immediate / Flexible",
+      note: "Available for part-time, contract, or scheduled work in Canada",
     },
     {
       label: "Location",
       value: "St. John's, NL",
-      note: "Open to hybrid and on-site; remote across Atlantic Canada",
+      note: "55 Sir Wilfred Greenfield Place · Open to on-site/hybrid in St. John's, or remote across Canada",
     },
   ],
 
@@ -43,13 +42,15 @@ export const brief = {
 
   // What you'd want a screener to read out to a hiring manager.
   pitch:
-    "Five years running network and server infrastructure end to end — MikroTik RouterOS, dual-WAN failover with Starlink, ERPNext and Odoo administration, and the IT support function around all of it. Currently sole administrator for a multi-site network in Ghana. Arriving in St. John's in August 2026 for an MSc in Computer Science focused on network security and intrusion detection.",
+    "Information Technology Consultant and Memorial University Computer Science MSc student with five years' experience running network, server, and end-user infrastructure end to end. Currently providing remote IT consulting at Sabaoth across hardware, switching, firewalls, and Microsoft 365/Google Workspace in Canada. Previously sole IT administrator for a 1,200-acre industrial campus in Ghana.",
 
   // Ranked for a screener matching against a job description.
   strengths: [
-    { skill: "MikroTik RouterOS / CCR2004", years: "3 yrs", level: "Daily, production" },
+    { skill: "IT Consulting & Remote Support", years: "5 yrs", level: "Daily, production" },
+    { skill: "Microsoft 365 & Google Workspace", years: "3 yrs", level: "Daily, production" },
+    { skill: "MikroTik RouterOS / Networking", years: "3 yrs", level: "Daily, production" },
     { skill: "ERPNext / Odoo administration", years: "3 yrs", level: "Daily, production" },
-    { skill: "Network troubleshooting & diagnostics", years: "5 yrs", level: "Daily" },
+    { skill: "Network troubleshooting & firewalls", years: "5 yrs", level: "Daily" },
     { skill: "Server & systems administration", years: "5 yrs", level: "Daily" },
     { skill: "Starlink / satellite networking", years: "2 yrs", level: "Deployed and maintained" },
     { skill: "AWS", years: "2 yrs", level: "Certified Cloud Practitioner" },

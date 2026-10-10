@@ -20,7 +20,7 @@ export function GET() {
 
   const body = `# ${site.name}
 
-> ${site.role} relocating to ${site.relocation.to} in ${site.relocation.when}. ${site.summary}
+> ${site.role} based in ${site.location}. ${site.summary}
 
 ## About
 
@@ -28,8 +28,8 @@ ${site.headline}
 
 - Role: ${site.role}
 - Based: ${site.location} (${site.timezone})
-- Relocating to: ${site.relocation.to}, ${site.relocation.when} — ${site.relocation.note}
-- Available in Canada from: August 2026
+- Status: ${site.relocation.note}
+- Availability: ${site.availability}
 - Languages: English, French
 
 ## Case studies

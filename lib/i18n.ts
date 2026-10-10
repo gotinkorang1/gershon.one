@@ -207,18 +207,18 @@ const en: Dictionary = {
     contact: "Contact",
   },
   hero: {
-    role: "IT Support Specialist",
+    role: "Information Technology Consultant",
     headline:
-      "I keep the systems people depend on working — from a jammed printer to a fibre backbone across 1,200 acres.",
+      "I keep the systems people depend on working — from client infrastructure and cloud workspaces to a fibre backbone across 1,200 acres.",
     summary:
-      "IT support specialist with five years keeping users, devices and infrastructure running across a 1,200-acre industrial park and multiple retail sites in Ghana. Day to day that means end-user support, POS and PDA systems, and the servers behind them; it has also meant designing the site-wide fibre network and the multi-WAN satellite link that carries it. Comfortable at both ends — the helpdesk ticket and the distribution panel.",
-    availability: "Available in Canada from August 2026",
+      "Information Technology Consultant and Memorial University Computer Science MSc student with five years keeping users, devices and enterprise infrastructure running. Based in St. John's, NL. Providing remote IT consulting at Sabaoth across hardware, networks, firewalls and Microsoft 365/Google Workspace; previously engineered the multi-WAN satellite link and GPON fibre backbone across a 1,200-acre industrial park in Ghana.",
+    availability: "Available in Canada (Part-time in term / Full-time breaks)",
     downloadCv: "Download CV",
     getInTouch: "Get in touch",
-    movingTo: (city, when) => `Accra, Ghana — arriving in ${city}, ${when}`,
+    movingTo: (city, when) => "St. John's, NL, Canada",
     topologyMode: "Aggregated multi-WAN",
     currentlyLabel: "Currently",
-    currently: "Sole IT for a 1,200-acre industrial park",
+    currently: "IT Consultant at Sabaoth · MSc student at Memorial University",
     stackLabel: "Stack",
   },
   facts: {
@@ -230,7 +230,7 @@ const en: Dictionary = {
   sections: {
     experienceTitle: "Where I've done the work",
     experienceLede:
-      "Six roles across engineering, real estate, advertising and Ghana's national power utility.",
+      "Roles across IT consulting, enterprise infrastructure, banking, real estate, and power utilities.",
     workTitle: "How the work actually went",
     workLede:
       "Longer write-ups of problems worth explaining, rather than screenshots that age badly.",
@@ -239,13 +239,13 @@ const en: Dictionary = {
       "Grouped by use, in rough order of how central each is to the current role.",
     credentialsTitle: "Education and certification",
     credentialsLede:
-      "In order, from the first diploma to the MSc that starts in 2026. Every item links to the issuing body.",
+      "In order, from technical diploma to the ongoing MSc in Computer Science at Memorial University. Every item links to the issuing body.",
     referencesEyebrow: "References",
     referencesTitle: "What people I've worked with say",
     referencesLede: "People who managed or worked alongside me, in their own words.",
     contactTitle: "Tell me what you're building",
     contactLede: (city, when) =>
-      `Available for IT and network administration roles in ${city} from ${when}.`,
+      `Available for IT consulting, systems, and network roles in St. John's and remotely across Canada.`,
   },
   common: {
     current: "Current",
@@ -301,7 +301,7 @@ const en: Dictionary = {
       "A design I built and maintain: eight satellite terminals bonded into one uplink, feeding fibre across a 1,200-acre site. Drop a terminal and watch capacity rebalance instead of cutting over.",
     aboutMe: "In short",
     metaDescription:
-      "IT support specialist who runs the helpdesk and the fibre backbone — 5 years across a 1,200-acre park in Ghana. Arriving in St. John's, Canada, Aug 2026.",
+      "IT consultant and Memorial University MSc Computer Science student with 5+ years running enterprise infrastructure. Based in St. John's, NL, Canada.",
     relocationWhen: "August 2026",
     present: "Present",
     eyebrowExperience: "01 — Experience",
@@ -315,9 +315,9 @@ const en: Dictionary = {
     proofDegree: "BSc Information Technology",
     proofDegreeSub: "KNUST · Second Class Upper",
     proofMsc: "MSc Computer Science",
-    proofMscSub: "Memorial University · network security focus",
+    proofMscSub: "Memorial University · 2026–2028",
     basedIn: (location, timezone, city, when) =>
-      `Based in ${location} (${timezone}), arriving in ${city} ${when}. Comfortable working across North American and European hours.`,
+      `Based in St. John's, NL (${timezone}) · MSc student at Memorial University. Comfortable working across Canadian and North American timezones.`,
     noResults: (query) => `No results for “${query}”`,
     failedOver: (seconds, live) =>
       `Rebalanced across ${live} uplinks · ${seconds}s`,
@@ -422,18 +422,18 @@ const fr: Dictionary = {
     contact: "Contact",
   },
   hero: {
-    role: "Spécialiste du support informatique",
+    role: "Consultant en technologies de l'information",
     headline:
-      "Je maintiens en service les systèmes dont dépendent les utilisateurs — de l'imprimante bloquée à une dorsale fibre sur 1 200 acres.",
+      "Je maintiens en service les systèmes dont dépendent les utilisateurs — des espaces infonuagiques à une dorsale fibre sur 1 200 acres.",
     summary:
-      "Spécialiste du support informatique comptant cinq ans d'expérience à maintenir en service les utilisateurs, les équipements et les infrastructures d'un parc industriel de 1 200 acres et de plusieurs points de vente au Ghana. Au quotidien : support aux utilisateurs, systèmes de caisse et terminaux portables, et les serveurs qui les sous-tendent. Cela a aussi impliqué la conception de la dorsale fibre du site et de la liaison satellite multi-WAN qui l'alimente.",
-    availability: "Disponible au Canada à partir d'août 2026",
+      "Consultant en technologies de l'information et étudiant à la maîtrise en informatique à l'Université Memorial avec cinq ans d'expérience. Basé à St. John's, T.-N.-L. Conseil IT à distance chez Sabaoth (matériel, réseaux, pare-feu, Microsoft 365/Google Workspace) ; conception antérieure de la dorsale fibre et de la liaison multi-WAN satellite sur un parc de 1 200 acres au Ghana.",
+    availability: "Disponible au Canada (temps partiel / sessions)",
     downloadCv: "Télécharger le CV",
     getInTouch: "Me contacter",
-    movingTo: (city, when) => `Accra, Ghana — arrivée à ${city}, ${when}`,
+    movingTo: (city, when) => "St. John's, T.-N.-L., Canada",
     topologyMode: "Multi-WAN agrégé",
     currentlyLabel: "En poste",
-    currently: "Seul responsable IT d'un parc industriel de 1 200 acres",
+    currently: "Consultant IT chez Sabaoth · Étudiant à la maîtrise à l'Université Memorial",
     stackLabel: "Stack",
   },
   facts: {
@@ -445,7 +445,7 @@ const fr: Dictionary = {
   sections: {
     experienceTitle: "Où j'ai fait mes preuves",
     experienceLede:
-      "Six postes en ingénierie, immobilier, publicité et à la compagnie nationale d'électricité du Ghana.",
+      "Des postes en conseil informatique, infrastructure d'entreprise, secteur bancaire, immobilier et services publics.",
     workTitle: "Comment le travail s'est réellement déroulé",
     workLede:
       "Des analyses détaillées de problèmes qui méritent d'être expliqués, plutôt que des captures d'écran qui vieillissent mal.",
@@ -454,13 +454,13 @@ const fr: Dictionary = {
       "Regroupé par usage, approximativement selon l'importance de chaque domaine dans mon poste actuel.",
     credentialsTitle: "Formation et certifications",
     credentialsLede:
-      "Dans l'ordre, du premier diplôme jusqu'à la maîtrise qui débute en 2026. Chaque élément renvoie à l'organisme émetteur.",
+      "Dans l'ordre, du diplôme technique jusqu'à la maîtrise en informatique en cours à l'Université Memorial. Chaque élément renvoie à l'organisme émetteur.",
     referencesEyebrow: "Références",
     referencesTitle: "Ce que disent mes collègues et responsables",
     referencesLede: "Des personnes qui m'ont encadré ou avec qui j'ai travaillé, dans leurs propres mots.",
     contactTitle: "Parlez-moi de votre projet",
     contactLede: (city, when) =>
-      `Disponible pour des postes en administration systèmes et réseaux à ${city} à partir d'${when}.`,
+      `Disponible pour des postes en conseil informatique, systèmes et réseaux à St. John's et à distance à travers le Canada.`,
   },
   common: {
     current: "Actuel",
@@ -516,7 +516,7 @@ const fr: Dictionary = {
       "Une architecture que j'ai conçue et que je maintiens : huit terminaux satellite agrégés en une seule liaison, alimentant la fibre sur un site de 1 200 acres. Coupez un terminal et observez la capacité se rééquilibrer au lieu de basculer.",
     aboutMe: "En bref",
     metaDescription:
-      "Spécialiste du support informatique — du helpdesk à la dorsale fibre. 5 ans sur un parc de 1 200 acres au Ghana. Arrivée à St. John's, Canada, août 2026.",
+      "Consultant IT et étudiant à la maîtrise en informatique à l'Université Memorial avec plus de 5 ans d'expérience. Basé à St. John's, Canada.",
     relocationWhen: "août 2026",
     present: "aujourd'hui",
     eyebrowExperience: "01 — Expérience",
@@ -530,9 +530,9 @@ const fr: Dictionary = {
     proofDegree: "Licence en technologies de l'information",
     proofDegreeSub: "KNUST · Mention bien",
     proofMsc: "Maîtrise en informatique",
-    proofMscSub: "Université Memorial · axe sécurité réseau",
+    proofMscSub: "Université Memorial · 2026–2028",
     basedIn: (location, timezone, city, when) =>
-      `Basé à ${location} (${timezone}), arrivée à ${city} en ${when}. À l'aise pour travailler sur les fuseaux nord-américains et européens.`,
+      `Basé à St. John's, T.-N.-L. (${timezone}) · étudiant à la maîtrise à l'Université Memorial. À l'aise sur les fuseaux horaires canadiens et nord-américains.`,
     noResults: (query) => `Aucun résultat pour « ${query} »`,
     failedOver: (seconds, live) =>
       `Rééquilibrage sur ${live} liaisons · ${seconds} s`,

@@ -11,6 +11,17 @@ export const experienceFr: Record<
   string,
   { role: string; summary: string; highlights: string[]; division?: string }
 > = {
+  SABAOTH: {
+    role: "Consultant en technologies de l'information",
+    summary:
+      "Conseil et support informatique à distance pour le matériel, les logiciels, les réseaux et les espaces de travail infonuagiques des clients.",
+    highlights: [
+      "Conseil informatique et assistance technique à distance pour les pannes matérielles, logicielles et réseau, garantissant une connectivité continue.",
+      "Configuration et dépannage de routeurs, commutateurs et pare-feu, améliorant la fiabilité de l'infrastructure des clients.",
+      "Support et administration de Microsoft 365 et Google Workspace, gestion des comptes utilisateurs et des permissions.",
+      "Contribution aux mesures de cybersécurité et à la maintenance préventive pour un environnement informatique sécurisé.",
+    ],
+  },
   "Greenhouse International Development Group Ghana Ltd.": {
     role: "Chargé de support informatique",
     division: "Département ingénierie et conception",
@@ -55,6 +66,18 @@ export const experienceFr: Record<
       "Compilation et analyse de rapports de performance sur les plateformes numériques pour orienter les décisions marketing et opérationnelles.",
     ],
   },
+  "Kwaaba Foundation": {
+    role: "Assistant de projet",
+    summary:
+      "Coordination de projets, gestion des opérations de bureau et communication numérique au profit d'initiatives communautaires.",
+    highlights: [
+      "Appui aux initiatives de santé et d'action communautaire de la Fondation Kwaaba.",
+      "Organisation d'événements et de programmes alignés sur les missions de la fondation.",
+      "Collaboration à la planification de projets, aux structures d'équipe, aux échéanciers et aux opérations quotidiennes.",
+      "Gestion documentaire, communications internes et externes, réunions, présentations et suivi.",
+      "Soutien au développement de sites web, aux contenus graphiques et à la communication sur les réseaux sociaux.",
+    ],
+  },
   "Kaysens Group & Kwaaba Foundation": {
     role: "Assistant de projet (contrat)",
     summary:
@@ -66,6 +89,16 @@ export const experienceFr: Record<
       "Conception et développement de sites web et de contenus graphiques pour l'image de marque des projets.",
     ],
   },
+  "Origin8 Limited": {
+    role: "Spécialiste informatique",
+    summary:
+      "Conception de sites web, assistance informatique au personnel et intégration d'outils numériques aux projets de campagne.",
+    highlights: [
+      "Conception et maintenance de sites web pour les projets internes et clients.",
+      "Support technique aux employés pour le matériel, les logiciels et le réseau afin de limiter les interruptions.",
+      "Collaboration avec les équipes créatives pour intégrer les solutions techniques aux livrables.",
+    ],
+  },
   "Origin8 Advertising Ltd.": {
     role: "Spécialiste informatique (service national)",
     division: "Département création",
@@ -75,6 +108,17 @@ export const experienceFr: Record<
       "Conception et développement de sites web pour des projets clients et internes.",
       "Support informatique au personnel, avec résolution des problèmes matériels et logiciels pour limiter les interruptions.",
       "Production de contenus créatifs pour des campagnes marketing et publicitaires.",
+    ],
+  },
+  "GCB Bank Limited": {
+    role: "Spécialiste informatique",
+    summary:
+      "Maintenance de compteuses de billets, support informatique au personnel et traitement numérique de formulaires au sein de la plus grande banque commerciale du Ghana.",
+    highlights: [
+      "Entretien et réparation de compteuses de billets, assurant un fonctionnement matériel optimal pour les opérations bancaires.",
+      "Support technique au personnel pour le matériel, les logiciels et le réseau, réduisant les interruptions de service.",
+      "Assistance aux clients pour leurs demandes de renseignements sur les comptes et les services.",
+      "Utilisation de Google Forms et d'outils numériques pour la collecte et le traitement efficace des données.",
     ],
   },
   "Volta River Authority": {
@@ -133,7 +177,7 @@ export const skillGroupsFr: Record<string, { title: string; blurb: string }> = {
 export const credentialsFr: Record<string, { title: string; detail?: string }> = {
   "MSc Computer Science": {
     title: "Maîtrise en informatique",
-    detail: "Avec cours · axée sur la sécurité réseau et la détection d'intrusion",
+    detail: "Avec cours · axée sur la sécurité réseau et la détection d'intrusion (2026–2028)",
   },
   "BSc Information Technology": {
     title: "Baccalauréat en technologies de l'information",
@@ -145,6 +189,18 @@ export const credentialsFr: Record<string, { title: string; detail?: string }> =
   },
   "AWS Certified Cloud Practitioner": {
     title: "AWS Certified Cloud Practitioner",
+  },
+  "Intermediate First Aid CPR C/AED (Standard)": {
+    title: "Secourisme intermédiaire RCR niveau C / DEA (standard)",
+    detail: "Cours COUR-1164-NL-260926-7265 · Conseil de Terre-Neuve-et-Labrador d'Ambulance Saint-Jean · RCR niveau C et DEA",
+  },
+  "Sexual Violence Awareness and Prevention": {
+    title: "Sensibilisation et prévention de la violence sexuelle",
+    detail: "Bureau du harcèlement sexuel · certification de sécurité institutionnelle",
+  },
+  "Fire Safety, Prevention, Evacuation and Basic Firefighting": {
+    title: "Sécurité incendie, prévention, évacuation et lutte contre l'incendie",
+    detail: "Caserne d'Amasaman · prévention, évacuation d'urgence, fonctions de garde d'incendie pour le parc industriel de Bright",
   },
   "LinkedIn Marketing Strategy": { title: "Stratégie marketing LinkedIn" },
   "LinkedIn Marketing Fundamentals": { title: "Fondements du marketing LinkedIn" },
@@ -158,8 +214,8 @@ export const credentialsFr: Record<string, { title: string; detail?: string }> =
 export const factsFr: Record<string, { label: string; value: string }> = {
   Experience: { label: "Expérience", value: "Plus de 5 ans" },
   "Site supported": { label: "Site couvert", value: "1 200 acres" },
-  Available: { label: "Disponible", value: "Août 2026" },
-  Based: { label: "Basé à", value: "Accra → St. John's" },
+  Available: { label: "Disponible", value: "Immédiatement" },
+  Based: { label: "Basé à", value: "St. John's, T.-N.-L." },
 };
 
 export const issuersFr: Record<string, string> = {
@@ -167,6 +223,10 @@ export const issuersFr: Record<string, string> = {
   "Kwame Nkrumah University of Science and Technology":
     "Université des sciences et technologies Kwame Nkrumah",
   "Amazon Web Services": "Amazon Web Services",
+  "St. John Ambulance": "Ambulance Saint-Jean",
+  "Ghana National Fire Service": "Service national des incendies du Ghana",
+  "Canadian Red Cross / St. John Ambulance":
+    "Croix-Rouge canadienne / Ambulance Saint-Jean",
   LinkedIn: "LinkedIn",
   "Takoradi Technical University (NABPTEX)": "Université technique de Takoradi (NABPTEX)",
   Google: "Google",

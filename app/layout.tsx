@@ -87,13 +87,19 @@ const jsonLd = {
   nationality: { "@type": "Country", name: "Ghana" },
   worksFor: {
     "@type": "Organization",
-    name: "Greenhouse International Development Group Ghana Ltd.",
+    name: "SABAOTH",
   },
   url: siteUrl,
   email: `mailto:${site.email}`,
   telephone: site.phone,
   jobTitle: site.role,
-  address: { "@type": "PostalAddress", addressLocality: "Accra", addressCountry: "GH" },
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "55 Sir Wilfred Greenfield Place",
+    addressLocality: "St. John's",
+    addressRegion: "NL",
+    addressCountry: "CA",
+  },
   alumniOf: [
     {
       "@type": "CollegeOrUniversity",
@@ -175,6 +181,7 @@ const jsonLd = {
       name: "St. John's",
       address: {
         "@type": "PostalAddress",
+        streetAddress: "55 Sir Wilfred Greenfield Place",
         addressLocality: "St. John's",
         addressRegion: "NL",
         addressCountry: "CA",

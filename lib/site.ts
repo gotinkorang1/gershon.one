@@ -9,11 +9,15 @@ export const site = {
   name: "Gershon Adjei Otinkorang",
   shortName: "Gershon Otinkorang",
   initials: "GO",
-  role: "IT Support Specialist",
-  location: "Accra, Ghana",
+  role: "Information Technology Consultant",
+  location: "St. John's, NL, Canada",
   // Ticker of real tools shown under the hero summary. Kept short and true —
   // every item appears in the experience section's stacks.
   heroStack: [
+    "Microsoft 365",
+    "Google Workspace",
+    "Routers & switches",
+    "Firewalls",
     "MikroTik RouterOS",
     "Starlink",
     "GPON / fibre",
@@ -21,7 +25,6 @@ export const site = {
     "Proxmox",
     "Docker",
     "Odoo",
-    "Ubiquiti",
     "Tailscale",
     "Linux",
     "CCTV",
@@ -30,20 +33,20 @@ export const site = {
   relocation: {
     to: "St. John's, NL, Canada",
     when: "August 2026",
-    note: "Arriving August 2026 for an MSc at Memorial University",
+    note: "Relocated August 2026 · MSc student at Memorial University",
   },
-  timezone: "GMT",
+  timezone: "NDT",
   email: "contact@gershon.one",
-  phone: "+233 (0) 55 466 4733",
-  phoneHref: "+233554664733",
+  phone: "+1 (709) 219-5364",
+  phoneHref: "+17092195364",
   // Must match the host Vercel actually serves. The apex redirects to www, so
   // www is canonical — every canonical tag, og:url, sitemap entry and the
   // robots.txt Host directive derive from this one value.
   url: "https://www.gershon.one",
   headline:
-    "I keep the systems people depend on working — from a jammed printer to a fibre backbone across 1,200 acres.",
+    "I keep the systems people depend on working — from client infrastructure and cloud workspaces to a fibre backbone across 1,200 acres.",
   summary:
-    "IT support specialist with five years keeping users, devices and infrastructure running across a 1,200-acre industrial park and multiple retail sites in Ghana. Day to day that means end-user support, POS and PDA systems, and the servers behind them; it has also meant designing the site-wide fibre network and the multi-WAN satellite link that carries it. Comfortable at both ends — the helpdesk ticket and the distribution panel.",
+    "Information Technology Consultant and Memorial University Computer Science MSc student with five years keeping users, devices and enterprise infrastructure running. Based in St. John's, NL. Providing remote IT consulting at Sabaoth across hardware, networks, firewalls and Microsoft 365/Google Workspace; previously engineered the multi-WAN satellite link and GPON fibre backbone across a 1,200-acre industrial park in Ghana.",
   // Professional statement for security-focused positioning
   securityStatement:
     "I help organizations protect their infrastructure without sacrificing velocity. With hands-on experience in cloud security, compliance operations, and SOC monitoring, I believe security works best when it enables teams to move fast. I design layered defenses that catch threats early, keep systems compliant, and let people do their jobs. Whether building secure cloud architectures, operationalizing threat detection, or bridging security and engineering teams, I focus on outcomes: reduced risk, faster incident response, and sustainable security culture.",
@@ -51,8 +54,8 @@ export const site = {
   // runs far past what Google shows, so the meta description is authored
   // separately — leading with the strongest hook before the truncation point.
   metaDescription:
-    "IT support specialist who runs the helpdesk and the fibre backbone — 5 years across a 1,200-acre park in Ghana. Arriving in St. John's, Canada, Aug 2026.",
-  availability: "Available in Canada from August 2026",
+    "IT consultant and Memorial University MSc Computer Science student with 5+ years running enterprise infrastructure. Based in St. John's, NL, Canada.",
+  availability: "Available in Canada (Part-time in term / Full-time breaks)",
   /**
    * When the page content last meaningfully changed — bump by hand when you
    * edit experience, skills or credentials. Deliberately not derived from the
@@ -61,7 +64,7 @@ export const site = {
    * Must be a full ISO 8601 datetime with an offset; Google rejects a
    * date-only value for schema.org dateModified.
    */
-  contentUpdated: "2026-07-30T00:00:00+00:00",
+  contentUpdated: "2026-10-09T00:00:00-02:30",
   resumeUrl: "/gershon-otinkorang-cv.pdf",
   contactCard: {
     url: "/gershon-otinkorang.vcf",
@@ -98,7 +101,7 @@ export const site = {
   },
   socials: {
     github: "https://github.com/gotinkorang1",
-    linkedin: "https://www.linkedin.com/in/gotinkorang",
+    linkedin: "https://www.linkedin.com/in/gaotinkorang",
   },
 } as const;
 
@@ -138,8 +141,10 @@ export const roleFocusProfiles = [
     description:
       "End-user support, hardware, accounts, POS and handheld systems, troubleshooting and practical service ownership across multiple sites.",
     experience: [
+      "SABAOTH",
       "Greenhouse International Development Group Ghana Ltd.",
-      "Origin8 Advertising Ltd.",
+      "GCB Bank Limited",
+      "Origin8 Limited",
       "Volta River Authority",
       "RichWorld Mobile Devices",
     ],
@@ -162,6 +167,7 @@ export const roleFocusProfiles = [
     description:
       "Fibre, GPON, MikroTik, multi-WAN aggregation, enterprise switching, wireless coverage and fault isolation at industrial-site scale.",
     experience: [
+      "SABAOTH",
       "Greenhouse International Development Group Ghana Ltd.",
       "Volta River Authority",
     ],
@@ -202,6 +208,7 @@ export const roleFocusProfiles = [
     description:
       "Servers, virtualisation, Linux, containers, cloud, network security and resilient connectivity for distributed operations.",
     experience: [
+      "SABAOTH",
       "Greenhouse International Development Group Ghana Ltd.",
       "Volta River Authority",
       "Nii Plants Group",
@@ -225,7 +232,9 @@ export const roleFocusProfiles = [
     description:
       "Day-to-day ownership across users, devices, vendors, assets, business systems, documentation and distributed locations.",
     experience: [
+      "SABAOTH",
       "Greenhouse International Development Group Ghana Ltd.",
+      "GCB Bank Limited",
       "Nii Plants Group",
       "Prop-Tis GH Limited",
     ],
@@ -250,8 +259,8 @@ export const roleFocusProfiles = [
     experience: [
       "Nii Plants Group",
       "Prop-Tis GH Limited",
-      "Kaysens Group & Kwaaba Foundation",
-      "Origin8 Advertising Ltd.",
+      "Kwaaba Foundation",
+      "Origin8 Limited",
       "Volta River Authority",
     ],
     skillGroups: ["Cloud & web", "IT support"],
@@ -273,8 +282,8 @@ export const facts = [
   // identifiers — animating them produces nonsense like "Aug 1256".
   { label: "Experience", value: "5+ years", countable: true },
   { label: "Site supported", value: "1,200 acres", countable: false },
-  { label: "Available", value: "Aug 2026", countable: false },
-  { label: "Based", value: "Accra → St. John's", countable: false },
+  { label: "Available", value: "Available now", countable: false },
+  { label: "Based", value: "St. John's, NL", countable: false },
 ] as const;
 
 /* -------------------------------------------------------------------------- */
@@ -295,11 +304,34 @@ export type Job = {
 
 export const experience: Job[] = [
   {
+    company: "SABAOTH",
+    role: "Information Technology Consultant",
+    start: "2026-09",
+    end: null,
+    location: "Auburn Bay, AB, Canada (Remote)",
+    summary:
+      "Remote IT consulting and technical support for client hardware, software, networking, and cloud workspace infrastructure.",
+    highlights: [
+      "Provided remote IT consulting and technical support for hardware, software, and network issues, ensuring seamless connectivity.",
+      "Configured and troubleshot routers, switches, and firewalls, enhancing infrastructure reliability for clients.",
+      "Supported Microsoft 365 and Google Workspace, managing user accounts and permissions for optimal functionality.",
+      "Assisted with cybersecurity measures and system maintenance, contributing to a secure IT environment.",
+    ],
+    stack: [
+      "Microsoft 365",
+      "Google Workspace",
+      "Routers & switches",
+      "Firewalls",
+      "Remote support",
+      "Cybersecurity",
+    ],
+  },
+  {
     company: "Greenhouse International Development Group Ghana Ltd.",
     division: "Engineering & Design Department",
     role: "IT Support Officer",
     start: "2023-10",
-    end: null,
+    end: "2026-08",
     location: "Bright Industrial Park, Ghana",
     summary:
       "Sole IT support for a 1,200-acre industrial park and the retail sites of its subsidiary — end users, POS and PDA systems, servers, and the site-wide network that connects all of it.",
@@ -357,58 +389,73 @@ export const experience: Job[] = [
   {
     company: "Prop-Tis GH Limited",
     division: "IT / Advertising Department",
-    role: "Lead IT Officer",
-    start: "2022-03",
-    end: "2023-10",
-    location: "Ghana",
+    role: "Information Technology Specialist",
+    start: "2022-04",
+    end: "2023-09",
+    location: "Accra, Ghana",
     summary:
-      "Owned the company's real estate listing platform and the IT function around it, alongside the creative production team.",
+      "Developed real estate listing platforms, managed backups and SEO, and provided technical support across hardware and network systems.",
     highlights: [
-      "Developed and managed the real estate listing platform, improving performance and user experience.",
-      "Implemented SEO strategies that increased organic visibility and web traffic.",
+      "Developed and maintained a real-estate listing platform to enhance user experience and performance.",
+      "Provided technical support for hardware, software, and network issues, ensuring minimal disruption to operations.",
+      "Implemented data-backup systems to protect company information and managed corporate online assets, including the website and SEO.",
       "Supervised creative production teams across video, photography and graphic content.",
-      "Implemented and maintained data backup systems to safeguard company information.",
-      "Compiled and analysed performance reports across digital platforms to inform marketing and operational decisions.",
     ],
-    stack: ["WordPress", "PHP", "MySQL", "SEO", "Backup systems"],
+    stack: ["WordPress", "PHP", "MySQL", "SEO", "Backup systems", "IT support"],
   },
   {
-    company: "Kaysens Group & Kwaaba Foundation",
-    role: "Project Assistant (Contract)",
-    start: "2021-01",
-    end: "2022-03",
-    location: "Ghana",
+    company: "Kwaaba Foundation",
+    role: "Project Assistant",
+    start: "2021-03",
+    end: "2022-02",
+    location: "Accra, Ghana",
     summary:
-      "Project coordination and office operations, with the web and design work that supported them.",
+      "Project operations, documentation control, and web and digital communications for community initiatives.",
     highlights: [
-      "Coordinated project plans, timelines and personnel allocation.",
-      "Managed daily project office operations, documentation control and stakeholder communications.",
-      "Stood in for the Project Manager as needed to keep deadlines on track.",
-      "Designed and developed websites and graphic content for project branding.",
+      "Supported health and community initiatives at Kwaaba Foundation, empowering individuals to reach their full potential.",
+      "Assisted in organizing events and programs that align with the Foundation's mission of promoting good causes.",
+      "Collaborated with team members on project plans, personnel structures, timelines, and day-to-day project-office operations.",
+      "Managed documentation, internal and external communications, meetings, presentations, and follow-up actions; acted as stand-in for the Project Manager when required.",
+      "Supported website development, graphic content, and social-media communication for project activities.",
     ],
-    stack: ["Project coordination", "Documentation", "Web design"],
+    stack: ["Project coordination", "Documentation", "Web design", "Communications"],
   },
   {
-    company: "Origin8 Advertising Ltd.",
-    division: "Creative Department",
-    role: "IT Specialist (National Service)",
-    start: "2020-09",
-    end: "2020-12",
-    location: "Ghana",
-    summary: "Web development and internal IT support inside a creative agency.",
+    company: "Origin8 Limited",
+    role: "Information Technology Specialist",
+    start: "2020-04",
+    end: "2021-03",
+    location: "Greater Accra Region, Ghana",
+    summary: "Designed websites, provided staff hardware/network support, and integrated digital tools into campaign deliverables.",
     highlights: [
-      "Designed and developed websites for client and internal projects.",
-      "Provided IT support for staff, resolving hardware and software issues to minimise downtime.",
-      "Produced creative assets for marketing and advertising campaigns.",
+      "Designed and maintained websites for client and internal projects.",
+      "Provided staff support for hardware, software, and network issues and helped reduce downtime through practical troubleshooting.",
+      "Collaborated with creative staff to integrate digital tools and technical solutions into campaign deliverables.",
     ],
-    stack: ["HTML/CSS/JS", "WordPress", "IT support"],
+    stack: ["HTML/CSS/JS", "WordPress", "IT support", "Troubleshooting"],
+  },
+  {
+    company: "GCB Bank Limited",
+    role: "Information Technology Specialist",
+    start: "2019-10",
+    end: "2020-01",
+    location: "Amasaman, Ghana",
+    summary:
+      "Hardware maintenance for currency counters, staff technical support, and digital form processing at Ghana's largest commercial bank.",
+    highlights: [
+      "Provided maintenance and repair for currency counters, ensuring optimal hardware functionality across banking operations.",
+      "Offered staff support for hardware, software, and network issues, minimizing banking disruptions.",
+      "Assisted customers with account inquiries and service requests through clear communication.",
+      "Utilized Google Forms and digital tools for efficient information collection and processing.",
+    ],
+    stack: ["Hardware maintenance", "Banking systems", "IT support", "Google Forms"],
   },
   {
     company: "Volta River Authority",
     role: "Management Information Systems Intern",
     start: "2017-09",
     end: "2018-01",
-    location: "Ghana",
+    location: "Aboadze, Western Region, Ghana",
     summary:
       "First exposure to enterprise infrastructure, at Ghana's national power utility.",
     highlights: [
@@ -565,10 +612,9 @@ export const credentials: Credential[] = [
   {
     title: "MSc Computer Science",
     issuer: "Memorial University of Newfoundland",
-    date: "2026-08-01",
-    detail: "Course-based · focus on network security and intrusion detection",
+    date: "2026-09-01",
+    detail: "Course-based · focus on network security and intrusion detection (2026–2028)",
     kind: "degree",
-    upcoming: true,
   },
   {
     title: "BSc Information Technology",
@@ -593,6 +639,29 @@ export const credentials: Credential[] = [
     expires: "2027-07-14",
     credentialId: "22299d8c82674d9fa309d05ac2c872a6",
     verifyUrl: "https://aws.amazon.com/verification",
+    kind: "certification",
+  },
+  {
+    title: "Intermediate First Aid CPR C/AED (Standard)",
+    issuer: "St. John Ambulance",
+    date: "2026-09-27",
+    expires: "2029-09-27",
+    credentialId: "1561996292",
+    detail: "Class COUR-1164-NL-260926-7265 · St. John Council for Newfoundland & Labrador · CPR Level C & AED",
+    kind: "certification",
+  },
+  {
+    title: "Sexual Violence Awareness and Prevention",
+    issuer: "Memorial University of Newfoundland",
+    date: "2026-09-11",
+    detail: "Sexual Harassment Office · campus and workplace safety certification",
+    kind: "certification",
+  },
+  {
+    title: "Fire Safety, Prevention, Evacuation and Basic Firefighting",
+    issuer: "Ghana National Fire Service",
+    date: "2025-09-26",
+    detail: "Amasaman Fire Station · workplace fire prevention, emergency evacuation, fire warden duties and basic firefighting for Bright Industrial Park",
     kind: "certification",
   },
   {
@@ -627,7 +696,7 @@ export const credentials: Credential[] = [
     // Google retired the Digital Garage certificate validator — every
     // learndigital.withgoogle.com link now redirects to grow.google — so
     // "verify" points to the LinkedIn certifications section instead.
-    verifyUrl: "https://www.linkedin.com/in/gotinkorang/details/certifications/",
+    verifyUrl: "https://www.linkedin.com/in/gaotinkorang/details/certifications/",
     kind: "certification",
   },
 ];

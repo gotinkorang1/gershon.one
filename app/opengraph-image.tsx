@@ -33,8 +33,8 @@ export default async function Image() {
             paddingBottom: 20,
           }}
         >
-          <span>Accra, Ghana / St. John&apos;s, NL</span>
-          <span>Available Aug 2026</span>
+          <span>St. John&apos;s, NL, Canada</span>
+          <span>Available Now</span>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column" }}>

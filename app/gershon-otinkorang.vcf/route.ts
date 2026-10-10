@@ -21,6 +21,7 @@ export function GET() {
     `N:${escapeVCard("Otinkorang")};${escapeVCard("Gershon")};${escapeVCard("Adjei")};;`,
     `FN:${escapeVCard(site.name)}`,
     `TITLE:${escapeVCard(site.role)}`,
+    `ADR;TYPE=HOME:;;${escapeVCard("55 Sir Wilfred Greenfield Place")};${escapeVCard("St. John's")};NL;;Canada`,
     `EMAIL;TYPE=INTERNET,WORK:${site.email}`,
     `TEL;TYPE=CELL,VOICE:${site.phoneHref}`,
     `URL;TYPE=WORK:${site.url}`,
