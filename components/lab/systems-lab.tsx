@@ -2,7 +2,8 @@
 
 import { useState, type KeyboardEvent } from "react";
 import { Activity, Boxes, Network, Wrench } from "lucide-react";
-import { portfolioFeatures } from "@/lib/site";
+import { useLab } from "@/components/lab/use-lab";
+import type { LabContent } from "@/lib/localised-content";
 import type { ActivityItem, EvidenceItem } from "@/lib/portfolio-features";
 import { TroubleshootingLab } from "@/components/lab/troubleshooting-lab";
 import { EvidenceMap } from "@/components/lab/evidence-map";
@@ -12,7 +13,7 @@ import { cn } from "@/lib/utils";
 import { GitHubActivity } from "@/components/github-activity";
 import { captureAnalyticsEvent } from "@/lib/analytics";
 
-type Tab = keyof typeof portfolioFeatures.lab.tabs;
+type Tab = keyof LabContent["tabs"];
 const tabs = [
   { id: "troubleshoot" as const, icon: Wrench },
   { id: "evidence" as const, icon: Network },
@@ -27,6 +28,7 @@ export function SystemsLab({
   evidence: EvidenceItem[];
   activity: ActivityItem[];
 }) {
+  const lab = useLab();
   const [tab, setTab] = useState<Tab>("troubleshoot");
 
   function selectTab(next: Tab) {
@@ -51,7 +53,7 @@ export function SystemsLab({
   return (
     <>
       <div className="sticky top-[4.75rem] z-30 -mx-5 border-y border-border bg-surface-0/90 px-5 py-3 backdrop-blur-xl md:-mx-10 md:px-10">
-        <div role="tablist" aria-label={portfolioFeatures.lab.title} className="focus-strip flex gap-2 overflow-x-auto">
+        <div role="tablist" aria-label={lab.title} className="focus-strip flex gap-2 overflow-x-auto">
           {tabs.map((item, index) => {
             const Icon = item.icon;
             return (
@@ -73,7 +75,7 @@ export function SystemsLab({
                 )}
               >
                 <Icon className="size-4" aria-hidden />
-                {portfolioFeatures.lab.tabs[item.id]}
+                {lab.tabs[item.id]}
               </button>
             );
           })}

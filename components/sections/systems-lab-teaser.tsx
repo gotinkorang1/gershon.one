@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Activity, ArrowRight, Boxes, Network, Wrench } from "lucide-react";
 import { useI18n } from "@/components/locale-provider";
-import { getFeatures } from "@/lib/localised-content";
+import { getFeatures, labHref } from "@/lib/localised-content";
 import { Panel } from "@/components/ui/panel";
 
 const icons = [Wrench, Network, Boxes, Activity];
@@ -26,7 +26,7 @@ export function SystemsLabTeaser() {
             </p>
           </div>
           <Link
-            href="/lab"
+            href={labHref(locale)}
             className="tap inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-accent px-4 text-sm font-medium text-accent-fg transition-transform hover:-translate-y-0.5 sm:w-auto"
           >
             {portfolioFeatures.lab.open}

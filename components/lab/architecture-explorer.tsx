@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import { ArrowRight, Boxes } from "lucide-react";
-import { portfolioFeatures } from "@/lib/site";
+import { useLab } from "@/components/lab/use-lab";
 import { Badge } from "@/components/ui/badge";
 import { Panel } from "@/components/ui/panel";
 import { cn } from "@/lib/utils";
 
-const content = portfolioFeatures.lab.architecture;
 
 export function ArchitectureExplorer() {
+  const content = useLab().architecture;
   const [systemIndex, setSystemIndex] = useState(0);
   const [nodeIndex, setNodeIndex] = useState(0);
   const system = content.systems[systemIndex];

@@ -3,15 +3,15 @@
 import { useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { ArrowUpRight, Search } from "lucide-react";
-import { portfolioFeatures } from "@/lib/site";
+import { useLab } from "@/components/lab/use-lab";
 import type { EvidenceItem } from "@/lib/portfolio-features";
 import { Badge } from "@/components/ui/badge";
 import { Panel } from "@/components/ui/panel";
 import { cn } from "@/lib/utils";
 
-const content = portfolioFeatures.lab.evidence;
 
 export function EvidenceMap({ items }: { items: EvidenceItem[] }) {
+  const content = useLab().evidence;
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(items[0]?.id ?? "");
 
@@ -126,6 +126,7 @@ function EvidenceGroup({
   empty?: string;
   children: ReactNode;
 }) {
+  const content = useLab().evidence;
   const isEmpty = Array.isArray(children) && children.length === 0;
   return (
     <section>

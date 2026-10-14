@@ -34,6 +34,7 @@ import {
   projectsPageFr,
   briefActionsFr,
   eligibilityFr,
+  labFr,
 } from "@/lib/content.fr";
 import { brief } from "@/lib/brief";
 import type { Locale } from "@/lib/i18n";
@@ -148,7 +149,7 @@ export function getFeatures(locale: Locale) {
   }
   return {
     navigation: featuresFr.navigation,
-    lab: { ...portfolioFeatures.lab, ...featuresFr.lab },
+    lab: labFr,
     recruiterPack: { ...portfolioFeatures.recruiterPack, ...featuresFr.recruiterPack },
   };
 }
@@ -195,3 +196,22 @@ export function getBriefContent(locale: Locale) {
 
 /** Path to a recruiter pack in the given language. */
 export const packHref = (locale: Locale, id: string) => (locale === "fr" ? `/fr/pack/${id}` : `/pack/${id}`);
+
+type Widen<T> = T extends string
+  ? string
+  : T extends boolean
+    ? boolean
+    : T extends readonly (infer U)[]
+      ? readonly Widen<U>[]
+      : T extends object
+        ? { readonly [K in keyof T]: Widen<T[K]> }
+        : T;
+
+export type LabContent = Widen<typeof portfolioFeatures.lab>;
+
+/** All Systems Lab copy in one language. */
+export function getLab(locale: Locale): LabContent {
+  return locale === "fr" ? labFr : portfolioFeatures.lab;
+}
+
+export const labHref = (locale: Locale) => (locale === "fr" ? "/fr/lab" : "/lab");

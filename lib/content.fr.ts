@@ -567,3 +567,181 @@ export const projectsPageFr = {
   metaDescription: "Des sites web que j'ai construits et maintenus, et des projets réseau, infrastructure, ERP et logiciels au Ghana et au Canada.",
   homepageAlt: (name: string) => `Page d'accueil de ${name}`,
 };
+
+/* -------------------------------------------------------------------------- */
+/*  Systems Lab — same shape as portfolioFeatures.lab                          */
+/* -------------------------------------------------------------------------- */
+
+export const labFr = {
+  eyebrow: "Preuve interactive",
+  title: "Voyez comment je diagnostique, relie et améliore les systèmes.",
+  lede:
+    "Quatre vues fonctionnelles du portfolio : dépannage guidé, preuves derrière chaque compétence, architecture des systèmes et historique chronologique des activités.",
+  open: "Ouvrir le labo",
+  homeTitle: "Ne vous contentez pas de lire. Examinez la démarche.",
+  homeLede:
+    "Lancez un scénario de dépannage, reliez chaque compétence à ses preuves, examinez les architectures et l'activité professionnelle récente.",
+  tabs: {
+    troubleshoot: "Dépannage",
+    evidence: "Preuves",
+    architecture: "Architecture",
+    activity: "Activité",
+  },
+  troubleshooting: {
+    title: "Simulateur de dépannage",
+    lede:
+      "Choisissez la prochaine étape de diagnostic. Ces simulations reprennent les méthodes que j'applique en production : isoler d'abord, modifier ensuite, vérifier en dernier.",
+    principleTitle: "Principe de diagnostic",
+    principle:
+      "Préserver les indices, réduire le domaine de la panne et n'effectuer qu'une modification justifiée à la fois.",
+    progress: "Progression du diagnostic",
+    next: "Vérification suivante",
+    restart: "Recommencer le scénario",
+    complete: "Incident résolu",
+    scenarios: [
+      {
+        id: "slow-network",
+        title: "Le réseau est lent",
+        symptom: "Les utilisateurs d'un bâtiment signalent une latence intermittente alors que la liaison internet principale reste en ligne.",
+        environment: "MikroTik · commutation Huawei · fibre GPON · multi-WAN",
+        resolution:
+          "Le domaine de la panne passe de l'impact utilisateur à une seule branche fibre, l'état physique est mesuré, et le chemin réparé est vérifié en continu avant la clôture.",
+        proofHref: "/fr/work/diagnosing-fibre-latency",
+        proofLabel: "Lire l'étude de cas sur la latence fibre",
+        checks: [
+          {
+            prompt: "Que faut-il établir en premier ?",
+            choices: [
+              { label: "Redémarrer tous les points d'accès", feedback: "Cela modifie plusieurs variables avant que le domaine de la panne soit connu.", correct: false },
+              { label: "Comparer les utilisateurs, supports et segments touchés", feedback: "Exact. Le périmètre indique la couche qui mérite d'être mesurée.", correct: true },
+              { label: "Remplacer le routeur internet", feedback: "Remplacer n'est pas une étape de diagnostic, et la liaison amont est toujours en ligne.", correct: false },
+            ],
+          },
+          {
+            prompt: "Le problème est isolé à une branche GPON. Quelle est l'étape suivante ?",
+            choices: [
+              { label: "Examiner les erreurs, les niveaux optiques et les coupures de lien", feedback: "Exact. Ces mesures distinguent une congestion d'un chemin physique dégradé.", correct: true },
+              { label: "Augmenter toutes les limites de bande passante", feedback: "La bande passante ne corrige ni les pertes, ni une puissance optique faible, ni les erreurs d'interface.", correct: false },
+              { label: "Changer de fournisseur DNS", feedback: "Le DNS n'explique pas des pertes de paquets limitées à une branche fibre.", correct: false },
+            ],
+          },
+        ],
+      },
+      {
+        id: "erp-print",
+        title: "L'impression ERPNext est défaillante",
+        symptom: "Une carte d'identité paraît correcte en aperçu, mais les photos disparaissent et les dimensions dérivent dans le PDF.",
+        environment: "ERPNext · Frappe · Jinja · HTML/CSS · PDF",
+        resolution:
+          "Le rendu navigateur et le rendu PDF sont testés comme deux environnements distincts. Les URL des ressources deviennent absolues, des unités physiques remplacent les unités d'écran, et le PDF exporté est mesuré.",
+        proofHref: "/fr/work/erpnext-bilingual-id-cards",
+        proofLabel: "Lire l'étude de cas sur les cartes ERPNext",
+        checks: [
+          {
+            prompt: "Que faut-il reproduire en premier ?",
+            choices: [
+              { label: "Le PDF exact avec le même dossier d'employé", feedback: "Exact. Des données constantes isolent le moteur de rendu comme seule variable.", correct: true },
+              { label: "Un tout nouveau format d'impression", feedback: "Réécrire efface les indices avant que la panne actuelle soit comprise.", correct: false },
+              { label: "Seulement l'aperçu navigateur qui fonctionne", feedback: "Le chemin défaillant, c'est le PDF généré.", correct: false },
+            ],
+          },
+          {
+            prompt: "Pourquoi la photo disparaît-elle seulement dans le PDF ?",
+            choices: [
+              { label: "Le moteur de rendu ne peut pas résoudre une URL relative", feedback: "Exact. Le filtre abs_url de Frappe donne au processus PDF un chemin complet.", correct: true },
+              { label: "L'image a besoin d'un filtre CSS", feedback: "Un style ne peut pas charger une ressource que le moteur de rendu ne trouve pas.", correct: false },
+              { label: "Il faut dupliquer l'employé", feedback: "Dupliquer les données ne change pas la résolution des URL.", correct: false },
+            ],
+          },
+        ],
+      },
+      {
+        id: "user-sign-in",
+        title: "Un utilisateur ne peut pas se connecter",
+        symptom: "Un employé ne peut plus accéder à son poste après un changement de mot de passe ; les autres utilisateurs ne sont pas touchés.",
+        environment: "Poste Windows · identité · réseau local · applications métier",
+        resolution:
+          "L'état du compte, du poste et du réseau est testé séparément. L'accès est rétabli sans recueillir d'identifiants, puis la cause et la mesure préventive sont documentées.",
+        proofHref: "/fr/for/it-support",
+        proofLabel: "Voir le portfolio support informatique",
+        checks: [
+          {
+            prompt: "Quelle est la première action la plus sûre ?",
+            choices: [
+              { label: "Demander à l'utilisateur d'envoyer son mot de passe", feedback: "Un mot de passe ne doit jamais être recueilli ni partagé pendant le support.", correct: false },
+              { label: "Confirmer l'erreur, le compte et le périmètre", feedback: "Exact. Cela distingue un problème de compte d'une panne de poste ou de service.", correct: true },
+              { label: "Réinstaller Windows", feedback: "Une modification destructrice est disproportionnée avant que la panne soit isolée.", correct: false },
+            ],
+          },
+          {
+            prompt: "Le compte fonctionne ailleurs. Que faut-il vérifier sur ce poste ?",
+            choices: [
+              { label: "La connectivité, l'heure, l'état en cache et la saisie", feedback: "Exact. Chacun peut bloquer l'authentification alors que le compte est sain.", correct: true },
+              { label: "La file d'impression du bureau", feedback: "Le service d'impression est hors du chemin de connexion.", correct: false },
+              { label: "Désactiver les protections du compte", feedback: "Retirer les garde-fous n'est pas une solution de contournement acceptable.", correct: false },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  evidence: {
+    title: "Carte des preuves de compétences",
+    lede: "Choisissez une compétence pour la relier à l'expérience en production, aux études de cas et aux vues par poste.",
+    select: "Choisir une compétence",
+    experience: "Expérience en production",
+    caseStudies: "Études de cas",
+    roles: "Postes correspondants",
+    credentials: "Certifications",
+    none: "Pas encore d'étude de cas dédiée ; l'expérience professionnelle sert de preuve.",
+    noResults: "Aucune compétence ne correspond à cette recherche.",
+  },
+  architecture: {
+    title: "Explorateur d'architecture",
+    lede: "Parcourez chaque système de la source au résultat, puis choisissez un composant pour examiner son rôle.",
+    selected: "Composant sélectionné",
+    systems: [
+      {
+        id: "industrial-network",
+        name: "Réseau industriel",
+        summary: "Une connectivité amont résiliente qui alimente la distribution fibre sur un site de 1 200 acres.",
+        nodes: [
+          { id: "wan", label: "8 WAN satellite", kind: "Entrée", metric: "8 liaisons", detail: "Des terminaux indépendants fournissent une capacité agrégée et réduisent la dépendance à un seul chemin amont." },
+          { id: "router", label: "MikroTik CCR2004", kind: "Contrôle", metric: "Multi-WAN", detail: "Le routage, les contrôles d'état et les règles de trafic réunissent les liaisons montantes." },
+          { id: "core", label: "Huawei S5735", kind: "Cœur", metric: "Distribution", detail: "Le cœur sépare et achemine les services vers la distribution fibre." },
+          { id: "gpon", label: "Fibre GPON", kind: "Accès", metric: "Répartition 1:4", detail: "La distribution optique passive transporte la connectivité sur de longues distances dans le parc." },
+          { id: "services", label: "Usines et services", kind: "Résultat", metric: "1 200 acres", detail: "Usines, vidéosurveillance, caisses et liaisons distantes utilisent l'infrastructure commune." },
+        ],
+      },
+      {
+        id: "erp-identity",
+        name: "Flux d'identité ERP",
+        summary: "Un dossier d'employé devient une carte d'identité bilingue, imprimable aux dimensions réelles.",
+        nodes: [
+          { id: "record", label: "Dossier d'employé", kind: "Source", metric: "ERPNext", detail: "Les RH gèrent noms, photos, services, fonctions et identifiants dans un seul dossier." },
+          { id: "template", label: "Format Jinja", kind: "Transformation", metric: "Frappe", detail: "Le modèle récupère les champs, résout les URL des ressources et répète la mise en page imprimable." },
+          { id: "layout", label: "Mise en page bilingue", kind: "Présentation", metric: "EN + 中文", detail: "Une grille fixe garde le chinois et l'anglais lisibles dans les dimensions physiques de la carte." },
+          { id: "pdf", label: "PDF A4", kind: "Sortie", metric: "2 cartes", detail: "Les unités physiques et le contrôle des sauts de page produisent deux cartes complètes par feuille." },
+          { id: "card", label: "Carte d'identité remise", kind: "Résultat", metric: "Prête à imprimer", detail: "Les cartes se réimpriment directement dès que le dossier de l'employé change." },
+        ],
+      },
+      {
+        id: "support-loop",
+        name: "Boucle d'opérations de support",
+        summary: "Un parcours reproductible, du signalement de l'utilisateur au rétablissement vérifié et à des connaissances réutilisables.",
+        nodes: [
+          { id: "report", label: "Signalement", kind: "Signal", metric: "Impact", detail: "Noter le symptôme exact, le moment, le périmètre et la conséquence pour l'activité." },
+          { id: "scope", label: "Tri et périmètre", kind: "Décision", metric: "Priorité", detail: "Séparer les pannes isolées des pannes partagées et choisir la voie la plus sûre." },
+          { id: "isolate", label: "Mesurer et isoler", kind: "Diagnostic", metric: "Preuves", detail: "Tester une couche à la fois et conserver les observations avant de modifier quoi que ce soit." },
+          { id: "restore", label: "Rétablir le service", kind: "Action", metric: "Rétablissement", detail: "Appliquer la plus petite réparation justifiée en gardant les contrôles et un retour arrière possible." },
+          { id: "verify", label: "Vérifier et documenter", kind: "Résultat", metric: "Connaissance", detail: "Confirmer le parcours de l'utilisateur, consigner la cause et accélérer la prochaine intervention." },
+        ],
+      },
+    ],
+  },
+  activity: {
+    title: "Activité professionnelle",
+    lede: "Études de cas publiées, rédaction technique, certifications et activité publique, réunies en un seul historique.",
+    filters: { all: "Tout", writing: "Rédaction", caseStudy: "Études de cas", credential: "Certifications" },
+  },
+};
