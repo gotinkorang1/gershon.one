@@ -3,15 +3,15 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, CircleAlert, RotateCcw, XCircle } from "lucide-react";
-import { portfolioFeatures } from "@/lib/site";
+import { useLab } from "@/components/lab/use-lab";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Panel } from "@/components/ui/panel";
 import { cn } from "@/lib/utils";
 
-const content = portfolioFeatures.lab.troubleshooting;
 
 export function TroubleshootingLab() {
+  const content = useLab().troubleshooting;
   const [scenarioIndex, setScenarioIndex] = useState(0);
   const [stepIndex, setStepIndex] = useState(0);
   const [choiceIndex, setChoiceIndex] = useState<number | null>(null);

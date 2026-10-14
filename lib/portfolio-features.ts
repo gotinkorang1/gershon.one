@@ -6,6 +6,14 @@ import {
   roleFocusProfiles,
   skillGroups,
 } from "@/lib/site";
+import {
+  getCaseStudies,
+  getCredentials,
+  getExperience,
+  getRoleFocusProfiles,
+  getSkillGroups,
+} from "@/lib/localised-content";
+import type { Locale } from "@/lib/i18n";
 
 export type EvidenceItem = {
   id: string;
@@ -40,22 +48,32 @@ function hasRelevantToken(haystack: string, needle: string) {
   return relevant.length > 0 && relevant.some((token) => normalized.includes(token));
 }
 
-export function getEvidenceItems(): EvidenceItem[] {
-  return skillGroups.flatMap((group) =>
-    group.skills.map((skill) => {
+export function getEvidenceItems(locale: Locale = "en"): EvidenceItem[] {
+  // Matching runs on the English source text; the output is drawn from the
+  // localised records at the same positions, so French pages show French.
+  const prefix = locale === "fr" ? "/fr" : "";
+  const groupsL = getSkillGroups(locale);
+  const jobsL = getExperience(locale);
+  const studiesL = getCaseStudies(locale);
+  const profilesL = getRoleFocusProfiles(locale);
+  const credsL = getCredentials(locale);
+  return skillGroups.flatMap((group, gi) =>
+    group.skills.map((skill, si) => {
       const matchingExperience = experience
-        .filter((job) =>
+        .map((job, i) => ({ job, local: jobsL[i] }))
+        .filter(({ job }) =>
           hasRelevantToken(
             `${job.role} ${job.summary} ${job.highlights.join(" ")} ${job.stack.join(" ")}`,
             skill,
           ),
         )
         .slice(0, 4)
-        .map((job) => ({ title: job.role, subtitle: job.company }));
+        .map(({ local }) => ({ title: local.role, subtitle: local.company }));
 
       const matchingStudies = caseStudies
+        .map((study, i) => ({ study, local: studiesL[i] }))
         .filter(
-          (study) =>
+          ({ study }) =>
             !study.draft &&
             hasRelevantToken(
               `${study.title} ${study.summary} ${study.tags.join(" ")} ${study.sections
@@ -65,34 +83,36 @@ export function getEvidenceItems(): EvidenceItem[] {
             ),
         )
         .slice(0, 4)
-        .map((study) => ({ title: study.title, href: `/work/${study.slug}` }));
+        .map(({ local }) => ({ title: local.title, href: `${prefix}/work/${local.slug}` }));
 
       const matchingRoles = roleFocusProfiles
+        .map((profile, i) => ({ profile, local: profilesL[i] }))
         .filter(
-          (profile) =>
+          ({ profile }) =>
             profile.skillGroups.some((title) => title === group.title) ||
             hasRelevantToken(`${profile.title} ${profile.description}`, skill),
         )
         .slice(0, 4)
-        .map((profile) => ({ title: profile.title, href: `/for/${profile.id}` }));
+        .map(({ local }) => ({ title: local.title, href: `${prefix}/for/${local.id}` }));
 
       const matchingCredentials = credentials
-        .filter((credential) =>
+        .map((credential, i) => ({ credential, local: credsL[i] }))
+        .filter(({ credential }) =>
           hasRelevantToken(
             `${credential.title} ${credential.issuer} ${credential.detail ?? ""}`,
             skill,
           ),
         )
         .slice(0, 3)
-        .map((credential) => ({
-          title: credential.title,
-          subtitle: credential.issuer,
+        .map(({ local }) => ({
+          title: local.title,
+          subtitle: local.issuer,
         }));
 
       return {
         id: `${group.title}-${skill}`.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
-        skill,
-        group: group.title,
+        skill: groupsL[gi]?.skills[si] ?? skill,
+        group: groupsL[gi]?.title ?? group.title,
         experience: matchingExperience,
         caseStudies: matchingStudies,
         roles: matchingRoles,
@@ -102,7 +122,8 @@ export function getEvidenceItems(): EvidenceItem[] {
   );
 }
 
-export function getActivityItems(): ActivityItem[] {
+export function getActivityItems(locale: Locale = "en"): ActivityItem[] {
+  const prefix = locale === "fr" ? "/fr" : "";
   const posts: ActivityItem[] = getPublishedPosts().map((post) => ({
     id: `post-${post.slug}`,
     type: "writing",
@@ -112,7 +133,7 @@ export function getActivityItems(): ActivityItem[] {
     href: `/blog/${post.slug}`,
   }));
 
-  const studies: ActivityItem[] = caseStudies
+  const studies: ActivityItem[] = getCaseStudies(locale)
     .filter((study) => !study.draft)
     .map((study) => ({
       id: `study-${study.slug}`,
@@ -120,10 +141,10 @@ export function getActivityItems(): ActivityItem[] {
       date: study.published,
       title: study.title,
       description: study.summary,
-      href: `/work/${study.slug}`,
+      href: `${prefix}/work/${study.slug}`,
     }));
 
-  const verifiedCredentials: ActivityItem[] = credentials.map((credential) => ({
+  const verifiedCredentials: ActivityItem[] = getCredentials(locale).map((credential) => ({
     id: `credential-${credential.title}`,
     type: "credential",
     date: credential.date,

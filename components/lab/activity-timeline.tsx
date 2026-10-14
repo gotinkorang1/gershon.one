@@ -3,22 +3,24 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { portfolioFeatures } from "@/lib/site";
+import { useLab } from "@/components/lab/use-lab";
+import { useI18n } from "@/components/locale-provider";
 import type { ActivityItem } from "@/lib/portfolio-features";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
-const content = portfolioFeatures.lab.activity;
 type Filter = "all" | ActivityItem["type"];
 
-function formatDate(value: string) {
-  return new Date(`${value.slice(0, 10)}T12:00:00Z`).toLocaleDateString("en-CA", {
+function formatDate(value: string, locale: string) {
+  return new Date(`${value.slice(0, 10)}T12:00:00Z`).toLocaleDateString(locale === "fr" ? "fr-CA" : "en-CA", {
     month: "short",
     year: "numeric",
   });
 }
 
 export function ActivityTimeline({ items }: { items: ActivityItem[] }) {
+  const content = useLab().activity;
+  const { locale } = useI18n();
   const [filter, setFilter] = useState<Filter>("all");
   const visible = filter === "all" ? items : items.filter((item) => item.type === filter);
   const filters: { id: Filter; label: string }[] = [
@@ -68,7 +70,7 @@ export function ActivityTimeline({ items }: { items: ActivityItem[] }) {
               <article className="rounded-xl border border-border bg-surface-1 p-4 sm:p-5">
                 <div className="flex flex-wrap items-center gap-2">
                   <Badge>{label}</Badge>
-                  <time className="label">{formatDate(item.date)}</time>
+                  <time className="label">{formatDate(item.date, locale)}</time>
                 </div>
                 <h3 className="mt-3 font-semibold tracking-tight">
                   {item.href ? (

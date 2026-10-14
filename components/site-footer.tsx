@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { site, navLinks } from "@/lib/site";
 import { useI18n } from "@/components/locale-provider";
-import { getFeatures, projectsHref } from "@/lib/localised-content";
+import { getFeatures, labHref, projectsHref } from "@/lib/localised-content";
 import { CvButton } from "@/components/cv-button";
 import { SHORTCUTS_HELP_EVENT } from "@/components/keyboard-shortcuts";
 import { PwaController } from "@/components/pwa-controller";
@@ -51,7 +51,7 @@ export function SiteFooter() {
                 </Link>
               </li>
               <li>
-                <Link href="/lab" className="link text-sm text-muted-foreground">
+                <Link href={labHref(locale)} className="link text-sm text-muted-foreground">
                   {features.navigation.lab}
                 </Link>
               </li>
