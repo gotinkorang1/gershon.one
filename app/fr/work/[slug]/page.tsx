@@ -32,7 +32,7 @@ export async function generateMetadata({
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? site.url;
   return {
     title: study.title,
-    description: study.summary,
+    description: study.metaDescription,
     alternates: {
       canonical: `/fr/work/${study.slug}`,
       languages: {
@@ -52,12 +52,12 @@ export async function generateMetadata({
     twitter: {
       card: "summary_large_image",
       title: study.title,
-      description: study.summary,
+      description: study.metaDescription,
     },
     openGraph: {
       type: "article",
       title: study.title,
-      description: study.summary,
+      description: study.metaDescription,
       locale: "fr_CA",
     },
   };
@@ -78,7 +78,7 @@ export default async function FrenchCaseStudy({
     "@type": "TechArticle",
     "@id": `${base}/fr/work/${study.slug}`,
     headline: study.title,
-    description: study.summary,
+    description: study.metaDescription,
     datePublished: study.published,
     inLanguage: "fr-CA",
     author: { "@type": "Person", name: site.name },

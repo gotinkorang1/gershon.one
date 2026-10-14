@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { roleFocusProfiles, site } from "@/lib/site";
 import { caseStudies } from "@/lib/case-studies";
-import { getPublishedPosts, getTagSlugs } from "@/lib/blog";
+import { getPublishedPosts } from "@/lib/blog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? site.url;
@@ -98,12 +98,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly" as const,
       priority: 0.6,
     })),
-    // Tag archive pages.
-    ...getTagSlugs().map(({ slug }) => ({
-      url: `${base}/blog/tag/${slug}`,
-      lastModified: posts[0] ? new Date(posts[0].date) : updated,
-      changeFrequency: "weekly" as const,
-      priority: 0.4,
-    })),
+    // Tag archives are noindex (thin, near-duplicate), so they stay out.
   ];
 }

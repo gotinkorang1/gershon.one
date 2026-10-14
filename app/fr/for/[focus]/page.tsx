@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { defaultOgImage } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { PortfolioHome } from "@/components/portfolio-home";
 import { roleFocusProfiles, site } from "@/lib/site";
@@ -27,6 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: { "en-CA": englishPath, "fr-CA": path, "x-default": englishPath },
     },
     openGraph: {
+      images: [defaultOgImage],
       type: "profile",
       url: path,
       title: `${profile.title} — ${site.shortName}`,
@@ -34,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       locale: "fr_CA",
     },
     twitter: {
-      card: "summary_large_image",
+      card: "summary_large_image", images: [defaultOgImage.url],
       title: `${profile.title} — ${site.shortName}`,
       description: profile.description,
     },

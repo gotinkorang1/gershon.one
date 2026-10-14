@@ -32,7 +32,7 @@ export const site = {
   // runs far past what Google shows, so the meta description is authored
   // separately — leading with the strongest hook before the truncation point.
   metaDescription:
-    "IT infrastructure and systems specialist and Memorial University MSc Computer Science student with 5+ years running enterprise networks. Based in St. John's, NL, Canada.",
+    "IT infrastructure and systems specialist in St. John's, NL: 5+ years running networks, servers and IT support. MSc Computer Science student at Memorial.",
   availability: "Available now · part-time in term, full-time in breaks",
   /**
    * When the page content last meaningfully changed — bump by hand when you

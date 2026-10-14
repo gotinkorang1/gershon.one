@@ -10,6 +10,7 @@ export const caseStudiesFr: Record<
   {
     title: string;
     summary: string;
+    metaDescription: string;
     role: string;
     sections: { heading: string; body: string[] }[];
     outcomes: string[];
@@ -19,6 +20,8 @@ export const caseStudiesFr: Record<
     title: "Des badges que deux langues devaient partager",
     summary:
       "ERPNext imprime des documents, pas des badges. Un format d'impression Jinja qui place deux badges d'employé bilingues — recto et verso — sur une seule feuille A4, aux dimensions qu'un agent peut vérifier à l'entrée.",
+    metaDescription:
+      "Un format d'impression Jinja pour ERPNext qui imprime deux cartes d'employé bilingues, recto verso, sur une feuille A4 — vérifiables à l'entrée.",
     role: "Responsable informatique principal",
     outcomes: [
       "badges par feuille A4",
@@ -65,6 +68,8 @@ export const caseStudiesFr: Record<
     title: "La pile de factures que l'on ressaisissait à la main",
     summary:
       "L'équipe commerciale ressaisissait les lignes de machines et de véhicules d'un dossier de factures scannées dans un modèle Word, un PDF à la fois. Un outil de traitement par lots sous Windows lit chaque PDF, ne conserve que les lignes admissibles et exporte une facture finalisée nommée d'après son numéro BOE — avec un recours à l'IA pour les scans que le texte brut n'atteint pas.",
+    metaDescription:
+      "Un outil Windows qui lit des factures PDF numérisées, garde les lignes admissibles et produit des factures nommées par numéro BOE, avec repli IA.",
     role: "Responsable informatique principal",
     outcomes: [
       "fournisseurs d'IA pour les scans illisibles",
@@ -126,6 +131,8 @@ export const caseStudiesFr: Record<
     title: "Connecter un parc industriel de 1 200 acres",
     summary:
       "Aucune fibre disponible sur place, aucun lien satellite unique suffisamment rapide, et des flux de vidéosurveillance et de caisse à acheminer des usines vers le siège. Huit terminaux Starlink agrégés vers une couche de distribution en fibre optique.",
+    metaDescription:
+      "Connecter un parc industriel de 1 200 acres : huit terminaux Starlink agrégés sur un routeur MikroTik et distribués par une dorsale fibre GPON.",
     role: "Responsable informatique principal",
     outcomes: [
       "terminaux Starlink agrégés",
@@ -179,6 +186,8 @@ export const caseStudiesFr: Record<
     title: "Huit mille dossiers RH, et qui peut y accéder",
     summary:
       "Les RH avaient besoin d'un système unique pour les dossiers des employés, l'attribution du matériel, les cartes de travail et l'affectation des foyers — des données personnelles réelles pour 8 000 travailleurs répartis sur quatre bureaux. Bâti sur ERPNext, tenu hors de l'internet public, avec un accès administrateur filtré par un VPN configuré sur le routeur MikroTik.",
+    metaDescription:
+      "Un système RH ERPNext pour 8 000 dossiers d'employés dans quatre bureaux, hors de l'internet public, avec accès admin par un VPN MikroTik.",
     role: "Responsable informatique principal",
     outcomes: [
       "dossiers de travailleurs sur un seul système",
@@ -227,6 +236,8 @@ export const caseStudiesFr: Record<
     title: "Trouver une panne là où personne ne cherchait",
     summary:
       "Dans un parc de cette taille, « internet est lent » ne veut presque jamais dire ce qu'il annonce. La fibre ajoute une latence infime ; la panne, c'est un connecteur sale, un SFP défaillant, une boucle de commutation, un câble trop courbé. Une méthode pour diagnostiquer par couches plutôt que par l'intuition la plus bruyante.",
+    metaDescription:
+      "Pourquoi « internet est lent » ne vise presque jamais la fibre : une méthode couche par couche pour trouver connecteurs, SFP et boucles en cause.",
     role: "Responsable informatique principal",
     outcomes: [
       "de délai que la fibre ajoute au km",

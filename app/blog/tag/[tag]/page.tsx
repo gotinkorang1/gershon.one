@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { defaultOgImage } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
@@ -26,8 +27,11 @@ export async function generateMetadata({
     title,
     description,
     alternates: { canonical: `/blog/tag/${entry.slug}` },
-    openGraph: { title, description, type: "website" },
-    twitter: { card: "summary_large_image", title, description },
+    // Ten tag archives over three posts are near-duplicates of the blog index;
+    // keep them for readers and keep their links followable, but unindexed.
+    robots: { index: false, follow: true },
+    openGraph: { title, description, type: "website", images: [defaultOgImage] },
+    twitter: { card: "summary_large_image", title, description, images: [defaultOgImage.url] },
   };
 }
 
