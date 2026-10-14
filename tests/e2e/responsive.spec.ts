@@ -96,9 +96,9 @@ test("mobile navigation opens without moving the document", async ({ page }, tes
   await page.getByRole("button", { name: "Open menu", exact: true }).click();
 
   await expect(page.getByRole("navigation", { name: "Mobile menu" })).toBeVisible();
-  await expect(
-    page.getByRole("navigation", { name: "Mobile menu" }).getByRole("link", { name: /See how I diagnose/ }),
-  ).toBeVisible();
+  const menu = page.getByRole("navigation", { name: "Mobile menu" });
+  await expect(menu.getByRole("link", { name: /Projects/ })).toBeVisible();
+  await expect(menu.getByRole("link", { name: /Lab/ })).toBeVisible();
   await expect(page.getByRole("link", { name: "Blog", exact: true }).last()).toBeVisible();
   await expect(page.getByRole("button", { name: "Close menu", exact: true })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(widthBefore);
