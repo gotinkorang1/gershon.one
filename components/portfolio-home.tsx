@@ -10,12 +10,18 @@ import { Contact } from "@/components/sections/contact";
 import { SectionDivider } from "@/components/fx/section-divider";
 import { RecruiterPackBanner } from "@/components/sections/recruiter-pack-banner";
 import { SystemsLabTeaser } from "@/components/sections/systems-lab-teaser";
+import { RoleFocusSelector } from "@/components/role-focus-selector";
 
 export function PortfolioHome({ focus = null }: { focus?: RoleFocusId | null }) {
   return (
     <RoleFocusProvider focus={focus}>
       <Hero />
       {focus && <RecruiterPackBanner focus={focus} />}
+      {/* Out of the hero: the chips reorder everything below, so they sit
+          where that content starts. */}
+      <div className="shell pb-4 pt-6">
+        <RoleFocusSelector />
+      </div>
       <SectionDivider />
       <Experience key={focus ?? "overview"} />
       <SectionDivider />

@@ -86,12 +86,11 @@ export function Skills() {
                 reactive
                 className={cn("trace-panel group h-full p-5", matched && "focus-match")}
               >
-                <div className="mb-4 flex items-center justify-between gap-3">
-                  <span aria-hidden className="trace-id">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  {matched && <Badge variant="accent">{t.ui.focusMatch}</Badge>}
-                </div>
+                {matched && (
+                  <div className="mb-3">
+                    <Badge variant="accent">{t.ui.focusMatch}</Badge>
+                  </div>
+                )}
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <h3 className="text-lg font-semibold tracking-tight">{group.title}</h3>
@@ -108,7 +107,7 @@ export function Skills() {
                   {group.skills.map((skill) => (
                     <li
                       key={skill}
-                      className="skill-chip rounded-[0.2rem_0.5rem_0.2rem_0.5rem] border border-border bg-surface-2 px-2.5 py-1 text-[0.6875rem] text-muted-foreground transition-colors hover:border-accent/40 hover:text-foreground"
+                      className="skill-chip rounded-[0.2rem_0.5rem_0.2rem_0.5rem] border border-border bg-surface-2 px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:border-accent/40 hover:text-foreground"
                     >
                       {skill}
                     </li>

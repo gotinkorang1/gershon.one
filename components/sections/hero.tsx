@@ -2,17 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { ThemePortrait } from "@/components/theme-portrait";
-import { RoleRotator } from "@/components/fx/role-rotator";
-import { RoleFocusSelector } from "@/components/role-focus-selector";
 import { useRoleFocus } from "@/components/role-focus-provider";
-import { StackTicker } from "@/components/fx/stack-ticker";
-import { Tilt } from "@/components/fx/tilt";
 import { motion } from "motion/react";
 import {
   Award,
   ArrowUpRight,
   GraduationCap,
-  MapPin,
   ShieldCheck,
 } from "lucide-react";
 import { Github, Linkedin } from "@/components/ui/brand-icons";
@@ -25,7 +20,6 @@ import { Counter } from "@/components/fx/counter";
 import { ImageReveal } from "@/components/fx/image-reveal";
 import { TextReveal } from "@/components/fx/text-reveal";
 import { cn } from "@/lib/utils";
-import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 let hasMountedHero = false;
@@ -46,7 +40,6 @@ export function Hero() {
   const focus = useRoleFocus();
   const focusProfiles = getRoleFocusProfiles(locale);
   const activeFocus = focusProfiles.find((profile) => profile.id === focus);
-  const reduced = useReducedMotion();
   const [animateIntro] = useState(() => !hasMountedHero);
 
   useEffect(() => {
@@ -60,27 +53,7 @@ export function Hero() {
   ];
 
   return (
-    <section className="hero-field relative overflow-hidden pb-4 pt-28 md:pb-6 md:pt-32">
-      {/* Two slow, offset washes. Movement without anything you'd call an
-          effect — the page breathes rather than performs. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[40rem] overflow-hidden"
-      >
-        <motion.div
-          className="absolute -left-1/4 -top-1/3 size-[42rem] rounded-full blur-[120px]"
-          style={{ background: "radial-gradient(circle, var(--accent-quiet), transparent 68%)" }}
-          animate={reduced ? undefined : { x: [0, 60, 0], y: [0, 34, 0] }}
-          transition={{ duration: 28, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute right-0 top-0 size-[30rem] rounded-full blur-[110px]"
-          style={{ background: "radial-gradient(circle, var(--signal-quiet), transparent 70%)" }}
-          animate={reduced ? undefined : { x: [0, -44, 0], y: [0, 40, 0] }}
-          transition={{ duration: 34, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-        />
-      </div>
-
+    <section className="hero-field relative overflow-hidden pb-4 pt-28 md:pb-6 md:pt-36">
       <div className="shell">
         <motion.div
           variants={container}
@@ -89,16 +62,18 @@ export function Hero() {
           className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16"
         >
           {/* ------------------------------------------------------- copy */}
+          {/* One job: who, what, and how to reach him. Everything else on the
+              page has its own section. */}
           <div className="min-w-0 lg:col-span-7">
             <motion.p
               variants={rise}
-              className="flex items-center gap-2.5 text-sm text-muted-foreground"
+              className="inline-flex items-center gap-2.5 rounded-full border border-border bg-surface-1/60 py-1.5 pl-3 pr-3.5 text-xs text-muted-foreground backdrop-blur-sm"
             >
               <span className="pulse-dot text-live" />
-              {t.hero.availability}
+              {t.hero.status}
             </motion.p>
 
-            <h1 className="mt-7 text-display font-semibold tracking-tight">
+            <h1 className="mt-8 text-display font-semibold tracking-tight">
               <TextReveal
                 lines={["Gershon", "Otinkorang"]}
                 delay={0.12}
@@ -106,48 +81,39 @@ export function Hero() {
               />
             </h1>
 
-            <motion.div variants={rise} className="mt-6 flex items-center gap-4">
-              <span className="h-px w-10 shrink-0 bg-accent/60" />
-              <p className="text-lede font-medium">
-                {activeFocus ? (
-                  <span className="text-accent">{activeFocus.title}</span>
-                ) : (
-                  <RoleRotator roles={[t.hero.role, ...focusProfiles.map((profile) => profile.title)]} />
-                )}
-              </p>
-            </motion.div>
+            <motion.p variants={rise} className="mt-6 text-lede font-medium text-accent">
+              {activeFocus ? activeFocus.title : t.hero.role}
+            </motion.p>
 
             <motion.p
               variants={rise}
-              className="mt-5 max-w-lg text-base leading-relaxed text-muted-foreground"
+              className="mt-4 max-w-[34rem] text-lg leading-relaxed text-muted-foreground"
             >
               {t.hero.headline}
             </motion.p>
 
-            <motion.div variants={rise}>
-              <RoleFocusSelector />
-            </motion.div>
-
-            <motion.div variants={rise} className="mt-7 w-full min-w-0 max-w-lg">
-              <p className="label mb-2.5">{t.hero.stackLabel}</p>
-              <StackTicker items={site.heroStack} />
-            </motion.div>
-
             <motion.div
               variants={rise}
-              className="mt-9 flex flex-wrap items-center gap-3"
+              className="mt-10 flex flex-wrap items-center gap-3"
             >
-              <CvButton />
-              <a
-                href={`mailto:${site.email}`}
-                className={cn(buttonVariants({ variant: "outline", size: "lg" }), "group")}
-              >
-                {t.hero.getInTouch}
-                <ArrowUpRight
-                  aria-hidden
-                  className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                />
-              </a>
+              {/* On phones the two primary actions split the full width and the
+                  social icons sit beneath them; from sm up it is one row. */}
+              <div className="flex w-full gap-3 sm:w-auto">
+                <CvButton className="flex-1 sm:flex-none" />
+                <a
+                  href={`mailto:${site.email}`}
+                  className={cn(
+                    buttonVariants({ variant: "outline", size: "lg" }),
+                    "group flex-1 sm:flex-none",
+                  )}
+                >
+                  {t.hero.getInTouch}
+                  <ArrowUpRight
+                    aria-hidden
+                    className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  />
+                </a>
+              </div>
 
               {/* Recruiters look for these immediately; keep them at hand next
                   to the primary actions rather than only in the footer. */}
@@ -157,76 +123,44 @@ export function Hero() {
                   target="_blank"
                   rel="noreferrer noopener"
                   aria-label="GitHub"
-                  className="tap grid size-10 place-items-center rounded-lg border border-border text-muted-foreground transition-colors hover:border-border-strong hover:text-foreground"
+                  className="tap grid size-10 place-items-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-1 hover:text-foreground"
                 >
-                  <Github aria-hidden className="size-4" />
+                  <Github aria-hidden className="size-[1.125rem]" />
                 </a>
                 <a
                   href={site.socials.linkedin}
                   target="_blank"
                   rel="noreferrer noopener"
                   aria-label="LinkedIn"
-                  className="tap grid size-10 place-items-center rounded-lg border border-border text-muted-foreground transition-colors hover:border-border-strong hover:text-foreground"
+                  className="tap grid size-10 place-items-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-1 hover:text-foreground"
                 >
-                  <Linkedin aria-hidden className="size-4" />
+                  <Linkedin aria-hidden className="size-[1.125rem]" />
                 </a>
               </div>
             </motion.div>
 
-            <motion.div variants={rise} className="mt-7 space-y-2.5 text-sm text-muted-foreground">
-              <p className="flex items-start gap-2">
-                <span className="pulse-dot mt-1.5 shrink-0 text-live" />
-                <span className="min-w-0">
-                  <span className="label mr-2 block !text-live/90 sm:inline">
-                    {t.hero.currentlyLabel}
-                  </span>
-                  <span>{t.hero.currently}</span>
-                </span>
-              </p>
-              <p className="flex items-start gap-2">
-                <MapPin aria-hidden className="mt-0.5 size-3.5 shrink-0 text-faint" />
-                <span className="min-w-0">
-                  {t.hero.location}
-                </span>
-              </p>
-            </motion.div>
+            <motion.p variants={rise} className="mt-8 text-sm text-faint">
+              {t.hero.currently}
+            </motion.p>
           </div>
 
           {/* --------------------------------------------------- portrait */}
           <motion.div variants={rise} className="lg:col-span-5">
-            <div className="portrait-node relative mx-auto w-full max-w-[19rem] lg:ml-auto lg:mr-0">
-              {/* A hairline that traces two corners — quiet framing detail. */}
-              <motion.span
-                aria-hidden
-                initial={animateIntro ? { opacity: 0 } : false}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.9, duration: 0.8 }}
-                className="pointer-events-none absolute -right-3 -top-3 size-16 rounded-tr-xl border-r border-t border-accent/40"
-              />
-              <motion.span
-                aria-hidden
-                initial={animateIntro ? { opacity: 0 } : false}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.05, duration: 0.8 }}
-                className="pointer-events-none absolute -bottom-3 -left-3 size-16 rounded-bl-xl border-b border-l border-accent/40"
-              />
-
-              <Tilt className="group/tilt relative">
-                <ImageReveal
-                  animate={animateIntro}
-                  className="portrait-plate overflow-hidden rounded-xl"
-                >
-                  <ThemePortrait
-                    alt={`${site.name} — ${t.hero.role}`}
-                    width={840}
-                    height={624}
-                    priority
-                    sizes="(max-width: 1024px) 76vw, 304px"
-                    className="aspect-4/5 w-full"
-                    imgClassName="aspect-4/5 w-full object-cover object-top"
-                  />
-                </ImageReveal>
-              </Tilt>
+            <div className="mx-auto w-full max-w-[20rem] lg:ml-auto lg:mr-0">
+              <ImageReveal
+                animate={animateIntro}
+                className="portrait-plate overflow-hidden rounded-2xl"
+              >
+                <ThemePortrait
+                  alt={`${site.name} — ${t.hero.role}`}
+                  width={840}
+                  height={624}
+                  priority
+                  sizes="(max-width: 1024px) 76vw, 320px"
+                  className="aspect-4/5 w-full"
+                  imgClassName="aspect-4/5 w-full object-cover object-top"
+                />
+              </ImageReveal>
             </div>
           </motion.div>
         </motion.div>

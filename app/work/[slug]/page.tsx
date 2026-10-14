@@ -7,6 +7,8 @@ import { caseStudies, getCaseStudy } from "@/lib/case-studies";
 import { Badge } from "@/components/ui/badge";
 import { Panel } from "@/components/ui/panel";
 import { Counter } from "@/components/fx/counter";
+import { CaseStudyToc } from "@/components/case-study-toc";
+import { slugify } from "@/lib/utils";
 import { site } from "@/lib/site";
 import { serialiseJsonLd } from "@/lib/json-ld";
 import { getDictionary } from "@/lib/i18n";
@@ -159,20 +161,38 @@ export default async function CaseStudyPage({
         </dl>
       )}
 
-      <div className="mt-14 max-w-2xl">
-        {study.sections.map((section) => (
-          <section key={section.heading} className="mb-12">
-            <h2 className="text-xl font-semibold tracking-tight">{section.heading}</h2>
-            {section.body.map((para) => (
-              <p
-                key={para.slice(0, 40)}
-                className="measure mt-4 text-base leading-relaxed text-muted-foreground"
-              >
-                {para}
-              </p>
-            ))}
-          </section>
-        ))}
+      {/* Article plus an "On this page" rail in the otherwise empty column. */}
+      <div className="mt-14 lg:grid lg:grid-cols-[minmax(0,42rem)_minmax(0,1fr)] lg:gap-16">
+        <div>
+          {study.sections.map((section) => (
+            <section
+              key={section.heading}
+              id={slugify(section.heading)}
+              className="mb-12 scroll-mt-28"
+            >
+              <h2 className="text-xl font-semibold tracking-tight">{section.heading}</h2>
+              {section.body.map((para) => (
+                <p
+                  key={para.slice(0, 40)}
+                  className="measure mt-4 text-base leading-relaxed text-muted-foreground"
+                >
+                  {para}
+                </p>
+              ))}
+            </section>
+          ))}
+        </div>
+        {study.sections.length > 2 && (
+          <aside className="hidden lg:block">
+            <CaseStudyToc
+              label={t.common.onThisPage}
+              items={study.sections.map((section) => ({
+                id: slugify(section.heading),
+                heading: section.heading,
+              }))}
+            />
+          </aside>
+        )}
       </div>
 
       <div className="mt-4 flex flex-wrap gap-1.5 border-t border-border pt-8">

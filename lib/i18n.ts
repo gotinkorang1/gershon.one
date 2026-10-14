@@ -19,6 +19,7 @@ type Dictionary = {
     headline: string;
     summary: string;
     availability: string;
+    status: string;
     downloadCv: string;
     getInTouch: string;
     location: string;
@@ -58,6 +59,7 @@ type Dictionary = {
     stack: string;
     minRead: string;
     allCaseStudies: string;
+    onThisPage: string;
     viewSource: string;
     summary: string;
   };
@@ -221,6 +223,7 @@ const en: Dictionary = {
     summary:
       "IT infrastructure and systems specialist and Memorial University Computer Science MSc student with five years keeping users, devices and enterprise infrastructure running. Based in St. John's, NL. Providing remote IT consulting at Sabaoth across hardware, networks, firewalls and Microsoft 365/Google Workspace; previously engineered the multi-WAN satellite link and GPON fibre backbone across a 1,200-acre industrial park in Ghana.",
     availability: "Available now · part-time in term, full-time in breaks",
+    status: "Available now · St. John's, NL",
     downloadCv: "Download CV",
     getInTouch: "Get in touch",
     location: "St. John's, NL, Canada",
@@ -270,6 +273,7 @@ const en: Dictionary = {
     stack: "Stack",
     minRead: "min read",
     allCaseStudies: "All case studies",
+    onThisPage: "On this page",
     viewSource: "View the source on GitHub",
     summary: "Summary",
   },
@@ -445,6 +449,7 @@ const fr: Dictionary = {
     summary:
       "Spécialiste en infrastructure et systèmes informatiques et étudiant à la maîtrise en informatique à l'Université Memorial avec cinq ans d'expérience. Basé à St. John's, T.-N.-L. Conseil IT à distance chez Sabaoth (matériel, réseaux, pare-feu, Microsoft 365/Google Workspace) ; conception antérieure de la dorsale fibre et de la liaison multi-WAN satellite sur un parc de 1 200 acres au Ghana.",
     availability: "Disponible maintenant · temps partiel en session, temps plein pendant les pauses",
+    status: "Disponible maintenant · St. John's, T.-N.-L.",
     downloadCv: "Télécharger le CV",
     getInTouch: "Me contacter",
     location: "St. John's, T.-N.-L., Canada",
@@ -494,6 +499,7 @@ const fr: Dictionary = {
     stack: "Technologies",
     minRead: "min de lecture",
     allCaseStudies: "Toutes les études de cas",
+    onThisPage: "Sur cette page",
     viewSource: "Voir le code source sur GitHub",
     summary: "Résumé",
   },
