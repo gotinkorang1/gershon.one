@@ -1154,7 +1154,7 @@ export const projects: Project[] = [
     title: "ERPNext HR implementation",
     context: "Greenhouse International",
     category: "business",
-    summary: "Supported the HR system setup and employee data imports for approximately 453 employees.",
+    summary: "Supported the HR system setup and employee data imports for about 8,000 employees.",
     tags: ["ERPNext", "HR", "Data import"],
     href: "/work/erpnext-administration",
   },

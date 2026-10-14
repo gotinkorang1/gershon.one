@@ -460,7 +460,7 @@ export const projectsFr: Record<
   },
   "ERPNext HR implementation": {
     title: "Mise en place des RH dans ERPNext",
-    summary: "Appui à la configuration du système RH et à l'import des données d'environ 453 employés.",
+    summary: "Appui à la configuration du système RH et à l'import des données d'environ 8 000 employés.",
     tags: ["ERPNext", "RH", "Import de données"],
   },
   "openMAINT pilot": {
