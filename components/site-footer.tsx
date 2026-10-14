@@ -45,7 +45,7 @@ export function SiteFooter() {
               ))}
               <li>
                 <Link href="/lab" className="link text-sm text-muted-foreground">
-                  {portfolioFeatures.lab.title}
+                  {portfolioFeatures.navigation.lab}
                 </Link>
               </li>
               <li>
@@ -62,6 +62,11 @@ export function SiteFooter() {
               <li>
                 <a href={`mailto:${site.email}`} className="link">
                   {site.email}
+                </a>
+              </li>
+              <li>
+                <a href={`mailto:${site.emailAlt}`} className="link">
+                  {site.emailAlt}
                 </a>
               </li>
               <li>

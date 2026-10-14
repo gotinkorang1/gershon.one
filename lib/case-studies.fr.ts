@@ -19,7 +19,7 @@ export const caseStudiesFr: Record<
     title: "Des badges que deux langues devaient partager",
     summary:
       "ERPNext imprime des documents, pas des badges. Un format d'impression Jinja qui place deux badges d'employé bilingues — recto et verso — sur une seule feuille A4, aux dimensions qu'un agent peut vérifier à l'entrée.",
-    role: "Chargé de support informatique",
+    role: "Responsable informatique principal",
     outcomes: [
       "badges par feuille A4",
       "langues sur chaque badge",
@@ -65,7 +65,7 @@ export const caseStudiesFr: Record<
     title: "La pile de factures que l'on ressaisissait à la main",
     summary:
       "L'équipe commerciale ressaisissait les lignes de machines et de véhicules d'un dossier de factures scannées dans un modèle Word, un PDF à la fois. Un outil de traitement par lots sous Windows lit chaque PDF, ne conserve que les lignes admissibles et exporte une facture finalisée nommée d'après son numéro BOE — avec un recours à l'IA pour les scans que le texte brut n'atteint pas.",
-    role: "Chargé de support informatique",
+    role: "Responsable informatique principal",
     outcomes: [
       "fournisseurs d'IA pour les scans illisibles",
       "PDF propre par facture source",
@@ -126,7 +126,7 @@ export const caseStudiesFr: Record<
     title: "Connecter un parc industriel de 1 200 acres",
     summary:
       "Aucune fibre disponible sur place, aucun lien satellite unique suffisamment rapide, et des flux de vidéosurveillance et de caisse à acheminer des usines vers le siège. Huit terminaux Starlink agrégés vers une couche de distribution en fibre optique.",
-    role: "Chargé de support informatique",
+    role: "Responsable informatique principal",
     outcomes: [
       "terminaux Starlink agrégés",
       "débit agrégé sur la fibre",
@@ -179,7 +179,7 @@ export const caseStudiesFr: Record<
     title: "Huit mille dossiers RH, et qui peut y accéder",
     summary:
       "Les RH avaient besoin d'un système unique pour les dossiers des employés, l'attribution du matériel, les cartes de travail et l'affectation des foyers — des données personnelles réelles pour 8 000 travailleurs répartis sur quatre bureaux. Bâti sur ERPNext, tenu hors de l'internet public, avec un accès administrateur filtré par un VPN configuré sur le routeur MikroTik.",
-    role: "Chargé de support informatique",
+    role: "Responsable informatique principal",
     outcomes: [
       "dossiers de travailleurs sur un seul système",
       "bureaux RH, un par phase",
@@ -227,7 +227,7 @@ export const caseStudiesFr: Record<
     title: "Trouver une panne là où personne ne cherchait",
     summary:
       "Dans un parc de cette taille, « internet est lent » ne veut presque jamais dire ce qu'il annonce. La fibre ajoute une latence infime ; la panne, c'est un connecteur sale, un SFP défaillant, une boucle de commutation, un câble trop courbé. Une méthode pour diagnostiquer par couches plutôt que par l'intuition la plus bruyante.",
-    role: "Chargé de support informatique",
+    role: "Responsable informatique principal",
     outcomes: [
       "de délai que la fibre ajoute au km",
       "où se trouve presque toujours la panne",

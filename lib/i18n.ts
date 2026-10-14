@@ -21,7 +21,7 @@ type Dictionary = {
     availability: string;
     downloadCv: string;
     getInTouch: string;
-    movingTo: (city: string, when: string) => string;
+    location: string;
     topologyMode: string;
     currentlyLabel: string;
     currently: string;
@@ -41,13 +41,18 @@ type Dictionary = {
     referencesTitle: string;
     referencesLede: string;
     contactTitle: string;
-    contactLede: (city: string, when: string) => string;
+    contactLede: string;
   };
   common: {
     current: string;
     upcoming: string;
     draft: string;
     verify: string;
+    viewCertificate: string;
+    openFullSize: string;
+    requestCopy: string;
+    requestCopySubject: (title: string) => string;
+    certificateAlt: (title: string, issuer: string) => string;
     validTo: string;
     expired: string;
     stack: string;
@@ -93,9 +98,12 @@ type Dictionary = {
     currentlyAt: string;
     yearsExperience: string;
     topologyCaption: string;
+    securityLabel: string;
+    educationLabel: string;
+    certificationsLabel: string;
+    securityStatement: string;
     aboutMe: string;
     metaDescription: string;
-    relocationWhen: string;
     present: string;
     eyebrowExperience: string;
     eyebrowWork: string;
@@ -109,7 +117,7 @@ type Dictionary = {
     proofDegreeSub: string;
     proofMsc: string;
     proofMscSub: string;
-    basedIn: (location: string, timezone: string, city: string, when: string) => string;
+    basedIn: (timezone: string) => string;
     noResults: (query: string) => string;
     failedOver: (seconds: string, live: string) => string;
     failedOverAnnounce: (seconds: string, live: string) => string;
@@ -120,7 +128,7 @@ type Dictionary = {
     allUplinksDownAnnounce: string;
     switchToEnglish: string;
     switchToFrench: string;
-    terminalIntro: (location: string, city: string, when: string) => string;
+    terminalIntro: (location: string) => string;
     themeSet: (theme: string) => string;
     themeDark: string;
     themeLight: string;
@@ -207,15 +215,15 @@ const en: Dictionary = {
     contact: "Contact",
   },
   hero: {
-    role: "Information Technology Consultant",
+    role: "IT Infrastructure & Systems Specialist",
     headline:
       "I keep the systems people depend on working — from client infrastructure and cloud workspaces to a fibre backbone across 1,200 acres.",
     summary:
-      "Information Technology Consultant and Memorial University Computer Science MSc student with five years keeping users, devices and enterprise infrastructure running. Based in St. John's, NL. Providing remote IT consulting at Sabaoth across hardware, networks, firewalls and Microsoft 365/Google Workspace; previously engineered the multi-WAN satellite link and GPON fibre backbone across a 1,200-acre industrial park in Ghana.",
-    availability: "Available in Canada (Part-time in term / Full-time breaks)",
+      "IT infrastructure and systems specialist and Memorial University Computer Science MSc student with five years keeping users, devices and enterprise infrastructure running. Based in St. John's, NL. Providing remote IT consulting at Sabaoth across hardware, networks, firewalls and Microsoft 365/Google Workspace; previously engineered the multi-WAN satellite link and GPON fibre backbone across a 1,200-acre industrial park in Ghana.",
+    availability: "Available now · part-time in term, full-time in breaks",
     downloadCv: "Download CV",
     getInTouch: "Get in touch",
-    movingTo: (city, when) => "St. John's, NL, Canada",
+    location: "St. John's, NL, Canada",
     topologyMode: "Aggregated multi-WAN",
     currentlyLabel: "Currently",
     currently: "IT Consultant at Sabaoth · MSc student at Memorial University",
@@ -239,19 +247,24 @@ const en: Dictionary = {
       "Grouped by use, in rough order of how central each is to the current role.",
     credentialsTitle: "Education and certification",
     credentialsLede:
-      "In order, from technical diploma to the ongoing MSc in Computer Science at Memorial University. Every item links to the issuing body.",
+      "Newest first. Open a certificate to see the document, check it with the issuer, or ask me for a copy of anything not shown.",
     referencesEyebrow: "References",
     referencesTitle: "What people I've worked with say",
     referencesLede: "People who managed or worked alongside me, in their own words.",
     contactTitle: "Tell me what you're building",
-    contactLede: (city, when) =>
-      `Available for IT consulting, systems, and network roles in St. John's and remotely across Canada.`,
+    contactLede:
+      "Available for IT consulting, systems, and network roles in St. John's and remotely across Canada.",
   },
   common: {
     current: "Current",
     upcoming: "Upcoming",
     draft: "Draft",
     verify: "Verify",
+    viewCertificate: "View certificate",
+    openFullSize: "Open full size",
+    requestCopy: "Request a copy",
+    requestCopySubject: (title) => `Copy of certificate: ${title}`,
+    certificateAlt: (title, issuer) => `${title} certificate issued by ${issuer}`,
     validTo: "Valid to",
     expired: "Expired",
     stack: "Stack",
@@ -299,10 +312,14 @@ const en: Dictionary = {
     yearsExperience: "Experience",
     topologyCaption:
       "A design I built and maintain: eight satellite terminals bonded into one uplink, feeding fibre across a 1,200-acre site. Drop a terminal and watch capacity rebalance instead of cutting over.",
+    securityLabel: "How I approach security",
+    educationLabel: "Education",
+    certificationsLabel: "Certifications",
+    securityStatement:
+      "I treat security as part of running the network, not a separate project. At Bright Industrial Park that meant segmenting the network with VLANs and firewall policy, putting administrator access to internal systems behind a VPN, and keeping the HR system that holds 8,000 people's personal data off the public internet entirely. It also meant the unglamorous parts: weekly bare-metal backups, event-triggered database backups, identity and password policy, and MFA on cloud accounts. I'm now building on that with Google's Foundations of Cybersecurity course and an MSc at Memorial University focused on network security and intrusion detection.",
     aboutMe: "In short",
     metaDescription:
-      "IT consultant and Memorial University MSc Computer Science student with 5+ years running enterprise infrastructure. Based in St. John's, NL, Canada.",
-    relocationWhen: "August 2026",
+      "IT infrastructure and systems specialist and Memorial University MSc Computer Science student with 5+ years running enterprise networks. Based in St. John's, NL, Canada.",
     present: "Present",
     eyebrowExperience: "01 — Experience",
     eyebrowWork: "02 — Case studies",
@@ -316,7 +333,7 @@ const en: Dictionary = {
     proofDegreeSub: "KNUST · Second Class Upper",
     proofMsc: "MSc Computer Science",
     proofMscSub: "Memorial University · 2026–2028",
-    basedIn: (location, timezone, city, when) =>
+    basedIn: (timezone) =>
       `Based in St. John's, NL (${timezone}) · MSc student at Memorial University. Comfortable working across Canadian and North American timezones.`,
     noResults: (query) => `No results for “${query}”`,
     failedOver: (seconds, live) =>
@@ -331,8 +348,8 @@ const en: Dictionary = {
       "All eight terminals are offline. The site has no upstream connectivity.",
     switchToEnglish: "Switch to English",
     switchToFrench: "Passer en français",
-    terminalIntro: (location, city, when) =>
-      `${location} · arriving ${city}, ${when}`,
+    terminalIntro: (location) =>
+      `${location} · MSc student at Memorial University`,
     themeSet: (theme) => `Theme set to ${theme}.`,
     themeDark: "dark",
     themeLight: "light",
@@ -422,15 +439,15 @@ const fr: Dictionary = {
     contact: "Contact",
   },
   hero: {
-    role: "Consultant en technologies de l'information",
+    role: "Spécialiste en infrastructure et systèmes informatiques",
     headline:
       "Je maintiens en service les systèmes dont dépendent les utilisateurs — des espaces infonuagiques à une dorsale fibre sur 1 200 acres.",
     summary:
-      "Consultant en technologies de l'information et étudiant à la maîtrise en informatique à l'Université Memorial avec cinq ans d'expérience. Basé à St. John's, T.-N.-L. Conseil IT à distance chez Sabaoth (matériel, réseaux, pare-feu, Microsoft 365/Google Workspace) ; conception antérieure de la dorsale fibre et de la liaison multi-WAN satellite sur un parc de 1 200 acres au Ghana.",
-    availability: "Disponible au Canada (temps partiel / sessions)",
+      "Spécialiste en infrastructure et systèmes informatiques et étudiant à la maîtrise en informatique à l'Université Memorial avec cinq ans d'expérience. Basé à St. John's, T.-N.-L. Conseil IT à distance chez Sabaoth (matériel, réseaux, pare-feu, Microsoft 365/Google Workspace) ; conception antérieure de la dorsale fibre et de la liaison multi-WAN satellite sur un parc de 1 200 acres au Ghana.",
+    availability: "Disponible maintenant · temps partiel en session, temps plein pendant les pauses",
     downloadCv: "Télécharger le CV",
     getInTouch: "Me contacter",
-    movingTo: (city, when) => "St. John's, T.-N.-L., Canada",
+    location: "St. John's, T.-N.-L., Canada",
     topologyMode: "Multi-WAN agrégé",
     currentlyLabel: "En poste",
     currently: "Consultant IT chez Sabaoth · Étudiant à la maîtrise à l'Université Memorial",
@@ -454,19 +471,24 @@ const fr: Dictionary = {
       "Regroupé par usage, approximativement selon l'importance de chaque domaine dans mon poste actuel.",
     credentialsTitle: "Formation et certifications",
     credentialsLede:
-      "Dans l'ordre, du diplôme technique jusqu'à la maîtrise en informatique en cours à l'Université Memorial. Chaque élément renvoie à l'organisme émetteur.",
+      "Du plus récent au plus ancien. Ouvrez un certificat pour voir le document, vérifiez-le auprès de l'émetteur, ou demandez-moi une copie de ce qui n'est pas affiché.",
     referencesEyebrow: "Références",
     referencesTitle: "Ce que disent mes collègues et responsables",
     referencesLede: "Des personnes qui m'ont encadré ou avec qui j'ai travaillé, dans leurs propres mots.",
     contactTitle: "Parlez-moi de votre projet",
-    contactLede: (city, when) =>
-      `Disponible pour des postes en conseil informatique, systèmes et réseaux à St. John's et à distance à travers le Canada.`,
+    contactLede:
+      "Disponible pour des postes en conseil informatique, systèmes et réseaux à St. John's et à distance à travers le Canada.",
   },
   common: {
     current: "Actuel",
     upcoming: "À venir",
     draft: "Brouillon",
     verify: "Vérifier",
+    viewCertificate: "Voir le certificat",
+    openFullSize: "Ouvrir en taille réelle",
+    requestCopy: "Demander une copie",
+    requestCopySubject: (title) => `Copie du certificat : ${title}`,
+    certificateAlt: (title, issuer) => `Certificat ${title} délivré par ${issuer}`,
     validTo: "Valide jusqu'en",
     expired: "Expiré",
     stack: "Technologies",
@@ -514,10 +536,14 @@ const fr: Dictionary = {
     yearsExperience: "Expérience",
     topologyCaption:
       "Une architecture que j'ai conçue et que je maintiens : huit terminaux satellite agrégés en une seule liaison, alimentant la fibre sur un site de 1 200 acres. Coupez un terminal et observez la capacité se rééquilibrer au lieu de basculer.",
+    securityLabel: "Ma façon d'aborder la sécurité",
+    educationLabel: "Formation",
+    certificationsLabel: "Certifications",
+    securityStatement:
+      "Pour moi, la sécurité fait partie de l'exploitation du réseau, pas d'un projet à part. Au parc industriel Bright, cela voulait dire segmenter le réseau par VLAN et règles de pare-feu, placer l'accès administrateur aux systèmes internes derrière un VPN, et garder le système RH qui contient les données personnelles de 8 000 personnes entièrement hors de l'internet public. Cela voulait aussi dire le travail moins visible : sauvegardes complètes hebdomadaires, sauvegardes de bases de données déclenchées par événement, politiques d'identité et de mots de passe, et MFA sur les comptes infonuagiques. Je prolonge aujourd'hui ce travail avec le cours Foundations of Cybersecurity de Google et une maîtrise à l'Université Memorial axée sur la sécurité réseau et la détection d'intrusion.",
     aboutMe: "En bref",
     metaDescription:
-      "Consultant IT et étudiant à la maîtrise en informatique à l'Université Memorial avec plus de 5 ans d'expérience. Basé à St. John's, Canada.",
-    relocationWhen: "août 2026",
+      "Spécialiste en infrastructure et systèmes informatiques, étudiant à la maîtrise en informatique à l'Université Memorial, avec plus de 5 ans d'expérience. Basé à St. John's, Canada.",
     present: "aujourd'hui",
     eyebrowExperience: "01 — Expérience",
     eyebrowWork: "02 — Études de cas",
@@ -531,7 +557,7 @@ const fr: Dictionary = {
     proofDegreeSub: "KNUST · Mention bien",
     proofMsc: "Maîtrise en informatique",
     proofMscSub: "Université Memorial · 2026–2028",
-    basedIn: (location, timezone, city, when) =>
+    basedIn: (timezone) =>
       `Basé à St. John's, T.-N.-L. (${timezone}) · étudiant à la maîtrise à l'Université Memorial. À l'aise sur les fuseaux horaires canadiens et nord-américains.`,
     noResults: (query) => `Aucun résultat pour « ${query} »`,
     failedOver: (seconds, live) =>
@@ -546,8 +572,8 @@ const fr: Dictionary = {
       "Les huit terminaux sont hors service. Le site n'a plus de connectivité amont.",
     switchToEnglish: "Switch to English",
     switchToFrench: "Passer en français",
-    terminalIntro: (location, city, when) =>
-      `${location} · arrivée à ${city}, ${when}`,
+    terminalIntro: (location) =>
+      `${location} · étudiant à la maîtrise à l'Université Memorial`,
     themeSet: (theme) => `Thème réglé sur ${theme}.`,
     themeDark: "sombre",
     themeLight: "clair",

@@ -1,6 +1,5 @@
 "use client";
 
-import { Fragment } from "react";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 /**
@@ -18,15 +17,17 @@ export function StackTicker({ items }: { items: readonly string[] }) {
   if (reduced) {
     return (
       <div className="flex flex-wrap items-center gap-y-1 text-sm text-muted-foreground">
+        {/* Each separator travels with the item before it, so a wrapped line
+            never starts with an orphaned dot. */}
         {items.map((item, i) => (
-          <Fragment key={item}>
-            <span className="whitespace-nowrap">{item}</span>
+          <span key={item} className="whitespace-nowrap">
+            {item}
             {i < items.length - 1 && (
               <span aria-hidden className="mx-3 text-faint">
                 ·
               </span>
             )}
-          </Fragment>
+          </span>
         ))}
       </div>
     );

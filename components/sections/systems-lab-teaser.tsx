@@ -8,12 +8,12 @@ const icons = [Wrench, Network, Boxes, Activity];
 export function SystemsLabTeaser() {
   const labels = Object.values(portfolioFeatures.lab.tabs);
   return (
-    <section className="shell py-20 sm:py-24" aria-labelledby="systems-lab-teaser-title">
+    <section className="shell py-14 md:py-16" aria-labelledby="systems-lab-teaser-title">
       <Panel raised reactive className="trace-panel p-6 sm:p-9">
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
           <div>
             <p className="label text-accent">{portfolioFeatures.lab.eyebrow}</p>
-            <h2 id="systems-lab-teaser-title" className="mt-4 max-w-3xl text-section font-semibold tracking-tight">
+            <h2 id="systems-lab-teaser-title" className="mt-4 max-w-3xl text-jumbo font-semibold">
               {portfolioFeatures.lab.homeTitle}
             </h2>
             <p className="mt-4 max-w-2xl text-lede leading-relaxed text-muted-foreground">

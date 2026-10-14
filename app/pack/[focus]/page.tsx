@@ -174,6 +174,9 @@ export default async function RecruiterPackPage({ params }: Props) {
           <a href={`mailto:${site.email}`} className="link inline-flex items-center gap-2 text-sm">
             <Mail className="size-3.5 text-faint" aria-hidden /> {site.email}
           </a>
+          <a href={`mailto:${site.emailAlt}`} className="link inline-flex items-center gap-2 text-sm">
+            <Mail className="size-3.5 text-faint" aria-hidden /> {site.emailAlt}
+          </a>
           <a href={`tel:${site.phoneHref}`} className="link inline-flex items-center gap-2 text-sm">
             <Phone className="size-3.5 text-faint" aria-hidden /> {site.phone}
           </a>

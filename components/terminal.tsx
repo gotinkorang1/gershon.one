@@ -16,7 +16,7 @@ export function Terminal({ className }: { className?: string }) {
     { kind: "out", text: `${site.name} — ${t.hero.role}` },
     {
       kind: "out",
-      text: t.ui.terminalIntro(site.location, site.relocation.to, t.ui.relocationWhen),
+      text: t.ui.terminalIntro(site.location),
     },
     { kind: "out", text: "" },
     { kind: "out", text: t.ui.terminal.hint },
@@ -84,6 +84,7 @@ export function Terminal({ className }: { className?: string }) {
       help: t.ui.terminal.contact,
       run: () => [
         { kind: "out", text: `email    ${site.email}` },
+        { kind: "out", text: `         ${site.emailAlt}` },
         { kind: "out", text: `phone    ${site.phone}` },
         { kind: "out", text: `linkedin ${site.socials.linkedin}` },
         { kind: "out", text: `github   ${site.socials.github}` },
@@ -146,17 +147,17 @@ export function Terminal({ className }: { className?: string }) {
       { kind: "out", text: " 1  accra-gh            2.1 ms" },
       { kind: "out", text: " 2  knust-bsc-2024     18.4 ms" },
       { kind: "out", text: " 3  aws-ccp-2024       22.9 ms" },
-      { kind: "out", text: " 4  st-johns-nl-2026   ** reachable August 2026 **" },
+      { kind: "out", text: " 4  st-johns-nl       ** reached · MSc @ Memorial **" },
     ],
     neofetch: () => [
       { kind: "out", text: "       ___        gershon@portfolio" },
       { kind: "out", text: "      /   \\       -----------------" },
       { kind: "out", text: "     |  o  |      OS: RouterOS 7.x / Debian" },
-      { kind: "out", text: "     |     |      Role: IT Systems & Network Administrator" },
+      { kind: "out", text: `     |     |      Role: ${site.role}` },
       { kind: "out", text: "      \\___/       Uptime: 5 years" },
       { kind: "out", text: "                  WAN: fibre (primary), Starlink (backup)" },
       { kind: "out", text: "                  Shell: zsh" },
-      { kind: "out", text: "                  Available: August 2026, St. John's NL" },
+      { kind: "out", text: `                  Based: ${site.location}` },
     ],
     ip: () => [
       { kind: "out", text: "1: lo    <LOOPBACK,UP>  inet 127.0.0.1/8" },
@@ -171,8 +172,9 @@ export function Terminal({ className }: { className?: string }) {
     hire: () => [
       { kind: "out", text: "Excellent choice." },
       { kind: "out", text: `  ${site.email}` },
+      { kind: "out", text: `  ${site.emailAlt}` },
       { kind: "out", text: `  ${site.phone}` },
-      { kind: "out", text: "  Available in Canada from August 2026." },
+      { kind: "out", text: `  ${site.availability}.` },
     ],
     "": () => [],
   };

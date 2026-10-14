@@ -112,7 +112,7 @@ export function Hero() {
                 {activeFocus ? (
                   <span className="text-accent">{activeFocus.title}</span>
                 ) : (
-                  <RoleRotator roles={focusProfiles.map((profile) => profile.title)} />
+                  <RoleRotator roles={[t.hero.role, ...focusProfiles.map((profile) => profile.title)]} />
                 )}
               </p>
             </motion.div>
@@ -186,7 +186,7 @@ export function Hero() {
               <p className="flex items-start gap-2">
                 <MapPin aria-hidden className="mt-0.5 size-3.5 shrink-0 text-faint" />
                 <span className="min-w-0">
-                  {t.hero.movingTo(site.relocation.to, t.ui.relocationWhen)}
+                  {t.hero.location}
                 </span>
               </p>
             </motion.div>

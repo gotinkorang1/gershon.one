@@ -137,13 +137,13 @@ def render(r, filename):
 
 RESUME_EN = {
     "name": "Gershon Adjei Otinkorang",
-    "title": "Information Technology Consultant",
-    "location": "55 Sir Wilfred Greenfield Place, St. John's, NL, Canada",
-    "contact": "+1 (709) 219-5364 &middot; contact@gershon.one &middot; gershon.one &middot; linkedin.com/in/gaotinkorang",
+    "title": "IT Infrastructure &amp; Systems Specialist",
+    "location": "St. John's, NL, Canada",
+    "contact": "+1 (709) 219-5364 &middot; contact@gershon.one &middot; gotinkorang@gmail.com &middot; gershon.one &middot; linkedin.com/in/gaotinkorang",
     "page_word": "Page",
     "profile_heading": "PROFILE",
     "profile": (
-        "Information Technology Consultant and Memorial University of Newfoundland MSc Computer Science student "
+        "IT infrastructure and systems specialist and Memorial University of Newfoundland MSc Computer Science student "
         "with five years' experience keeping users, devices and enterprise infrastructure running. Currently "
         "providing remote IT consulting at Sabaoth across hardware, networks, firewalls, and Microsoft 365/Google "
         "Workspace in Canada. Previously engineered the multi-WAN satellite link and GPON fibre backbone across a "
@@ -160,7 +160,7 @@ RESUME_EN = {
     "experience": [
         {
             "role": "Information Technology Consultant",
-            "meta": "SABAOTH &middot; Auburn Bay, AB, Canada (Remote) &middot; September 2026 – present",
+            "meta": "SABAOTH &middot; Alberta, Canada (Remote, freelance) &middot; September 2026 – present",
             "bullets": [
                 "Provided remote IT consulting and technical support for hardware, software, and network issues, ensuring seamless connectivity.",
                 "Configured and troubleshot routers, switches, and firewalls, enhancing infrastructure reliability for clients.",
@@ -169,43 +169,47 @@ RESUME_EN = {
             ],
         },
         {
-            "role": "IT Support Officer",
+            "role": "Lead IT Officer",
             "meta": "Greenhouse International Development Group Ghana Ltd. &middot; Bright Industrial Park, Ghana &middot; October 2023 – August 2026",
-            "lede": "Sole IT support for a 1,200-acre industrial park and the retail sites of its subsidiary.",
+            "lede": "Led IT support for a 1,200-acre industrial park and its branches and factories — end users, POS, servers, CCTV and the site-wide network — supervising a four-member team.",
             "bullets": [
-                "First and only line of IT support for staff across the park and head office: hardware, software, printers, accounts and access, from triage to resolution.",
-                "Configure, deploy and support point-of-sale systems for Bright Afrimall across multiple retail locations in Ghana, including staff training and remote fault resolution.",
-                "Manage the handheld PDA estate used for stock and operations — provisioning, application deployment and day-to-day fault resolution.",
-                "Designed and deployed the park's fibre backbone, carrying CCTV footage and POS data from factories and remote buildings to head office, and distributing internet back out to the factories.",
-                "Built site internet capacity by aggregating eight individually mounted Starlink terminals into a MikroTik router as eight WAN links, feeding a Huawei S5735 enterprise switch and a GPON distribution layer with 1:4 splitters across the fibre panel.",
+                "Supervised a four-member IT team supporting staff across the park, head office and branches — around 36 staff per branch or factory — for hardware, software, printers, accounts and access, from triage to resolution.",
+                "Personally installed and supervised CCTV and Starlink deployments across 47 branches and factories in Ghana — 15 to 45 cameras per site with remote viewing for management, and Starlink brought up in about two hours per site.",
+                "Supported POS setup, staff training and equipment tracking across 23 Bright Afrimall sales points, with remote fault resolution.",
+                "Managed the handheld PDA estate used for stock and operations — provisioning, application deployment and day-to-day fault resolution.",
+                "Designed and deployed the park's fibre backbone — installing and terminating overhead fibre-optic cable — carrying CCTV footage and POS data from factories and remote buildings to head office, and distributing internet back out to the factories.",
+                "Built the site's internet capacity by aggregating eight individually mounted Starlink terminals into a MikroTik router as eight WAN links, feeding a Huawei S5735 enterprise switch and a GPON distribution layer with 1:4 splitters across the fibre panel.",
                 "Gated administrator access to internal systems behind a VPN on the MikroTik router, and segmented the network with VLANs and firewall policy to keep PII off the public internet.",
-                "Extended coverage beyond the park boundary with point-to-point wireless links and VPN tunnels so off-site locations reach head office resources.",
-                "Installed and manage indoor and outdoor access points with centralised controllers across offices, factory floors and open ground.",
-                "Deploy and maintain internal services on Proxmox and Linux servers using Docker and Portainer — Odoo, OpenMAINT, Tailscale and DNS-level ad and content filtering.",
-                "Run IT stores and asset control in Odoo: inventory, stock movements and equipment issue for the IT warehouse.",
-                "Support the survey team by converting CAD site plans into OpenStreetMap data with JOSM, giving the park an accurate digital basemap.",
-                "Act as departmental supervisor in the Engineering &amp; Design Manager's absence, and lead technical interviews for IT Officer hires.",
+                "Extended coverage beyond the park boundary with point-to-point wireless links and VPN tunnels, keeping a public-IP path as a backup remote-access route alongside the VPNs and MTN fibre.",
+                "Installed and managed indoor and outdoor access points with centralised controllers, covering offices, factory floors and open ground.",
+                "Administered 3 physical servers and around 9 VMs on Proxmox, plus 2 production and 3 development/test servers online — Odoo, OpenMAINT, Tailscale, OPNsense, file and proxy services and DNS-level filtering, using Docker and Portainer.",
+                "Ran bare-metal backups every Sunday evening and event-triggered automated POS and database backups, using Proxmox VE backups and Proxmox Backup Server.",
+                "Migrated on-premises email to Microsoft 365, moved a local POS server to AWS, and transferred company websites from Namecheap to Hostinger.",
+                "Administered NingDun Identity Domain Management for a year — directory services, Windows authentication, computers and password policies.",
+                "Ran IT stores and asset control in Odoo: inventory, stock movements and equipment issue for the IT warehouse.",
+                "Supported the survey team by converting CAD site plans into OpenStreetMap data with JOSM, giving the park an accurate digital basemap.",
+                "Acted as departmental supervisor in the Engineering &amp; Design Manager's absence, and led technical interviews for IT Officer hires.",
             ],
         },
         {
             "role": "Remote IT Consultant",
             "meta": "Nii Plants Group &middot; Ghana &middot; 2021 – present",
             "bullets": [
-                "Provide remote IT administration and technical support for company digital infrastructure.",
+                "Provide remote IT administration and technical support for company digital infrastructure, explaining solutions to non-technical stakeholders.",
                 "Manage company websites, domains, hosting platforms, SSL certificates and business email systems.",
                 "Perform website maintenance, security updates, performance optimisation and troubleshooting.",
                 "Support digital platforms used across hospitality, transportation, logistics and real estate operations.",
                 "Manage online services and ensure availability of critical business systems.",
+                "Develop websites and support SEO for the group's businesses.",
             ],
         },
         {
             "role": "Information Technology Specialist",
             "meta": "Prop-Tis GH Limited &middot; Ghana &middot; April 2022 – September 2023",
             "bullets": [
-                "Developed and managed the company's real estate listing platform, improving performance and user experience.",
-                "Delivered IT support across the organisation for hardware, software and network issues.",
-                "Implemented and maintained data backup systems, and SEO strategies that increased organic visibility.",
-                "Supervised creative production teams across video, photography and graphic content.",
+"Developed and maintained the WordPress real-estate listing platform, supporting property publishing and the customer search experience.",
+                "Maintained hosting, backups and website security to protect business information, and resolved staff hardware, software and connectivity issues.",
+                "Coordinated an eight-member multidisciplinary team on website and digital content delivery, including newsletters and SEO reporting.",
             ],
         },
         {
@@ -218,7 +222,7 @@ RESUME_EN = {
             ],
         },
         {
-            "role": "Information Technology Specialist",
+            "role": "Information Technology Specialist Intern",
             "meta": "Origin8 Limited &middot; Ghana &middot; April 2020 – March 2021",
             "bullets": [
                 "Designed and maintained websites for client and internal projects.",
@@ -227,20 +231,22 @@ RESUME_EN = {
             ],
         },
         {
-            "role": "Information Technology Specialist",
+            "role": "Information Technology Specialist Intern",
             "meta": "GCB Bank Limited &middot; Amasaman, Ghana &middot; October 2019 – January 2020",
             "bullets": [
-                "Provided maintenance and repair for currency counters, ensuring optimal hardware functionality across banking operations.",
-                "Offered staff support for hardware, software, and network issues, minimizing service disruptions.",
-                "Assisted customers with account inquiries and service requests through clear communication.",
-                "Utilized Google Forms and digital tools for efficient information collection and processing.",
+"Supported Windows and Linux servers, user and email accounts, access privileges, file servers, printers and VPNs.",
+                "Troubleshot hardware, CCTV and software faults for staff, minimising banking disruptions.",
+                "Maintained and repaired currency counters used across banking operations.",
+                "Assisted customers with account inquiries and service requests.",
+                "Used Google Forms and other digital tools to collect and process information efficiently.",
             ],
         },
         {
             "role": "Management Information Systems Intern",
             "meta": "Volta River Authority &middot; Aboadze, Ghana &middot; September 2017 – January 2018",
             "bullets": [
-                "Resolved network connectivity issues, configured staff hardware, and installed server and client operating systems.",
+                "Configured server and client operating systems, and supported Windows and Linux servers, accounts, permissions, file services and VPNs.",
+                "Resolved computer, printer, network and CCTV issues for staff.",
             ],
         },
         {
@@ -257,8 +263,10 @@ RESUME_EN = {
          "meta": "Memorial University of Newfoundland, St. John's, Canada &middot; September 2026 – November 2028 &middot; Course-based, network security and intrusion detection"},
         {"title": "BSc, Information Technology",
          "meta": "Kwame Nkrumah University of Science and Technology, Ghana &middot; 2022 – 2024 &middot; Second Class Honours, Upper Division"},
-        {"title": "Higher National Diploma, Information Science/Studies",
-         "meta": "Takoradi Technical University, Ghana &middot; 2017 – 2021 &middot; Second Class, Upper Division"},
+        {"title": "Higher National Diploma, Information and Communication Technology",
+         "meta": "Takoradi Technical University, Ghana (NABPTEX) &middot; 2017 – 2020 &middot; Second Class, Upper Division"},
+        {"title": "Certificate II, Electrical Engineering Technology",
+         "meta": "Twumasi Boateng Technical Institute, Ghana &middot; 2016 &middot; Ghana Education Service / NABPTEX"},
     ],
     "cert_heading": "CERTIFICATIONS",
     "certs": [
@@ -272,19 +280,21 @@ RESUME_EN = {
          "meta": "Google (Coursera) &middot; August 2026 &middot; Credential KVMKSBBS97UR"},
         {"title": "AWS Certified Cloud Practitioner",
          "meta": "Amazon Web Services &middot; July 2024 – July 2027 &middot; Credential 22299d8c82674d9fa309d05ac2c872a6"},
-        {"title": "LinkedIn Marketing Strategy &middot; Marketing Fundamentals",
-         "meta": "LinkedIn &middot; 2022"},
-        {"title": "Google Digital Skills",
-         "meta": "Google &middot; October 2020"},
+        {"title": "ALX Cloud Computing (Cloud Practitioner course)",
+         "meta": "ALX Africa, powered by AWS Academy &middot; July 2025 &middot; Certificate HrRxBsfZLz"},
+        {"title": "ALX Professional Foundations",
+         "meta": "ALX Africa &middot; April 2025 &middot; Certificate 59XFYHsMer"},
+        {"title": "The Fundamentals of Digital Marketing",
+         "meta": "Google Digital Skills for Africa &middot; October 2020 &middot; Certificate 58H 54V V9H"},
     ],
     "technical_heading": "TECHNICAL",
     "technical": [
         {"label": "Consulting & Support", "items": "Remote IT consulting &middot; Hardware diagnostics and repair &middot; Windows and Linux desktops &middot; Microsoft 365 &middot; Google Workspace &middot; Printers and peripherals &middot; User accounts and access &middot; User training"},
         {"label": "Retail / field", "items": "POS configuration and rollout &middot; PDA provisioning &middot; Multi-site deployment &middot; CCTV / IP cameras &middot; Asset and inventory control (Odoo)"},
-        {"label": "Network", "items": "MikroTik RouterOS &middot; Routers and enterprise switches &middot; Multi-WAN aggregation &middot; Starlink &middot; Fibre / GPON &middot; Huawei S5735 &middot; VLANs and firewall policy &middot; Point-to-point wireless &middot; WireGuard / Tailscale &middot; APs"},
+        {"label": "Network", "items": "MikroTik RouterOS &middot; OPNsense &middot; Routers and enterprise switches &middot; Multi-WAN aggregation &middot; Starlink &middot; Fibre / GPON &middot; Huawei S5735 &middot; VLANs and firewall policy &middot; Point-to-point wireless &middot; WireGuard / Tailscale &middot; APs"},
         {"label": "Security", "items": "Network segmentation (VLANs) &middot; Firewall policy and hardening &middot; VPN-gated admin access &middot; DNS content filtering &middot; PII and data protection &middot; Access and identity management &middot; SIEM fundamentals &middot; Threat analysis"},
-        {"label": "Servers", "items": "Proxmox &middot; Linux administration &middot; Docker and Portainer &middot; Odoo &middot; OpenMAINT &middot; Frappe / ERPNext &middot; DNS filtering &middot; Backup and recovery"},
-        {"label": "Cloud / web", "items": "AWS &middot; Google Cloud &middot; Cloudflare &middot; Domain and DNS &middot; Email hosting &middot; WordPress &middot; PHP / MySQL &middot; HTML, CSS, JavaScript &middot; Git"},
+        {"label": "Servers", "items": "Windows Server, Active Directory and Group Policy &middot; Proxmox and Proxmox Backup Server &middot; Linux administration &middot; Docker and Portainer &middot; Odoo &middot; OpenMAINT &middot; Frappe / ERPNext &middot; DNS filtering &middot; Backup and recovery"},
+        {"label": "Cloud / web", "items": "AWS (IAM roles, policies, MFA) &middot; Google Cloud &middot; Cloudflare &middot; Domain and DNS &middot; Email hosting &middot; WordPress &middot; cPanel &middot; PHP / MySQL &middot; HTML, CSS, JavaScript &middot; Git"},
         {"label": "Other", "items": "JOSM / OpenStreetMap &middot; CAD to GIS conversion &middot; Structured cabling &middot; Technical documentation &middot; Project coordination &middot; Remote work"},
     ],
 }
@@ -295,13 +305,13 @@ RESUME_EN = {
 
 RESUME_FR = {
     "name": "Gershon Adjei Otinkorang",
-    "title": "Consultant en technologies de l'information",
-    "location": "55 Sir Wilfred Greenfield Place, St. John's, T.-N.-L., Canada",
-    "contact": "+1 (709) 219-5364 &middot; contact@gershon.one &middot; gershon.one &middot; linkedin.com/in/gaotinkorang",
+    "title": "Spécialiste en infrastructure et systèmes informatiques",
+    "location": "St. John's, T.-N.-L., Canada",
+    "contact": "+1 (709) 219-5364 &middot; contact@gershon.one &middot; gotinkorang@gmail.com &middot; gershon.one &middot; linkedin.com/in/gaotinkorang",
     "page_word": "Page",
     "profile_heading": "PROFIL",
     "profile": (
-        "Consultant en technologies de l'information et étudiant à la maîtrise en informatique à l'Université Memorial "
+        "Spécialiste en infrastructure et systèmes informatiques et étudiant à la maîtrise en informatique à l'Université Memorial "
         "de Terre-Neuve, comptant cinq ans d'expérience. Fournit actuellement des services de conseil et de support "
         "informatique à distance chez Sabaoth (matériel, réseaux, pare-feu, Microsoft 365/Google Workspace) au Canada. "
         "A précédemment conçu la dorsale en fibre optique et la liaison multi-WAN satellite d'un parc industriel de "
@@ -318,7 +328,7 @@ RESUME_FR = {
     "experience": [
         {
             "role": "Consultant en technologies de l'information",
-            "meta": "SABAOTH &middot; Auburn Bay, AB, Canada (À distance) &middot; septembre 2026 – aujourd'hui",
+            "meta": "SABAOTH &middot; Alberta, Canada (À distance, travail autonome) &middot; septembre 2026 – aujourd'hui",
             "bullets": [
                 "Conseil informatique et assistance technique à distance pour les pannes matérielles, logicielles et réseau, garantissant une connectivité continue.",
                 "Configuration et dépannage de routeurs, commutateurs et pare-feu, améliorant la fiabilité de l'infrastructure des clients.",
@@ -327,43 +337,47 @@ RESUME_FR = {
             ],
         },
         {
-            "role": "Chargé de support informatique",
+            "role": "Responsable informatique principal",
             "meta": "Greenhouse International Development Group Ghana Ltd. &middot; Bright Industrial Park, Ghana &middot; octobre 2023 – août 2026",
-            "lede": "Seul responsable du support informatique pour un parc industriel de 1 200 acres et les points de vente de sa filiale.",
+            "lede": "Responsable du support informatique d'un parc industriel de 1 200 acres, de ses succursales et de ses usines — utilisateurs, caisses, serveurs, vidéosurveillance et réseau du site — à la tête d'une équipe de quatre personnes.",
             "bullets": [
-                "Premier et unique niveau de support informatique pour le personnel du parc et du siège : matériel, logiciels, imprimantes, comptes et accès, du diagnostic à la résolution.",
-                "Configuration, déploiement et support des systèmes de point de vente de Bright Afrimall sur plusieurs sites commerciaux au Ghana, y compris la formation du personnel et le dépannage à distance.",
+                "Encadrement d'une équipe informatique de quatre personnes assurant le support du personnel du parc, du siège et des succursales — environ 36 employés par succursale ou usine — pour le matériel, les logiciels, les imprimantes, les comptes et les accès, du diagnostic à la résolution.",
+                "Installation et supervision en personne des déploiements de vidéosurveillance et de Starlink dans 47 succursales et usines au Ghana — de 15 à 45 caméras par site avec visionnement à distance pour la direction, et Starlink mis en service en deux heures environ par site.",
+                "Appui à la mise en place des caisses, à la formation du personnel et au suivi des équipements dans 23 points de vente Bright Afrimall, avec dépannage à distance.",
                 "Gestion du parc de terminaux portables utilisés pour les stocks et l'exploitation — approvisionnement, déploiement d'applications et résolution des pannes.",
-                "Conception et déploiement de la dorsale en fibre optique du parc, acheminant les flux de vidéosurveillance et les données de caisse depuis les usines et bâtiments distants vers le siège, et redistribuant l'accès internet vers les usines.",
-                "Augmentation de la capacité internet du site en agrégeant huit terminaux Starlink installés individuellement sur un routeur MikroTik comme huit liens WAN, alimentant un commutateur Huawei S5735 puis une couche de distribution GPON avec des répartiteurs 1:4.",
+                "Conception et déploiement de la dorsale en fibre optique du parc — pose et raccordement de câble aérien — acheminant les flux de vidéosurveillance et les données de caisse depuis les usines et bâtiments distants vers le siège, et redistribuant l'accès internet vers les usines.",
+                "Augmentation de la capacité internet du site en agrégeant huit terminaux Starlink installés individuellement sur un routeur MikroTik comme huit liens WAN, alimentant un commutateur d'entreprise Huawei S5735 puis une couche de distribution GPON avec des répartiteurs 1:4 sur le panneau de brassage.",
                 "Accès administrateur aux systèmes internes protégé par un VPN sur le routeur MikroTik, et segmentation du réseau par VLAN et pare-feu pour garder les données personnelles hors de l'internet public.",
-                "Extension de la couverture au-delà du périmètre du parc par liaisons sans fil point à point et tunnels VPN.",
-                "Installation et gestion de points d'accès intérieurs et extérieurs avec contrôleurs centralisés.",
-                "Déploiement et maintenance des services internes sur Proxmox et serveurs Linux via Docker et Portainer — Odoo, OpenMAINT, Tailscale et filtrage DNS.",
+                "Extension de la couverture au-delà du périmètre du parc par liaisons sans fil point à point et tunnels VPN, avec une adresse IP publique comme accès distant de secours en plus des VPN et de la fibre MTN.",
+                "Installation et gestion de points d'accès intérieurs et extérieurs avec contrôleurs centralisés, couvrant bureaux, ateliers et espaces ouverts.",
+                "Administration de 3 serveurs physiques et d'environ 9 machines virtuelles sous Proxmox, ainsi que de 2 serveurs de production et 3 serveurs de développement et de test en ligne — Odoo, OpenMAINT, Tailscale, OPNsense, services de fichiers et de proxy et filtrage DNS, via Docker et Portainer.",
+                "Sauvegardes complètes chaque dimanche soir et sauvegardes automatiques des caisses et bases de données déclenchées par événement, avec les sauvegardes Proxmox VE et Proxmox Backup Server.",
+                "Migration de la messagerie sur site vers Microsoft 365, d'un serveur de caisse local vers AWS, et des sites web de l'entreprise de Namecheap vers Hostinger.",
+                "Administration de NingDun Identity Domain Management pendant un an — services d'annuaire, authentification Windows, ordinateurs et politiques de mots de passe.",
                 "Gestion du magasin informatique et du parc matériel dans Odoo : inventaire, mouvements de stock et attribution des équipements.",
-                "Appui à l'équipe de géomètres par la conversion de plans CAO en données OpenStreetMap avec JOSM.",
-                "Remplacement du responsable ingénierie et conception en son absence, et conduite des entretiens techniques.",
+                "Appui à l'équipe de géomètres par la conversion de plans CAO en données OpenStreetMap avec JOSM, dotant le parc d'un fond de plan numérique fiable.",
+                "Remplacement du responsable ingénierie et conception en son absence, et conduite des entretiens techniques pour le recrutement d'agents informatiques.",
             ],
         },
         {
             "role": "Consultant informatique à distance",
             "meta": "Nii Plants Group &middot; Ghana &middot; 2021 – aujourd'hui",
             "bullets": [
-                "Administration et support technique à distance de l'infrastructure numérique de l'entreprise.",
+                "Administration et support technique à distance de l'infrastructure numérique de l'entreprise, avec explication des solutions aux interlocuteurs non techniques.",
                 "Gestion des sites web, des domaines, des plateformes d'hébergement, des certificats SSL et de la messagerie d'entreprise.",
                 "Maintenance des sites, mises à jour de sécurité, optimisation des performances et dépannage.",
                 "Support des plateformes numériques utilisées dans l'hôtellerie, le transport, la logistique et l'immobilier.",
                 "Gestion des services en ligne et maintien de la disponibilité des systèmes critiques.",
+                "Développement de sites web et appui au référencement pour les entreprises du groupe.",
             ],
         },
         {
-            "role": "Spécialiste informatique",
+            "role": "Spécialiste en technologies de l'information",
             "meta": "Prop-Tis GH Limited &middot; Ghana &middot; avril 2022 – septembre 2023",
             "bullets": [
-                "Développement et gestion de la plateforme d'annonces immobilières de l'entreprise.",
-                "Support informatique à l'échelle de l'organisation pour le matériel, les logiciels et le réseau.",
-                "Mise en place des sauvegardes de données et de stratégies de référencement.",
-                "Encadrement des équipes de production créative en vidéo, photographie et graphisme.",
+"Développement et maintenance de la plateforme WordPress d'annonces immobilières, au service de la publication des biens et de la recherche client.",
+                "Maintenance de l'hébergement, des sauvegardes et de la sécurité du site pour protéger les données de l'entreprise, et résolution des problèmes matériels, logiciels et de connectivité du personnel.",
+                "Coordination d'une équipe pluridisciplinaire de huit personnes pour la livraison du site et des contenus numériques, y compris les infolettres et les rapports de référencement.",
             ],
         },
         {
@@ -376,7 +390,7 @@ RESUME_FR = {
             ],
         },
         {
-            "role": "Spécialiste informatique",
+            "role": "Stagiaire spécialiste en informatique",
             "meta": "Origin8 Limited &middot; Ghana &middot; avril 2020 – mars 2021",
             "bullets": [
                 "Conception et maintenance de sites web pour des projets clients et internes.",
@@ -385,20 +399,22 @@ RESUME_FR = {
             ],
         },
         {
-            "role": "Spécialiste informatique",
+            "role": "Stagiaire spécialiste en informatique",
             "meta": "GCB Bank Limited &middot; Amasaman, Ghana &middot; octobre 2019 – janvier 2020",
             "bullets": [
-                "Entretien et réparation de compteuses de billets, assurant un fonctionnement matériel optimal pour les opérations bancaires.",
-                "Support technique au personnel pour le matériel, les logiciels et le réseau, réduisant les interruptions de service.",
+"Support des serveurs Windows et Linux, des comptes utilisateurs et de messagerie, des droits d'accès, des serveurs de fichiers, des imprimantes et des VPN.",
+                "Dépannage du matériel, de la vidéosurveillance et des logiciels pour le personnel, limitant les interruptions des opérations bancaires.",
+                "Entretien et réparation des compteuses de billets utilisées dans les opérations bancaires.",
                 "Assistance aux clients pour leurs demandes de renseignements sur les comptes et les services.",
-                "Utilisation de Google Forms et d'outils numériques pour la collecte et le traitement efficace des données.",
+                "Utilisation de Google Forms et d'autres outils numériques pour collecter et traiter efficacement l'information.",
             ],
         },
         {
             "role": "Stagiaire en systèmes d'information de gestion",
             "meta": "Volta River Authority &middot; Aboadze, Ghana &middot; septembre 2017 – janvier 2018",
             "bullets": [
-                "Résolution de problèmes de connectivité réseau, configuration du matériel et installation de systèmes d'exploitation serveur et client.",
+                "Configuration de systèmes d'exploitation serveur et client, et support des serveurs Windows et Linux, des comptes, des permissions, des services de fichiers et des VPN.",
+                "Résolution des problèmes d'ordinateurs, d'imprimantes, de réseau et de vidéosurveillance pour le personnel.",
             ],
         },
         {
@@ -416,7 +432,9 @@ RESUME_FR = {
         {"title": "Baccalauréat en technologies de l'information",
          "meta": "Université des sciences et technologies Kwame Nkrumah, Ghana &middot; 2022 – 2024 &middot; Mention bien, division supérieure"},
         {"title": "Diplôme supérieur en technologies de l'information et de la communication",
-         "meta": "Université technique de Takoradi, Ghana &middot; 2017 – 2021 &middot; Mention bien, division supérieure"},
+         "meta": "Université technique de Takoradi, Ghana (NABPTEX) &middot; 2017 – 2020 &middot; Mention bien, division supérieure"},
+        {"title": "Certificat II, technologie du génie électrique",
+         "meta": "Twumasi Boateng Technical Institute, Ghana &middot; 2016 &middot; Service de l'éducation du Ghana / NABPTEX"},
     ],
     "cert_heading": "CERTIFICATIONS",
     "certs": [
@@ -430,19 +448,21 @@ RESUME_FR = {
          "meta": "Google (Coursera) &middot; août 2026 &middot; Identifiant KVMKSBBS97UR"},
         {"title": "AWS Certified Cloud Practitioner",
          "meta": "Amazon Web Services &middot; juillet 2024 – juillet 2027 &middot; Identifiant 22299d8c82674d9fa309d05ac2c872a6"},
-        {"title": "Stratégie et fondements du marketing LinkedIn",
-         "meta": "LinkedIn &middot; 2022"},
-        {"title": "Compétences numériques Google",
-         "meta": "Google &middot; octobre 2020"},
+        {"title": "ALX Infonuagique (cours Cloud Practitioner)",
+         "meta": "ALX Africa, propulsé par AWS Academy &middot; juillet 2025 &middot; Certificat HrRxBsfZLz"},
+        {"title": "ALX Fondements professionnels",
+         "meta": "ALX Africa &middot; avril 2025 &middot; Certificat 59XFYHsMer"},
+        {"title": "Les fondamentaux du marketing numérique",
+         "meta": "Google Digital Skills for Africa &middot; octobre 2020 &middot; Certificat 58H 54V V9H"},
     ],
     "technical_heading": "COMPÉTENCES TECHNIQUES",
     "technical": [
         {"label": "Conseil et support", "items": "Support à distance &middot; Diagnostic et réparation matériels &middot; Postes Windows et Linux &middot; Microsoft 365 &middot; Google Workspace &middot; Imprimantes et périphériques &middot; Comptes et accès &middot; Formation des utilisateurs"},
         {"label": "Vente / terrain", "items": "Configuration et déploiement de caisses &middot; Terminaux portables &middot; Déploiement multi-sites &middot; Vidéosurveillance &middot; Gestion des actifs et stocks (Odoo)"},
-        {"label": "Réseau", "items": "MikroTik RouterOS &middot; Routeurs et commutateurs entreprise &middot; Agrégation multi-WAN &middot; Starlink &middot; Fibre / GPON &middot; Huawei S5735 &middot; VLAN et pare-feu &middot; Liaisons point à point &middot; WireGuard / Tailscale &middot; Points d'accès"},
+        {"label": "Réseau", "items": "MikroTik RouterOS &middot; OPNsense &middot; Routeurs et commutateurs entreprise &middot; Agrégation multi-WAN &middot; Starlink &middot; Fibre / GPON &middot; Huawei S5735 &middot; VLAN et pare-feu &middot; Liaisons point à point &middot; WireGuard / Tailscale &middot; Points d'accès"},
         {"label": "Sécurité", "items": "Segmentation réseau (VLAN) &middot; Politique et durcissement du pare-feu &middot; Accès admin protégé par VPN &middot; Filtrage de contenu DNS &middot; Protection des données personnelles &middot; Gestion des accès et des identités &middot; Surveillance (SIEM) &middot; Analyse des menaces"},
-        {"label": "Serveurs", "items": "Proxmox &middot; Administration Linux &middot; Docker et Portainer &middot; Odoo &middot; OpenMAINT &middot; Frappe / ERPNext &middot; Filtrage DNS &middot; Sauvegarde et restauration"},
-        {"label": "Infonuagique / web", "items": "AWS &middot; Google Cloud &middot; Cloudflare &middot; Domaines et DNS &middot; Hébergement de messagerie &middot; WordPress &middot; PHP / MySQL &middot; HTML, CSS, JavaScript &middot; Git"},
+        {"label": "Serveurs", "items": "Windows Server, Active Directory et stratégies de groupe &middot; Proxmox et Proxmox Backup Server &middot; Administration Linux &middot; Docker et Portainer &middot; Odoo &middot; OpenMAINT &middot; Frappe / ERPNext &middot; Filtrage DNS &middot; Sauvegarde et restauration"},
+        {"label": "Infonuagique / web", "items": "AWS (rôles et politiques IAM, MFA) &middot; Google Cloud &middot; Cloudflare &middot; Domaines et DNS &middot; Hébergement de messagerie &middot; WordPress &middot; cPanel &middot; PHP / MySQL &middot; HTML, CSS, JavaScript &middot; Git"},
         {"label": "Divers", "items": "JOSM / OpenStreetMap &middot; Conversion CAO vers SIG &middot; Câblage structuré &middot; Documentation technique &middot; Coordination de projets &middot; Travail à distance"},
     ],
 }

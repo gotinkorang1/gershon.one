@@ -95,8 +95,7 @@ const jsonLd = {
   jobTitle: site.role,
   address: {
     "@type": "PostalAddress",
-    streetAddress: "55 Sir Wilfred Greenfield Place",
-    addressLocality: "St. John's",
+        addressLocality: "St. John's",
     addressRegion: "NL",
     addressCountry: "CA",
   },
@@ -181,8 +180,7 @@ const jsonLd = {
       name: "St. John's",
       address: {
         "@type": "PostalAddress",
-        streetAddress: "55 Sir Wilfred Greenfield Place",
-        addressLocality: "St. John's",
+                addressLocality: "St. John's",
         addressRegion: "NL",
         addressCountry: "CA",
       },

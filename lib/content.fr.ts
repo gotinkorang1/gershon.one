@@ -23,19 +23,23 @@ export const experienceFr: Record<
     ],
   },
   "Greenhouse International Development Group Ghana Ltd.": {
-    role: "Chargé de support informatique",
+    role: "Responsable informatique principal",
     division: "Département ingénierie et conception",
     summary:
-      "Seul responsable du support informatique pour un parc industriel de 1 200 acres et les points de vente de sa filiale — utilisateurs, systèmes de caisse et terminaux portables, serveurs, et le réseau du site qui relie l'ensemble.",
+      "Responsable du support informatique d'un parc industriel de 1 200 acres, de ses succursales et de ses usines — utilisateurs, caisses, serveurs, vidéosurveillance et réseau du site — à la tête d'une équipe de quatre personnes.",
     highlights: [
-      "Premier et unique niveau de support informatique pour le personnel du parc et du siège : matériel, logiciels, imprimantes, comptes et accès, du diagnostic à la résolution.",
-      "Configuration, déploiement et support des systèmes de point de vente de Bright Afrimall sur plusieurs sites commerciaux au Ghana, y compris la formation du personnel et le dépannage à distance.",
+      "Encadrement d'une équipe informatique de quatre personnes assurant le support du personnel du parc, du siège et des succursales — environ 36 employés par succursale ou usine — pour le matériel, les logiciels, les imprimantes, les comptes et les accès, du diagnostic à la résolution.",
+      "Installation et supervision en personne des déploiements de vidéosurveillance et de Starlink dans 47 succursales et usines au Ghana — de 15 à 45 caméras par site avec visionnement à distance pour la direction, et Starlink mis en service en deux heures environ par site.",
+      "Appui à la mise en place des caisses, à la formation du personnel et au suivi des équipements dans 23 points de vente Bright Afrimall, avec dépannage à distance.",
       "Gestion du parc de terminaux portables utilisés pour les stocks et l'exploitation — approvisionnement, déploiement d'applications et résolution des pannes.",
-      "Conception et déploiement de la dorsale en fibre optique du parc, acheminant les flux de vidéosurveillance et les données de caisse depuis les usines et bâtiments distants vers le siège, et redistribuant l'accès internet vers les usines.",
+      "Conception et déploiement de la dorsale en fibre optique du parc — pose et raccordement de câble aérien — acheminant les flux de vidéosurveillance et les données de caisse depuis les usines et bâtiments distants vers le siège, et redistribuant l'accès internet vers les usines.",
       "Augmentation de la capacité internet du site en agrégeant huit terminaux Starlink installés individuellement sur un routeur MikroTik comme huit liens WAN, alimentant un commutateur d'entreprise Huawei S5735 puis une couche de distribution GPON avec des répartiteurs 1:4 sur le panneau de brassage.",
-      "Extension de la couverture au-delà du périmètre du parc par liaisons sans fil point à point et tunnels VPN, permettant aux sites distants d'accéder aux ressources du siège.",
+      "Extension de la couverture au-delà du périmètre du parc par liaisons sans fil point à point et tunnels VPN, avec une adresse IP publique comme accès distant de secours en plus des VPN et de la fibre MTN.",
       "Installation et gestion de points d'accès intérieurs et extérieurs avec contrôleurs centralisés, couvrant bureaux, ateliers et espaces ouverts.",
-      "Déploiement et maintenance des services internes sur Proxmox et serveurs Linux via Docker et Portainer — Odoo, OpenMAINT, Tailscale et filtrage DNS des publicités et contenus.",
+      "Administration de 3 serveurs physiques et d'environ 9 machines virtuelles sous Proxmox, ainsi que de 2 serveurs de production et 3 serveurs de développement et de test en ligne — Odoo, OpenMAINT, Tailscale, OPNsense, services de fichiers et de proxy et filtrage DNS, via Docker et Portainer.",
+      "Sauvegardes complètes chaque dimanche soir et sauvegardes automatiques des caisses et bases de données déclenchées par événement, avec les sauvegardes Proxmox VE et Proxmox Backup Server.",
+      "Migration de la messagerie sur site vers Microsoft 365, d'un serveur de caisse local vers AWS, et des sites web de l'entreprise de Namecheap vers Hostinger.",
+      "Administration de NingDun Identity Domain Management pendant un an — services d'annuaire, authentification Windows, ordinateurs et politiques de mots de passe.",
       "Gestion du magasin informatique et du parc matériel dans Odoo : inventaire, mouvements de stock et attribution des équipements.",
       "Appui à l'équipe de géomètres par la conversion de plans CAO en données OpenStreetMap avec JOSM, dotant le parc d'un fond de plan numérique fiable.",
       "Remplacement du responsable ingénierie et conception en son absence, et conduite des entretiens techniques pour le recrutement d'agents informatiques.",
@@ -46,24 +50,23 @@ export const experienceFr: Record<
     summary:
       "Administration et support informatiques à distance de l'infrastructure numérique du groupe, en parallèle de l'emploi principal.",
     highlights: [
-      "Administration et support technique à distance de l'infrastructure numérique de l'entreprise.",
+      "Administration et support technique à distance de l'infrastructure numérique de l'entreprise, avec explication des solutions aux interlocuteurs non techniques.",
       "Gestion des sites web, des domaines, des plateformes d'hébergement, des certificats SSL et de la messagerie d'entreprise.",
       "Maintenance des sites, mises à jour de sécurité, optimisation des performances et dépannage.",
       "Support des plateformes numériques utilisées dans l'hôtellerie, le transport, la logistique et l'immobilier.",
       "Gestion des services en ligne et maintien de la disponibilité des systèmes critiques.",
+      "Développement de sites web et appui au référencement pour les entreprises du groupe.",
     ],
   },
   "Prop-Tis GH Limited": {
-    role: "Responsable informatique",
+    role: "Spécialiste en technologies de l'information",
     division: "Département informatique et publicité",
     summary:
-      "Responsable de la plateforme d'annonces immobilières de l'entreprise et de la fonction informatique qui l'entoure, aux côtés de l'équipe de production créative.",
+      "Création et gestion de la plateforme d'annonces WordPress de l'entreprise et de l'informatique qui l'entoure, avec la coordination d'une équipe numérique de huit personnes.",
     highlights: [
-      "Développement et gestion de la plateforme d'annonces immobilières, avec amélioration des performances et de l'expérience utilisateur.",
-      "Mise en place de stratégies de référencement ayant accru la visibilité organique et le trafic web.",
-      "Encadrement des équipes de production créative en vidéo, photographie et graphisme.",
-      "Mise en place et maintenance des systèmes de sauvegarde protégeant les données de l'entreprise.",
-      "Compilation et analyse de rapports de performance sur les plateformes numériques pour orienter les décisions marketing et opérationnelles.",
+      "Développement et maintenance de la plateforme WordPress d'annonces immobilières, au service de la publication des biens et de la recherche client.",
+      "Maintenance de l'hébergement, des sauvegardes et de la sécurité du site pour protéger les données de l'entreprise, et résolution des problèmes matériels, logiciels et de connectivité du personnel.",
+      "Coordination d'une équipe pluridisciplinaire de huit personnes pour la livraison du site et des contenus numériques, y compris les infolettres et les rapports de référencement.",
     ],
   },
   "Kwaaba Foundation": {
@@ -78,19 +81,8 @@ export const experienceFr: Record<
       "Soutien au développement de sites web, aux contenus graphiques et à la communication sur les réseaux sociaux.",
     ],
   },
-  "Kaysens Group & Kwaaba Foundation": {
-    role: "Assistant de projet (contrat)",
-    summary:
-      "Coordination de projets et gestion des opérations de bureau, avec le travail web et graphique qui les accompagnait.",
-    highlights: [
-      "Coordination des plans de projet, des échéanciers et de l'affectation du personnel.",
-      "Gestion quotidienne des opérations de bureau, du contrôle documentaire et des communications avec les parties prenantes.",
-      "Remplacement du chef de projet au besoin pour respecter les échéances.",
-      "Conception et développement de sites web et de contenus graphiques pour l'image de marque des projets.",
-    ],
-  },
   "Origin8 Limited": {
-    role: "Spécialiste informatique",
+    role: "Stagiaire spécialiste en informatique",
     summary:
       "Conception de sites web, assistance informatique au personnel et intégration d'outils numériques aux projets de campagne.",
     highlights: [
@@ -99,26 +91,16 @@ export const experienceFr: Record<
       "Collaboration avec les équipes créatives pour intégrer les solutions techniques aux livrables.",
     ],
   },
-  "Origin8 Advertising Ltd.": {
-    role: "Spécialiste informatique (service national)",
-    division: "Département création",
-    summary:
-      "Développement web et support informatique interne au sein d'une agence de création.",
-    highlights: [
-      "Conception et développement de sites web pour des projets clients et internes.",
-      "Support informatique au personnel, avec résolution des problèmes matériels et logiciels pour limiter les interruptions.",
-      "Production de contenus créatifs pour des campagnes marketing et publicitaires.",
-    ],
-  },
   "GCB Bank Limited": {
-    role: "Spécialiste informatique",
+    role: "Stagiaire spécialiste en informatique",
     summary:
-      "Maintenance de compteuses de billets, support informatique au personnel et traitement numérique de formulaires au sein de la plus grande banque commerciale du Ghana.",
+      "Support des serveurs, des comptes et des utilisateurs, ainsi que maintenance des compteuses de billets, dans l'une des plus grandes banques commerciales du Ghana.",
     highlights: [
-      "Entretien et réparation de compteuses de billets, assurant un fonctionnement matériel optimal pour les opérations bancaires.",
-      "Support technique au personnel pour le matériel, les logiciels et le réseau, réduisant les interruptions de service.",
+      "Support des serveurs Windows et Linux, des comptes utilisateurs et de messagerie, des droits d'accès, des serveurs de fichiers, des imprimantes et des VPN.",
+      "Dépannage du matériel, de la vidéosurveillance et des logiciels pour le personnel, limitant les interruptions des opérations bancaires.",
+      "Entretien et réparation des compteuses de billets utilisées dans les opérations bancaires.",
       "Assistance aux clients pour leurs demandes de renseignements sur les comptes et les services.",
-      "Utilisation de Google Forms et d'outils numériques pour la collecte et le traitement efficace des données.",
+      "Utilisation de Google Forms et d'autres outils numériques pour collecter et traiter efficacement l'information.",
     ],
   },
   "Volta River Authority": {
@@ -126,9 +108,9 @@ export const experienceFr: Record<
     summary:
       "Première expérience des infrastructures d'entreprise, à la compagnie nationale d'électricité du Ghana.",
     highlights: [
+"Configuration de systèmes d'exploitation serveur et client, et support des serveurs Windows et Linux, des comptes, des permissions, des services de fichiers et des VPN.",
+      "Résolution des problèmes d'ordinateurs, d'imprimantes, de réseau et de vidéosurveillance pour le personnel.",
       "Gestion et mise à jour du site web de l'organisation.",
-      "Diagnostic et résolution de problèmes de connectivité réseau, et configuration du matériel du personnel.",
-      "Installation et configuration de systèmes d'exploitation serveur et client.",
     ],
   },
   "RichWorld Mobile Devices": {
@@ -190,6 +172,14 @@ export const credentialsFr: Record<string, { title: string; detail?: string }> =
   "AWS Certified Cloud Practitioner": {
     title: "AWS Certified Cloud Practitioner",
   },
+  "ALX Cloud Computing": {
+    title: "ALX Infonuagique",
+    detail: "Cours ALX Cloud Practitioner de deux mois, propulsé par AWS Academy, avec des compétences de développement professionnel pour l'ère numérique · terminé en juin 2025",
+  },
+  "ALX Professional Foundations": {
+    title: "ALX Fondements professionnels",
+    detail: "Compétences de développement professionnel pour l'ère numérique",
+  },
   "Intermediate First Aid CPR C/AED (Standard)": {
     title: "Secourisme intermédiaire RCR niveau C / DEA (standard)",
     detail: "Cours COUR-1164-NL-260926-7265 · Conseil de Terre-Neuve-et-Labrador d'Ambulance Saint-Jean · RCR niveau C et DEA",
@@ -202,19 +192,24 @@ export const credentialsFr: Record<string, { title: string; detail?: string }> =
     title: "Sécurité incendie, prévention, évacuation et lutte contre l'incendie",
     detail: "Caserne d'Amasaman · prévention, évacuation d'urgence, fonctions de garde d'incendie pour le parc industriel de Bright",
   },
-  "LinkedIn Marketing Strategy": { title: "Stratégie marketing LinkedIn" },
-  "LinkedIn Marketing Fundamentals": { title: "Fondements du marketing LinkedIn" },
   "HND Information & Communication Technology": {
     title: "Diplôme supérieur en technologies de l'information et de la communication",
     detail: "Mention bien, division supérieure",
   },
-  "Google Digital Skills": { title: "Compétences numériques Google" },
+  "Google Digital Skills": {
+    title: "Compétences numériques Google",
+    detail: "Les fondamentaux du marketing numérique · Google Digital Skills for Africa, reconnu par IAB Europe et The Open University",
+  },
+  "Certificate II, Electrical Engineering Technology": {
+    title: "Certificat II, technologie du génie électrique",
+    detail: "Service de l'éducation du Ghana / NABPTEX · examens des matières techniques et de base",
+  },
 };
 
 export const factsFr: Record<string, { label: string; value: string }> = {
   Experience: { label: "Expérience", value: "Plus de 5 ans" },
   "Site supported": { label: "Site couvert", value: "1 200 acres" },
-  Available: { label: "Disponible", value: "Immédiatement" },
+  Available: { label: "Disponible", value: "Maintenant" },
   Based: { label: "Basé à", value: "St. John's, T.-N.-L." },
 };
 
@@ -225,9 +220,6 @@ export const issuersFr: Record<string, string> = {
   "Amazon Web Services": "Amazon Web Services",
   "St. John Ambulance": "Ambulance Saint-Jean",
   "Ghana National Fire Service": "Service national des incendies du Ghana",
-  "Canadian Red Cross / St. John Ambulance":
-    "Croix-Rouge canadienne / Ambulance Saint-Jean",
-  LinkedIn: "LinkedIn",
   "Takoradi Technical University (NABPTEX)": "Université technique de Takoradi (NABPTEX)",
   Google: "Google",
 };
@@ -331,7 +323,7 @@ export const roleFocusFr = {
       "Administration d'ERPNext, Frappe et Odoo, données RH, formats d'impression, gestion des actifs, contrôle des accès et automatisation.",
   },
   infrastructure: {
-    title: "Ingénieur infrastructure",
+    title: "Spécialiste en infrastructure",
     shortTitle: "Infrastructure",
     description:
       "Serveurs, virtualisation, Linux, conteneurs, cloud, sécurité réseau et connectivité résiliente pour des opérations distribuées.",

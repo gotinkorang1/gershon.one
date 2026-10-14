@@ -14,16 +14,27 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#0e1013",
-          color: "#f2f3f5",
-          fontSize: 30,
-          fontWeight: 700,
-          letterSpacing: -1,
-          borderRadius: 12,
-          fontFamily: "sans-serif",
+          background: "#ffffff",
         }}
       >
-        {site.initials}
+        <div
+          style={{
+            width: 56,
+            height: 56,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "#0e1013",
+            color: "#f2f3f5",
+            fontSize: 28,
+            fontWeight: 700,
+            letterSpacing: -1,
+            borderRadius: 11,
+            fontFamily: "sans-serif",
+          }}
+        >
+          {site.initials}
+        </div>
       </div>
     ),
     size,

@@ -30,7 +30,15 @@ export function SiteNav() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    const first = navLinks[0] ? document.querySelector(navLinks[0].href) : null;
+    const onScroll = () => {
+      setScrolled(window.scrollY > 12);
+      // Back above the first section (the hero): nothing is current. The
+      // observer below only ever sets a section, so it can't clear this.
+      if (first && first.getBoundingClientRect().top > window.innerHeight * 0.4) {
+        setActive("");
+      }
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);

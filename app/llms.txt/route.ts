@@ -44,7 +44,7 @@ ${caseStudyLines || "- (none published yet)"}
 
 ## Contact
 
-- Email: ${site.email}
+- Email: ${site.email} · ${site.emailAlt}
 - GitHub: ${site.socials.github}
 - LinkedIn: ${site.socials.linkedin}
 
