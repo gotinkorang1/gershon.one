@@ -1,6 +1,7 @@
 "use client";
 
-import { Cloud, LifeBuoy, Map, Network, Server, ShieldCheck, Store } from "lucide-react";
+import { useState } from "react";
+import { ChevronDown, Cloud, LifeBuoy, Map, Network, Server, ShieldCheck, Store } from "lucide-react";
 import { SectionHeading } from "@/components/fx/section-heading";
 import { Reveal } from "@/components/fx/reveal";
 import { Panel } from "@/components/ui/panel";
@@ -61,6 +62,16 @@ export function Skills() {
   const { t, locale } = useI18n();
   const skillGroups = getSkillGroups(locale);
   const focusProfile = getRoleFocus(useRoleFocus());
+  // Phones only: which cards have their skill list open. Desktop always
+  // shows every list; the toggle is hidden there.
+  const [openGroups, setOpenGroups] = useState<ReadonlySet<string>>(new Set());
+  const toggleGroup = (title: string) =>
+    setOpenGroups((current) => {
+      const next = new Set(current);
+      if (next.has(title)) next.delete(title);
+      else next.add(title);
+      return next;
+    });
   const orderedGroups = prioritizeByKeys(
     skillGroups.map((group, sourceIndex) => ({ group, sourceIndex })),
     focusProfile?.skillGroups,
@@ -80,6 +91,8 @@ export function Skills() {
           const Icon = ICONS[sourceIndex] ?? Network;
           const sourceTitle = sourceSkillGroups[sourceIndex]?.title ?? group.title;
           const matched = isTopMatch(sourceTitle, focusProfile?.skillGroups);
+          const open = openGroups.has(group.title);
+          const listId = `skills-${sourceIndex}`;
           return (
             <Reveal key={group.title} delay={0.04 * i} className={cn(spanFor(i, orderedGroups.length))}>
               <Panel
@@ -103,7 +116,25 @@ export function Skills() {
                   </span>
                 </div>
 
-                <ul className="skill-list mt-4 flex flex-wrap gap-1.5">
+                {/* Collapsed on phones until asked for; the list stays in the
+                    page either way, so search and find-in-page still see it. */}
+                <button
+                  type="button"
+                  aria-expanded={open}
+                  aria-controls={listId}
+                  onClick={() => toggleGroup(group.title)}
+                  className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-accent sm:hidden"
+                >
+                  {open ? t.ui.hideSkills : t.ui.showSkills(group.skills.length)}
+                  <ChevronDown
+                    aria-hidden
+                    className={cn("size-4 transition-transform duration-300", open && "rotate-180")}
+                  />
+                </button>
+                <ul
+                  id={listId}
+                  className={cn("skill-list mt-4 flex-wrap gap-1.5 sm:flex", open ? "flex" : "hidden")}
+                >
                   {group.skills.map((skill) => (
                     <li
                       key={skill}

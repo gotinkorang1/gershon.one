@@ -422,7 +422,7 @@
 /* Phones: seven cards of bordered pills stacked to 2,000px+, with one long
    chip per line. Below sm the same list reads as dot-separated text. */
 @media (max-width: 639px) {
-  .skill-list {
+  .skill-list:not(.hidden) {
     display: block;
     font-size: 0.8125rem;
     line-height: 1.75;
