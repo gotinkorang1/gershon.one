@@ -1,11 +1,16 @@
+"use client";
+
 import Link from "next/link";
 import { Activity, ArrowRight, Boxes, Network, Wrench } from "lucide-react";
-import { portfolioFeatures } from "@/lib/site";
+import { useI18n } from "@/components/locale-provider";
+import { getFeatures } from "@/lib/localised-content";
 import { Panel } from "@/components/ui/panel";
 
 const icons = [Wrench, Network, Boxes, Activity];
 
 export function SystemsLabTeaser() {
+  const { locale } = useI18n();
+  const portfolioFeatures = getFeatures(locale);
   const labels = Object.values(portfolioFeatures.lab.tabs);
   return (
     <section className="shell py-14 md:py-16" aria-labelledby="systems-lab-teaser-title">

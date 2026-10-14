@@ -6,8 +6,9 @@ import { usePathname } from "next/navigation";
 import { motion } from "motion/react";
 import { Command } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { navLinks, portfolioFeatures, site } from "@/lib/site";
+import { navLinks, site } from "@/lib/site";
 import { useI18n } from "@/components/locale-provider";
+import { getFeatures, projectsHref } from "@/lib/localised-content";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageToggle } from "@/components/language-toggle";
 import { CvButton } from "@/components/cv-button";
@@ -15,6 +16,7 @@ import { requestCommandPalette } from "@/lib/command-palette-bus";
 
 export function SiteNav() {
   const { t, locale } = useI18n();
+  const features = getFeatures(locale);
   const pathname = usePathname();
   const home = locale === "fr" ? "/fr" : "/";
   // On a sub-route a bare "#experience" targets a section that does not exist
@@ -115,11 +117,11 @@ export function SiteNav() {
                 : "border border-transparent",
             )}
           >
-            <Link href={home} className="flex items-center gap-2.5">
+            <Link href={home} className="flex shrink-0 items-center gap-2.5">
               <span className="identity-mark grid size-7 place-items-center bg-foreground text-[0.625rem] font-bold text-surface-0">
                 {site.initials}
               </span>
-              <span className="hidden text-sm font-medium tracking-tight sm:inline">
+              <span className="hidden whitespace-nowrap text-sm font-medium tracking-tight sm:inline">
                 {site.shortName}
               </span>
             </Link>
@@ -132,7 +134,7 @@ export function SiteNav() {
                     <Link
                       href={sectionHref(link.href)}
                       className={cn(
-                        "relative rounded-lg px-3 py-1.5 text-sm transition-colors",
+                        "relative whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm transition-colors",
                         isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground",
                       )}
                     >
@@ -150,41 +152,41 @@ export function SiteNav() {
               })}
               <li>
                 <Link
-                  href="/projects"
+                  href={projectsHref(locale)}
                   className={cn(
-                    "relative rounded-lg px-3 py-1.5 text-sm transition-colors",
-                    pathname.startsWith("/projects")
+                    "relative whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm transition-colors",
+                    pathname.startsWith(projectsHref(locale))
                       ? "text-foreground"
                       : "text-muted-foreground hover:text-foreground",
                   )}
                 >
-                  {portfolioFeatures.navigation.projects}
+                  {features.navigation.projects}
                 </Link>
               </li>
               <li>
                 <Link
                   href="/lab"
                   className={cn(
-                    "relative rounded-lg px-3 py-1.5 text-sm transition-colors",
+                    "relative whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm transition-colors",
                     pathname.startsWith("/lab")
                       ? "text-foreground"
                       : "text-muted-foreground hover:text-foreground",
                   )}
                 >
-                  {portfolioFeatures.navigation.lab}
+                  {features.navigation.lab}
                 </Link>
               </li>
               <li>
                 <Link
                   href="/blog"
                   className={cn(
-                    "relative rounded-lg px-3 py-1.5 text-sm transition-colors",
+                    "relative whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm transition-colors",
                     pathname.startsWith("/blog")
                       ? "text-foreground"
                       : "text-muted-foreground hover:text-foreground",
                   )}
                 >
-                  {portfolioFeatures.navigation.blog}
+                  {features.navigation.blog}
                 </Link>
               </li>
             </ul>
@@ -256,12 +258,12 @@ export function SiteNav() {
             </Link>
           ))}
           <Link
-            href="/projects"
+            href={projectsHref(locale)}
             onClick={() => setOpen(false)}
             className="flex items-baseline gap-4 border-b border-border py-4"
           >
             <span className="label">06</span>
-            <span className="text-2xl font-medium tracking-tight">{portfolioFeatures.navigation.projects}</span>
+            <span className="text-2xl font-medium tracking-tight">{features.navigation.projects}</span>
           </Link>
           <Link
             href="/lab"
@@ -269,7 +271,7 @@ export function SiteNav() {
             className="flex items-baseline gap-4 border-b border-border py-4"
           >
             <span className="label">07</span>
-            <span className="text-2xl font-medium tracking-tight">{portfolioFeatures.navigation.lab}</span>
+            <span className="text-2xl font-medium tracking-tight">{features.navigation.lab}</span>
           </Link>
           <Link
             href="/blog"
@@ -277,7 +279,7 @@ export function SiteNav() {
             className="flex items-baseline gap-4 border-b border-border py-4"
           >
             <span className="label">08</span>
-            <span className="text-2xl font-medium tracking-tight">{portfolioFeatures.navigation.blog}</span>
+            <span className="text-2xl font-medium tracking-tight">{features.navigation.blog}</span>
           </Link>
           <div className="mt-6" onClick={() => setOpen(false)}>
             <CvButton size="lg" className="w-full" />

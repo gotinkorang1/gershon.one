@@ -1,10 +1,16 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight, FileUser } from "lucide-react";
-import { portfolioFeatures, roleFocusProfiles, type RoleFocusId } from "@/lib/site";
+import type { RoleFocusId } from "@/lib/site";
+import { useI18n } from "@/components/locale-provider";
+import { getFeatures, getRoleFocusProfiles } from "@/lib/localised-content";
 import { Panel } from "@/components/ui/panel";
 
 export function RecruiterPackBanner({ focus }: { focus: RoleFocusId }) {
-  const profile = roleFocusProfiles.find((item) => item.id === focus);
+  const { locale } = useI18n();
+  const portfolioFeatures = getFeatures(locale);
+  const profile = getRoleFocusProfiles(locale).find((item) => item.id === focus);
   if (!profile) return null;
 
   return (

@@ -341,3 +341,184 @@ export const roleFocusFr = {
       "Sites web, hébergement, DNS, messagerie, WordPress, PHP et MySQL, SEO, maintenance et intégration front-end.",
   },
 } as const;
+
+/* -------------------------------------------------------------------------- */
+/*  Site features, references and the projects page                           */
+/* -------------------------------------------------------------------------- */
+
+export const featuresFr = {
+  navigation: { projects: "Projets", lab: "Labo", blog: "Blog" },
+  lab: {
+    eyebrow: "Preuve interactive",
+    homeTitle: "Ne vous contentez pas de lire. Examinez la démarche.",
+    homeLede:
+      "Lancez un scénario de dépannage, reliez chaque compétence à ses preuves, examinez les architectures et l'activité professionnelle récente.",
+    open: "Ouvrir le labo",
+    tabs: {
+      troubleshoot: "Dépannage",
+      evidence: "Preuves",
+      architecture: "Architecture",
+      activity: "Activité",
+    },
+  },
+  recruiterPack: {
+    eyebrow: "Dossier recruteur par poste",
+    title: "Preuves sélectionnées pour",
+    lede: "Un dossier prêt à imprimer : adéquation au poste, disponibilité, expérience la plus pertinente, projets, certifications et coordonnées.",
+    open: "Ouvrir le dossier recruteur",
+  },
+};
+
+/** Keyed by the reference's name. */
+export const referencesFr: Record<string, { title: string }> = {
+  Theophilus: { title: "PDG, Nii Plants Group" },
+  "Michael Donkor": { title: "Analyste SI, Avenue Living" },
+};
+
+/** Keyed by website slug. */
+export const websitesFr: Record<string, { summary: string }> = {
+  "nii-plants-logistics": { summary: "Fret et logistique au Ghana et en Afrique de l'Ouest" },
+  "papersource-ghana": { summary: "Catalogue et boutique en ligne livrant à Accra et Tema" },
+  "nii-plants-group": { summary: "Site du groupe : mobilité, hôtellerie et services aux entreprises" },
+  "nii-plants-car-rentals": { summary: "Location de voitures avec ou sans chauffeur à Accra" },
+  "nbc-ghana-trust": { summary: "Société fiduciaire d'avantages sociaux" },
+  "akosombo-textiles": { summary: "Fabricant textile et collections de mode" },
+  "kwaaba-foundation": { summary: "Organisme sans but lucratif pour la santé et les initiatives communautaires" },
+  "greenhouse-international": { summary: "Site institutionnel du promoteur du parc industriel" },
+  proptisgh: { summary: "Plateforme d'annonces immobilières" },
+  "autism-destigma": { summary: "Organisme de sensibilisation à l'autisme" },
+  "plantsville-ghana": { summary: "Résidences et salon" },
+  "the-home-of-beads": { summary: "Boutique Shopify de perles et bijoux africains" },
+};
+
+/** Keyed by the English project title. */
+export const projectsFr: Record<
+  string,
+  { title: string; context?: string; summary: string; tags: string[] }
+> = {
+  "Multi-site Starlink deployment": {
+    title: "Déploiement Starlink multi-sites",
+    summary: "Installation et activation de Starlink sur les sites de l'entreprise, avec la gestion des abonnements, de la facturation, des résiliations et des remboursements.",
+    tags: ["Starlink", "Multi-sites", "Gestion fournisseurs"],
+  },
+  "Head office Wi-Fi and network": {
+    title: "Wi-Fi et réseau du siège",
+    summary: "Configuration des routeurs, commutateurs, points d'accès et d'un réseau distinct par étage sur équipement TP-Link Omada, avec Starlink comme liaison montante.",
+    tags: ["TP-Link Omada", "Wi-Fi", "Commutation"],
+  },
+  "Industrial park fibre network": {
+    title: "Réseau fibre du parc industriel",
+    summary: "Connectivité fibre à travers le parc sur un câble principal à huit brins, avec des liaisons à deux brins vers chaque bâtiment.",
+    tags: ["Fibre", "GPON", "Câblage"],
+  },
+  "Industrial park wireless and VLANs": {
+    title: "Sans-fil et VLAN du parc industriel",
+    summary: "VLAN et liaisons sans fil point à point reliant bâtiments et zones d'exploitation, sur des équipements comme les radios CPE510 et M5.",
+    tags: ["VLAN", "Point à point", "CPE510"],
+  },
+  "Centralised POS server and branch connectivity": {
+    title: "Serveur de caisse centralisé et connectivité des succursales",
+    summary: "Support d'un environnement de caisse sous Windows Server desservant 23 points de vente, y compris la connectivité des succursales et les besoins en IP publique.",
+    tags: ["Windows Server", "Caisses", "IP publique"],
+  },
+  "Server administration and backups": {
+    title: "Administration des serveurs et sauvegardes",
+    summary: "Exploitation de deux serveurs de production en ligne et de trois serveurs de développement et de test, avec sauvegardes complètes hebdomadaires et sauvegardes automatiques des bases de données.",
+    tags: ["Proxmox", "Sauvegardes", "Linux"],
+  },
+  "Hikvision CCTV deployment and support": {
+    title: "Déploiement et support de la vidéosurveillance Hikvision",
+    summary: "Installation, raccordement, maintenance et dépannage de la vidéosurveillance dans les installations de l'entreprise.",
+    tags: ["Hikvision", "Vidéosurveillance", "Caméras IP"],
+  },
+  "KIRIKOU AI chatbot": {
+    title: "Agent conversationnel IA KIRIKOU",
+    context: "Projet de fin d'études, KNUST",
+    summary: "Un agent conversationnel de support construit avec Next.js, LangChain et OpenAI, avec Upstash Redis pour la mémoire, Scrapy et des ressources Botpress pour ses connaissances, et Zendesk pour transférer la conversation à une personne.",
+    tags: ["Next.js", "LangChain", "OpenAI", "Zendesk"],
+  },
+  "Car rental booking app": {
+    title: "Application de réservation de voitures",
+    context: "Application web",
+    summary: "Une application de réservation construite avec Next.js, Drizzle et Supabase, avec paiements Paystack simulés, migrations de base de données et tests de bout en bout.",
+    tags: ["Next.js", "Drizzle", "Supabase", "Paystack"],
+  },
+  "PaperSource Ghana website": {
+    title: "Site web de PaperSource Ghana",
+    summary: "Travail sur le catalogue et la boutique en ligne livrant à Accra et Tema, y compris le contenu produit et le dépannage.",
+    tags: ["Commerce en ligne", "Contenu", "Support"],
+  },
+  "Real estate website and digital marketing": {
+    title: "Site immobilier et marketing numérique",
+    summary: "Création et maintenance du site, gestion de ses sauvegardes et de sa sécurité, et appui au référencement, aux infolettres et au CRM HubSpot.",
+    tags: ["WordPress", "Référencement", "HubSpot"],
+  },
+  "Group website and IT support": {
+    title: "Site du groupe et support informatique",
+    summary: "Développement web et référencement, en parallèle du support aux utilisateurs et du dépannage matériel et logiciel.",
+    tags: ["Web", "Référencement", "Assistance"],
+  },
+  "ERPNext HR implementation": {
+    title: "Mise en place des RH dans ERPNext",
+    summary: "Appui à la configuration du système RH et à l'import des données d'environ 453 employés.",
+    tags: ["ERPNext", "RH", "Import de données"],
+  },
+  "openMAINT pilot": {
+    title: "Projet pilote openMAINT",
+    summary: "Un projet pilote de gestion des activités de maintenance et des actifs de l'organisation.",
+    tags: ["openMAINT", "Actifs", "Maintenance"],
+  },
+  "IT and CCTV inventory": {
+    title: "Inventaire informatique et vidéosurveillance",
+    summary: "Organisation et suivi du matériel informatique, des équipements de vidéosurveillance et du stock d'entrepôt.",
+    tags: ["Inventaire", "Odoo", "Suivi des actifs"],
+  },
+  "POS and business operations support": {
+    title: "Support des caisses et des opérations",
+    summary: "Mise en place des caisses, traitement des commandes dans l'ERP, registres d'inventaire, coordination de la flotte et processus de service à la clientèle.",
+    tags: ["Caisses", "ERP", "Opérations"],
+  },
+  "IT operations handover and documentation": {
+    title: "Passation et documentation des opérations informatiques",
+    summary: "Préparation de la passation opérationnelle, accompagnement de mon remplaçant, et rédaction d'avis techniques et de communications bilingues.",
+    tags: ["Documentation", "Passation", "Bilingue"],
+  },
+  "Microsoft enterprise infrastructure lab": {
+    title: "Labo d'infrastructure d'entreprise Microsoft",
+    context: "Labo personnel",
+    summary: "Un labo Windows Server pratique couvrant Active Directory, DNS, DHCP, les stratégies de groupe, les services de fichiers et les postes joints au domaine. AD DS fonctionne sur corp.gershonlab.test, avec les partages NETLOGON et SYSVOL vérifiés.",
+    tags: ["Active Directory", "Stratégies de groupe", "DNS / DHCP"],
+  },
+  "Software engineering team project": {
+    title: "Projet d'équipe en génie logiciel",
+    context: "COMP 6905 · Université Memorial",
+    summary: "Collaboration dans le dépôt GitHub Asgn1TeamD en JavaScript : branches, fusions, demandes de tirage, profils d'équipe et planification de sprints.",
+    tags: ["JavaScript", "Git", "Scrum"],
+  },
+};
+
+export const projectsPageFr = {
+  eyebrow: "Projets",
+  title: "Ce que j'ai construit, déployé et maintenu en service",
+  lede: "Des sites web en ligne aujourd'hui, et le travail d'infrastructure, de logiciel et d'exploitation derrière les postes de mon CV.",
+  websitesTitle: "Sites web",
+  websitesLede: "Des sites que j'ai construits ou maintenus. Chaque carte ouvre le vrai site.",
+  projectsTitle: "Projets",
+  projectsLede: "Filtrer par type de travail.",
+  visit: "Voir le site",
+  offline: "Hors ligne pour le moment",
+  inProgress: "En cours",
+  readMore: "Lire l'étude de cas",
+  all: "Tous",
+  categories: {
+    network: "Réseaux",
+    infrastructure: "Infrastructure",
+    software: "Logiciel et web",
+    business: "Systèmes de gestion",
+    study: "Études et labos",
+  },
+  homeLink: "Voir tous les projets et sites web",
+  metaTitle: "Projets et sites web",
+  metaDescription: "Des sites web que j'ai construits et maintenus, et des projets réseau, infrastructure, ERP et logiciels au Ghana et au Canada.",
+  homepageAlt: (name: string) => `Page d'accueil de ${name}`,
+};

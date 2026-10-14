@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowUpRight, Quote } from "lucide-react";
-import { references } from "@/lib/site";
+import { getReferences } from "@/lib/localised-content";
 import { useI18n } from "@/components/locale-provider";
 import { Reveal } from "@/components/fx/reveal";
 import { Panel } from "@/components/ui/panel";
@@ -16,7 +16,8 @@ import { SectionDivider } from "@/components/fx/section-divider";
  * it's present.
  */
 export function References() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+  const references = getReferences(locale);
 
   if (references.length === 0) return null;
 

@@ -80,12 +80,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
         },
       })),
     // Blog index + published posts (English-only, so no hreflang alternates).
-    {
-      url: `${base}/projects`,
+    ...[`${base}/projects`, `${base}/fr/projects`].map((url, i) => ({
+      url,
       lastModified: updated,
       changeFrequency: "monthly" as const,
-      priority: 0.8,
-    },
+      priority: i === 0 ? 0.8 : 0.7,
+      alternates: {
+        languages: {
+          "en-CA": `${base}/projects`,
+          "fr-CA": `${base}/fr/projects`,
+          "x-default": `${base}/projects`,
+        },
+      },
+    })),
     {
       url: `${base}/lab`,
       lastModified: updated,

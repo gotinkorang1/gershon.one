@@ -2,14 +2,16 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { site, navLinks, portfolioFeatures } from "@/lib/site";
+import { site, navLinks } from "@/lib/site";
 import { useI18n } from "@/components/locale-provider";
+import { getFeatures, projectsHref } from "@/lib/localised-content";
 import { CvButton } from "@/components/cv-button";
 import { SHORTCUTS_HELP_EVENT } from "@/components/keyboard-shortcuts";
 import { PwaController } from "@/components/pwa-controller";
 
 export function SiteFooter() {
   const { t, locale } = useI18n();
+  const features = getFeatures(locale);
   const pathname = usePathname();
   const prefix = locale === "fr" ? "/fr" : "";
   // From a sub-route a bare hash targets a section that is not on the page.
@@ -44,18 +46,18 @@ export function SiteFooter() {
                 </li>
               ))}
               <li>
-                <Link href="/projects" className="link text-sm text-muted-foreground">
-                  {portfolioFeatures.navigation.projects}
+                <Link href={projectsHref(locale)} className="link text-sm text-muted-foreground">
+                  {features.navigation.projects}
                 </Link>
               </li>
               <li>
                 <Link href="/lab" className="link text-sm text-muted-foreground">
-                  {portfolioFeatures.navigation.lab}
+                  {features.navigation.lab}
                 </Link>
               </li>
               <li>
                 <Link href="/blog" className="link text-sm text-muted-foreground">
-                  {portfolioFeatures.navigation.blog}
+                  {features.navigation.blog}
                 </Link>
               </li>
             </ul>

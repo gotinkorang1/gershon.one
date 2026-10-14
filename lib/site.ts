@@ -1217,8 +1217,11 @@ export const projectsPage = {
     software: "Software & web",
     business: "Business systems",
     study: "Study & labs",
-  } satisfies Record<ProjectCategory, string>,
+  } as Record<ProjectCategory, string>,
   homeLink: "See all projects and websites",
   metaTitle: "Projects and websites",
+  homepageAlt: (name: string) => `${name} homepage`,
   metaDescription: "Websites I've built and maintained, plus networking, infrastructure, ERP and software projects across Ghana and Canada.",
-} as const;
+};
+
+export type ProjectsPageCopy = typeof projectsPage;
