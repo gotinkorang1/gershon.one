@@ -83,6 +83,8 @@ type Dictionary = {
     focusOverview: string;
     focusMatch: string;
     showEarlierRoles: (count: number) => string;
+    showSkills: (count: number) => string;
+    hideSkills: string;
     showFewerRoles: string;
     candidateBrief: string;
     terminalInput: string;
@@ -300,6 +302,8 @@ const en: Dictionary = {
     focusOverview: "Overview",
     focusMatch: "Best match",
     showEarlierRoles: (count) => `Show ${count} earlier roles`,
+    showSkills: (count) => `Show ${count} skills`,
+    hideSkills: "Hide skills",
     showFewerRoles: "Show fewer roles",
     candidateBrief: "Candidate brief",
     terminalInput: "Terminal input",
@@ -529,6 +533,8 @@ const fr: Dictionary = {
     focusOverview: "Vue d'ensemble",
     focusMatch: "Meilleure correspondance",
     showEarlierRoles: (count) => `Afficher ${count} postes antérieurs`,
+    showSkills: (count) => `Afficher ${count} compétences`,
+    hideSkills: "Masquer les compétences",
     showFewerRoles: "Afficher moins de postes",
     candidateBrief: "Fiche candidat",
     terminalInput: "Saisie du terminal",
