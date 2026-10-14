@@ -103,7 +103,7 @@ export function Skills() {
                   </span>
                 </div>
 
-                <ul className="mt-4 flex flex-wrap gap-1.5">
+                <ul className="skill-list mt-4 flex flex-wrap gap-1.5">
                   {group.skills.map((skill) => (
                     <li
                       key={skill}
