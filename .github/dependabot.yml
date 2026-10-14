@@ -14,6 +14,12 @@ updates:
         update-types:
           - "minor"
           - "patch"
+    # TypeScript 7's native rewrite drops the compiler API `next build` needs,
+    # and typescript-eslint supports <6.1. package.json pins 5.x via
+    # `overrides`; stop proposing majors until Next.js supports them.
+    ignore:
+      - dependency-name: "typescript"
+        versions: [">=6.0.0"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
