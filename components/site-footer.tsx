@@ -44,6 +44,11 @@ export function SiteFooter() {
                 </li>
               ))}
               <li>
+                <Link href="/projects" className="link text-sm text-muted-foreground">
+                  {portfolioFeatures.navigation.projects}
+                </Link>
+              </li>
+              <li>
                 <Link href="/lab" className="link text-sm text-muted-foreground">
                   {portfolioFeatures.navigation.lab}
                 </Link>

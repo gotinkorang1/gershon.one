@@ -82,6 +82,8 @@ type Dictionary = {
     focusHint: string;
     focusOverview: string;
     focusMatch: string;
+    showEarlierRoles: (count: number) => string;
+    showFewerRoles: string;
     candidateBrief: string;
     terminalInput: string;
     topologyLabel: string;
@@ -296,6 +298,8 @@ const en: Dictionary = {
     focusHint: "Relevant evidence moves first. Nothing is hidden.",
     focusOverview: "Overview",
     focusMatch: "Best match",
+    showEarlierRoles: (count) => `Show ${count} earlier roles`,
+    showFewerRoles: "Show fewer roles",
     candidateBrief: "Candidate brief",
     terminalInput: "Terminal input",
     topologyLabel: "Aggregated multi-WAN network topology",
@@ -522,6 +526,8 @@ const fr: Dictionary = {
     focusHint: "Les éléments les plus pertinents passent en premier. Rien n'est masqué.",
     focusOverview: "Vue d'ensemble",
     focusMatch: "Meilleure correspondance",
+    showEarlierRoles: (count) => `Afficher ${count} postes antérieurs`,
+    showFewerRoles: "Afficher moins de postes",
     candidateBrief: "Fiche candidat",
     terminalInput: "Saisie du terminal",
     topologyLabel: "Topologie réseau multi-WAN agrégée",

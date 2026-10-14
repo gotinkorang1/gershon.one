@@ -150,6 +150,19 @@ export function SiteNav() {
               })}
               <li>
                 <Link
+                  href="/projects"
+                  className={cn(
+                    "relative rounded-lg px-3 py-1.5 text-sm transition-colors",
+                    pathname.startsWith("/projects")
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  {portfolioFeatures.navigation.projects}
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/lab"
                   className={cn(
                     "relative rounded-lg px-3 py-1.5 text-sm transition-colors",
@@ -243,19 +256,27 @@ export function SiteNav() {
             </Link>
           ))}
           <Link
-            href="/lab"
+            href="/projects"
             onClick={() => setOpen(false)}
             className="flex items-baseline gap-4 border-b border-border py-4"
           >
             <span className="label">06</span>
-            <span className="text-2xl font-medium tracking-tight">{portfolioFeatures.lab.title}</span>
+            <span className="text-2xl font-medium tracking-tight">{portfolioFeatures.navigation.projects}</span>
+          </Link>
+          <Link
+            href="/lab"
+            onClick={() => setOpen(false)}
+            className="flex items-baseline gap-4 border-b border-border py-4"
+          >
+            <span className="label">07</span>
+            <span className="text-2xl font-medium tracking-tight">{portfolioFeatures.navigation.lab}</span>
           </Link>
           <Link
             href="/blog"
             onClick={() => setOpen(false)}
             className="flex items-baseline gap-4 border-b border-border py-4"
           >
-            <span className="label">07</span>
+            <span className="label">08</span>
             <span className="text-2xl font-medium tracking-tight">{portfolioFeatures.navigation.blog}</span>
           </Link>
           <div className="mt-6" onClick={() => setOpen(false)}>

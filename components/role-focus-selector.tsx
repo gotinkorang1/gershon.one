@@ -29,7 +29,7 @@ export function RoleFocusSelector() {
           scroll={false}
           aria-current={focus === null ? "page" : undefined}
           className={cn(
-            "tap shrink-0 rounded-[0.2rem_0.55rem_0.2rem_0.55rem] border px-3 py-2 text-xs font-medium transition-colors",
+            "tap shrink-0 rounded-md border px-3 py-2 text-xs font-medium transition-colors",
             focus === null
               ? "border-accent/50 bg-accent-quiet text-accent"
               : "border-border bg-surface-1/65 text-muted-foreground hover:border-border-strong hover:text-foreground",
@@ -47,7 +47,7 @@ export function RoleFocusSelector() {
               scroll={false}
               aria-current={active ? "page" : undefined}
               className={cn(
-                "tap shrink-0 rounded-[0.2rem_0.55rem_0.2rem_0.55rem] border px-3 py-2 text-xs font-medium transition-colors",
+                "tap shrink-0 rounded-md border px-3 py-2 text-xs font-medium transition-colors",
                 active
                   ? "border-accent/50 bg-accent-quiet text-accent"
                   : "border-border bg-surface-1/65 text-muted-foreground hover:border-border-strong hover:text-foreground",
