@@ -19,7 +19,7 @@ const Terminal = dynamic(() => import("@/components/terminal").then((m) => m.Ter
 });
 const NetworkTopology = dynamic(
   () => import("@/components/fx/network-topology").then((m) => m.NetworkTopology),
-  { ssr: false, loading: () => <div className="mt-7 h-[18rem] sm:h-[20rem]" aria-hidden /> },
+  { ssr: false, loading: () => <div className="mt-7 h-[24rem] sm:h-[22rem]" aria-hidden /> },
 );
 
 import { cn } from "@/lib/utils";
@@ -139,7 +139,7 @@ export function Skills() {
           <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
             {t.ui.topologyCaption}
           </p>
-          <NetworkTopology className="mt-7 h-[18rem] sm:h-[20rem]" />
+          <NetworkTopology className="mt-7 h-[24rem] sm:h-[22rem]" />
         </Panel>
       </Reveal>
 

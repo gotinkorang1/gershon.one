@@ -26,48 +26,59 @@ type Node = {
   kind: "wan" | "router" | "leaf";
 };
 
-// Symmetric about y=50 so the fan-out reads as deliberate rather than sketched.
-// Three even columns. The previous values bunched the leaves against the right
-// edge and left the lower-left quadrant empty.
-// Eight Starlink terminals aggregate into the router, which feeds the switch,
-// then GPON, then out across the park.
-//
-// The terminals sit in two columns of four, not one column of eight: the
-// figure is ~320px tall, so eight rows leaves ~40px each and the labels
-// collide. Four rows at 22% apart clears the panel height with room to spare.
+// Eight terminals in one column feed the router, so every uplink fans in on
+// its own curve instead of crossing behind a second column of nodes. Each
+// terminal is a single-line pill, which is what lets eight of them stack.
+// The chain runs along the terminals' centre line and the four destinations fan back out on the
+// right, symmetric about the centre line.
+// Ends at 83 so the controls row under the figure has clear space.
+const WAN_Y = [6, 17, 28, 39, 50, 61, 72, 83];
 const NODES: Node[] = [
-  { id: "sat1", label: "1", sub: "Starlink", x: 5, y: 12, kind: "wan" },
-  { id: "sat2", label: "2", sub: "Starlink", x: 5, y: 37, kind: "wan" },
-  { id: "sat3", label: "3", sub: "Starlink", x: 5, y: 62, kind: "wan" },
-  { id: "sat4", label: "4", sub: "Starlink", x: 5, y: 87, kind: "wan" },
-  { id: "sat5", label: "5", sub: "Starlink", x: 21, y: 12, kind: "wan" },
-  { id: "sat6", label: "6", sub: "Starlink", x: 21, y: 37, kind: "wan" },
-  { id: "sat7", label: "7", sub: "Starlink", x: 21, y: 62, kind: "wan" },
-  { id: "sat8", label: "8", sub: "Starlink", x: 21, y: 87, kind: "wan" },
-  { id: "router", label: "MikroTik", sub: "8 × WAN", x: 42, y: 50, kind: "router" },
-  { id: "switch", label: "S5735", sub: "Huawei", x: 60, y: 50, kind: "router" },
-  { id: "gpon", label: "GPON", sub: "1:4 split", x: 76, y: 50, kind: "router" },
-  { id: "factory", label: "Factories", sub: "Fibre", x: 93, y: 12, kind: "leaf" },
-  { id: "cctv", label: "CCTV", sub: "Fibre", x: 93, y: 37, kind: "leaf" },
-  { id: "pos", label: "POS", sub: "Fibre", x: 93, y: 62, kind: "leaf" },
-  { id: "remote", label: "Off-site", sub: "P2P + VPN", x: 93, y: 87, kind: "leaf" },
+  ...WAN_Y.map((y, i) => ({
+    id: `sat${i + 1}`,
+    label: String(i + 1),
+    sub: "Starlink",
+    x: 8,
+    y,
+    kind: "wan" as const,
+  })),
+  { id: "router", label: "MikroTik", sub: "8 × WAN", x: 40, y: 44.5, kind: "router" },
+  { id: "switch", label: "S5735", sub: "Huawei", x: 58, y: 44.5, kind: "router" },
+  { id: "gpon", label: "GPON", sub: "1:4 split", x: 74, y: 44.5, kind: "router" },
+  { id: "factory", label: "Factories", sub: "Fibre", x: 92, y: 17.5, kind: "leaf" },
+  { id: "cctv", label: "CCTV", sub: "Fibre", x: 92, y: 35.5, kind: "leaf" },
+  { id: "pos", label: "POS", sub: "Fibre", x: 92, y: 53.5, kind: "leaf" },
+  { id: "remote", label: "Off-site", sub: "P2P + VPN", x: 92, y: 71.5, kind: "leaf" },
 ];
 
-// Narrow screens: WANs across the top, router in the middle, VLANs in a row
-// beneath. Same graph, laid out top-to-bottom so nothing overlaps.
-// Narrow screens cannot carry eight stacked labels plus a four-node fan-out,
-// so satellites compress into two columns and the chain runs vertically.
+// Narrow screens run top-to-bottom: terminals in two rows of four, the chain
+// down the middle, destinations in a row at the foot.
 const MOBILE_POSITIONS: Record<string, { x: number; y: number }> = {
-  sat1: { x: 12, y: 5 }, sat2: { x: 36, y: 5 },
-  sat3: { x: 60, y: 5 }, sat4: { x: 84, y: 5 },
-  sat5: { x: 12, y: 20 }, sat6: { x: 36, y: 20 },
-  sat7: { x: 60, y: 20 }, sat8: { x: 84, y: 20 },
-  router: { x: 30, y: 45 },
-  switch: { x: 70, y: 45 },
-  gpon: { x: 50, y: 65 },
-  factory: { x: 13, y: 90 }, cctv: { x: 38, y: 90 },
-  pos: { x: 63, y: 90 }, remote: { x: 88, y: 90 },
+  sat1: { x: 13, y: 5 }, sat2: { x: 38, y: 5 },
+  sat3: { x: 62, y: 5 }, sat4: { x: 87, y: 5 },
+  sat5: { x: 13, y: 17 }, sat6: { x: 38, y: 17 },
+  sat7: { x: 62, y: 17 }, sat8: { x: 87, y: 17 },
+  router: { x: 50, y: 33 },
+  switch: { x: 50, y: 47 },
+  gpon: { x: 50, y: 61 },
+  // Leaves stop at 75%: on phones the controls wrap to two lines beneath.
+  factory: { x: 13, y: 75 }, cctv: { x: 38, y: 75 },
+  pos: { x: 62, y: 75 }, remote: { x: 87, y: 75 },
 };
+
+/**
+ * A smooth S-curve between two points. Horizontal layouts bend through the
+ * mid x, vertical ones through the mid y, so links leave and arrive square to
+ * the node rather than at an angle.
+ */
+function curve(a: { x: number; y: number }, b: { x: number; y: number }, vertical: boolean) {
+  if (vertical) {
+    const my = (a.y + b.y) / 2;
+    return `M${a.x} ${a.y} C${a.x} ${my} ${b.x} ${my} ${b.x} ${b.y}`;
+  }
+  const mx = (a.x + b.x) / 2;
+  return `M${a.x} ${a.y} C${mx} ${a.y} ${mx} ${b.y} ${b.x} ${b.y}`;
+}
 
 const LINKS: { from: string; to: string; id: string }[] = [
   ...Array.from({ length: 8 }, (_, i) => ({
@@ -184,31 +195,27 @@ export function NetworkTopology({ className }: { className?: string }) {
 
           return (
             <g key={link.id}>
-              <line
-                x1={a.x}
-                y1={a.y}
-                x2={b.x}
-                y2={b.y}
+              <path
+                d={curve(a, b, compact)}
+                fill="none"
                 vectorEffect="non-scaling-stroke"
-                strokeWidth={1}
+                strokeWidth={1.25}
                 className={cn(
                   "transition-all duration-500",
                   isDown
-                    ? "stroke-warn opacity-40"
+                    ? "stroke-warn opacity-50"
                     : isCarrying
-                      ? "stroke-accent opacity-70"
+                      ? "stroke-accent opacity-45"
                       : "stroke-border-strong opacity-50",
                 )}
                 strokeDasharray={isDown ? "3 3" : undefined}
               />
               {isCarrying && !reduced && (
-                <line
-                  x1={a.x}
-                  y1={a.y}
-                  x2={b.x}
-                  y2={b.y}
+                <path
+                  d={curve(a, b, compact)}
+                  fill="none"
                   vectorEffect="non-scaling-stroke"
-                  strokeWidth={1.75}
+                  strokeWidth={2}
                   strokeLinecap="round"
                   strokeDasharray="1 14"
                   className="stroke-accent"
@@ -225,7 +232,6 @@ export function NetworkTopology({ className }: { className?: string }) {
 
       {NODES.map((node) => {
         const isDown = down.has(node.id);
-        const isActiveWan = node.kind === "wan" && !isDown;
 
         return (
           <motion.div
@@ -236,25 +242,30 @@ export function NetworkTopology({ className }: { className?: string }) {
             style={{ left: `${pos(node).x}%`, top: `${pos(node).y}%` }}
             className="absolute -translate-x-1/2 -translate-y-1/2"
           >
+            {node.kind === "wan" ? (
+              <div
+                className={cn(
+                  "panel flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 text-[0.625rem] font-medium transition-all duration-500 sm:text-xs",
+                  isDown ? "border-warn/50 opacity-60" : "border-accent/30",
+                )}
+              >
+                <span
+                  className={cn(
+                    "size-1.5 shrink-0 rounded-full transition-colors duration-300",
+                    isDown ? "bg-warn" : "bg-live",
+                  )}
+                />
+                <span className="hidden sm:inline">{node.sub}</span> {node.label}
+                {isDown && <span className="sr-only">{t.ui.terminalDown}</span>}
+              </div>
+            ) : (
             <div
               className={cn(
                 "panel flex flex-col items-center whitespace-nowrap px-2 py-1 transition-all duration-500 sm:px-3 sm:py-2",
-                node.kind === "router" && "panel-raised px-2.5 py-1.5 sm:px-4 sm:py-3",
-                isDown && "opacity-55",
-                isActiveWan && "border-accent/40",
+                node.kind === "router" && "panel-raised border-accent/40 px-2.5 py-1.5 sm:px-4 sm:py-2.5",
               )}
             >
-              <span className="flex items-center gap-1 text-[0.625rem] font-medium sm:gap-1.5 sm:text-xs">
-                {node.kind === "wan" && (
-                  <span
-                    className={cn(
-                      "size-1.5 shrink-0 rounded-full transition-colors duration-300",
-                      isDown ? "bg-warn" : isActiveWan ? "bg-live" : "bg-faint",
-                    )}
-                  />
-                )}
-                {node.label}
-              </span>
+              <span className="text-[0.625rem] font-medium sm:text-xs">{node.label}</span>
               <span className="label mt-0.5 hidden text-[0.5625rem] tracking-[0.08em] sm:block">
                 {isDown
                   ? t.ui.terminalDown
@@ -263,6 +274,7 @@ export function NetworkTopology({ className }: { className?: string }) {
                     : node.sub}
               </span>
             </div>
+            )}
           </motion.div>
         );
       })}
