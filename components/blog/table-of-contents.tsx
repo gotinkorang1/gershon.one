@@ -1,5 +1,8 @@
 "use client";
 
+import { useI18n } from "@/components/locale-provider";
+import { getBlogCopy } from "@/lib/localised-content";
+
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import type { Heading } from "@/lib/blog";
@@ -10,6 +13,7 @@ import type { Heading } from "@/lib/blog";
  * entries by the same slugify function that generated them).
  */
 export function TableOfContents({ headings }: { headings: Heading[] }) {
+  const c = getBlogCopy(useI18n().locale);
   const [active, setActive] = useState("");
 
   useEffect(() => {
@@ -35,8 +39,8 @@ export function TableOfContents({ headings }: { headings: Heading[] }) {
   if (headings.length < 2) return null;
 
   return (
-    <nav aria-label="Table of contents" className="text-sm">
-      <p className="label mb-3">On this page</p>
+    <nav aria-label={c.tableOfContents} className="text-sm">
+      <p className="label mb-3">{c.onThisPage}</p>
       <ul>
         {headings.map((h) => (
           <li key={h.id} className={cn(h.level === 3 && "ml-3")}>

@@ -124,13 +124,13 @@ export function getEvidenceItems(locale: Locale = "en"): EvidenceItem[] {
 
 export function getActivityItems(locale: Locale = "en"): ActivityItem[] {
   const prefix = locale === "fr" ? "/fr" : "";
-  const posts: ActivityItem[] = getPublishedPosts().map((post) => ({
+  const posts: ActivityItem[] = getPublishedPosts(locale).map((post) => ({
     id: `post-${post.slug}`,
     type: "writing",
     date: post.date,
     title: post.title,
     description: post.summary,
-    href: `/blog/${post.slug}`,
+    href: `${prefix}/blog/${post.slug}`,
   }));
 
   const studies: ActivityItem[] = getCaseStudies(locale)

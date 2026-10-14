@@ -1,5 +1,8 @@
 "use client";
 
+import { useI18n } from "@/components/locale-provider";
+import { blogDate, blogHref, getBlogCopy } from "@/lib/localised-content";
+
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -12,22 +15,19 @@ import type { PostCard } from "@/lib/blog";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { ReadingShelf } from "@/components/blog/reading-shelf";
 
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    timeZone: "UTC",
-  });
+function useBlog() {
+  const { locale } = useI18n();
+  return { c: getBlogCopy(locale), locale };
 }
 
 function Meta({ post }: { post: PostCard }) {
+  const { c, locale } = useBlog();
   return (
     <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-      <p className="label">{formatDate(post.date)}</p>
+      <p className="label">{blogDate(post.date, locale)}</p>
       <p className="label flex items-center gap-1.5">
         <Clock className="size-3" />
-        {post.readingMinutes} min read
+        {post.readingMinutes} {c.minRead}
       </p>
     </div>
   );
@@ -46,8 +46,9 @@ function Tags({ tags }: { tags: string[] }) {
 
 /** The newest post, shown large when no filter is active. */
 function Featured({ post, index }: { post: PostCard; index: number }) {
+  const { c, locale } = useBlog();
   return (
-    <Link href={`/blog/${post.slug}`} className="block">
+    <Link href={blogHref(locale, post.slug)} className="block">
       <Panel interactive reactive className="group overflow-hidden">
         <div className="overflow-hidden border-b border-border">
           {post.cover ? (
@@ -77,7 +78,7 @@ function Featured({ post, index }: { post: PostCard; index: number }) {
         </div>
         <div className="p-6 sm:p-8">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <p className="label text-accent">Latest</p>
+            <p className="label text-accent">{c.latest}</p>
             <Meta post={post} />
           </div>
           <div className="mt-4 flex items-start justify-between gap-6">
@@ -100,8 +101,9 @@ function Featured({ post, index }: { post: PostCard; index: number }) {
 
 /** Compact row with the small side thumbnail. */
 export function PostRow({ post, index }: { post: PostCard; index: number }) {
+  const { locale } = useI18n();
   return (
-    <Link href={`/blog/${post.slug}`} className="block">
+    <Link href={blogHref(locale, post.slug)} className="block">
       <Panel interactive reactive className="group flex items-start gap-4 p-5 sm:gap-6 sm:p-6">
         {post.cover ? (
           <div className="shrink-0 self-start overflow-hidden rounded-xl border border-border">
@@ -149,6 +151,7 @@ export function PostRow({ post, index }: { post: PostCard; index: number }) {
 }
 
 export function BlogIndex({ posts, tags }: { posts: PostCard[]; tags: string[] }) {
+  const { c } = useBlog();
   const reduced = useReducedMotion();
   const [query, setQuery] = useState("");
   const [activeTag, setActiveTag] = useState<string | null>(null);
@@ -178,15 +181,15 @@ export function BlogIndex({ posts, tags }: { posts: PostCard[]; tags: string[] }
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search posts…"
-            aria-label="Search posts"
+            placeholder={c.searchPlaceholder}
+            aria-label={c.searchLabel}
             className="w-full rounded-lg border border-border bg-surface-inset py-2.5 pl-10 pr-9 text-sm outline-none transition-colors placeholder:text-faint focus:border-accent/60 focus:bg-surface-1"
           />
           {query && (
             <button
               type="button"
               onClick={() => setQuery("")}
-              aria-label="Clear search"
+              aria-label={c.clearSearch}
               className="tap absolute right-2.5 top-1/2 grid size-6 -translate-y-1/2 place-items-center rounded text-faint hover:text-foreground"
             >
               <X className="size-3.5" />
@@ -206,7 +209,7 @@ export function BlogIndex({ posts, tags }: { posts: PostCard[]; tags: string[] }
                   : "border-border text-muted-foreground hover:border-border-strong hover:text-foreground",
               )}
             >
-              All
+              {c.all}
             </button>
             {tags.map((tag) => (
               <button
@@ -230,8 +233,7 @@ export function BlogIndex({ posts, tags }: { posts: PostCard[]; tags: string[] }
       {/* Results */}
       {filtered.length === 0 ? (
         <p className="mt-12 text-muted-foreground">
-          No posts match{query ? ` “${query}”` : ""}
-          {activeTag ? ` in ${activeTag}` : ""}.
+          {c.noResults(query, activeTag ?? "")}
         </p>
       ) : (
         <div className="mt-8 grid gap-4">

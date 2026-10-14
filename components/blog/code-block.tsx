@@ -1,5 +1,8 @@
 "use client";
 
+import { useI18n } from "@/components/locale-provider";
+import { getBlogCopy } from "@/lib/localised-content";
+
 import { useRef, useState, type ReactNode } from "react";
 import { Check, Copy } from "lucide-react";
 
@@ -9,6 +12,7 @@ import { Check, Copy } from "lucide-react";
  * `pre` renderer, so highlighting still happens server-side via rehype.
  */
 export function CodeBlock({ children }: { children: ReactNode }) {
+  const c = getBlogCopy(useI18n().locale);
   const ref = useRef<HTMLPreElement>(null);
   const [copied, setCopied] = useState(false);
 
@@ -28,7 +32,7 @@ export function CodeBlock({ children }: { children: ReactNode }) {
       <button
         type="button"
         onClick={copy}
-        aria-label={copied ? "Copied" : "Copy code"}
+        aria-label={copied ? c.copied : c.copyCode}
         className="tap absolute right-2 top-2 z-10 grid size-8 place-items-center rounded-md border border-border bg-surface-1/80 text-faint backdrop-blur transition-opacity hover:text-foreground focus-visible:opacity-100 md:opacity-0 md:group-hover/code:opacity-100"
       >
         {copied ? <Check className="size-3.5 text-live" /> : <Copy className="size-3.5" />}

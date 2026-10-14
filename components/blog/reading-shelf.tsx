@@ -1,10 +1,12 @@
 "use client";
 
+import { useI18n } from "@/components/locale-provider";
+import { getBlogCopy } from "@/lib/localised-content";
+
 import { useSyncExternalStore } from "react";
 import Link from "next/link";
 import { Bookmark, Clock3, X } from "lucide-react";
 import type { PostCard } from "@/lib/blog";
-import { portfolioFeatures } from "@/lib/site";
 import {
   getReadingServerSnapshot,
   getReadingSnapshot,
@@ -14,6 +16,7 @@ import {
 import { Panel } from "@/components/ui/panel";
 
 export function ReadingShelf({ posts }: { posts: PostCard[] }) {
+  const reading = getBlogCopy(useI18n().locale).reading;
   const state = useSyncExternalStore(subscribeReading, getReadingSnapshot, getReadingServerSnapshot);
   const bySlug = new Map(posts.map((post) => [post.slug, post]));
   const continueReading = Object.values(state.entries)
@@ -25,18 +28,18 @@ export function ReadingShelf({ posts }: { posts: PostCard[] }) {
   if (continueReading.length === 0 && saved.length === 0) return null;
 
   return (
-    <section className="mt-10 grid gap-3 sm:grid-cols-2" aria-label={portfolioFeatures.reading.continueReading}>
+    <section className="mt-10 grid gap-3 sm:grid-cols-2" aria-label={reading.continueReading}>
       {continueReading.map((entry) => (
         <Link key={entry.slug} href={`/blog/${entry.slug}`} className="block">
           <Panel interactive className="h-full p-4">
             <p className="label flex items-center gap-2 text-accent">
-              <Clock3 className="size-3.5" aria-hidden /> {portfolioFeatures.reading.continueReading}
+              <Clock3 className="size-3.5" aria-hidden /> {reading.continueReading}
             </p>
             <p className="mt-2 line-clamp-2 text-sm font-medium leading-snug">{entry.title}</p>
             <div className="mt-4 h-1 overflow-hidden rounded-full bg-surface-inset" aria-hidden>
               <span className="block h-full bg-accent" style={{ width: `${entry.progress}%` }} />
             </div>
-            <p className="mt-2 text-xs text-faint">{entry.progress}% {portfolioFeatures.reading.progress}</p>
+            <p className="mt-2 text-xs text-faint">{entry.progress}% {reading.progress}</p>
           </Panel>
         </Link>
       ))}
@@ -44,7 +47,7 @@ export function ReadingShelf({ posts }: { posts: PostCard[] }) {
       {saved.length > 0 && (
         <Panel className="p-4">
           <p className="label flex items-center gap-2">
-            <Bookmark className="size-3.5 text-accent" aria-hidden /> {portfolioFeatures.reading.savedArticles}
+            <Bookmark className="size-3.5 text-accent" aria-hidden /> {reading.savedArticles}
           </p>
           <ul className="mt-3 divide-y divide-border">
             {saved.map((post) => (
@@ -53,7 +56,7 @@ export function ReadingShelf({ posts }: { posts: PostCard[] }) {
                 <button
                   type="button"
                   onClick={() => toggleSaved(post)}
-                  aria-label={`${portfolioFeatures.reading.remove}: ${post.title}`}
+                  aria-label={`${reading.remove}: ${post.title}`}
                   className="tap grid size-8 shrink-0 place-items-center rounded-md text-faint hover:bg-surface-2 hover:text-foreground"
                 >
                   <X className="size-3.5" aria-hidden />

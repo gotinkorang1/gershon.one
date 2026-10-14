@@ -15,6 +15,8 @@ import {
   type ProjectsPageCopy,
   type Reference,
   type Website,
+  blogCopy,
+  type BlogCopy,
   type SkillGroup,
   type Credential,
   type RoleFocusProfile,
@@ -35,6 +37,8 @@ import {
   briefActionsFr,
   eligibilityFr,
   labFr,
+  blogCopyFr,
+  readingFr,
 } from "@/lib/content.fr";
 import { brief } from "@/lib/brief";
 import type { Locale } from "@/lib/i18n";
@@ -215,3 +219,23 @@ export function getLab(locale: Locale): LabContent {
 }
 
 export const labHref = (locale: Locale) => (locale === "fr" ? "/fr/lab" : "/lab");
+
+/** Blog index, post page and reading-widget labels in one language. */
+export function getBlogCopy(locale: Locale): BlogCopy & { reading: typeof portfolioFeatures.reading } {
+  return locale === "fr"
+    ? { ...blogCopyFr, reading: readingFr as unknown as typeof portfolioFeatures.reading }
+    : { ...blogCopy, reading: portfolioFeatures.reading };
+}
+
+export const blogHref = (locale: Locale, slug?: string) =>
+  `${locale === "fr" ? "/fr" : ""}/blog${slug ? `/${slug}` : ""}`;
+
+/** Date as shown on the blog: "1 August 2026" / "1 août 2026". */
+export function blogDate(iso: string, locale: Locale) {
+  return new Date(iso).toLocaleDateString(locale === "fr" ? "fr-CA" : "en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}

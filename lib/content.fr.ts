@@ -572,6 +572,50 @@ export const projectsPageFr = {
 /*  Systems Lab — same shape as portfolioFeatures.lab                          */
 /* -------------------------------------------------------------------------- */
 
+export const blogCopyFr = {
+  eyebrow: "Rédaction",
+  title: "Blog",
+  description: "Notes de terrain sur les réseaux, l'administration de systèmes et ce que je construis et exploite.",
+  subscribe: "S'abonner par RSS",
+  empty: "Aucun article pour l'instant — revenez bientôt.",
+  searchPlaceholder: "Rechercher des articles…",
+  searchLabel: "Rechercher des articles",
+  clearSearch: "Effacer la recherche",
+  all: "Tous",
+  latest: "Le plus récent",
+  noResults: (query: string, tag: string) =>
+    `Aucun article ne correspond${query ? ` à « ${query} »` : ""}${tag ? ` dans ${tag}` : ""}.`,
+  minRead: "min de lecture",
+  min: "min",
+  allPosts: "Tous les articles",
+  readNext: "À lire ensuite",
+  olderPost: "Article précédent",
+  newerPost: "Article suivant",
+  share: "Partager",
+  shareOnX: "Partager sur X",
+  shareOnLinkedIn: "Partager sur LinkedIn",
+  copyLink: "Copier le lien",
+  linkCopied: "Lien copié",
+  onThisPage: "Sur cette page",
+  tableOfContents: "Table des matières",
+  backToTop: "Retour en haut",
+  copyCode: "Copier le code",
+  copied: "Copié",
+  linkToSection: "Lien vers cette section",
+  home: "Accueil",
+  blogName: "Rédaction",
+};
+
+export const readingFr = {
+  save: "Enregistrer l'article",
+  saved: "Enregistré",
+  savedArticles: "Articles enregistrés",
+  continueReading: "Reprendre la lecture",
+  progress: "lu",
+  remove: "Retirer des articles enregistrés",
+  empty: "Enregistrez un article pour le garder dans ce navigateur.",
+};
+
 export const labFr = {
   eyebrow: "Preuve interactive",
   title: "Voyez comment je diagnostique, relie et améliore les systèmes.",

@@ -1,9 +1,11 @@
 "use client";
 
+import { useI18n } from "@/components/locale-provider";
+import { getBlogCopy } from "@/lib/localised-content";
+
 import { useEffect, useSyncExternalStore } from "react";
 import { Bookmark, BookmarkCheck } from "lucide-react";
 import type { PostCard } from "@/lib/blog";
-import { portfolioFeatures } from "@/lib/site";
 import { captureAnalyticsEvent } from "@/lib/analytics";
 import {
   getReadingServerSnapshot,
@@ -14,6 +16,7 @@ import {
 } from "@/lib/reading-store";
 
 export function ReadingTools({ post }: { post: PostCard }) {
+  const reading = getBlogCopy(useI18n().locale).reading;
   const state = useSyncExternalStore(subscribeReading, getReadingSnapshot, getReadingServerSnapshot);
   const saved = state.saved.includes(post.slug);
 
@@ -55,7 +58,7 @@ export function ReadingTools({ post }: { post: PostCard }) {
       className="tap inline-flex min-h-10 items-center gap-2 rounded-full border border-border bg-surface-1 px-3.5 text-xs font-medium text-muted-foreground transition-colors hover:border-border-strong hover:text-foreground"
     >
       {saved ? <BookmarkCheck className="size-4 text-accent" aria-hidden /> : <Bookmark className="size-4" aria-hidden />}
-      {saved ? portfolioFeatures.reading.saved : portfolioFeatures.reading.save}
+      {saved ? reading.saved : reading.save}
     </button>
   );
 }

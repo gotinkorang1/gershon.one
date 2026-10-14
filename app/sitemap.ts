@@ -6,6 +6,7 @@ import { getPublishedPosts } from "@/lib/blog";
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? site.url;
   const posts = getPublishedPosts();
+  const frPosts = getPublishedPosts("fr");
   // A hand-bumped content date, not `new Date()`. Building at deploy time
   // stamped every page "changed today" on every deploy, so crawlers learned to
   // ignore the field. This changes only when the content actually does.
@@ -102,18 +103,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
         languages: { "en-CA": `${base}/lab`, "fr-CA": `${base}/fr/lab`, "x-default": `${base}/lab` },
       },
     })),
-    {
-      url: `${base}/blog`,
+    ...[`${base}/blog`, `${base}/fr/blog`].map((url) => ({
+      url,
       lastModified: posts[0] ? new Date(posts[0].date) : updated,
       changeFrequency: "weekly" as const,
       priority: 0.6,
-    },
-    ...posts.map((p) => ({
-      url: `${base}/blog/${p.slug}`,
-      lastModified: new Date(p.date),
-      changeFrequency: "yearly" as const,
-      priority: 0.6,
+      alternates: {
+        languages: { "en-CA": `${base}/blog`, "fr-CA": `${base}/fr/blog`, "x-default": `${base}/blog` },
+      },
     })),
+    ...posts.flatMap((p) => {
+      const fr = frPosts.find((f) => f.slug === p.slug);
+      const languages = {
+        "en-CA": `${base}/blog/${p.slug}`,
+        ...(fr ? { "fr-CA": `${base}/fr/blog/${p.slug}` } : {}),
+        "x-default": `${base}/blog/${p.slug}`,
+      };
+      const entry = (url: string) => ({
+        url,
+        lastModified: new Date(p.date),
+        changeFrequency: "yearly" as const,
+        priority: 0.6,
+        alternates: { languages },
+      });
+      return fr ? [entry(`${base}/blog/${p.slug}`), entry(`${base}/fr/blog/${p.slug}`)] : [entry(`${base}/blog/${p.slug}`)];
+    }),
     // Tag archives are noindex (thin, near-duplicate), so they stay out.
   ];
 }
