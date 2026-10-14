@@ -41,8 +41,14 @@ export function Credentials() {
     );
   const groups = [
     { label: t.ui.educationLabel, items: newestFirst.filter(({ credential }) => credential.kind === "degree") },
-    { label: t.ui.certificationsLabel, items: newestFirst.filter(({ credential }) => credential.kind !== "degree") },
+    {
+      label: t.ui.certificationsLabel,
+      items: newestFirst.filter(({ credential }) => credential.kind !== "degree" && !credential.safety),
+    },
   ];
+  // Safety certificates are real but not what an IT screen looks for; they sit
+  // under the professional ones as a compact list instead of full cards.
+  const safety = newestFirst.filter(({ credential }) => credential.safety);
 
   return (
     <section id="credentials" className="section-band shell scroll-mt-24 py-14 md:py-16">
@@ -155,6 +161,41 @@ export function Credentials() {
               );
             })}
             </Stagger>
+
+            {i === 1 && safety.length > 0 && (
+              <div className="mt-8">
+                <h3 className="label mb-3">{t.ui.safetyLabel}</h3>
+                <Panel className="divide-y divide-border">
+                  {safety.map(({ credential: c }) => (
+                    <div key={c.title} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1.5 px-4 py-3">
+                      <div className="min-w-0">
+                        <p className="text-sm font-medium leading-snug">{c.title}</p>
+                        <p className="mt-0.5 text-xs text-muted-foreground">
+                          {c.issuer} · {monthYear(c.date, locale)}
+                          {c.expires && ` · ${t.common.validTo} ${monthYear(c.expires, locale)}`}
+                        </p>
+                      </div>
+                      {c.preview ? (
+                        <button
+                          type="button"
+                          onClick={() => setViewing(c)}
+                          className="link inline-flex items-center gap-1.5 text-xs font-medium text-accent"
+                        >
+                          <Eye aria-hidden className="size-3.5" /> {t.common.viewCertificate}
+                        </button>
+                      ) : (
+                        <a
+                          href={`mailto:${site.email}?subject=${encodeURIComponent(t.common.requestCopySubject(c.title))}`}
+                          className="link inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground"
+                        >
+                          <Mail aria-hidden className="size-3.5" /> {t.common.requestCopy}
+                        </a>
+                      )}
+                    </div>
+                  ))}
+                </Panel>
+              </div>
+            )}
           </div>
         ))}
       </div>

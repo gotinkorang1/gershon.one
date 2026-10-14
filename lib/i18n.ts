@@ -105,6 +105,7 @@ type Dictionary = {
     securityLabel: string;
     educationLabel: string;
     certificationsLabel: string;
+    safetyLabel: string;
     securityStatement: string;
     aboutMe: string;
     metaDescription: string;
@@ -323,6 +324,7 @@ const en: Dictionary = {
     securityLabel: "How I approach security",
     educationLabel: "Education",
     certificationsLabel: "Certifications",
+    safetyLabel: "Workplace safety",
     securityStatement:
       "I treat security as part of running the network, not a separate project. At Bright Industrial Park that meant segmenting the network with VLANs and firewall policy, putting administrator access to internal systems behind a VPN, and keeping the HR system that holds 8,000 people's personal data off the public internet entirely. It also meant the unglamorous parts: weekly bare-metal backups, event-triggered database backups, identity and password policy, and MFA on cloud accounts. I'm now building on that with Google's Foundations of Cybersecurity course and an MSc at Memorial University focused on network security and intrusion detection.",
     aboutMe: "In short",
@@ -551,6 +553,7 @@ const fr: Dictionary = {
     securityLabel: "Ma façon d'aborder la sécurité",
     educationLabel: "Formation",
     certificationsLabel: "Certifications",
+    safetyLabel: "Sécurité au travail",
     securityStatement:
       "Pour moi, la sécurité fait partie de l'exploitation du réseau, pas d'un projet à part. Au parc industriel Bright, cela voulait dire segmenter le réseau par VLAN et règles de pare-feu, placer l'accès administrateur aux systèmes internes derrière un VPN, et garder le système RH qui contient les données personnelles de 8 000 personnes entièrement hors de l'internet public. Cela voulait aussi dire le travail moins visible : sauvegardes complètes hebdomadaires, sauvegardes de bases de données déclenchées par événement, politiques d'identité et de mots de passe, et MFA sur les comptes infonuagiques. Je prolonge aujourd'hui ce travail avec le cours Foundations of Cybersecurity de Google et une maîtrise à l'Université Memorial axée sur la sécurité réseau et la détection d'intrusion.",
     aboutMe: "En bref",
