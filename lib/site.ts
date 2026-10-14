@@ -11,25 +11,6 @@ export const site = {
   initials: "GO",
   role: "IT Infrastructure & Systems Specialist",
   location: "St. John's, NL, Canada",
-  // Ticker of real tools shown under the hero summary. Kept short and true —
-  // every item appears in the experience section's stacks.
-  heroStack: [
-    "Microsoft 365",
-    "Google Workspace",
-    "Routers & switches",
-    "Firewalls",
-    "MikroTik RouterOS",
-    "Starlink",
-    "GPON / fibre",
-    "Huawei S5735",
-    "Proxmox",
-    "Docker",
-    "Odoo",
-    "Tailscale",
-    "Linux",
-    "CCTV",
-    "GIS / JOSM",
-  ],
   relocation: {
     note: "Relocated August 2026 · MSc student at Memorial University",
   },
@@ -280,8 +261,10 @@ export const facts = [
   // identifiers — animating them produces nonsense like "Aug 1256".
   { label: "Experience", value: "5+ years", countable: true },
   { label: "Site supported", value: "1,200 acres", countable: false },
-  { label: "Available", value: "Now", countable: false },
-  { label: "Based", value: "St. John's, NL", countable: false },
+  // Availability and location live in the hero's status line; these two are
+  // scale, from the resume, that the hero doesn't already say.
+  { label: "Sites rolled out", value: "47", countable: true },
+  { label: "Team led", value: "4 people", countable: true },
 ] as const;
 
 /* -------------------------------------------------------------------------- */

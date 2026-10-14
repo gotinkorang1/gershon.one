@@ -209,8 +209,8 @@ export const credentialsFr: Record<string, { title: string; detail?: string }> =
 export const factsFr: Record<string, { label: string; value: string }> = {
   Experience: { label: "Expérience", value: "Plus de 5 ans" },
   "Site supported": { label: "Site couvert", value: "1 200 acres" },
-  Available: { label: "Disponible", value: "Maintenant" },
-  Based: { label: "Basé à", value: "St. John's, T.-N.-L." },
+  "Sites rolled out": { label: "Sites déployés", value: "47" },
+  "Team led": { label: "Équipe dirigée", value: "4 personnes" },
 };
 
 export const issuersFr: Record<string, string> = {

@@ -166,16 +166,6 @@ export function NetworkTopology({ className }: { className?: string }) {
             ? t.ui.failedOverAnnounce(elapsed.toFixed(1), String(liveCount))
             : t.ui.wansHealthy(String(liveCount))}
       </p>
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 rounded-lg opacity-70"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, var(--grid) 1px, transparent 1px), linear-gradient(to bottom, var(--grid) 1px, transparent 1px)",
-          backgroundSize: "26px 26px",
-        }}
-      />
-
       <svg
         viewBox="0 0 100 100"
         preserveAspectRatio="none"

@@ -32,7 +32,7 @@ export function CaseStudies() {
       />
 
       <Stagger className="mt-10 grid gap-3">
-        {orderedStudies.map((study, index) => {
+        {orderedStudies.map((study) => {
           const matched = isTopMatch(study.slug, focusProfile?.caseStudies);
           return (
           <StaggerItem key={study.slug}>
@@ -43,9 +43,6 @@ export function CaseStudies() {
                 className={cn("trace-panel group p-5 sm:p-6", matched && "focus-match")}
               >
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                  <p aria-hidden className="trace-id">
-                    {String(index + 1).padStart(2, "0")}
-                  </p>
                   <p className="label">{study.period}</p>
                   <p className="label flex items-center gap-1.5">
                     <Clock aria-hidden className="size-3" />

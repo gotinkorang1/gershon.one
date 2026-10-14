@@ -22,13 +22,11 @@ function span(job: Job, present: string) {
 
 function Entry({
   job,
-  index,
   matched,
   open,
   onToggle,
 }: {
   job: Job;
-  index: number;
   matched: boolean;
   open: boolean;
   onToggle: () => void;
@@ -50,10 +48,6 @@ function Entry({
         aria-expanded={open}
         className="flex w-full items-start gap-5 p-5 text-left sm:p-6"
       >
-        <span aria-hidden className="trace-id mt-1.5 w-8 shrink-0">
-          {String(index + 1).padStart(2, "0")}
-        </span>
-
         <span className="min-w-0 flex-1">
           <span className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
             {/* A heading, not a span: screen reader users navigate by heading
@@ -70,25 +64,8 @@ function Entry({
           </span>
         </span>
 
-        {/* A collapsed row was 18% empty across 1166px. Showing the leading
-            technologies previews what expanding reveals, and lets someone
-            scanning for "MikroTik" find the right role without opening any. */}
-        <span className="hidden min-w-0 shrink items-center gap-1.5 lg:flex">
-          {job.stack.slice(0, 3).map((item) => (
-            <span
-              key={item}
-              className="truncate rounded-md border border-border bg-surface-2/60 px-2 py-1 text-[0.6875rem] text-muted-foreground"
-            >
-              {item}
-            </span>
-          ))}
-          {job.stack.length > 3 && (
-            <span className="text-[0.6875rem] text-faint">
-              +{job.stack.length - 3}
-            </span>
-          )}
-        </span>
-
+        {/* Collapsed rows stay quiet — role, company, dates. Nine rows of tool
+            chips made the list read as noise; the stack is one click away. */}
         <span className="flex shrink-0 items-center gap-4">
           <span className="label hidden sm:block">{span(job, t.ui.present)}</span>
           <ChevronDown
@@ -183,7 +160,6 @@ export function Experience() {
           <Reveal key={`${job.company}-${job.start}`} delay={0.04 * i}>
             <Entry
               job={job}
-              index={i}
               matched={isTopMatch(job.company, focusProfile?.experience)}
               open={openCompany === job.company}
               onToggle={() => setOpenCompany(openCompany === job.company ? null : job.company)}
