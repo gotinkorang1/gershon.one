@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { site, navLinks } from "@/lib/site";
 import { useI18n } from "@/components/locale-provider";
-import { getFeatures, labHref, projectsHref } from "@/lib/localised-content";
+import { blogHref, getFeatures, labHref, projectsHref } from "@/lib/localised-content";
 import { CvButton } from "@/components/cv-button";
 import { SHORTCUTS_HELP_EVENT } from "@/components/keyboard-shortcuts";
 import { PwaController } from "@/components/pwa-controller";
@@ -56,7 +56,7 @@ export function SiteFooter() {
                 </Link>
               </li>
               <li>
-                <Link href="/blog" className="link text-sm text-muted-foreground">
+                <Link href={blogHref(locale)} className="link text-sm text-muted-foreground">
                   {features.navigation.blog}
                 </Link>
               </li>

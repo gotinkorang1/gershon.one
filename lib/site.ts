@@ -1203,6 +1203,43 @@ export const projects: Project[] = [
   },
 ];
 
+/** Blog chrome (index, post page and reading widgets). French in content.fr.ts. */
+export const blogCopy = {
+  eyebrow: "Writing",
+  title: "Blog",
+  description: "Field notes on networking, systems administration, and the things I build and run.",
+  subscribe: "Subscribe via RSS",
+  empty: "No posts yet — check back soon.",
+  searchPlaceholder: "Search posts…",
+  searchLabel: "Search posts",
+  clearSearch: "Clear search",
+  all: "All",
+  latest: "Latest",
+  noResults: (query: string, tag: string) =>
+    `No posts match${query ? ` “${query}”` : ""}${tag ? ` in ${tag}` : ""}.`,
+  minRead: "min read",
+  min: "min",
+  allPosts: "All posts",
+  readNext: "Read next",
+  olderPost: "Older post",
+  newerPost: "Newer post",
+  share: "Share",
+  shareOnX: "Share on X",
+  shareOnLinkedIn: "Share on LinkedIn",
+  copyLink: "Copy link",
+  linkCopied: "Link copied",
+  onThisPage: "On this page",
+  tableOfContents: "Table of contents",
+  backToTop: "Back to top",
+  copyCode: "Copy code",
+  copied: "Copied",
+  linkToSection: "Link to this section",
+  home: "Home",
+  blogName: "Writing",
+};
+
+export type BlogCopy = typeof blogCopy;
+
 export const projectsPage = {
   eyebrow: "Projects",
   title: "Things I've built, deployed and kept running",

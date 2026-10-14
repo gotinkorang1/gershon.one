@@ -8,7 +8,7 @@ import { Command } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { navLinks, site } from "@/lib/site";
 import { useI18n } from "@/components/locale-provider";
-import { getFeatures, labHref, projectsHref } from "@/lib/localised-content";
+import { blogHref, getFeatures, labHref, projectsHref } from "@/lib/localised-content";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageToggle } from "@/components/language-toggle";
 import { CvButton } from "@/components/cv-button";
@@ -178,10 +178,10 @@ export function SiteNav() {
               </li>
               <li>
                 <Link
-                  href="/blog"
+                  href={blogHref(locale)}
                   className={cn(
                     "relative whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm transition-colors",
-                    pathname.startsWith("/blog")
+                    pathname.startsWith(blogHref(locale))
                       ? "text-foreground"
                       : "text-muted-foreground hover:text-foreground",
                   )}
@@ -274,7 +274,7 @@ export function SiteNav() {
             <span className="text-2xl font-medium tracking-tight">{features.navigation.lab}</span>
           </Link>
           <Link
-            href="/blog"
+            href={blogHref(locale)}
             onClick={() => setOpen(false)}
             className="flex items-baseline gap-4 border-b border-border py-4"
           >

@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import type { Locale } from "@/lib/i18n";
 
 /**
  * File-based blog. Each post is a Markdown file in `content/blog/` with a small
@@ -37,7 +38,12 @@ export type Post = {
   readingMinutes: number;
 };
 
-const BLOG_DIR = path.join(process.cwd(), "content", "blog");
+// English posts live in content/blog; translations in content/blog/fr with the
+// same file name, so a slug is shared across languages.
+const blogDir = (locale: Locale) =>
+  locale === "fr"
+    ? path.join(process.cwd(), "content", "blog", "fr")
+    : path.join(process.cwd(), "content", "blog");
 
 /** ~200 words per minute; never reports zero. */
 function readingMinutes(markdown: string): number {
@@ -84,14 +90,15 @@ function parseFrontmatter(raw: string): {
   return { data, content: content.trimStart() };
 }
 
-export function getAllPosts(): Post[] {
-  if (!fs.existsSync(BLOG_DIR)) return [];
+export function getAllPosts(locale: Locale = "en"): Post[] {
+  const dir = blogDir(locale);
+  if (!fs.existsSync(dir)) return [];
 
   const posts = fs
-    .readdirSync(BLOG_DIR)
+    .readdirSync(dir)
     .filter((file) => file.endsWith(".md"))
     .map((file) => {
-      const raw = fs.readFileSync(path.join(BLOG_DIR, file), "utf8");
+      const raw = fs.readFileSync(path.join(dir, file), "utf8");
       const { data, content } = parseFrontmatter(raw);
       const asString = (v: unknown) => (typeof v === "string" ? v : "");
 
@@ -114,17 +121,17 @@ export function getAllPosts(): Post[] {
 }
 
 /** Published posts only — drafts are noindex and kept out of listings/feeds. */
-export function getPublishedPosts(): Post[] {
-  return getAllPosts().filter((post) => !post.draft);
+export function getPublishedPosts(locale: Locale = "en"): Post[] {
+  return getAllPosts(locale).filter((post) => !post.draft);
 }
 
-export function getPost(slug: string): Post | undefined {
-  return getAllPosts().find((post) => post.slug === slug);
+export function getPost(slug: string, locale: Locale = "en"): Post | undefined {
+  return getAllPosts(locale).find((post) => post.slug === slug);
 }
 
 /** Every published tag, de-duplicated. */
-export function getAllPostTags(): string[] {
-  return [...new Set(getPublishedPosts().flatMap((p) => p.tags))].sort();
+export function getAllPostTags(locale: Locale = "en"): string[] {
+  return [...new Set(getPublishedPosts(locale).flatMap((p) => p.tags))].sort();
 }
 
 /** Lightweight post shape for the index — everything but the (heavy) body. */
@@ -143,8 +150,11 @@ export function toCard(post: Post): PostCard {
  * the rendered headings, so they always match.
  */
 export function slugify(text: string): string {
+  // Accents fold first ("réels" → "reels"); `\w` would otherwise drop them.
   return text
     .toLowerCase()
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
     .trim()
     .replace(/[^\w\s-]/g, "")
     .replace(/\s+/g, "-")
@@ -179,8 +189,8 @@ export function getHeadings(content: string): Heading[] {
  * Posts related to `slug`, ranked by shared tags then recency. Falls back to
  * the most recent posts when nothing shares a tag, so the section is never empty.
  */
-export function getRelatedPosts(slug: string, limit = 3): Post[] {
-  const published = getPublishedPosts();
+export function getRelatedPosts(slug: string, limit = 3, locale: Locale = "en"): Post[] {
+  const published = getPublishedPosts(locale);
   const current = published.find((p) => p.slug === slug);
   if (!current) return [];
 
@@ -198,8 +208,8 @@ export function getRelatedPosts(slug: string, limit = 3): Post[] {
 }
 
 /** Newer/older neighbours of a post, for prev/next navigation. */
-export function getAdjacentPosts(slug: string): { newer?: Post; older?: Post } {
-  const published = getPublishedPosts(); // newest first
+export function getAdjacentPosts(slug: string, locale: Locale = "en"): { newer?: Post; older?: Post } {
+  const published = getPublishedPosts(locale); // newest first
   const i = published.findIndex((p) => p.slug === slug);
   if (i === -1) return {};
   return { newer: published[i - 1], older: published[i + 1] };
