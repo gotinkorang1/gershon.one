@@ -366,8 +366,53 @@ export const featuresFr = {
     title: "Preuves sélectionnées pour",
     lede: "Un dossier prêt à imprimer : adéquation au poste, disponibilité, expérience la plus pertinente, projets, certifications et coordonnées.",
     open: "Ouvrir le dossier recruteur",
+    back: "Retour au portfolio ciblé",
+    availability: "Disponibilité et admissibilité",
+    experience: "Expérience pertinente",
+    capabilities: "Compétences correspondantes",
+    caseStudies: "Études de cas choisies",
+    credentials: "Certifications pertinentes",
+    contact: "Contact",
+    downloadCv: "Télécharger le CV",
+    print: "Imprimer / enregistrer en PDF",
+    present: "aujourd'hui",
+    linkedin: "LinkedIn",
+    metaTitle: (role: string) => `Dossier recruteur — ${role}`,
   },
 };
+
+export const briefActionsFr = {
+  print: "Imprimer / enregistrer en PDF",
+  share: "Partager le dossier",
+  linkCopied: "Lien copié",
+  shareTitle: "Gershon Otinkorang — dossier candidat",
+  shareText:
+    "Disponibilité, autorisation de travail, expérience et compétences clés de Gershon Otinkorang.",
+};
+
+/** Same order as `brief.eligibility` in lib/brief.ts. */
+export const eligibilityFr = [
+  {
+    label: "Disponible à partir de",
+    value: "Maintenant",
+    note: "Temps partiel en session, temps plein pendant les pauses prévues · Étudiant à la maîtrise à l'Université Memorial (2026–2028)",
+  },
+  {
+    label: "Autorisation de travail",
+    value: "Permis d'études canadien (valide jusqu'en 2028)",
+    note: "Travail hors campus jusqu'à 24 h/semaine en session, temps plein pendant les pauses prévues · Admissible au PTPD après l'obtention du diplôme",
+  },
+  {
+    label: "Préavis",
+    value: "Immédiat / flexible",
+    note: "Disponible pour du travail à temps partiel, contractuel ou planifié au Canada",
+  },
+  {
+    label: "Lieu",
+    value: "St. John's (T.-N.-L.)",
+    note: "Ouvert au travail sur place ou hybride à St. John's, ou à distance partout au Canada",
+  },
+];
 
 /** Keyed by the reference's name. */
 export const referencesFr: Record<string, { title: string }> = {

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowRight, FileUser } from "lucide-react";
 import type { RoleFocusId } from "@/lib/site";
 import { useI18n } from "@/components/locale-provider";
-import { getFeatures, getRoleFocusProfiles } from "@/lib/localised-content";
+import { getFeatures, getRoleFocusProfiles, packHref } from "@/lib/localised-content";
 import { Panel } from "@/components/ui/panel";
 
 export function RecruiterPackBanner({ focus }: { focus: RoleFocusId }) {
@@ -32,7 +32,7 @@ export function RecruiterPackBanner({ focus }: { focus: RoleFocusId }) {
             </div>
           </div>
           <Link
-            href={`/pack/${profile.id}`}
+            href={packHref(locale, profile.id)}
             className="tap inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-lg bg-foreground px-4 text-sm font-medium text-surface-0 transition-opacity hover:opacity-90"
           >
             {portfolioFeatures.recruiterPack.open}

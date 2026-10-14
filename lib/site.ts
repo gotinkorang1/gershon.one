@@ -1000,6 +1000,7 @@ export const portfolioFeatures = {
     print: "Print / save PDF",
     present: "Present",
     linkedin: "LinkedIn",
+    metaTitle: (role: string) => `${role} recruiter pack`,
   },
 } as const;
 
