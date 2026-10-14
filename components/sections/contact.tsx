@@ -82,7 +82,7 @@ export function Contact() {
       <SectionHeading
         index={t.ui.eyebrowContact}
         title={t.sections.contactTitle}
-        description={t.sections.contactLede(site.relocation.to, t.ui.relocationWhen)}
+        description={t.sections.contactLede}
       />
 
       <div className="mt-10 grid gap-3 lg:grid-cols-12">
@@ -110,6 +110,12 @@ export function Contact() {
                 )}
               </button>
             </div>
+            <a
+              href={`mailto:${site.emailAlt}`}
+              className="link mt-2 block truncate text-sm text-muted-foreground"
+            >
+              {site.emailAlt}
+            </a>
           </Panel>
 
           </StaggerItem>
@@ -179,12 +185,7 @@ export function Contact() {
           <Panel inset className="p-5">
             <p className="label">{t.contact.availability}</p>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              {t.ui.basedIn(
-                site.location,
-                site.timezone,
-                site.relocation.to,
-                t.ui.relocationWhen,
-              )}
+              {t.ui.basedIn(site.timezone)}
             </p>
           </Panel>
           </StaggerItem>

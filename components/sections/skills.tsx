@@ -50,7 +50,12 @@ const SPAN_PATTERN = [
   "lg:col-span-6",
 ] as const;
 
-const spanFor = (index: number) => SPAN_PATTERN[index % SPAN_PATTERN.length];
+// Every pair in the pattern fills a 12-column row, so an odd card out at the
+// end would sit beside a hole. Give it the whole row instead.
+const spanFor = (index: number, count: number) =>
+  index === count - 1 && index % 2 === 0
+    ? "lg:col-span-12"
+    : SPAN_PATTERN[index % SPAN_PATTERN.length];
 
 export function Skills() {
   const { t, locale } = useI18n();
@@ -76,7 +81,7 @@ export function Skills() {
           const sourceTitle = sourceSkillGroups[sourceIndex]?.title ?? group.title;
           const matched = isTopMatch(sourceTitle, focusProfile?.skillGroups);
           return (
-            <Reveal key={group.title} delay={0.04 * i} className={cn(spanFor(i))}>
+            <Reveal key={group.title} delay={0.04 * i} className={cn(spanFor(i, orderedGroups.length))}>
               <Panel
                 reactive
                 className={cn("trace-panel group h-full p-5", matched && "focus-match")}
@@ -114,6 +119,18 @@ export function Skills() {
           );
         })}
       </div>
+
+      {/* Ties the Security group above to the work that backs it up. */}
+      <Reveal delay={0.05}>
+        <Panel className="trace-panel mt-3 p-5 sm:p-7">
+          <p className="label flex items-center gap-2">
+            <ShieldCheck aria-hidden className="size-3 text-accent" /> {t.ui.securityLabel}
+          </p>
+          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">
+            {t.ui.securityStatement}
+          </p>
+        </Panel>
+      </Reveal>
 
       {/* The topology evidences the network administration group above it —
           a worked example rather than a decorative header graphic. */}

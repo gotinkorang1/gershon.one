@@ -12,8 +12,8 @@ export const brief = {
   eligibility: [
     {
       label: "Available from",
-      value: "Immediately",
-      note: "Based in St. John's, NL · MSc student at Memorial University (2026–2028)",
+      value: "Now",
+      note: "Part-time in term, full-time in scheduled breaks · MSc student at Memorial University (2026–2028)",
     },
     {
       label: "Work authorisation",
@@ -29,7 +29,7 @@ export const brief = {
     {
       label: "Location",
       value: "St. John's, NL",
-      note: "55 Sir Wilfred Greenfield Place · Open to on-site/hybrid in St. John's, or remote across Canada",
+      note: "Open to on-site/hybrid in St. John's, or remote across Canada",
     },
   ],
 
@@ -42,7 +42,7 @@ export const brief = {
 
   // What you'd want a screener to read out to a hiring manager.
   pitch:
-    "Information Technology Consultant and Memorial University Computer Science MSc student with five years' experience running network, server, and end-user infrastructure end to end. Currently providing remote IT consulting at Sabaoth across hardware, switching, firewalls, and Microsoft 365/Google Workspace in Canada. Previously sole IT administrator for a 1,200-acre industrial campus in Ghana.",
+    "IT infrastructure and systems specialist and Memorial University Computer Science MSc student with five years' experience running network, server, and end-user infrastructure end to end. Currently providing remote IT consulting at Sabaoth across hardware, switching, firewalls, and Microsoft 365/Google Workspace in Canada. Previously led IT support for a 1,200-acre industrial park in Ghana, supervising a four-member team and delivering CCTV and Starlink across 47 branches and factories.",
 
   // Ranked for a screener matching against a job description.
   strengths: [

@@ -21,3 +21,4 @@ docs/certificates/
 
 .vercel
 .env*
+!.env.example

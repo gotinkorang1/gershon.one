@@ -9,7 +9,7 @@ export const site = {
   name: "Gershon Adjei Otinkorang",
   shortName: "Gershon Otinkorang",
   initials: "GO",
-  role: "Information Technology Consultant",
+  role: "IT Infrastructure & Systems Specialist",
   location: "St. John's, NL, Canada",
   // Ticker of real tools shown under the hero summary. Kept short and true —
   // every item appears in the experience section's stacks.
@@ -31,12 +31,12 @@ export const site = {
     "GIS / JOSM",
   ],
   relocation: {
-    to: "St. John's, NL, Canada",
-    when: "August 2026",
     note: "Relocated August 2026 · MSc student at Memorial University",
   },
-  timezone: "NDT",
+  timezone: "Newfoundland Time",
   email: "contact@gershon.one",
+  // Shown alongside the domain address wherever contact details are listed.
+  emailAlt: "gotinkorang@gmail.com",
   phone: "+1 (709) 219-5364",
   phoneHref: "+17092195364",
   // Must match the host Vercel actually serves. The apex redirects to www, so
@@ -46,16 +46,13 @@ export const site = {
   headline:
     "I keep the systems people depend on working — from client infrastructure and cloud workspaces to a fibre backbone across 1,200 acres.",
   summary:
-    "Information Technology Consultant and Memorial University Computer Science MSc student with five years keeping users, devices and enterprise infrastructure running. Based in St. John's, NL. Providing remote IT consulting at Sabaoth across hardware, networks, firewalls and Microsoft 365/Google Workspace; previously engineered the multi-WAN satellite link and GPON fibre backbone across a 1,200-acre industrial park in Ghana.",
-  // Professional statement for security-focused positioning
-  securityStatement:
-    "I help organizations protect their infrastructure without sacrificing velocity. With hands-on experience in cloud security, compliance operations, and SOC monitoring, I believe security works best when it enables teams to move fast. I design layered defenses that catch threats early, keep systems compliant, and let people do their jobs. Whether building secure cloud architectures, operationalizing threat detection, or bridging security and engineering teams, I focus on outcomes: reduced risk, faster incident response, and sustainable security culture.",
+    "IT infrastructure and systems specialist and Memorial University Computer Science MSc student with five years keeping users, devices and enterprise infrastructure running. Based in St. John's, NL. Providing remote IT consulting at Sabaoth across hardware, networks, firewalls and Microsoft 365/Google Workspace; previously engineered the multi-WAN satellite link and GPON fibre backbone across a 1,200-acre industrial park in Ghana.",
   // Search-snippet length (~155 chars). `summary` above is the on-page bio and
   // runs far past what Google shows, so the meta description is authored
   // separately — leading with the strongest hook before the truncation point.
   metaDescription:
-    "IT consultant and Memorial University MSc Computer Science student with 5+ years running enterprise infrastructure. Based in St. John's, NL, Canada.",
-  availability: "Available in Canada (Part-time in term / Full-time breaks)",
+    "IT infrastructure and systems specialist and Memorial University MSc Computer Science student with 5+ years running enterprise networks. Based in St. John's, NL, Canada.",
+  availability: "Available now · part-time in term, full-time in breaks",
   /**
    * When the page content last meaningfully changed — bump by hand when you
    * edit experience, skills or credentials. Deliberately not derived from the
@@ -64,7 +61,7 @@ export const site = {
    * Must be a full ISO 8601 datetime with an offset; Google rejects a
    * date-only value for schema.org dateModified.
    */
-  contentUpdated: "2026-10-09T00:00:00-02:30",
+  contentUpdated: "2026-10-14T00:00:00-02:30",
   resumeUrl: "/gershon-otinkorang-cv.pdf",
   contactCard: {
     url: "/gershon-otinkorang.vcf",
@@ -203,7 +200,7 @@ export const roleFocusProfiles = [
   },
   {
     id: "infrastructure",
-    title: "Infrastructure Engineer",
+    title: "Infrastructure Specialist",
     shortTitle: "Infrastructure",
     description:
       "Servers, virtualisation, Linux, containers, cloud, network security and resilient connectivity for distributed operations.",
@@ -221,6 +218,7 @@ export const roleFocusProfiles = [
     ],
     credentials: [
       "AWS Certified Cloud Practitioner",
+      "ALX Cloud Computing",
       "MSc Computer Science",
       "Foundations of Cybersecurity",
     ],
@@ -282,7 +280,7 @@ export const facts = [
   // identifiers — animating them produces nonsense like "Aug 1256".
   { label: "Experience", value: "5+ years", countable: true },
   { label: "Site supported", value: "1,200 acres", countable: false },
-  { label: "Available", value: "Available now", countable: false },
+  { label: "Available", value: "Now", countable: false },
   { label: "Based", value: "St. John's, NL", countable: false },
 ] as const;
 
@@ -308,7 +306,7 @@ export const experience: Job[] = [
     role: "Information Technology Consultant",
     start: "2026-09",
     end: null,
-    location: "Auburn Bay, AB, Canada (Remote)",
+    location: "Alberta, Canada (Remote, freelance)",
     summary:
       "Remote IT consulting and technical support for client hardware, software, networking, and cloud workspace infrastructure.",
     highlights: [
@@ -329,24 +327,28 @@ export const experience: Job[] = [
   {
     company: "Greenhouse International Development Group Ghana Ltd.",
     division: "Engineering & Design Department",
-    role: "IT Support Officer",
+    role: "Lead IT Officer",
     start: "2023-10",
     end: "2026-08",
     location: "Bright Industrial Park, Ghana",
     summary:
-      "Sole IT support for a 1,200-acre industrial park and the retail sites of its subsidiary — end users, POS and PDA systems, servers, and the site-wide network that connects all of it.",
+      "Led IT support for a 1,200-acre industrial park and its branches and factories — end users, POS, servers, CCTV and the site-wide network — supervising a four-member team.",
     highlights: [
-      "First and only line of IT support for staff across the park and head office: hardware, software, printers, accounts and access, from triage to resolution.",
-      "Configure, deploy and support point-of-sale systems for Bright Afrimall across multiple retail locations in Ghana, including staff training and remote fault resolution.",
-      "Manage the handheld PDA estate used for stock and operations — provisioning, application deployment and day-to-day fault resolution.",
-      "Designed and deployed the park's fibre backbone, carrying CCTV footage and POS data from factories and remote buildings to the head office, and distributing internet back out to the factories.",
+      "Supervised a four-member IT team supporting staff across the park, head office and branches — around 36 staff per branch or factory — for hardware, software, printers, accounts and access, from triage to resolution.",
+      "Personally installed and supervised CCTV and Starlink deployments across 47 branches and factories in Ghana — 15 to 45 cameras per site with remote viewing for management, and Starlink brought up in about two hours per site.",
+      "Supported POS setup, staff training and equipment tracking across 23 Bright Afrimall sales points, with remote fault resolution.",
+      "Managed the handheld PDA estate used for stock and operations — provisioning, application deployment and day-to-day fault resolution.",
+      "Designed and deployed the park's fibre backbone — installing and terminating overhead fibre-optic cable — carrying CCTV footage and POS data from factories and remote buildings to head office, and distributing internet back out to the factories.",
       "Built the site's internet capacity by aggregating eight individually mounted Starlink terminals into a MikroTik router as eight WAN links, feeding a Huawei S5735 enterprise switch and a GPON distribution layer with 1:4 splitters across the fibre panel.",
-      "Extended coverage beyond the park boundary with point-to-point wireless links and VPN tunnels so off-site locations reach head office resources.",
-      "Installed and manage indoor and outdoor access points with centralised controllers, covering offices, factory floors and open ground.",
-      "Deploy and maintain internal services on Proxmox and Linux servers using Docker and Portainer — Odoo, OpenMAINT, Tailscale and DNS-level ad and content filtering.",
-      "Run IT stores and asset control in Odoo: inventory, stock movements and equipment issue for the IT warehouse.",
-      "Support the survey team by converting CAD site plans into OpenStreetMap data with JOSM, giving the park an accurate digital basemap.",
-      "Act as departmental supervisor in the Engineering & Design Manager's absence, and lead technical interviews for IT Officer hires.",
+      "Extended coverage beyond the park boundary with point-to-point wireless links and VPN tunnels, keeping a public-IP path as a backup remote-access route alongside the VPNs and MTN fibre.",
+      "Installed and managed indoor and outdoor access points with centralised controllers, covering offices, factory floors and open ground.",
+      "Administered 3 physical servers and around 9 VMs on Proxmox, plus 2 production and 3 development/test servers online — Odoo, OpenMAINT, Tailscale, OPNsense, file and proxy services and DNS-level filtering, using Docker and Portainer.",
+      "Ran bare-metal backups every Sunday evening and event-triggered automated POS and database backups, using Proxmox VE backups and Proxmox Backup Server.",
+      "Migrated on-premises email to Microsoft 365, moved a local POS server to AWS, and transferred company websites from Namecheap to Hostinger.",
+      "Administered NingDun Identity Domain Management for a year — directory services, Windows authentication, computers and password policies.",
+      "Ran IT stores and asset control in Odoo: inventory, stock movements and equipment issue for the IT warehouse.",
+      "Supported the survey team by converting CAD site plans into OpenStreetMap data with JOSM, giving the park an accurate digital basemap.",
+      "Acted as departmental supervisor in the Engineering & Design Manager's absence, and led technical interviews for IT Officer hires.",
     ],
     stack: [
       "MikroTik RouterOS",
@@ -354,8 +356,12 @@ export const experience: Job[] = [
       "Huawei S5735",
       "GPON / fibre",
       "Proxmox",
+      "Proxmox Backup Server",
       "Docker / Portainer",
+      "OPNsense",
       "Odoo",
+      "Microsoft 365",
+      "NingDun",
       "Tailscale",
       "Ubiquiti / APs",
       "POS systems",
@@ -372,11 +378,12 @@ export const experience: Job[] = [
     summary:
       "Remote IT administration and technical support for the group's digital infrastructure, alongside full-time employment.",
     highlights: [
-      "Provide remote IT administration and technical support for company digital infrastructure.",
+      "Provide remote IT administration and technical support for company digital infrastructure, explaining solutions to non-technical stakeholders.",
       "Manage company websites, domains, hosting platforms, SSL certificates and business email systems.",
       "Perform website maintenance, security updates, performance optimisation and troubleshooting.",
       "Support digital platforms used across hospitality, transportation, logistics and real estate operations.",
       "Manage online services and ensure availability of critical business systems.",
+      "Develop websites and support SEO for the group's businesses.",
     ],
     stack: [
       "WordPress",
@@ -394,12 +401,11 @@ export const experience: Job[] = [
     end: "2023-09",
     location: "Accra, Ghana",
     summary:
-      "Developed real estate listing platforms, managed backups and SEO, and provided technical support across hardware and network systems.",
+      "Built and ran the company's WordPress listing platform and the IT around it, coordinating an eight-member digital team.",
     highlights: [
-      "Developed and maintained a real-estate listing platform to enhance user experience and performance.",
-      "Provided technical support for hardware, software, and network issues, ensuring minimal disruption to operations.",
-      "Implemented data-backup systems to protect company information and managed corporate online assets, including the website and SEO.",
-      "Supervised creative production teams across video, photography and graphic content.",
+      "Developed and maintained the WordPress real-estate listing platform, supporting property publishing and the customer search experience.",
+      "Maintained hosting, backups and website security to protect business information, and resolved staff hardware, software and connectivity issues.",
+      "Coordinated an eight-member multidisciplinary team on website and digital content delivery, including newsletters and SEO reporting.",
     ],
     stack: ["WordPress", "PHP", "MySQL", "SEO", "Backup systems", "IT support"],
   },
@@ -422,7 +428,7 @@ export const experience: Job[] = [
   },
   {
     company: "Origin8 Limited",
-    role: "Information Technology Specialist",
+    role: "Information Technology Specialist Intern",
     start: "2020-04",
     end: "2021-03",
     location: "Greater Accra Region, Ghana",
@@ -436,19 +442,20 @@ export const experience: Job[] = [
   },
   {
     company: "GCB Bank Limited",
-    role: "Information Technology Specialist",
+    role: "Information Technology Specialist Intern",
     start: "2019-10",
     end: "2020-01",
     location: "Amasaman, Ghana",
     summary:
-      "Hardware maintenance for currency counters, staff technical support, and digital form processing at Ghana's largest commercial bank.",
+      "Server, account and end-user support alongside currency-counter maintenance at one of Ghana's largest commercial banks.",
     highlights: [
-      "Provided maintenance and repair for currency counters, ensuring optimal hardware functionality across banking operations.",
-      "Offered staff support for hardware, software, and network issues, minimizing banking disruptions.",
-      "Assisted customers with account inquiries and service requests through clear communication.",
-      "Utilized Google Forms and digital tools for efficient information collection and processing.",
+      "Supported Windows and Linux servers, user and email accounts, access privileges, file servers, printers and VPNs.",
+      "Troubleshot hardware, CCTV and software faults for staff, minimising banking disruptions.",
+      "Maintained and repaired currency counters used across banking operations.",
+      "Assisted customers with account inquiries and service requests.",
+      "Used Google Forms and other digital tools to collect and process information efficiently.",
     ],
-    stack: ["Hardware maintenance", "Banking systems", "IT support", "Google Forms"],
+    stack: ["Windows / Linux servers", "Accounts & access", "VPN", "CCTV", "Hardware maintenance", "Google Forms"],
   },
   {
     company: "Volta River Authority",
@@ -459,11 +466,11 @@ export const experience: Job[] = [
     summary:
       "First exposure to enterprise infrastructure, at Ghana's national power utility.",
     highlights: [
+"Configured server and client operating systems, and supported Windows and Linux servers, accounts, permissions, file services and VPNs.",
+      "Resolved computer, printer, network and CCTV issues for staff.",
       "Managed and updated the organisation's website.",
-      "Diagnosed and resolved network connectivity issues and configured staff hardware.",
-      "Installed and configured server and client operating systems.",
     ],
-    stack: ["Windows Server", "Networking", "Web"],
+    stack: ["Windows Server", "Linux", "Networking", "CCTV", "Web"],
   },
   {
     company: "RichWorld Mobile Devices",
@@ -501,6 +508,7 @@ export const skillGroups: SkillGroup[] = [
       "Windows & Linux desktops",
       "Printers & peripherals",
       "Account & access management",
+      "Microsoft 365 & Google Workspace",
       "Software deployment",
       "User training",
       "Technical documentation",
@@ -528,6 +536,7 @@ export const skillGroups: SkillGroup[] = [
       "Fibre / GPON distribution",
       "Huawei enterprise switching",
       "VLANs & firewall policy",
+      "OPNsense",
       "Point-to-point wireless",
       "WireGuard / Tailscale VPN",
       "Indoor & outdoor APs",
@@ -552,7 +561,10 @@ export const skillGroups: SkillGroup[] = [
     title: "Servers & services",
     blurb: "The platforms behind the support desk.",
     skills: [
+      "Windows Server & Active Directory",
+      "Group Policy",
       "Proxmox virtualisation",
+      "Proxmox Backup Server",
       "Linux server administration",
       "Docker & Portainer",
       "Odoo",
@@ -567,11 +579,13 @@ export const skillGroups: SkillGroup[] = [
     blurb: "Hosting, domains and the sites that run on them.",
     skills: [
       "AWS",
+      "AWS IAM (roles, policies, MFA)",
       "Google Cloud Platform",
       "Cloudflare",
       "Domain & DNS management",
       "Email hosting",
       "WordPress",
+      "cPanel",
       "PHP / MySQL",
       "HTML, CSS, JavaScript",
       "Git / GitHub",
@@ -642,6 +656,24 @@ export const credentials: Credential[] = [
     kind: "certification",
   },
   {
+    title: "ALX Cloud Computing",
+    issuer: "ALX Africa",
+    date: "2025-07-28",
+    detail: "Two-month ALX Cloud Practitioner course, powered by AWS Academy, with professional development skills for the digital age · completed June 2025",
+    credentialId: "HrRxBsfZLz",
+    verifyUrl: "https://savanna.alxafrica.com/certificates/HrRxBsfZLz",
+    kind: "certification",
+  },
+  {
+    title: "ALX Professional Foundations",
+    issuer: "ALX Africa",
+    date: "2025-04-15",
+    detail: "Professional Development Skills for the Digital Age",
+    credentialId: "59XFYHsMer",
+    verifyUrl: "https://savanna.alxafrica.com/certificates/59XFYHsMer",
+    kind: "certification",
+  },
+  {
     title: "Intermediate First Aid CPR C/AED (Standard)",
     issuer: "St. John Ambulance",
     date: "2026-09-27",
@@ -665,24 +697,6 @@ export const credentials: Credential[] = [
     kind: "certification",
   },
   {
-    title: "LinkedIn Marketing Strategy",
-    issuer: "LinkedIn",
-    date: "2022-12-15",
-    expires: "2024-12-15",
-    credentialId: "swvppej77qan",
-    verifyUrl: "https://verify.skilljar.com/c/swvppej77qan",
-    kind: "certification",
-  },
-  {
-    title: "LinkedIn Marketing Fundamentals",
-    issuer: "LinkedIn",
-    date: "2022-05-17",
-    expires: "2024-05-17",
-    credentialId: "3ppmhqxobvk8",
-    verifyUrl: "https://verify.skilljar.com/c/3ppmhqxobvk8",
-    kind: "certification",
-  },
-  {
     title: "HND Information & Communication Technology",
     issuer: "Takoradi Technical University (NABPTEX)",
     date: "2020-10-13",
@@ -693,11 +707,20 @@ export const credentials: Credential[] = [
     title: "Google Digital Skills",
     issuer: "Google",
     date: "2020-10-04",
+    detail: "The Fundamentals of Digital Marketing · Google Digital Skills for Africa, endorsed by IAB Europe and The Open University",
+    credentialId: "58H 54V V9H",
     // Google retired the Digital Garage certificate validator — every
     // learndigital.withgoogle.com link now redirects to grow.google — so
     // "verify" points to the LinkedIn certifications section instead.
     verifyUrl: "https://www.linkedin.com/in/gaotinkorang/details/certifications/",
     kind: "certification",
+  },
+  {
+    title: "Certificate II, Electrical Engineering Technology",
+    issuer: "Twumasi Boateng Technical Institute",
+    date: "2016-06-01",
+    detail: "Ghana Education Service / NABPTEX · technical and core subject examinations",
+    kind: "degree",
   },
 ];
 

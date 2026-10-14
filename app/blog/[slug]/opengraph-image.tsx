@@ -25,6 +25,7 @@ export default async function Image({
         day: "numeric",
         month: "long",
         year: "numeric",
+        timeZone: "UTC",
       })
     : "";
 

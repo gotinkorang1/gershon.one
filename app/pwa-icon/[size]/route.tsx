@@ -18,7 +18,7 @@ export async function GET(
       <div
         style={{
           alignItems: "center",
-          background: "#171715",
+          background: "#ffffff",
           color: "#f5f2ea",
           display: "flex",
           height: "100%",
@@ -29,6 +29,7 @@ export async function GET(
         <div
           style={{
             alignItems: "center",
+            background: "#171715",
             border: `${Math.max(4, Math.round(size / 64))}px solid #b7ff4a`,
             borderRadius: `${Math.round(size * 0.23)}px ${Math.round(size * 0.08)}px`,
             display: "flex",

@@ -33,7 +33,7 @@ export const caseStudies: CaseStudy[] = [
     title: "ID cards two languages had to agree on",
     summary:
       "ERPNext prints documents, not cards. A Jinja print format that puts two bilingual employee ID cards — front and back — on a single A4 sheet, at dimensions a guard can check at a gate.",
-    role: "IT Support Officer",
+    role: "Lead IT Officer",
     context: "Greenhouse International Development Group Ghana Ltd.",
     period: "2026",
     published: "2026-07-30",
@@ -87,7 +87,7 @@ export const caseStudies: CaseStudy[] = [
     title: "The invoice pile that was being retyped by hand",
     summary:
       "The commercial team re-keyed machinery and vehicle line items from a folder of scanned invoices into a Word template, one PDF at a time. A Windows batch tool reads each PDF, keeps only the qualifying items, and exports a finished invoice named by its BOE number — with an AI fallback for the scans plain text can't reach.",
-    role: "IT Support Officer",
+    role: "Lead IT Officer",
     context: "Bright Industrial Park — Commercial Department",
     period: "2026",
     published: "2026-07-31",
@@ -156,7 +156,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Bringing a 1,200-acre industrial park online",
     summary:
       "No fibre to the door, no single satellite link fast enough, and CCTV plus point-of-sale data to move from factories to head office. Eight Starlink terminals aggregated into a fibre distribution layer.",
-    role: "IT Support Officer",
+    role: "Lead IT Officer",
     context: "Bright Industrial Park, Ghana",
     period: "2024",
     published: "2026-06-10",
@@ -216,7 +216,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Eight thousand HR records, and who can reach them",
     summary:
       "HR needed one system for employee records, asset assignments, work cards and hostel allocations — real PII for 8,000 workers across four offices. Built on ERPNext, kept off the public internet, with administrator access gated behind a VPN on the MikroTik router.",
-    role: "IT Support Officer",
+    role: "Lead IT Officer",
     context: "Bright Industrial Park, Ghana",
     period: "2024 — present",
     published: "2026-05-22",
@@ -271,7 +271,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Finding a fault that was not where everyone was looking",
     summary:
       "In a park this size, “the internet is slow” almost never means what it says. Fibre barely adds latency; the fault is a dirty connector, a failing SFP, a switching loop, a bent cable. A method for diagnosing by layer instead of by the loudest guess.",
-    role: "IT Support Officer",
+    role: "Lead IT Officer",
     context: "Bright Industrial Park, Ghana",
     period: "2024 — present",
     published: "2026-04-15",

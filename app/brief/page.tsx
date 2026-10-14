@@ -26,7 +26,7 @@ export default function BriefPage() {
     site.name,
     site.role,
     "",
-    `${site.briefActions.detailsLabels.email}: ${site.email}`,
+    `${site.briefActions.detailsLabels.email}: ${site.email} · ${site.emailAlt}`,
     `${site.briefActions.detailsLabels.phone}: ${site.phone}`,
     `${site.briefActions.detailsLabels.linkedin}: ${site.socials.linkedin}`,
     `${site.briefActions.detailsLabels.portfolio}: ${site.url}`,
@@ -232,6 +232,10 @@ export default function BriefPage() {
           <a href={`mailto:${site.email}`} className="link inline-flex items-center gap-2 text-sm">
             <Mail className="size-3.5 text-faint" />
             {site.email}
+          </a>
+          <a href={`mailto:${site.emailAlt}`} className="link inline-flex items-center gap-2 text-sm">
+            <Mail className="size-3.5 text-faint" />
+            {site.emailAlt}
           </a>
           <a href={`tel:${site.phoneHref}`} className="link inline-flex items-center gap-2 text-sm">
             <Phone className="size-3.5 text-faint" />
