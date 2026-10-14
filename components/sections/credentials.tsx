@@ -1,14 +1,17 @@
 "use client";
 
-import { ArrowUpRight, Award, GraduationCap } from "lucide-react";
+import { useState } from "react";
+import Image from "next/image";
+import { ArrowUpRight, Award, Eye, GraduationCap, Mail } from "lucide-react";
 import { SectionHeading } from "@/components/fx/section-heading";
 import { Panel } from "@/components/ui/panel";
 import { Badge } from "@/components/ui/badge";
+import { Dialog } from "@/components/ui/dialog";
 
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/components/locale-provider";
 import { getCredentials } from "@/lib/localised-content";
-import { credentials as sourceCredentials } from "@/lib/site";
+import { credentials as sourceCredentials, site, type Credential } from "@/lib/site";
 import { Stagger, StaggerItem } from "@/components/fx/stagger";
 import { useRoleFocus } from "@/components/role-focus-provider";
 import { getRoleFocus, isTopMatch } from "@/lib/role-focus";
@@ -27,6 +30,7 @@ export function Credentials() {
   const { t, locale } = useI18n();
   const credentials = getCredentials(locale);
   const focusProfile = getRoleFocus(useRoleFocus());
+  const [viewing, setViewing] = useState<Credential | null>(null);
   // Two lists, each newest first: a recruiter scans for the latest degree and
   // the current certifications, not for the order they were earned in.
   const newestFirst = credentials
@@ -117,16 +121,35 @@ export function Credentials() {
                         <p className="mt-1.5 text-xs leading-relaxed text-faint">{c.detail}</p>
                       )}
 
-                      {c.verifyUrl && (
-                        <a
-                          href={c.verifyUrl}
-                          target="_blank"
-                          rel="noreferrer noopener"
-                          className="link mt-3 inline-flex items-center gap-1 text-xs font-medium text-accent"
-                        >
-                          {t.common.verify} <ArrowUpRight aria-hidden className="size-3" />
-                        </a>
-                      )}
+                      <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-medium">
+                        {c.preview && (
+                          <button
+                            type="button"
+                            onClick={() => setViewing(c)}
+                            className="link inline-flex items-center gap-1.5 text-accent"
+                          >
+                            <Eye aria-hidden className="size-3.5" /> {t.common.viewCertificate}
+                          </button>
+                        )}
+                        {c.verifyUrl && (
+                          <a
+                            href={c.verifyUrl}
+                            target="_blank"
+                            rel="noreferrer noopener"
+                            className="link inline-flex items-center gap-1 text-accent"
+                          >
+                            {t.common.verify} <ArrowUpRight aria-hidden className="size-3" />
+                          </a>
+                        )}
+                        {!c.preview && (
+                          <a
+                            href={`mailto:${site.email}?subject=${encodeURIComponent(t.common.requestCopySubject(c.title))}`}
+                            className="link inline-flex items-center gap-1.5 text-muted-foreground"
+                          >
+                            <Mail aria-hidden className="size-3.5" /> {t.common.requestCopy}
+                          </a>
+                        )}
+                      </div>
                     </Panel>
                 </StaggerItem>
               );
@@ -135,6 +158,48 @@ export function Credentials() {
           </div>
         ))}
       </div>
+
+      <Dialog
+        open={viewing !== null}
+        onClose={() => setViewing(null)}
+        title={viewing?.title ?? ""}
+        className="max-w-3xl"
+      >
+        {viewing?.preview && (
+          <div className="p-3 sm:p-4">
+            <Image
+              src={viewing.preview.src}
+              width={viewing.preview.width}
+              height={viewing.preview.height}
+              alt={t.common.certificateAlt(viewing.title, viewing.issuer)}
+              sizes="(min-width: 768px) 46rem, 100vw"
+              className="h-auto w-full rounded-md border border-border"
+            />
+            <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-xs font-medium">
+              {/* Small screens shrink the certificate text; the raw image can
+                  be pinch-zoomed in its own tab. */}
+              <a
+                href={viewing.preview.src}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="link inline-flex items-center gap-1 text-accent"
+              >
+                {t.common.openFullSize} <ArrowUpRight aria-hidden className="size-3" />
+              </a>
+              {viewing.verifyUrl && (
+                <a
+                  href={viewing.verifyUrl}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="link inline-flex items-center gap-1 text-accent"
+                >
+                  {t.common.verify} <ArrowUpRight aria-hidden className="size-3" />
+                </a>
+              )}
+            </div>
+          </div>
+        )}
+      </Dialog>
     </section>
   );
 }

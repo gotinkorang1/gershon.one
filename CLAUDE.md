@@ -13,6 +13,10 @@ Personal portfolio site. Next.js App Router + TypeScript + Tailwind CSS v4 + Mot
 - **Respect `prefers-reduced-motion`** in any new animation.
 - **`docs/credentials/` contains personal documents and is gitignored.** Never
   move those files into `public/` or commit them.
+- **`public/certificates/` holds owner-approved previews only** — certificates
+  that are already verifiable online and show no ID numbers, photo or date of
+  birth. Degrees and similar documents get a "Request a copy" link, never an
+  image.
 
 ## Conventions
 

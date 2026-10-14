@@ -48,6 +48,11 @@ type Dictionary = {
     upcoming: string;
     draft: string;
     verify: string;
+    viewCertificate: string;
+    openFullSize: string;
+    requestCopy: string;
+    requestCopySubject: (title: string) => string;
+    certificateAlt: (title: string, issuer: string) => string;
     validTo: string;
     expired: string;
     stack: string;
@@ -242,7 +247,7 @@ const en: Dictionary = {
       "Grouped by use, in rough order of how central each is to the current role.",
     credentialsTitle: "Education and certification",
     credentialsLede:
-      "Newest first. Where the issuer offers a way to check a certificate, it links straight there.",
+      "Newest first. Open a certificate to see the document, check it with the issuer, or ask me for a copy of anything not shown.",
     referencesEyebrow: "References",
     referencesTitle: "What people I've worked with say",
     referencesLede: "People who managed or worked alongside me, in their own words.",
@@ -255,6 +260,11 @@ const en: Dictionary = {
     upcoming: "Upcoming",
     draft: "Draft",
     verify: "Verify",
+    viewCertificate: "View certificate",
+    openFullSize: "Open full size",
+    requestCopy: "Request a copy",
+    requestCopySubject: (title) => `Copy of certificate: ${title}`,
+    certificateAlt: (title, issuer) => `${title} certificate issued by ${issuer}`,
     validTo: "Valid to",
     expired: "Expired",
     stack: "Stack",
@@ -461,7 +471,7 @@ const fr: Dictionary = {
       "Regroupé par usage, approximativement selon l'importance de chaque domaine dans mon poste actuel.",
     credentialsTitle: "Formation et certifications",
     credentialsLede:
-      "Du plus récent au plus ancien. Lorsque l'émetteur permet de vérifier un certificat, le lien y mène directement.",
+      "Du plus récent au plus ancien. Ouvrez un certificat pour voir le document, vérifiez-le auprès de l'émetteur, ou demandez-moi une copie de ce qui n'est pas affiché.",
     referencesEyebrow: "Références",
     referencesTitle: "Ce que disent mes collègues et responsables",
     referencesLede: "Des personnes qui m'ont encadré ou avec qui j'ai travaillé, dans leurs propres mots.",
@@ -474,6 +484,11 @@ const fr: Dictionary = {
     upcoming: "À venir",
     draft: "Brouillon",
     verify: "Vérifier",
+    viewCertificate: "Voir le certificat",
+    openFullSize: "Ouvrir en taille réelle",
+    requestCopy: "Demander une copie",
+    requestCopySubject: (title) => `Copie du certificat : ${title}`,
+    certificateAlt: (title, issuer) => `Certificat ${title} délivré par ${issuer}`,
     validTo: "Valide jusqu'en",
     expired: "Expiré",
     stack: "Technologies",

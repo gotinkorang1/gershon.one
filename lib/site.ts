@@ -620,6 +620,13 @@ export type Credential = {
   verifyUrl?: string;
   kind: "degree" | "certification";
   upcoming?: boolean;
+  /**
+   * A public image of the certificate itself, shown in a viewer. Only for
+   * certificates that are already verifiable online and carry nothing private.
+   * Degrees and anything with ID numbers, photos or a date of birth stay off
+   * the site: those get a "Request a copy" link instead.
+   */
+  preview?: { src: string; width: number; height: number };
 };
 
 export const credentials: Credential[] = [
@@ -644,6 +651,7 @@ export const credentials: Credential[] = [
     detail: "Part of the Google Cybersecurity Professional Certificate — security controls, SIEM, network and cyber-attack analysis",
     credentialId: "KVMKSBBS97UR",
     verifyUrl: "https://www.coursera.org/account/accomplishments/verify/KVMKSBBS97UR",
+    preview: { src: "/certificates/google-foundations-of-cybersecurity.webp", width: 1400, height: 1082 },
     kind: "certification",
   },
   {
@@ -653,6 +661,7 @@ export const credentials: Credential[] = [
     expires: "2027-07-14",
     credentialId: "22299d8c82674d9fa309d05ac2c872a6",
     verifyUrl: "https://aws.amazon.com/verification",
+    preview: { src: "/certificates/aws-cloud-practitioner.webp", width: 1400, height: 1082 },
     kind: "certification",
   },
   {
@@ -662,6 +671,7 @@ export const credentials: Credential[] = [
     detail: "Two-month ALX Cloud Practitioner course, powered by AWS Academy, with professional development skills for the digital age · completed June 2025",
     credentialId: "HrRxBsfZLz",
     verifyUrl: "https://savanna.alxafrica.com/certificates/HrRxBsfZLz",
+    preview: { src: "/certificates/alx-cloud-computing.webp", width: 1280, height: 720 },
     kind: "certification",
   },
   {
@@ -671,6 +681,7 @@ export const credentials: Credential[] = [
     detail: "Professional Development Skills for the Digital Age",
     credentialId: "59XFYHsMer",
     verifyUrl: "https://savanna.alxafrica.com/certificates/59XFYHsMer",
+    preview: { src: "/certificates/alx-professional-foundations.webp", width: 1280, height: 720 },
     kind: "certification",
   },
   {
@@ -680,6 +691,7 @@ export const credentials: Credential[] = [
     expires: "2029-09-27",
     credentialId: "1561996292",
     detail: "Class COUR-1164-NL-260926-7265 · St. John Council for Newfoundland & Labrador · CPR Level C & AED",
+    preview: { src: "/certificates/st-john-first-aid.webp", width: 1400, height: 847 },
     kind: "certification",
   },
   {
@@ -713,6 +725,7 @@ export const credentials: Credential[] = [
     // learndigital.withgoogle.com link now redirects to grow.google — so
     // "verify" points to the LinkedIn certifications section instead.
     verifyUrl: "https://www.linkedin.com/in/gaotinkorang/details/certifications/",
+    preview: { src: "/certificates/google-digital-marketing.webp", width: 1400, height: 991 },
     kind: "certification",
   },
   {
