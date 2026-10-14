@@ -17,6 +17,7 @@ import { AnalyticsLink } from "@/components/analytics-link";
 import { BriefActions } from "@/components/brief-actions";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { Panel } from "@/components/ui/panel";
 
 type Props = { params: Promise<{ focus: string }> };
@@ -91,13 +92,6 @@ export default async function RecruiterPackPage({ params }: Props) {
       </header>
 
       <section className="brief-section mt-12">
-        <h2 className="label">{copy.roleFit}</h2>
-        <Panel inset className="brief-panel mt-4 p-5">
-          <p className="leading-relaxed text-muted-foreground">{profile.description}</p>
-        </Panel>
-      </section>
-
-      <section className="brief-section mt-12">
         <h2 className="label">{copy.availability}</h2>
         <dl className="brief-grid mt-4 grid gap-3 sm:grid-cols-2">
           {brief.eligibility.map((item) => (
@@ -129,8 +123,15 @@ export default async function RecruiterPackPage({ params }: Props) {
       <section className="brief-section mt-12">
         <h2 className="label">{copy.capabilities}</h2>
         <div className="brief-grid mt-4 grid gap-3 sm:grid-cols-2">
-          {capabilities.map((group) => (
-            <Panel key={group.title} className="brief-panel p-5">
+          {capabilities.map((group, i) => (
+            <Panel
+              key={group.title}
+              // An odd last card takes the full row rather than sitting beside a gap.
+              className={cn(
+                "brief-panel p-5",
+                i === capabilities.length - 1 && i % 2 === 0 && "sm:col-span-2",
+              )}
+            >
               <h3 className="font-semibold tracking-tight">{group.title}</h3>
               <div className="mt-3 flex flex-wrap gap-1.5">
                 {group.skills.map((skill) => <Badge key={skill}>{skill}</Badge>)}
