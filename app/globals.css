@@ -419,6 +419,28 @@
   align-items: center;
 }
 
+/* Phones: seven cards of bordered pills stacked to 2,000px+, with one long
+   chip per line. Below sm the same list reads as dot-separated text. */
+@media (max-width: 639px) {
+  .skill-list {
+    display: block;
+    font-size: 0.8125rem;
+    line-height: 1.75;
+  }
+  .skill-list .skill-chip {
+    display: inline;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    font-size: inherit;
+  }
+  .skill-list > .skill-chip:not(:last-child)::after {
+    content: "·";
+    margin-inline: 0.55rem;
+    color: var(--faint);
+  }
+}
+
 .hero-field::before {
   content: "";
   position: absolute;

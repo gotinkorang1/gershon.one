@@ -146,7 +146,7 @@ export function Hero() {
 
           {/* --------------------------------------------------- portrait */}
           <motion.div variants={rise} className="lg:col-span-5">
-            <div className="mx-auto w-full max-w-[20rem] lg:ml-auto lg:mr-0">
+            <div className="w-full max-w-[14rem] sm:mx-auto sm:max-w-[20rem] lg:ml-auto lg:mr-0">
               <ImageReveal
                 animate={animateIntro}
                 className="portrait-plate overflow-hidden rounded-2xl"
