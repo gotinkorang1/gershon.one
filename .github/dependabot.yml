@@ -20,6 +20,10 @@ updates:
     ignore:
       - dependency-name: "typescript"
         versions: [">=6.0.0"]
+      # eslint-plugin-react/jsx-a11y/import (via eslint-config-next) support
+      # ESLint <=9; on 10 lint crashes. Lift once they declare support.
+      - dependency-name: "eslint"
+        versions: [">=10.0.0"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
