@@ -990,7 +990,6 @@ export const portfolioFeatures = {
     lede: "A print-ready package combining role fit, availability, strongest experience, relevant projects, credentials and contact details.",
     open: "Open recruiter pack",
     back: "Back to focused portfolio",
-    roleFit: "Role fit",
     availability: "Availability and eligibility",
     experience: "Relevant experience",
     capabilities: "Matching capabilities",
