@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRight, Clock } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Clock } from "lucide-react";
+import { projectsPage } from "@/lib/site";
 import { SectionHeading } from "@/components/fx/section-heading";
 import { Panel } from "@/components/ui/panel";
 import { Badge } from "@/components/ui/badge";
@@ -82,6 +83,13 @@ export function CaseStudies() {
           );
         })}
       </Stagger>
+
+      <Link
+        href="/projects"
+        className="link mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-accent"
+      >
+        {projectsPage.homeLink} <ArrowRight aria-hidden className="size-3.5" />
+      </Link>
     </section>
   );
 }

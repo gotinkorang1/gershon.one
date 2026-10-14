@@ -107,7 +107,7 @@ export function Skills() {
                   {group.skills.map((skill) => (
                     <li
                       key={skill}
-                      className="skill-chip rounded-[0.2rem_0.5rem_0.2rem_0.5rem] border border-border bg-surface-2 px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:border-accent/40 hover:text-foreground"
+                      className="skill-chip rounded-md border border-border bg-surface-2 px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:border-accent/40 hover:text-foreground"
                     >
                       {skill}
                     </li>

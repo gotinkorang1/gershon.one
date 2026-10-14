@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ChevronDown } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
 import { SectionHeading } from "@/components/fx/section-heading";
 import { Reveal } from "@/components/fx/reveal";
 import { Panel } from "@/components/ui/panel";
@@ -13,6 +14,8 @@ import { useI18n } from "@/components/locale-provider";
 import { getExperience } from "@/lib/localised-content";
 import { useRoleFocus } from "@/components/role-focus-provider";
 import { getRoleFocus, isTopMatch, prioritizeByKeys } from "@/lib/role-focus";
+
+const VISIBLE_ROLES = 5;
 
 function span(job: Job, present: string) {
   const from = job.start.slice(0, 4);
@@ -138,14 +141,23 @@ export function Experience() {
   const { t, locale } = useI18n();
   const experience = getExperience(locale);
   const focusProfile = getRoleFocus(useRoleFocus());
+  // IT roles first (stable, so each group stays newest-first), then the
+  // focus view pulls its best matches to the top.
+  const itFirst = [...experience].sort(
+    (a, b) => Number(Boolean(a.secondary)) - Number(Boolean(b.secondary)),
+  );
   const orderedExperience = prioritizeByKeys(
-    experience,
+    itFirst,
     focusProfile?.experience,
     (job) => job.company,
   );
   const [openCompany, setOpenCompany] = useState<string | null>(
     orderedExperience[0]?.company ?? null,
   );
+  // The five most relevant roles carry the section; earlier ones stay in the
+  // DOM (for crawlers and find-in-page) but fold away until asked for.
+  const [showAll, setShowAll] = useState(false);
+  const earlierCount = Math.max(0, orderedExperience.length - VISIBLE_ROLES);
 
   return (
     <section id="experience" className="section-band shell scroll-mt-24 py-14 md:py-16">
@@ -156,7 +168,7 @@ export function Experience() {
       />
 
       <div className="mt-10 grid gap-3">
-        {orderedExperience.map((job, i) => (
+        {orderedExperience.slice(0, VISIBLE_ROLES).map((job, i) => (
           <Reveal key={`${job.company}-${job.start}`} delay={0.04 * i}>
             <Entry
               job={job}
@@ -167,6 +179,37 @@ export function Experience() {
           </Reveal>
         ))}
       </div>
+
+      {earlierCount > 0 && (
+        <>
+          <div id="earlier-roles" hidden={!showAll} className="mt-3 grid gap-3">
+            {orderedExperience.slice(VISIBLE_ROLES).map((job) => (
+              <Entry
+                key={`${job.company}-${job.start}`}
+                job={job}
+                matched={isTopMatch(job.company, focusProfile?.experience)}
+                open={openCompany === job.company}
+                onToggle={() => setOpenCompany(openCompany === job.company ? null : job.company)}
+              />
+            ))}
+          </div>
+          <div className="mt-5 flex justify-center">
+            <button
+              type="button"
+              aria-expanded={showAll}
+              aria-controls="earlier-roles"
+              onClick={() => setShowAll((v) => !v)}
+              className={cn(buttonVariants({ variant: "ghost" }), "group text-muted-foreground")}
+            >
+              {showAll ? t.ui.showFewerRoles : t.ui.showEarlierRoles(earlierCount)}
+              <ChevronDown
+                aria-hidden
+                className={cn("size-4 transition-transform duration-300", showAll && "rotate-180")}
+              />
+            </button>
+          </div>
+        </>
+      )}
     </section>
   );
 }

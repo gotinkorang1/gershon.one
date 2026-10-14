@@ -1,4 +1,4 @@
-import { experience, skillGroups, credentials, portfolioFeatures, roleFocusProfiles, site } from "@/lib/site";
+import { experience, skillGroups, credentials, portfolioFeatures, roleFocusProfiles, site, projects, projectsPage, websites } from "@/lib/site";
 import { caseStudies } from "@/lib/case-studies";
 
 export type SearchDoc = {
@@ -66,6 +66,14 @@ const searchIndex: SearchDoc[] = [
     }),
   ),
 
+  doc({
+    id: "page-projects",
+    title: projectsPage.metaTitle,
+    subtitle: projectsPage.lede,
+    group: "Pages",
+    href: "/projects",
+    body: `${websites.map((w) => `${w.name} ${w.summary}`).join(" ")} ${projects.map((p) => `${p.title} ${p.context} ${p.summary} ${p.tags.join(" ")}`).join(" ")}`,
+  }),
   doc({
     id: "page-lab",
     title: portfolioFeatures.lab.title,

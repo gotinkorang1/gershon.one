@@ -87,66 +87,58 @@ export function Contact() {
 
       <div className="mt-10 grid gap-3 lg:grid-cols-12">
         {/* ------------------------------------------------------- direct */}
-        <Stagger className="grid gap-3 lg:col-span-5">
+        {/* One panel, divided rows: the direct routes read as a single list
+            rather than five separately framed boxes. */}
+        <Stagger className="grid content-start gap-3 lg:col-span-5">
           <StaggerItem>
-          <Panel reactive className="trace-panel p-5">
-            <p className="label flex items-center gap-2">
-              <Mail aria-hidden className="size-3" /> {t.contact.email}
-            </p>
-            <div className="mt-3 flex items-center justify-between gap-3">
-              <a href={`mailto:${site.email}`} className="link truncate text-base font-medium">
-                {site.email}
-              </a>
-              <button
-                type="button"
-                onClick={copyEmail}
-                aria-label={t.ui.copyEmail}
-                className="tap grid size-8 shrink-0 place-items-center rounded-md border border-border text-faint transition-colors hover:border-border-strong hover:text-foreground"
-              >
-                {copied ? (
-                  <Check aria-hidden className="size-3.5 text-live" />
-                ) : (
-                  <Copy aria-hidden className="size-3.5" />
-                )}
-              </button>
-            </div>
-            <a
-              href={`mailto:${site.emailAlt}`}
-              className="link mt-2 block truncate text-sm text-muted-foreground"
-            >
-              {site.emailAlt}
-            </a>
-          </Panel>
+            <Panel className="divide-y divide-border">
+              <div className="p-5">
+                <p className="label flex items-center gap-2">
+                  <Mail aria-hidden className="size-3" /> {t.contact.email}
+                </p>
+                <div className="mt-3 flex items-center justify-between gap-3">
+                  <a href={`mailto:${site.email}`} className="link truncate text-base font-medium">
+                    {site.email}
+                  </a>
+                  <button
+                    type="button"
+                    onClick={copyEmail}
+                    aria-label={t.ui.copyEmail}
+                    className="tap grid size-8 shrink-0 place-items-center rounded-md border border-border text-faint transition-colors hover:border-border-strong hover:text-foreground"
+                  >
+                    {copied ? (
+                      <Check aria-hidden className="size-3.5 text-live" />
+                    ) : (
+                      <Copy aria-hidden className="size-3.5" />
+                    )}
+                  </button>
+                </div>
+                <a
+                  href={`mailto:${site.emailAlt}`}
+                  className="link mt-1.5 block truncate text-sm text-muted-foreground"
+                >
+                  {site.emailAlt}
+                </a>
+              </div>
 
-          </StaggerItem>
+              <div className="p-5">
+                <p className="label flex items-center gap-2">
+                  <Phone aria-hidden className="size-3" /> {t.contact.phone}
+                </p>
+                <a
+                  href={`tel:${site.phoneHref}`}
+                  className="link mt-3 inline-block text-base font-medium"
+                >
+                  {site.phone}
+                </a>
+              </div>
 
-          <StaggerItem>
-          <Panel reactive className="trace-panel p-5">
-            <p className="label flex items-center gap-2">
-              <Phone aria-hidden className="size-3" /> {t.contact.phone}
-            </p>
-            <a
-              href={`tel:${site.phoneHref}`}
-              className="link mt-3 inline-block text-base font-medium"
-            >
-              {site.phone}
-            </a>
-          </Panel>
-
-          </StaggerItem>
-
-          <StaggerItem>
-            <AnalyticsLink
-              href={site.contactCard.url}
-              download={site.contactCard.fileName}
-              analyticsEvent="contact card downloaded"
-              analyticsProperties={{ source: "contact_section" }}
-              className="block"
-            >
-              <Panel
-                interactive
-                reactive
-                className="trace-panel flex min-h-16 items-center gap-3 p-5"
+              <AnalyticsLink
+                href={site.contactCard.url}
+                download={site.contactCard.fileName}
+                analyticsEvent="contact card downloaded"
+                analyticsProperties={{ source: "contact_section" }}
+                className="group flex items-center gap-3 p-5 transition-colors hover:bg-surface-2/60"
               >
                 <ContactRound aria-hidden className="size-4 text-faint" />
                 <span className="min-w-0 flex-1">
@@ -157,37 +149,39 @@ export function Contact() {
                     {site.contactCard.labels[locale].description}
                   </span>
                 </span>
-                <Download aria-hidden className="size-3.5 shrink-0 text-faint" />
-              </Panel>
-            </AnalyticsLink>
-          </StaggerItem>
+                <Download aria-hidden className="size-3.5 shrink-0 text-faint transition-colors group-hover:text-foreground" />
+              </AnalyticsLink>
 
-          <StaggerItem className="grid grid-cols-2 gap-3">
-            {[
-              { href: site.socials.linkedin, label: "LinkedIn", Icon: Linkedin },
-              { href: site.socials.github, label: "GitHub", Icon: Github },
-            ].map(({ href, label, Icon }) => (
-              <a key={label} href={href} target="_blank" rel="noreferrer noopener">
-                <Panel interactive reactive className="trace-panel flex h-full items-center gap-3 p-5">
-                  <Icon aria-hidden className="size-4 text-faint" />
-                  <span className="text-sm font-medium">{label}</span>
-                  <ArrowUpRight aria-hidden className="ml-auto size-3.5 text-faint" />
-                </Panel>
-              </a>
-            ))}
+              <div className="grid grid-cols-2 divide-x divide-border">
+                {[
+                  { href: site.socials.linkedin, label: "LinkedIn", Icon: Linkedin },
+                  { href: site.socials.github, label: "GitHub", Icon: Github },
+                ].map(({ href, label, Icon }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="group flex items-center gap-3 p-5 transition-colors hover:bg-surface-2/60"
+                  >
+                    <Icon aria-hidden className="size-4 text-faint" />
+                    <span className="text-sm font-medium">{label}</span>
+                    <ArrowUpRight aria-hidden className="ml-auto size-3.5 text-faint transition-colors group-hover:text-foreground" />
+                  </a>
+                ))}
+              </div>
+
+              <div className="p-5">
+                <p className="label">{t.contact.availability}</p>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  {t.ui.basedIn(site.timezone)}
+                </p>
+              </div>
+            </Panel>
           </StaggerItem>
 
           <StaggerItem>
             <Booking />
-          </StaggerItem>
-
-          <StaggerItem>
-          <Panel inset className="p-5">
-            <p className="label">{t.contact.availability}</p>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              {t.ui.basedIn(site.timezone)}
-            </p>
-          </Panel>
           </StaggerItem>
         </Stagger>
 
