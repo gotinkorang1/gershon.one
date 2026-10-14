@@ -32,16 +32,21 @@ export function CaseStudies() {
         description={t.sections.workLede}
       />
 
-      <Stagger className="mt-10 grid gap-3">
-        {orderedStudies.map((study) => {
+      <Stagger className="mt-10 grid gap-3 lg:grid-cols-2">
+        {orderedStudies.map((study, i) => {
           const matched = isTopMatch(study.slug, focusProfile?.caseStudies);
           return (
-          <StaggerItem key={study.slug}>
-            <Link href={`${locale === "fr" ? "/fr" : ""}/work/${study.slug}`} className="block">
+          // With an odd count the lead study takes the full row, so the grid
+          // never ends on a card sitting beside an empty cell.
+          <StaggerItem
+            key={study.slug}
+            className={cn(i === 0 && orderedStudies.length % 2 === 1 && "lg:col-span-2")}
+          >
+            <Link href={`${locale === "fr" ? "/fr" : ""}/work/${study.slug}`} className="block h-full">
               <Panel
                 interactive
                 reactive
-                className={cn("trace-panel group p-5 sm:p-6", matched && "focus-match")}
+                className={cn("group flex h-full flex-col p-5 sm:p-6", matched && "focus-match")}
               >
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                   <p className="label">{study.period}</p>
@@ -72,7 +77,7 @@ export function CaseStudies() {
                   />
                 </div>
 
-                <div className="mt-4 flex flex-wrap gap-1.5">
+                <div className="mt-auto flex flex-wrap gap-1.5 pt-4">
                   {study.tags.slice(0, 5).map((t) => (
                     <Badge key={t}>{t}</Badge>
                   ))}

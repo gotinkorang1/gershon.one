@@ -607,6 +607,8 @@ export type Credential = {
   verifyUrl?: string;
   kind: "degree" | "certification";
   upcoming?: boolean;
+  /** Workplace safety rather than professional skill: listed compactly, last. */
+  safety?: boolean;
   /**
    * A public image of the certificate itself, shown in a viewer. Only for
    * certificates that are already verifiable online and carry nothing private.
@@ -680,6 +682,7 @@ export const credentials: Credential[] = [
     detail: "Class COUR-1164-NL-260926-7265 · St. John Council for Newfoundland & Labrador · CPR Level C & AED",
     preview: { src: "/certificates/st-john-first-aid.webp", width: 1400, height: 847 },
     kind: "certification",
+    safety: true,
   },
   {
     title: "Sexual Violence Awareness and Prevention",
@@ -687,6 +690,7 @@ export const credentials: Credential[] = [
     date: "2026-09-11",
     detail: "Sexual Harassment Office · campus and workplace safety certification",
     kind: "certification",
+    safety: true,
   },
   {
     title: "Fire Safety, Prevention, Evacuation and Basic Firefighting",
@@ -694,6 +698,7 @@ export const credentials: Credential[] = [
     date: "2025-09-26",
     detail: "Amasaman Fire Station · workplace fire prevention, emergency evacuation, fire warden duties and basic firefighting for Bright Industrial Park",
     kind: "certification",
+    safety: true,
   },
   {
     title: "HND Information & Communication Technology",
