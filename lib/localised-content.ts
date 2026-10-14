@@ -5,6 +5,7 @@ import {
   facts,
   roleFocusProfiles,
   portfolioFeatures,
+  site,
   references,
   projects,
   projectsPage,
@@ -31,7 +32,10 @@ import {
   websitesFr,
   projectsFr,
   projectsPageFr,
+  briefActionsFr,
+  eligibilityFr,
 } from "@/lib/content.fr";
+import { brief } from "@/lib/brief";
 import type { Locale } from "@/lib/i18n";
 import { caseStudies, type CaseStudy } from "@/lib/case-studies";
 import { caseStudiesFr } from "@/lib/case-studies.fr";
@@ -182,3 +186,12 @@ export function getProjectsContent(locale: Locale): {
 
 /** Path to the projects page in the given language. */
 export const projectsHref = (locale: Locale) => (locale === "fr" ? "/fr/projects" : "/projects");
+
+/** Availability facts and share/print labels for the brief and recruiter packs. */
+export function getBriefContent(locale: Locale) {
+  if (locale === "en") return { eligibility: brief.eligibility, actions: site.briefActions };
+  return { eligibility: eligibilityFr, actions: { ...site.briefActions, ...briefActionsFr } };
+}
+
+/** Path to a recruiter pack in the given language. */
+export const packHref = (locale: Locale, id: string) => (locale === "fr" ? `/fr/pack/${id}` : `/pack/${id}`);
