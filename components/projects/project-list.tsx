@@ -6,20 +6,19 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Panel } from "@/components/ui/panel";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import {
-  projects,
-  projectsPage as copy,
-  type ProjectCategory,
-} from "@/lib/site";
+import type { Project, ProjectCategory, ProjectsPageCopy } from "@/lib/site";
 
-const CATEGORIES = Object.keys(copy.categories) as ProjectCategory[];
+const CATEGORIES: ProjectCategory[] = ["network", "infrastructure", "software", "business", "study"];
 
 /**
  * The project list with a single-choice filter. Every project stays in the
  * server HTML; filtering only hides cards, so nothing depends on JavaScript to
  * be read or indexed.
  */
-export function ProjectList() {
+// Plain data only: this crosses the server/client boundary, so no functions.
+type ListCopy = Omit<ProjectsPageCopy, "homepageAlt">;
+
+export function ProjectList({ copy, projects }: { copy: ListCopy; projects: Project[] }) {
   const [active, setActive] = useState<ProjectCategory | null>(null);
   const counts = Object.fromEntries(
     CATEGORIES.map((c) => [c, projects.filter((p) => p.category === c).length]),

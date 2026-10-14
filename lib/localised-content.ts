@@ -4,7 +4,16 @@ import {
   credentials,
   facts,
   roleFocusProfiles,
+  portfolioFeatures,
+  references,
+  projects,
+  projectsPage,
+  websites,
   type Job,
+  type Project,
+  type ProjectsPageCopy,
+  type Reference,
+  type Website,
   type SkillGroup,
   type Credential,
   type RoleFocusProfile,
@@ -17,6 +26,11 @@ import {
   issuersFr,
   termsFr,
   roleFocusFr,
+  featuresFr,
+  referencesFr,
+  websitesFr,
+  projectsFr,
+  projectsPageFr,
 } from "@/lib/content.fr";
 import type { Locale } from "@/lib/i18n";
 import { caseStudies, type CaseStudy } from "@/lib/case-studies";
@@ -118,3 +132,53 @@ export function getRoleFocusProfiles(locale: Locale): RoleFocusProfile[] {
     ...roleFocusFr[profile.id],
   }));
 }
+
+/** Navigation labels, Lab teaser and recruiter-pack banner copy. */
+export function getFeatures(locale: Locale) {
+  if (locale === "en") {
+    return {
+      navigation: portfolioFeatures.navigation,
+      lab: portfolioFeatures.lab,
+      recruiterPack: portfolioFeatures.recruiterPack,
+    };
+  }
+  return {
+    navigation: featuresFr.navigation,
+    lab: { ...portfolioFeatures.lab, ...featuresFr.lab },
+    recruiterPack: { ...portfolioFeatures.recruiterPack, ...featuresFr.recruiterPack },
+  };
+}
+
+export function getReferences(locale: Locale): Reference[] {
+  if (locale === "en") return references;
+  return references.map((r) => ({ ...r, title: referencesFr[r.name]?.title ?? r.title }));
+}
+
+/** Everything the projects page renders, in one language. */
+export function getProjectsContent(locale: Locale): {
+  copy: ProjectsPageCopy;
+  websites: Website[];
+  projects: Project[];
+} {
+  if (locale === "en") return { copy: projectsPage, websites, projects };
+  return {
+    copy: projectsPageFr,
+    websites: websites.map((w) => ({ ...w, summary: websitesFr[w.slug]?.summary ?? w.summary })),
+    projects: projects.map((p) => {
+      const fr = projectsFr[p.title];
+      if (!fr) return p;
+      return {
+        ...p,
+        title: fr.title,
+        context: fr.context ?? p.context,
+        summary: fr.summary,
+        tags: fr.tags,
+        // Case studies have French versions; external sites stay as they are.
+        href: p.href?.startsWith("/") ? `/fr${p.href}` : p.href,
+      };
+    }),
+  };
+}
+
+/** Path to the projects page in the given language. */
+export const projectsHref = (locale: Locale) => (locale === "fr" ? "/fr/projects" : "/projects");
