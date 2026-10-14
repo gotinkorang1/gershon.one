@@ -219,22 +219,6 @@ const websiteLd = {
   publisher: { "@id": `${siteUrl}/#person` },
 };
 
-/**
- * ProfilePage is the type Google documents for a page whose primary focus is a
- * single person. `mainEntity` points at the Person node by @id rather than
- * repeating it, so the graph has one canonical description of him.
- */
-const profileLd = {
-  "@context": "https://schema.org",
-  "@type": "ProfilePage",
-  "@id": `${siteUrl}/#profile`,
-  url: siteUrl,
-  name: `${site.shortName} — ${site.role}`,
-  dateModified: site.contentUpdated,
-  inLanguage: "en-CA",
-  mainEntity: { "@id": `${siteUrl}/#person` },
-  isPartOf: { "@id": `${siteUrl}/#website` },
-};
 
 export default function RootLayout({
   children,
@@ -269,11 +253,6 @@ export default function RootLayout({
           type="application/ld+json"
           suppressHydrationWarning
           dangerouslySetInnerHTML={{ __html: serialiseJsonLd(websiteLd) }}
-        />
-        <script
-          type="application/ld+json"
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{ __html: serialiseJsonLd(profileLd) }}
         />
       </body>
     </html>

@@ -48,13 +48,13 @@ export async function generateMetadata({
 
   return {
     title: post.title,
-    description: post.summary,
+    description: post.description ?? post.summary,
     alternates: { canonical: `/blog/${post.slug}` },
     robots: post.draft ? { index: false, follow: true } : { index: true, follow: true },
     openGraph: {
       type: "article",
       title: post.title,
-      description: post.summary,
+      description: post.description ?? post.summary,
       publishedTime: post.date,
       authors: [site.name],
       tags: post.tags,
@@ -63,7 +63,7 @@ export async function generateMetadata({
     twitter: {
       card: "summary_large_image",
       title: post.title,
-      description: post.summary,
+      description: post.description ?? post.summary,
       ...(post.cover ? { images: [post.cover] } : {}),
     },
   };
@@ -158,7 +158,7 @@ export default async function BlogPostPage({
     "@id": url,
     url,
     headline: post.title,
-    description: post.summary,
+    description: post.description ?? post.summary,
     image,
     datePublished: post.date,
     dateModified: post.date,

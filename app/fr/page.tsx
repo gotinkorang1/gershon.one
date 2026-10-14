@@ -1,4 +1,7 @@
+import { serialiseJsonLd } from "@/lib/json-ld";
+import { profilePageJsonLd } from "@/lib/seo";
 import type { Metadata } from "next";
+import { defaultOgImage } from "@/lib/seo";
 import { PortfolioHome } from "@/components/portfolio-home";
 import { getDictionary } from "@/lib/i18n";
 import { site } from "@/lib/site";
@@ -7,7 +10,8 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? site.url;
 const fr = getDictionary("fr");
 
 export const metadata: Metadata = {
-  title: `${site.shortName} — ${fr.hero.role}`,
+  // Absolute: the root template would append the name a second time.
+  title: { absolute: `${site.shortName} — ${fr.hero.role}` },
   // The on-page bio (fr.hero.summary) runs ~460 chars; the search snippet uses
   // the purpose-authored 155-char version so the SERP doesn't truncate.
   description: fr.ui.metaDescription,
@@ -20,6 +24,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
+    images: [defaultOgImage],
     type: "profile",
     url: `${siteUrl}/fr`,
     title: `${site.shortName} — ${fr.hero.role}`,
@@ -30,7 +35,7 @@ export const metadata: Metadata = {
   // layout, so a shared /fr link previews in the wrong language.
   keywords: undefined,
   twitter: {
-    card: "summary_large_image",
+    card: "summary_large_image", images: [defaultOgImage.url],
     title: `${site.shortName} — ${fr.hero.role}`,
     description: fr.ui.metaDescription,
   },
@@ -38,6 +43,13 @@ export const metadata: Metadata = {
 
 export default function FrenchHome() {
   return (
-    <PortfolioHome />
+    <>
+      <PortfolioHome />
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: serialiseJsonLd(profilePageJsonLd("fr")) }}
+      />
+    </>
   );
 }

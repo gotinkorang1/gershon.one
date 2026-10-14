@@ -323,7 +323,7 @@ const en: Dictionary = {
       "I treat security as part of running the network, not a separate project. At Bright Industrial Park that meant segmenting the network with VLANs and firewall policy, putting administrator access to internal systems behind a VPN, and keeping the HR system that holds 8,000 people's personal data off the public internet entirely. It also meant the unglamorous parts: weekly bare-metal backups, event-triggered database backups, identity and password policy, and MFA on cloud accounts. I'm now building on that with Google's Foundations of Cybersecurity course and an MSc at Memorial University focused on network security and intrusion detection.",
     aboutMe: "In short",
     metaDescription:
-      "IT infrastructure and systems specialist and Memorial University MSc Computer Science student with 5+ years running enterprise networks. Based in St. John's, NL, Canada.",
+      "IT infrastructure and systems specialist in St. John's, NL: 5+ years running networks, servers and IT support. MSc Computer Science student at Memorial.",
     present: "Present",
     eyebrowExperience: "01 — Experience",
     eyebrowWork: "02 — Case studies",
@@ -549,7 +549,7 @@ const fr: Dictionary = {
       "Pour moi, la sécurité fait partie de l'exploitation du réseau, pas d'un projet à part. Au parc industriel Bright, cela voulait dire segmenter le réseau par VLAN et règles de pare-feu, placer l'accès administrateur aux systèmes internes derrière un VPN, et garder le système RH qui contient les données personnelles de 8 000 personnes entièrement hors de l'internet public. Cela voulait aussi dire le travail moins visible : sauvegardes complètes hebdomadaires, sauvegardes de bases de données déclenchées par événement, politiques d'identité et de mots de passe, et MFA sur les comptes infonuagiques. Je prolonge aujourd'hui ce travail avec le cours Foundations of Cybersecurity de Google et une maîtrise à l'Université Memorial axée sur la sécurité réseau et la détection d'intrusion.",
     aboutMe: "En bref",
     metaDescription:
-      "Spécialiste en infrastructure et systèmes informatiques, étudiant à la maîtrise en informatique à l'Université Memorial, avec plus de 5 ans d'expérience. Basé à St. John's, Canada.",
+      "Spécialiste en infrastructure et systèmes informatiques à St. John's (T.-N.-L.) : 5 ans de réseaux, serveurs et support. Maîtrise en informatique à Memorial.",
     present: "aujourd'hui",
     eyebrowExperience: "01 — Expérience",
     eyebrowWork: "02 — Études de cas",

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { defaultOgImage } from "@/lib/seo";
 import { Rss } from "lucide-react";
 import { getPublishedPosts, getAllPostTags, toCard } from "@/lib/blog";
 import { site } from "@/lib/site";
@@ -13,12 +14,13 @@ export const metadata: Metadata = {
   description,
   alternates: { canonical: "/blog" },
   openGraph: {
+    images: [defaultOgImage],
     type: "website",
     url: `${process.env.NEXT_PUBLIC_SITE_URL ?? site.url}/blog`,
     title: `Blog — ${site.shortName}`,
     description,
   },
-  twitter: { card: "summary_large_image", title: `Blog — ${site.shortName}`, description },
+  twitter: { card: "summary_large_image", images: [defaultOgImage.url], title: `Blog — ${site.shortName}`, description },
 };
 
 export default function BlogIndexPage() {

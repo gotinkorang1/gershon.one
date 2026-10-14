@@ -92,6 +92,7 @@ export function getCaseStudies(locale: Locale): CaseStudy[] {
       ...study,
       title: fr.title,
       summary: fr.summary,
+      metaDescription: fr.metaDescription,
       role: fr.role,
       // The period is authored data; only the English word needs replacing.
       period: study.period.replace(/present/i, "aujourd'hui"),

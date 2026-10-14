@@ -30,7 +30,7 @@ export async function generateMetadata({
 
   return {
     title: study.title,
-    description: study.summary,
+    description: study.metaDescription,
     // Both language versions must reference each other, or Google discards the
     // hreflang annotations entirely. The French page already points back here;
     // without this block that return link was one-directional and ignored.
@@ -51,12 +51,12 @@ export async function generateMetadata({
     twitter: {
       card: "summary_large_image",
       title: study.title,
-      description: study.summary,
+      description: study.metaDescription,
     },
     openGraph: {
       type: "article",
       title: study.title,
-      description: study.summary,
+      description: study.metaDescription,
       publishedTime: study.published,
       authors: [site.name],
       tags: [...study.tags],
@@ -96,7 +96,7 @@ export default async function CaseStudyPage({
       0,
     ),
     headline: study.title,
-    description: study.summary,
+    description: study.metaDescription,
     datePublished: study.published,
     author: { "@type": "Person", name: site.name },
     keywords: study.tags.join(", "),

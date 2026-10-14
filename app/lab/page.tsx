@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { defaultOgImage } from "@/lib/seo";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { portfolioFeatures, site } from "@/lib/site";
@@ -6,15 +7,17 @@ import { getActivityItems, getEvidenceItems } from "@/lib/portfolio-features";
 import { SystemsLab } from "@/components/lab/systems-lab";
 
 export const metadata: Metadata = {
-  title: portfolioFeatures.lab.title,
+  title: "IT troubleshooting lab",
   description: portfolioFeatures.lab.lede,
   alternates: { canonical: "/lab" },
   openGraph: {
+    images: [defaultOgImage],
     type: "website",
     url: "/lab",
     title: `${portfolioFeatures.navigation.lab} — ${site.shortName}`,
     description: portfolioFeatures.lab.lede,
   },
+  twitter: { card: "summary_large_image", images: [defaultOgImage.url] },
 };
 
 export default function SystemsLabPage() {
