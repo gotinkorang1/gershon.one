@@ -690,6 +690,76 @@ body::before {
   to   { opacity: 1; transform: none; }
 }
 
+/* Content blocks fade up as they enter the viewport. This replaced a Motion
+   `whileInView` wrapper: same 12px travel, but the browser drives it from
+   scroll position on the compositor, so no hydration or observers are
+   needed. `--reveal-step` staggers siblings by pushing each one's range a
+   little later. Without support or with reduced motion, content is simply
+   visible. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range:
+        entry calc(var(--reveal-step, 0) * 1%)
+        entry calc(55% + var(--reveal-step, 0) * 1%);
+    }
+  }
+}
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* -------------------------------------------------------------------------- */
+/*  View transitions                                                          */
+/*                                                                            */
+/*  Page changes: the old page leaves fast so it does not compete, the new    */
+/*  one arrives a beat later with a short rise. The nav and footer (the root  */
+/*  group) do not animate, so the frame stays put while the content changes.  */
+/* -------------------------------------------------------------------------- */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+::view-transition-old(.page-exit) {
+  animation: 140ms ease-out both vt-fade-out;
+}
+::view-transition-new(.page-enter) {
+  animation: 300ms cubic-bezier(0.22, 1, 0.36, 1) 60ms both vt-rise;
+}
+
+/* A case-study title travels from its card to the top of its page. Text is
+   scaled as a snapshot mid-flight, so a light blur hides the resampling. */
+::view-transition-group(.title-morph) {
+  animation-duration: 420ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+::view-transition-image-pair(.title-morph) {
+  animation-name: vt-soften;
+}
+
+@keyframes vt-fade-out {
+  to { opacity: 0; }
+}
+@keyframes vt-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes vt-soften {
+  35% { filter: blur(2px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-image-pair(*) {
+    animation: none !important;
+  }
+}
+
 .site-nav-shell {
   position: relative;
   border-radius: var(--radius);

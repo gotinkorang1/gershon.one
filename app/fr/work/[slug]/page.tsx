@@ -9,6 +9,7 @@ import { getDictionary } from "@/lib/i18n";
 import { Badge } from "@/components/ui/badge";
 import { Panel } from "@/components/ui/panel";
 import { Counter } from "@/components/fx/counter";
+import { CaseTitleMorph } from "@/components/fx/case-title-morph";
 import { CaseStudyToc } from "@/components/case-study-toc";
 import { slugify } from "@/lib/utils";
 import { serialiseJsonLd } from "@/lib/json-ld";
@@ -103,7 +104,9 @@ export default async function FrenchCaseStudy({
           {study.draft && <Badge variant="accent">{t.common.draft}</Badge>}
         </div>
 
-        <h1 className="mt-5 text-jumbo font-semibold">{study.title}</h1>
+        <CaseTitleMorph slug={study.slug}>
+          <h1 className="mt-5 text-jumbo font-semibold">{study.title}</h1>
+        </CaseTitleMorph>
         <p className="measure mt-5 text-lede text-muted-foreground">{study.summary}</p>
         <p className="mt-6 text-sm text-muted-foreground">
           {study.role} · {study.context}

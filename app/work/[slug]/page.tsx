@@ -7,6 +7,7 @@ import { caseStudies, getCaseStudy } from "@/lib/case-studies";
 import { Badge } from "@/components/ui/badge";
 import { Panel } from "@/components/ui/panel";
 import { Counter } from "@/components/fx/counter";
+import { CaseTitleMorph } from "@/components/fx/case-title-morph";
 import { CaseStudyToc } from "@/components/case-study-toc";
 import { slugify } from "@/lib/utils";
 import { site } from "@/lib/site";
@@ -123,7 +124,9 @@ export default async function CaseStudyPage({
           {study.draft && <Badge variant="accent">{t.common.draft}</Badge>}
         </div>
 
-        <h1 className="mt-5 text-jumbo font-semibold">{study.title}</h1>
+        <CaseTitleMorph slug={study.slug}>
+          <h1 className="mt-5 text-jumbo font-semibold">{study.title}</h1>
+        </CaseTitleMorph>
         <p className="measure mt-5 text-lede text-muted-foreground">{study.summary}</p>
 
         <p className="mt-6 text-sm text-muted-foreground">

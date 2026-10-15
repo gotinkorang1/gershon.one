@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Clock } from "lucide-react";
 import { getProjectsContent, projectsHref } from "@/lib/localised-content";
 import { SectionHeading } from "@/components/fx/section-heading";
+import { CaseTitleMorph } from "@/components/fx/case-title-morph";
 import { Panel } from "@/components/ui/panel";
 import { Badge } from "@/components/ui/badge";
 
@@ -60,9 +61,11 @@ export function CaseStudies() {
 
                 <div className="mt-3 flex items-start justify-between gap-6">
                   <div className="min-w-0">
-                    <h3 className="text-lg font-semibold tracking-tight sm:text-xl">
-                      {study.title}
-                    </h3>
+                    <CaseTitleMorph slug={study.slug}>
+                      <h3 className="text-lg font-semibold tracking-tight sm:text-xl">
+                        {study.title}
+                      </h3>
+                    </CaseTitleMorph>
                     <span
                       aria-hidden
                       className="grow-rule mt-2 block h-px w-full max-w-[14rem] bg-accent/50"
