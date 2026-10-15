@@ -48,7 +48,7 @@ test("open navigation passes automated WCAG checks", async ({ page }, testInfo) 
   await page.goto("/");
 
   if (testInfo.project.name === "desktop-1440") {
-    await page.getByRole("button", { name: "Open command palette", exact: true }).click();
+    await page.getByRole("button", { name: /^Search.*Open command palette$/ }).click();
     await expect(page.getByRole("dialog", { name: "Command palette" })).toBeVisible();
   } else {
     await page.getByRole("button", { name: "Open menu", exact: true }).click();

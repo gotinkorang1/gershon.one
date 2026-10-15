@@ -195,11 +195,19 @@ export function SiteNav() {
               <button
                 type="button"
                 onClick={() => requestCommandPalette()}
-                aria-label={t.ui.openPalette}
+                aria-keyshortcuts="Meta+K Control+K"
                 className="hidden items-center gap-2 rounded-lg border border-border bg-surface-1 py-1.5 pl-2.5 pr-2 text-xs text-faint transition-colors hover:border-border-strong hover:text-foreground xl:flex"
               >
+                {/* Named by its visible "Search" first, then the fuller purpose,
+                    so the label a voice-control user sees is in the name
+                    (WCAG 2.5.3). The shortcut hint is exposed via
+                    aria-keyshortcuts rather than read out as glyphs. */}
                 {t.ui.search}
-                <kbd className="flex items-center gap-0.5 rounded border border-border bg-surface-2 px-1 py-0.5 font-mono text-[0.625rem]">
+                <span className="sr-only">: {t.ui.openPalette}</span>
+                <kbd
+                  aria-hidden
+                  className="flex items-center gap-0.5 rounded border border-border bg-surface-2 px-1 py-0.5 font-mono text-[0.625rem]"
+                >
                   <Command className="size-2.5" />K
                 </kbd>
               </button>

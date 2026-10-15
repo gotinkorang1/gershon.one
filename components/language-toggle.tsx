@@ -39,16 +39,18 @@ export function LanguageToggle() {
           { immediate: true },
         )
       }
-      aria-label={isFrench ? t.ui.switchToEnglish : t.ui.switchToFrench}
       className={cn(
         "tap grid h-9 min-w-9 place-items-center gap-1 rounded-lg border border-border px-2",
         "text-xs font-medium text-faint transition-colors hover:border-border-strong hover:text-foreground",
       )}
     >
       <span className="flex items-center gap-1.5">
-        <Languages className="size-3.5" />
+        <Languages aria-hidden className="size-3.5" />
         {isFrench ? "EN" : "FR"}
       </span>
+      {/* The accessible name starts with the visible "FR"/"EN" so voice-control
+          users can say what they see (WCAG 2.5.3, Label in Name). */}
+      <span className="sr-only">: {isFrench ? t.ui.switchToEnglish : t.ui.switchToFrench}</span>
     </Link>
   );
 }

@@ -108,7 +108,7 @@ test("desktop command palette includes recruiter actions", async ({ page }, test
   test.skip(testInfo.project.name !== "desktop-1440", "Command trigger is desktop-only");
 
   await page.goto("/");
-  await page.getByRole("button", { name: "Open command palette", exact: true }).click();
+  await page.getByRole("button", { name: /^Search.*Open command palette$/ }).click();
   await expect(page.getByRole("dialog", { name: "Command palette" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Save contact", exact: true })).toBeVisible();
 });
@@ -117,7 +117,7 @@ test("copying the email from the palette confirms with a toast", async ({ page }
   test.skip(testInfo.project.name !== "desktop-1440", "Command trigger is desktop-only");
 
   await page.goto("/");
-  await page.getByRole("button", { name: "Open command palette", exact: true }).click();
+  await page.getByRole("button", { name: /^Search.*Open command palette$/ }).click();
   const palette = page.getByRole("dialog", { name: "Command palette" });
   await expect(palette).toBeVisible();
   // Scope to the palette — a page icon button shares the same accessible name.
