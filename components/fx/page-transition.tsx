@@ -1,35 +1,26 @@
 "use client";
 
+import { ViewTransition, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion } from "motion/react";
-import type { ReactNode } from "react";
-import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 /**
- * Crossfade between routes. Deliberately short and travel-light — a page
- * transition that makes someone wait to read a CV is a cost, not a feature.
- * `mode="wait"` would double the perceived latency, so the outgoing and
- * incoming pages overlap instead.
+ * Route changes run through the browser's View Transitions API. App Router
+ * navigations are already React transitions, so <ViewTransition> is enough:
+ * the browser snapshots the outgoing page, React commits the new one, and the
+ * two animate on the compositor with no JS animation loop.
+ *
+ * Keyed by pathname so each route is its own element: the old page exits and
+ * the new one enters. Without the key both pages share one transition group,
+ * and the browser stretches the old page's geometry onto the new one
+ * mid-flight. Timing for `page-exit` / `page-enter` lives in globals.css.
+ * Browsers without the API, and reduced-motion users, get an instant swap.
  */
 export function PageTransition({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const reduced = useReducedMotion();
 
   return (
-    <AnimatePresence initial={false}>
-      <motion.div
-        key={pathname}
-        initial={reduced ? false : { opacity: 0, y: 6 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={reduced ? { opacity: 1 } : { opacity: 0 }}
-        transition={
-          reduced
-            ? { duration: 0 }
-            : { duration: 0.28, ease: [0.22, 1, 0.36, 1] }
-        }
-      >
-        {children}
-      </motion.div>
-    </AnimatePresence>
+    <ViewTransition key={pathname} enter="page-enter" exit="page-exit" default="none">
+      {children}
+    </ViewTransition>
   );
 }

@@ -1,12 +1,15 @@
-"use client";
-
-import { motion } from "motion/react";
-import type { ReactNode } from "react";
-import { useReducedMotion } from "@/lib/use-reduced-motion";
+import type { CSSProperties, ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
 /**
- * A short, low-travel fade. Editorial layouts fall apart when elements slide
- * around, so this only moves 8px and never blurs.
+ * A short, low-travel fade as the block scrolls into view. Editorial layouts
+ * fall apart when elements slide around, so it only moves 12px and never
+ * blurs.
+ *
+ * The animation is the scroll-driven `.reveal` rule in globals.css, so this
+ * is plain markup: no client JS, no observers. `delay` keeps its old meaning
+ * for staggering siblings (seconds, typically 0.04 × index) and becomes how
+ * much later in the entry range this block starts.
  */
 export function Reveal({
   children,
@@ -17,21 +20,12 @@ export function Reveal({
   delay?: number;
   className?: string;
 }) {
-  const reduced = useReducedMotion();
-
-  // The global CSS reduced-motion rule cannot reach this: Motion writes inline
-  // styles from JS, so the opt-out has to happen here.
-  if (reduced) return <div className={className}>{children}</div>;
+  const step = Math.min(Math.round(delay * 100), 30);
+  const style = step ? ({ "--reveal-step": step } as CSSProperties) : undefined;
 
   return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, y: 12 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-70px" }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
-    >
+    <div className={cn("reveal", className)} style={style}>
       {children}
-    </motion.div>
+    </div>
   );
 }
