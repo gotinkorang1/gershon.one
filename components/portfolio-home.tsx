@@ -11,11 +11,15 @@ import { SectionDivider } from "@/components/fx/section-divider";
 import { RecruiterPackBanner } from "@/components/sections/recruiter-pack-banner";
 import { SystemsLabTeaser } from "@/components/sections/systems-lab-teaser";
 import { RoleFocusSelector } from "@/components/role-focus-selector";
+import { Marquee } from "@/components/fx/marquee";
 
 export function PortfolioHome({ focus = null }: { focus?: RoleFocusId | null }) {
   return (
     <RoleFocusProvider focus={focus}>
       <Hero />
+      <div className="pt-8">
+        <Marquee />
+      </div>
       {focus && <RecruiterPackBanner focus={focus} />}
       {/* Out of the hero: the chips reorder everything below, so they sit
           where that content starts. */}

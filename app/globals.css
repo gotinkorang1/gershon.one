@@ -49,6 +49,7 @@
   --signal: oklch(0.555 0.16 45);
   --signal-quiet: oklch(0.555 0.16 45 / 0.10);
   --radius: 0.75rem;
+  --grain-opacity: 0.05;
 }
 
 .dark {
@@ -82,6 +83,7 @@
   --panel-wash: oklch(1 0 0 / 0.045);
   --signal: oklch(0.80 0.14 58);
   --signal-quiet: oklch(0.80 0.14 58 / 0.14);
+  --grain-opacity: 0.07;
 }
 
 @theme inline {
@@ -183,13 +185,62 @@
 
   a { color: inherit; }
 
-  ::-webkit-scrollbar { width: 11px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb {
-    background: var(--border-strong);
-    border: 4px solid var(--surface-0);
-    border-radius: 999px;
+  /* Standard scrollbar properties — Baseline across engines now, and they
+     take precedence over the old ::-webkit-scrollbar pseudo-elements. */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-strong) transparent;
+    /* Lets height/width transition to and from `auto` (accordions, <details>). */
+    interpolate-size: allow-keywords;
+    color-scheme: light;
   }
+  html.dark { color-scheme: dark; }
+
+  /* Balanced headings never strand a single word on the last line; pretty
+     paragraphs avoid orphans. Both are progressive — ignored where unknown. */
+  :where(h1, h2, h3, h4) { text-wrap: balance; }
+  :where(p, li, dd, figcaption, blockquote) { text-wrap: pretty; }
+
+  /* Smooth open/close for every native disclosure widget. */
+  ::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition:
+      block-size 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      content-visibility 0.35s allow-discrete;
+  }
+  [open]::details-content { block-size: auto; }
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Grain                                                                     */
+/*                                                                            */
+/*  A fixed film-grain layer over the canvas only. z-index -1 on a fixed      */
+/*  pseudo-element paints above the root background but beneath every         */
+/*  in-flow box, so panels and text stay perfectly clean. The noise is an      */
+/*  inline SVG turbulence tile — no request, no image asset.                   */
+/* -------------------------------------------------------------------------- */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Spotlight                                                                 */
+/*                                                                            */
+/*  Registered so the colour can transition — an unregistered custom property */
+/*  swaps instantly, which would make the border glow snap on and off.        */
+/* -------------------------------------------------------------------------- */
+@property --spot {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -382,6 +433,32 @@
 }
 .reactive:hover::after { opacity: 1; }
 
+/* Spotlight border: the 1px edge brightens toward the accent where the cursor
+   is. The border itself is transparent and a border-box radial gradient shows
+   through it, which — unlike border-image — respects border-radius. */
+.reactive {
+  --spot: transparent;
+  border-color: transparent;
+  background:
+    linear-gradient(180deg, var(--panel-wash), transparent 42%) padding-box,
+    linear-gradient(var(--surface-1), var(--surface-1)) padding-box,
+    radial-gradient(
+      240px circle at var(--mx, 50%) var(--my, 50%),
+      var(--spot),
+      transparent 100%
+    ) border-box,
+    linear-gradient(var(--border), var(--border)) border-box;
+  transition:
+    --spot 0.4s ease,
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (hover: hover) {
+  .reactive:hover { --spot: var(--accent); }
+}
+/* An interactive panel's hover border is painted by the spotlight above. */
+.reactive.panel-interactive:hover { border-color: transparent; }
+
 /* -------------------------------------------------------------------------- */
 /*  Detail                                                                    */
 /* -------------------------------------------------------------------------- */
@@ -441,16 +518,134 @@
   }
 }
 
-.hero-field::before {
+.hero-field {
+  isolation: isolate;
+}
+/* Aurora: two soft lights that drift on long, offset cycles so the
+   composition never visibly repeats. Transform-only, so it runs on the
+   compositor; the reduced-motion rule freezes it in place. */
+.hero-field::before,
+.hero-field::after {
   content: "";
   position: absolute;
-  inset: 5rem 0 0;
   z-index: -1;
+  pointer-events: none;
+  will-change: transform;
+}
+.hero-field::before {
+  inset: 5rem -10% 0;
   background:
     radial-gradient(circle at 14% 24%, var(--accent-quiet), transparent 24rem),
     radial-gradient(circle at 82% 34%, var(--signal-quiet), transparent 22rem);
   mask-image: linear-gradient(180deg, #000 0 72%, transparent 100%);
+  animation: aurora-a 26s ease-in-out infinite alternate;
+}
+.hero-field::after {
+  inset: 0 -10% 30%;
+  background: radial-gradient(
+    ellipse 38rem 18rem at 58% 18%,
+    var(--canvas-light),
+    transparent 70%
+  );
+  animation: aurora-b 34s ease-in-out infinite alternate;
+}
+/* Fine dot lattice behind the copy — a quiet nod to a network diagram that
+   fades out radially, so it never reads as a pattern across the page. */
+.hero-lattice {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
   pointer-events: none;
+  background-image: radial-gradient(var(--trace) 1px, transparent 1.2px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(ellipse 60% 55% at 30% 35%, #000, transparent 75%);
+  opacity: 0.7;
+}
+
+@keyframes aurora-a {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(4%, 3%, 0) scale(1.08); }
+}
+@keyframes aurora-b {
+  from { transform: translate3d(0, 0, 0) rotate(0deg); }
+  to   { transform: translate3d(-6%, 4%, 0) rotate(6deg); }
+}
+
+/* Kinetic display type: Archivo's width axis opens from condensed to normal
+   as the name lands, then a line firms its weight under the pointer. Width
+   never goes past 100%, so the surname cannot overflow its column. */
+.display-kinetic {
+  font-stretch: 100%;
+  animation: stretch-in 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+.display-kinetic [aria-hidden] {
+  transition: font-weight 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (hover: hover) {
+  .display-kinetic [aria-hidden]:hover { font-weight: 720; }
+}
+@keyframes stretch-in {
+  from { font-stretch: 72%; }
+  to   { font-stretch: 100%; }
+}
+
+/* Gradient ink for an emphasised phrase. Clipped to the glyphs, with a solid
+   fallback colour for engines without background-clip: text. */
+.ink-gradient {
+  color: var(--accent);
+  background: linear-gradient(100deg, var(--accent) 30%, var(--signal) 130%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Marquee                                                                   */
+/* -------------------------------------------------------------------------- */
+.marquee {
+  --marquee-gap: 0.5rem;
+  display: flex;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.marquee-track {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--marquee-gap);
+  padding-right: var(--marquee-gap);
+  animation: marquee 90s linear infinite;
+}
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track { animation-play-state: paused; }
+@keyframes marquee {
+  to { transform: translate3d(-100%, 0, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* Still: one row the reader can swipe through at their own pace. */
+  .marquee { overflow-x: auto; scrollbar-width: none; overscroll-behavior-inline: contain; }
+  .marquee-track { animation: none; }
+  .marquee-track[aria-hidden] { display: none; }
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Scroll-driven                                                             */
+/*                                                                            */
+/*  Section headings settle into place as they cross the bottom of the        */
+/*  viewport, driven by scroll position rather than a timer — no JS, and it   */
+/*  reverses naturally. Gated on support and on motion preference.            */
+/* -------------------------------------------------------------------------- */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .scroll-settle {
+      animation: settle linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 70%;
+    }
+  }
+}
+@keyframes settle {
+  from { opacity: 0.2; transform: translateY(1.5rem); }
+  to   { opacity: 1; transform: none; }
 }
 
 .site-nav-shell {

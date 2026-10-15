@@ -54,6 +54,7 @@ export function Hero() {
 
   return (
     <section className="hero-field relative overflow-hidden pb-4 pt-28 md:pb-6 md:pt-36">
+      <div aria-hidden className="hero-lattice" />
       <div className="shell">
         <motion.div
           variants={container}
@@ -73,7 +74,12 @@ export function Hero() {
               {t.hero.status}
             </motion.p>
 
-            <h1 className="mt-8 text-display font-semibold tracking-tight">
+            <h1
+              className={cn(
+                "mt-8 text-display font-semibold tracking-tight",
+                animateIntro && "display-kinetic",
+              )}
+            >
               <TextReveal
                 lines={["Gershon", "Otinkorang"]}
                 delay={0.12}
@@ -81,8 +87,8 @@ export function Hero() {
               />
             </h1>
 
-            <motion.p variants={rise} className="mt-6 text-lede font-medium text-accent">
-              {activeFocus ? activeFocus.title : t.hero.role}
+            <motion.p variants={rise} className="mt-6 text-lede font-medium">
+              <span className="ink-gradient">{activeFocus ? activeFocus.title : t.hero.role}</span>
             </motion.p>
 
             <motion.p
