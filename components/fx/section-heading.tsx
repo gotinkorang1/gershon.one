@@ -19,7 +19,7 @@ export function SectionHeading({
       <div className="section-heading">
         <div>
           <p className="label">{sectionLabel}</p>
-          <h2 className="mt-3.5 text-jumbo font-semibold tracking-tight">{title}</h2>
+          <h2 className="scroll-settle mt-3.5 text-jumbo font-semibold tracking-tight">{title}</h2>
         </div>
 
         {description && (

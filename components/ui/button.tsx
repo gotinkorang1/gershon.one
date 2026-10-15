@@ -10,7 +10,7 @@ export const buttonVariants = cva(
         default:
           "bg-foreground text-surface-0 shadow-[var(--shadow-sm)] hover:opacity-90",
         accent:
-          "bg-accent text-accent-fg shadow-[var(--shadow-md)] hover:brightness-110 hover:shadow-[var(--shadow-glow)]",
+          "btn-shine overflow-hidden bg-accent text-accent-fg shadow-[var(--shadow-md)] hover:brightness-110 hover:shadow-[var(--shadow-glow)]",
         outline:
           "panel bg-surface-1 hover:border-border-strong hover:-translate-y-px hover:shadow-[var(--shadow-lg)]",
         ghost:
