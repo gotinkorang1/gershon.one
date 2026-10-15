@@ -20,9 +20,13 @@ import { Counter } from "@/components/fx/counter";
 import { ImageReveal } from "@/components/fx/image-reveal";
 import { TextReveal } from "@/components/fx/text-reveal";
 import { cn } from "@/lib/utils";
+import { Panel } from "@/components/ui/panel";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 let hasMountedHero = false;
+// One element per tile, so each <dt>/<dd> pair sits directly in its own
+// <div> inside the <dl>, as the HTML content model requires.
+const MotionPanel = motion.create(Panel);
 
 const container = {
   hidden: {},
@@ -176,20 +180,24 @@ export function Hero() {
           initial={animateIntro ? { opacity: 0, y: 14 } : false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5, ease: EASE }}
-          className="mt-16 grid grid-cols-2 gap-x-8 gap-y-8 border-t border-border pt-8 md:mt-20 md:grid-cols-4"
+          className="mt-16 grid grid-cols-2 gap-3 md:mt-20 md:grid-cols-4"
         >
+          {/* Bento tiles: the figure leads at display size, the label sits
+              beneath it as a caption. Each tile carries the spotlight edge. */}
           {facts.map((f, i) => (
-            <motion.div
+            <MotionPanel
               key={f.label}
+              reactive
               initial={animateIntro ? { opacity: 0, y: 10 } : false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.6 + i * 0.07, ease: EASE }}
+              className="flex flex-col-reverse justify-end gap-2 p-4 sm:p-5"
             >
               <dt className="label">{f.label}</dt>
-              <dd className="mt-2.5 text-base font-medium tracking-tight sm:text-lg">
+              <dd className="text-2xl font-semibold tracking-tight tabular-nums sm:text-[2rem] sm:leading-none">
                 <Counter value={f.value} animate={f.countable} />
               </dd>
-            </motion.div>
+            </MotionPanel>
           ))}
         </motion.dl>
 

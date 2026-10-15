@@ -599,6 +599,48 @@ body::before {
   -webkit-text-fill-color: transparent;
 }
 
+/* A diagonal glint that crosses the primary button once per hover. */
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    oklch(1 0 0 / 0.38) 50%,
+    transparent 65%
+  );
+  transform: translateX(-110%);
+  pointer-events: none;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .btn-shine:hover::after {
+    transform: translateX(110%);
+    transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+/* Footer sign-off: the name set at the full width of the column, fading into
+   the canvas toward its baseline. */
+.footer-wordmark {
+  container-type: inline-size;
+  overflow: hidden;
+  user-select: none;
+}
+.footer-wordmark > span {
+  display: block;
+  white-space: nowrap;
+  font-size: 11.3cqi;
+  font-weight: 700;
+  /* Room for the descender of the final "g" inside the clipping box. */
+  line-height: 1.05;
+  letter-spacing: -0.05em;
+  color: transparent;
+  background: linear-gradient(180deg, var(--border-strong), transparent 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
 /* -------------------------------------------------------------------------- */
 /*  Marquee                                                                   */
 /* -------------------------------------------------------------------------- */

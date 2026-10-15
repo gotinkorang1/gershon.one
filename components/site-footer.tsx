@@ -96,7 +96,13 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-2 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
+        {/* Oversized sign-off. Sized in container units so the name always
+            spans the column exactly, at any width, without overflowing. */}
+        <div aria-hidden className="footer-wordmark mt-14">
+          <span>{site.shortName}</span>
+        </div>
+
+        <div className="mt-6 flex flex-col gap-2 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="label">
             © {new Date().getFullYear()} {site.name}
           </p>
