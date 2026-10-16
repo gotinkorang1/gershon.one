@@ -19,14 +19,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!profile) return {};
 
   const path = `/fr/for/${profile.id}`;
-  const englishPath = `/for/${profile.id}`;
   return {
     title: profile.title,
     description: profile.description,
-    alternates: {
-      canonical: path,
-      languages: { "en-CA": englishPath, "fr-CA": path, "x-default": englishPath },
-    },
+    // Same reasoning as the English role pages: canonical to the French home.
+    alternates: { canonical: "/fr" },
     openGraph: {
       images: [defaultOgImage],
       type: "profile",

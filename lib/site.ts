@@ -790,6 +790,7 @@ export const errorFallback = {
 export const portfolioFeatures = {
   navigation: { projects: "Projects", lab: "Lab", blog: "Blog" },
   lab: {
+    metaTitle: "Interactive IT troubleshooting lab",
     eyebrow: "Interactive proof",
     title: "See how I diagnose, connect and improve systems.",
     lede:
@@ -1207,7 +1208,12 @@ export const projects: Project[] = [
 export const blogCopy = {
   eyebrow: "Writing",
   title: "Blog",
+  // Search title. "Blog" alone is too short for a results page to say what
+  // the writing is about (Bing flags titles this short).
+  metaTitle: "IT field notes: networking, ERPNext and systems",
   description: "Field notes on networking, systems administration, and the things I build and run.",
+  intro:
+    "Writing from real work in IT and the workplaces around it: why a slow network often isn't the fibre's fault, how to print two bilingual ID cards per A4 sheet straight from ERPNext, and what foreign-owned workplaces mean for the African workers in them. Every post is also published in French.",
   subscribe: "Subscribe via RSS",
   empty: "No posts yet — check back soon.",
   searchPlaceholder: "Search posts…",
@@ -1261,7 +1267,7 @@ export const projectsPage = {
     study: "Study & labs",
   } as Record<ProjectCategory, string>,
   homeLink: "See all projects and websites",
-  metaTitle: "Projects and websites",
+  metaTitle: "Websites, networks and IT projects",
   homepageAlt: (name: string) => `${name} homepage`,
   metaDescription: "Websites I've built and maintained, plus networking, infrastructure, ERP and software projects across Ghana and Canada.",
 };

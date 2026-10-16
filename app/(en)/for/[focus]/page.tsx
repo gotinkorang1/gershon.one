@@ -18,14 +18,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!profile) return {};
 
   const path = `/for/${profile.id}`;
-  const frenchPath = `/fr/for/${profile.id}`;
   return {
     title: profile.title,
     description: profile.description,
-    alternates: {
-      canonical: path,
-      languages: { "en-CA": path, "fr-CA": frenchPath, "x-default": path },
-    },
+    // Role pages are links for recruiters: the home page re-ordered for one
+    // role, so ~95% the same content. Canonical to the home page so search
+    // engines index one strong page instead of six near-duplicates (Bing
+    // flagged them as thin). They stay out of the sitemap for the same reason.
+    alternates: { canonical: "/" },
     openGraph: {
       images: [defaultOgImage],
       type: "profile",
