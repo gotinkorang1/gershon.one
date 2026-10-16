@@ -65,6 +65,27 @@ const csp = [
   .filter(Boolean)
   .join("; ");
 
+/**
+ * Trusted Types (Baseline 2026), report-only for now.
+ *
+ * Enforced, it makes DOM sinks that can run code (innerHTML, script.src,
+ * serviceWorker.register …) refuse plain strings, and lets only the `default`
+ * policy from lib/trusted-types.ts exist. That policy allows exactly what Next,
+ * React, Vercel Analytics, PostHog and Turnstile need, so normal pages report
+ * nothing. It ships report-only because Next emits its async chunk <script>
+ * tags ahead of anything a layout can put in <head>: on a slow first packet a
+ * cached chunk could run before the policy exists, and enforcement would then
+ * block chunk loading. Reports to /api/csp-report show whether that ever
+ * happens; when they stay empty, move these two directives into `csp` above.
+ * Production only: React's development build uses eval, which this flags.
+ */
+const trustedTypesReportOnly = [
+  "require-trusted-types-for 'script'",
+  "trusted-types default",
+  "report-to csp-endpoint",
+  "report-uri /api/csp-report",
+].join("; ");
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   // Drop the default `X-Powered-By: Next.js` header — it fingerprints the
@@ -122,6 +143,9 @@ const nextConfig: NextConfig = {
         source: "/(.*)",
         headers: [
           { key: "Content-Security-Policy", value: csp },
+          ...(isDev
+            ? []
+            : [{ key: "Content-Security-Policy-Report-Only", value: trustedTypesReportOnly }]),
           // Defines the `csp-endpoint` group that the CSP report-to references.
           {
             key: "Reporting-Endpoints",
