@@ -14,6 +14,7 @@ import { CaseStudyToc } from "@/components/case-study-toc";
 import { slugify } from "@/lib/utils";
 import { serialiseJsonLd } from "@/lib/json-ld";
 import { site } from "@/lib/site";
+import { defaultOgImage } from "@/lib/seo";
 
 const t = getDictionary("fr");
 
@@ -60,6 +61,8 @@ export async function generateMetadata({
       title: study.title,
       description: study.metaDescription,
       locale: "fr_CA",
+      // Setting openGraph replaces the layout's wholesale, image included.
+      images: [defaultOgImage],
     },
   };
 }

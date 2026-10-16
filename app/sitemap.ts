@@ -64,22 +64,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Drafts are noindex, so listing them only wastes crawl budget.
     ...caseStudies
       .filter((c) => !c.draft)
-      .map((c) => ({
-        url: `${base}/work/${c.slug}`,
-        lastModified: new Date(c.published),
-        changeFrequency: "yearly" as const,
-        priority: 0.7,
-        // Each study is published at /work/… and /fr/work/…. Without this the
-        // two read as unrelated pages competing for the same content rather
-        // than as translations of one another.
-        alternates: {
-          languages: {
-            "en-CA": `${base}/work/${c.slug}`,
-            "fr-CA": `${base}/fr/work/${c.slug}`,
-            "x-default": `${base}/work/${c.slug}`,
-          },
-        },
-      })),
+      .flatMap((c) => {
+        // Each study is published at /work/… and /fr/work/…. The alternates
+        // mark them as translations of one another rather than competing
+        // pages, and both URLs are listed: hreflang in a sitemap only counts
+        // for URLs that appear as entries themselves.
+        const english = `${base}/work/${c.slug}`;
+        const french = `${base}/fr/work/${c.slug}`;
+        const alternates = {
+          languages: { "en-CA": english, "fr-CA": french, "x-default": english },
+        };
+        return [english, french].map((url, i) => ({
+          url,
+          lastModified: new Date(c.published),
+          changeFrequency: "yearly" as const,
+          priority: i === 0 ? 0.7 : 0.6,
+          alternates,
+        }));
+      }),
     // Blog index + published posts (English-only, so no hreflang alternates).
     ...[`${base}/projects`, `${base}/fr/projects`].map((url, i) => ({
       url,

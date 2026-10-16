@@ -70,6 +70,12 @@ const nextConfig: NextConfig = {
   // Drop the default `X-Powered-By: Next.js` header — it fingerprints the
   // framework for no benefit to visitors.
   poweredByHeader: false,
+  experimental: {
+    // The site has one root layout per language (app/(en) and app/fr) so
+    // <html lang> is right in the server HTML. With no single root layout,
+    // unmatched URLs need app/global-not-found.tsx to render a 404.
+    globalNotFound: true,
+  },
   images: {
     formats: ["image/avif", "image/webp"],
   },
