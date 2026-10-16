@@ -7,10 +7,11 @@
  * policy falls through to `default`, which is the only one allowed to exist
  * (`trusted-types default`). Nothing this site ships needs those sinks;
  * framework and vendor code does, so the policy lets through exactly those
- * cases and refuses anything else by returning nothing. A refusal is a violation: while the header is report-only the
- * browser reports it to /api/csp-report and lets the assignment through; once
- * enforced it blocks. (Throwing would break the caller even in report-only
- * mode, so the policy never throws.)
+ * cases and refuses anything else by returning nothing. A refusal is a
+ * violation: while the header is report-only the browser reports it to
+ * /api/csp-report and lets the assignment through; once enforced it blocks.
+ * (Throwing would break the caller even in report-only mode, so the policy
+ * never throws.)
  *
  * Allowed:
  * - script URLs on this origin under /_next/ (Next's chunk loader) and
