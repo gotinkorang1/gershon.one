@@ -134,7 +134,10 @@ const nextConfig: NextConfig = {
           { key: "X-Frame-Options", value: "SAMEORIGIN" },
           {
             key: "Permissions-Policy",
-            value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+            // `browsing-topics` is the Topics API that replaced FLoC; the old
+            // `interest-cohort` opt-out no longer does anything.
+            value:
+              "camera=(), microphone=(), geolocation=(), browsing-topics=(), payment=(), usb=(), serial=(), bluetooth=(), hid=()",
           },
           {
             key: "Strict-Transport-Security",

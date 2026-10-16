@@ -96,6 +96,17 @@ const jsonLd = {
   givenName: "Gershon",
   familyName: "Otinkorang",
   additionalName: "Adjei",
+  description: site.metaDescription,
+  // The photo Google can show beside profile results. Same portrait as the
+  // hero, at its full 1200px width; absolute because crawlers resolve it
+  // outside the page.
+  image: {
+    "@type": "ImageObject",
+    url: `${siteUrl}/gershon-light.webp`,
+    width: 1200,
+    height: 891,
+    caption: site.name,
+  },
   nationality: { "@type": "Country", name: "Ghana" },
   worksFor: {
     "@type": "Organization",

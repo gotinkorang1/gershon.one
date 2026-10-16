@@ -124,7 +124,12 @@ export async function POST(request: Request) {
     );
   }
 
-  // Reject oversized bodies before parsing them.
+  // Reject oversized bodies before reading them when the client declares a
+  // length, and again after reading in case it lied or streamed.
+  const declared = Number(request.headers.get("content-length"));
+  if (declared > MAX_BODY_BYTES) {
+    return NextResponse.json({ ok: false, error: "Message too large." }, { status: 413 });
+  }
   const raw = await request.text();
   if (raw.length > MAX_BODY_BYTES) {
     return NextResponse.json({ ok: false, error: "Message too large." }, { status: 413 });
