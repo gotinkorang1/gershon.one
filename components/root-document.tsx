@@ -7,13 +7,13 @@ import { TopProgress } from "@/components/fx/top-progress";
 import { PageTransition } from "@/components/fx/page-transition";
 import { Analytics } from "@/components/analytics";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
-import { HtmlLang } from "@/components/html-lang";
 import { PostHogBoot } from "@/components/posthog-boot";
 import { DeferredInteractions } from "@/components/deferred-interactions";
 import { Toaster } from "@/components/toaster";
 import { site } from "@/lib/site";
-import "./globals.css";
+import "@/app/globals.css";
 import { serialiseJsonLd } from "@/lib/json-ld";
+import { defaultOgImage } from "@/lib/seo";
 
 const sans = Archivo({
   subsets: ["latin"],
@@ -31,7 +31,11 @@ const mono = JetBrains_Mono({
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? site.url;
 const title = `${site.shortName} — ${site.role}`;
 
-export const metadata: Metadata = {
+/**
+ * Metadata both root layouts start from. Each language's layout spreads this
+ * and overrides what differs (canonical, Open Graph locale).
+ */
+export const rootMetadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: { default: title, template: `%s — ${site.shortName}` },
   description: site.metaDescription,
@@ -60,8 +64,16 @@ export const metadata: Metadata = {
     title,
     description: site.metaDescription,
     locale: "en_CA",
+    // Referenced explicitly: app/opengraph-image.tsx sits above both root
+    // layouts, so the file convention no longer attaches it on its own.
+    images: [defaultOgImage],
   },
-  twitter: { card: "summary_large_image", title, description: site.metaDescription },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description: site.metaDescription,
+    images: [defaultOgImage],
+  },
   robots: {
     index: true,
     follow: true,
@@ -69,7 +81,7 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport: Viewport = {
+export const rootViewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#fbfbfa" },
     { media: "(prefers-color-scheme: dark)", color: "#1a1a19" },
@@ -220,17 +232,25 @@ const websiteLd = {
 };
 
 
-export default function RootLayout({
+/**
+ * The document shell shared by the English and French root layouts. The site
+ * has one root layout per language (app/(en)/layout.tsx and app/fr/layout.tsx)
+ * so <html lang> is correct in the server-rendered HTML. Crawlers that do not
+ * run JavaScript and screen readers on first paint both read it from there.
+ * Moving between the two languages is a full page load, which is what lets
+ * the attribute change.
+ */
+export function RootDocument({
+  lang,
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+}: Readonly<{ lang: "en-CA" | "fr-CA"; children: React.ReactNode }>) {
   return (
     <html
-      lang="en-CA"
+      lang={lang}
       suppressHydrationWarning
       className={`${sans.variable} ${mono.variable}`}
     >
       <body className="min-h-dvh antialiased">
-        <HtmlLang />
         <ThemeProvider>
           <TopProgress />
           <SiteNav />
