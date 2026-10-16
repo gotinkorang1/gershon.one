@@ -14,6 +14,7 @@ import { site } from "@/lib/site";
 import "@/app/globals.css";
 import { serialiseJsonLd } from "@/lib/json-ld";
 import { defaultOgImage } from "@/lib/seo";
+import { trustedTypesPolicyScript } from "@/lib/trusted-types";
 
 const sans = Archivo({
   subsets: ["latin"],
@@ -261,6 +262,13 @@ export function RootDocument({
       suppressHydrationWarning
       className={`${sans.variable} ${mono.variable}`}
     >
+      {/* App Router root layouts may render <head>; the rule targets pages/. */}
+      {/* eslint-disable-next-line @next/next/no-head-element */}
+      <head>
+        {/* First in <head>: the Trusted Types default policy must exist before
+            any external script runs (see lib/trusted-types.ts). */}
+        <script dangerouslySetInnerHTML={{ __html: trustedTypesPolicyScript }} />
+      </head>
       <body className="min-h-dvh antialiased">
         <ThemeProvider>
           <TopProgress />
