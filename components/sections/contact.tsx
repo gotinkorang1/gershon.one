@@ -240,7 +240,14 @@ export function Contact() {
                   minLength={10}
                   rows={5}
                   placeholder={t.contact.messagePlaceholder}
-                  className={cn(inputClass, "mt-2 resize-none")}
+                  // Grows with the message instead of scrolling inside a
+                  // five-line box (field-sizing, Baseline 2026), between
+                  // roughly five lines and a capped height. Browsers without
+                  // it keep the fixed `rows={5}` box.
+                  className={cn(
+                    inputClass,
+                    "mt-2 max-h-[24rem] min-h-32 resize-none field-sizing-content",
+                  )}
                 />
               </div>
 

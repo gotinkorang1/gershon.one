@@ -751,6 +751,26 @@ body::before {
   35% { filter: blur(2px); }
 }
 
+/* Full document loads between pages of this site: chiefly switching language,
+   since English and French have separate root layouts and the switch reloads
+   the page. Opting in to cross-document view transitions turns that hard
+   cut into the same quick fade-out and rise-in as in-app navigation. The
+   `document-swap` type scopes these rules so the "root stays still" rule above
+   keeps applying to in-app transitions and the theme reveal. Browsers without
+   cross-document support load the page as before. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+    types: document-swap;
+  }
+}
+html:active-view-transition-type(document-swap)::view-transition-old(root) {
+  animation: 140ms ease-out both vt-fade-out;
+}
+html:active-view-transition-type(document-swap)::view-transition-new(root) {
+  animation: 300ms cubic-bezier(0.22, 1, 0.36, 1) 60ms both vt-rise;
+}
+
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-group(*),
   ::view-transition-old(*),
