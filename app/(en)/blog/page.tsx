@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import { defaultOgImage } from "@/lib/seo";
 import { site } from "@/lib/site";
 import { BlogIndexView } from "@/components/blog/blog-index-view";
+import { getBlogCopy } from "@/lib/localised-content";
 
-const description =
-  "Field notes on networking, systems administration, and the things I build and run.";
+const c = getBlogCopy("en");
+const description = c.description;
 
 export const metadata: Metadata = {
-  title: "Blog",
+  title: c.metaTitle,
   description,
   alternates: {
     canonical: "/blog",
@@ -17,10 +18,10 @@ export const metadata: Metadata = {
     images: [defaultOgImage],
     type: "website",
     url: `${process.env.NEXT_PUBLIC_SITE_URL ?? site.url}/blog`,
-    title: `Blog — ${site.shortName}`,
+    title: `${c.metaTitle} — ${site.shortName}`,
     description,
   },
-  twitter: { card: "summary_large_image", images: [defaultOgImage.url], title: `Blog — ${site.shortName}`, description },
+  twitter: { card: "summary_large_image", images: [defaultOgImage.url], title: `${c.metaTitle} — ${site.shortName}`, description },
 };
 
 export default function BlogIndexPage() {

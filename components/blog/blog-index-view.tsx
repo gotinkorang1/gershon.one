@@ -67,6 +67,7 @@ export function BlogIndexView({ locale }: { locale: Locale }) {
         </p>
         <h1 className="mt-4 text-jumbo font-semibold tracking-tight">{c.title}</h1>
         <p className="mt-4 text-lede text-muted-foreground">{description}</p>
+        <p className="measure mt-4 text-sm leading-relaxed text-muted-foreground">{c.intro}</p>
         {locale === "en" && (
           <a
             href="/feed.xml"

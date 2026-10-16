@@ -563,7 +563,7 @@ export const projectsPageFr = {
     study: "Études et labos",
   },
   homeLink: "Voir tous les projets et sites web",
-  metaTitle: "Projets et sites web",
+  metaTitle: "Sites web, réseaux et projets informatiques",
   metaDescription: "Des sites web que j'ai construits et maintenus, et des projets réseau, infrastructure, ERP et logiciels au Ghana et au Canada.",
   homepageAlt: (name: string) => `Page d'accueil de ${name}`,
 };
@@ -575,7 +575,10 @@ export const projectsPageFr = {
 export const blogCopyFr = {
   eyebrow: "Rédaction",
   title: "Blog",
+  metaTitle: "Notes de terrain : réseaux, ERPNext et systèmes",
   description: "Notes de terrain sur les réseaux, l'administration de systèmes et ce que je construis et exploite.",
+  intro:
+    "Des textes tirés du travail en informatique et des milieux qui l'entourent : pourquoi un réseau lent n'est souvent pas la faute de la fibre, comment imprimer deux badges bilingues par feuille A4 directement depuis ERPNext, et ce que les entreprises à capitaux étrangers représentent pour les travailleurs africains qui y travaillent. Chaque article est aussi publié en anglais.",
   subscribe: "S'abonner par RSS",
   empty: "Aucun article pour l'instant — revenez bientôt.",
   searchPlaceholder: "Rechercher des articles…",
@@ -617,6 +620,7 @@ export const readingFr = {
 };
 
 export const labFr = {
+  metaTitle: "Labo interactif de dépannage informatique",
   eyebrow: "Preuve interactive",
   title: "Voyez comment je diagnostique, relie et améliore les systèmes.",
   lede:

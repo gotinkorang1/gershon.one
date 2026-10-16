@@ -4,7 +4,7 @@ import { portfolioFeatures, site } from "@/lib/site";
 import { defaultOgImage } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "IT troubleshooting lab",
+  title: portfolioFeatures.lab.metaTitle,
   description: portfolioFeatures.lab.lede,
   alternates: {
     canonical: "/lab",

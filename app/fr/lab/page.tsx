@@ -7,7 +7,7 @@ import { defaultOgImage } from "@/lib/seo";
 const lab = getLab("fr");
 
 export const metadata: Metadata = {
-  title: "Labo de dépannage informatique",
+  title: lab.metaTitle,
   description: lab.lede,
   alternates: {
     canonical: "/fr/lab",
