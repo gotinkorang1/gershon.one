@@ -6,6 +6,7 @@ import { useI18n } from "@/components/locale-provider";
 import { Reveal } from "@/components/fx/reveal";
 import { Panel } from "@/components/ui/panel";
 import { SectionDivider } from "@/components/fx/section-divider";
+import { ReferenceRequest } from "@/components/reference-request";
 
 /**
  * References / testimonials.
@@ -61,6 +62,10 @@ export function References() {
             </Reveal>
           ))}
         </div>
+
+        <Reveal>
+          <ReferenceRequest />
+        </Reveal>
       </section>
       <SectionDivider />
     </>

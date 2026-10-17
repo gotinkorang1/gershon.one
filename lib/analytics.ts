@@ -18,6 +18,7 @@ export type AnalyticsEvent =
   | "contact clicked"
   | "contact copied"
   | "contact form sent"
+  | "references requested"
   | "booking opened"
   | "language changed"
   | "social profile opened"
