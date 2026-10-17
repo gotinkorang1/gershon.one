@@ -1034,6 +1034,7 @@ export type Website = {
 };
 
 export const websites: Website[] = [
+  { slug: "fdi-ghana", name: "Foreign Direct International Group", url: "https://fdighana.com/", summary: "Investment and business setup services in Ghana", image: "/projects/fdi-ghana.webp" },
   { slug: "nii-plants-logistics", name: "Nii Plants Logistics", url: "https://niiplantslogistics.com/", summary: "Freight and logistics across Ghana and West Africa", image: "/projects/nii-plants-logistics.webp" },
   { slug: "papersource-ghana", name: "PaperSource Ghana", url: "https://www.papersourcegh.com/", summary: "Catalogue and storefront delivering across Accra and Tema", image: "/projects/papersource-ghana.webp" },
   { slug: "nii-plants-group", name: "Nii Plants Group", url: "https://www.niiplantsgroup.com/", summary: "Group site for mobility, hospitality and business services", image: "/projects/nii-plants-group.webp" },
