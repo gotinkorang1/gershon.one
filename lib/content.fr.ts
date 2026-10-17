@@ -422,6 +422,8 @@ export const referencesFr: Record<string, { title: string }> = {
 
 /** Keyed by website slug. */
 export const websitesFr: Record<string, { summary: string }> = {
+  origin8: { summary: "Agence de communication marketing, technologie et édition" },
+  "st-charles-shs": { summary: "Site de l'école avec actualités et portail des anciens élèves" },
   "fdi-ghana": { summary: "Services d'investissement et de création d'entreprise au Ghana" },
   "nii-plants-logistics": { summary: "Fret et logistique au Ghana et en Afrique de l'Ouest" },
   "papersource-ghana": { summary: "Catalogue et boutique en ligne livrant à Accra et Tema" },
@@ -535,6 +537,12 @@ export const projectsFr: Record<
     summary: "Un labo Windows Server pratique couvrant Active Directory, DNS, DHCP, les stratégies de groupe, les services de fichiers et les postes joints au domaine. AD DS fonctionne sur corp.gershonlab.test, avec les partages NETLOGON et SYSVOL vérifiés.",
     tags: ["Active Directory", "Stratégies de groupe", "DNS / DHCP"],
   },
+  "Green Ghana 2022 animations": {
+    title: "Animations Green Ghana 2022",
+    context: "Ministère des Terres et des Ressources naturelles",
+    summary: "Vidéos explicatives animées pour la campagne nationale de plantation d'arbres Green Ghana, notamment sur la manière de planter et d'entretenir un jeune arbre.",
+    tags: ["Animation", "Motion design", "Campagne publique"],
+  },
   "Software engineering team project": {
     title: "Projet d'équipe en génie logiciel",
     context: "COMP 6905 · Université Memorial",
@@ -552,6 +560,7 @@ export const projectsPageFr = {
   projectsTitle: "Projets",
   projectsLede: "Filtrer par type de travail.",
   visit: "Voir le site",
+  watch: "Regarder",
   offline: "Hors ligne pour le moment",
   inProgress: "En cours",
   readMore: "Lire l'étude de cas",
@@ -560,6 +569,7 @@ export const projectsPageFr = {
     network: "Réseaux",
     infrastructure: "Infrastructure",
     software: "Logiciel et web",
+    design: "Animation et design",
     business: "Systèmes de gestion",
     study: "Études et labos",
   },

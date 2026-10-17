@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import type { Project, ProjectCategory, ProjectsPageCopy } from "@/lib/site";
 
-const CATEGORIES: ProjectCategory[] = ["network", "infrastructure", "software", "business", "study"];
+const CATEGORIES: ProjectCategory[] = ["network", "infrastructure", "software", "design", "business", "study"];
 
 /**
  * The project list with a single-choice filter. Every project stays in the
@@ -80,7 +80,7 @@ export function ProjectList({ copy, projects }: { copy: ListCopy; projects: Proj
                         rel="noreferrer noopener"
                         className="link inline-flex items-center gap-1 text-xs font-medium text-accent"
                       >
-                        {copy.visit} <ArrowUpRight aria-hidden className="size-3" />
+                        {p.video ? copy.watch : copy.visit} <ArrowUpRight aria-hidden className="size-3" />
                       </a>
                     ) : (
                       <Link
