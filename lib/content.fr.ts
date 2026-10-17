@@ -422,6 +422,7 @@ export const referencesFr: Record<string, { title: string }> = {
 
 /** Keyed by website slug. */
 export const websitesFr: Record<string, { summary: string }> = {
+  "fdi-ghana": { summary: "Services d'investissement et de création d'entreprise au Ghana" },
   "nii-plants-logistics": { summary: "Fret et logistique au Ghana et en Afrique de l'Ouest" },
   "papersource-ghana": { summary: "Catalogue et boutique en ligne livrant à Accra et Tema" },
   "nii-plants-group": { summary: "Site du groupe : mobilité, hôtellerie et services aux entreprises" },
