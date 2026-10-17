@@ -210,6 +210,22 @@ type Dictionary = {
     phone: string;
     availability: string;
   };
+  referenceRequest: {
+    title: string;
+    lede: string;
+    open: string;
+    name: string;
+    email: string;
+    emailHint: string;
+    organisation: string;
+    role: string;
+    reason: string;
+    reasonPlaceholder: string;
+    submit: string;
+    sending: string;
+    sent: string;
+    sentDetail: string;
+  };
 };
 
 const en: Dictionary = {
@@ -441,6 +457,22 @@ const en: Dictionary = {
     phone: "Phone",
     availability: "Availability",
   },
+  referenceRequest: {
+    title: "Referee contact details",
+    lede: "Contact details for former managers and clients are shared on request, by email, for hiring and reference checks.",
+    open: "Request references",
+    name: "Your name",
+    email: "Work email",
+    emailHint: "The references are sent to this address.",
+    organisation: "Organisation",
+    role: "Your role",
+    reason: "Why you need them",
+    reasonPlaceholder: "e.g. Reference check for the IT Support role I interviewed Gershon for.",
+    submit: "Email me the references",
+    sending: "Sending",
+    sent: "Sent",
+    sentDetail: "Check your inbox. The references are on their way.",
+  },
 };
 
 const fr: Dictionary = {
@@ -671,6 +703,22 @@ const fr: Dictionary = {
     reply: "Je réponds sous un ou deux jours.",
     phone: "Téléphone",
     availability: "Disponibilité",
+  },
+  referenceRequest: {
+    title: "Coordonnées des références",
+    lede: "Les coordonnées d'anciens responsables et clients sont communiquées sur demande, par courriel, pour un recrutement ou une vérification de références.",
+    open: "Demander les références",
+    name: "Votre nom",
+    email: "Courriel professionnel",
+    emailHint: "Les références sont envoyées à cette adresse.",
+    organisation: "Organisation",
+    role: "Votre poste",
+    reason: "Pourquoi vous en avez besoin",
+    reasonPlaceholder: "p. ex. Vérification de références pour le poste de soutien informatique.",
+    submit: "M'envoyer les références",
+    sending: "Envoi en cours",
+    sent: "Envoyé",
+    sentDetail: "Consultez votre boîte de réception. Les références arrivent.",
   },
 };
 
