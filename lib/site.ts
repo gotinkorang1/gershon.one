@@ -1034,6 +1034,9 @@ export type Website = {
 };
 
 export const websites: Website[] = [
+  { slug: "origin8", name: "Origin8", url: "https://origin8gh.com/", summary: "Marketing communication, technology and publishing agency", image: "/projects/origin8.webp" },
+  { slug: "st-charles-shs", name: "St. Charles Senior High School", url: "https://stcharles.edu.gh/", summary: "School website with news and an alumni portal" },
+  { slug: "fdi-ghana", name: "Foreign Direct International Group", url: "https://fdighana.com/", summary: "Investment and business setup services in Ghana", image: "/projects/fdi-ghana.webp" },
   { slug: "nii-plants-logistics", name: "Nii Plants Logistics", url: "https://niiplantslogistics.com/", summary: "Freight and logistics across Ghana and West Africa", image: "/projects/nii-plants-logistics.webp" },
   { slug: "papersource-ghana", name: "PaperSource Ghana", url: "https://www.papersourcegh.com/", summary: "Catalogue and storefront delivering across Accra and Tema", image: "/projects/papersource-ghana.webp" },
   { slug: "nii-plants-group", name: "Nii Plants Group", url: "https://www.niiplantsgroup.com/", summary: "Group site for mobility, hospitality and business services", image: "/projects/nii-plants-group.webp" },
@@ -1048,7 +1051,7 @@ export const websites: Website[] = [
   { slug: "the-home-of-beads", name: "The Home of Beads", url: "https://thehomeofbeads.myshopify.com/", summary: "Shopify store for African beads and jewellery", image: "/projects/the-home-of-beads.webp" },
 ];
 
-export type ProjectCategory = "network" | "infrastructure" | "software" | "business" | "study";
+export type ProjectCategory = "network" | "infrastructure" | "software" | "design" | "business" | "study";
 
 export type Project = {
   title: string;
@@ -1059,6 +1062,8 @@ export type Project = {
   tags: string[];
   /** A live site or a case study that shows the work. */
   href?: string;
+  /** External href points at videos rather than a site. */
+  video?: boolean;
   status?: "in-progress";
 };
 
@@ -1150,6 +1155,15 @@ export const projects: Project[] = [
     summary: "Website development and SEO, alongside help-desk support and hardware and software troubleshooting.",
     tags: ["Web", "SEO", "Help desk"],
     href: "https://www.niiplantsgroup.com/",
+  },
+  {
+    title: "Green Ghana 2022 animations",
+    context: "Ministry of Lands and Natural Resources",
+    category: "design",
+    summary: "Animated explainer videos for the national Green Ghana tree-planting campaign, including how to plant and nurture a seedling.",
+    tags: ["Animation", "Motion graphics", "Public campaign"],
+    href: "https://www.youtube.com/watch?v=TVsP4nOwh4U&list=PLBmJa_HUVahnwqpJNTGEGc1Waed7G_gre",
+    video: true,
   },
   {
     title: "ERPNext HR implementation",
@@ -1255,6 +1269,7 @@ export const projectsPage = {
   projectsTitle: "Projects",
   projectsLede: "Filter by the kind of work.",
   visit: "Visit site",
+  watch: "Watch",
   offline: "Currently offline",
   inProgress: "In progress",
   readMore: "Read the write-up",
@@ -1263,6 +1278,7 @@ export const projectsPage = {
     network: "Networking",
     infrastructure: "Infrastructure",
     software: "Software & web",
+    design: "Motion & design",
     business: "Business systems",
     study: "Study & labs",
   } as Record<ProjectCategory, string>,
