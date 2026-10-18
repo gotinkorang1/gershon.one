@@ -132,8 +132,9 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        // RFC 9116 wants text/plain; be explicit and let clients cache a day.
-        source: "/.well-known/security.txt",
+        // RFC 9116 wants text/plain; Discord's domain check reads the body as
+        // plain text too. Be explicit and let clients cache a day.
+        source: "/.well-known/:file(security\\.txt|discord)",
         headers: [
           { key: "Content-Type", value: "text/plain; charset=utf-8" },
           { key: "Cache-Control", value: "public, max-age=86400" },
