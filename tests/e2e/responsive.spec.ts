@@ -23,6 +23,7 @@ const representativeRoutes = [
   "/",
   "/for/network",
   "/brief",
+  "/now",
   "/lab",
   "/pack/network",
   "/blog",

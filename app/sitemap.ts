@@ -84,6 +84,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
         languages: { "en-CA": `${base}/lab`, "fr-CA": `${base}/fr/lab`, "x-default": `${base}/lab` },
       },
     })),
+    ...[`${base}/now`, `${base}/fr/now`].map((url) => ({
+      url,
+      lastModified: updated,
+      changeFrequency: "monthly" as const,
+      priority: 0.5,
+      alternates: {
+        languages: { "en-CA": `${base}/now`, "fr-CA": `${base}/fr/now`, "x-default": `${base}/now` },
+      },
+    })),
     ...[`${base}/blog`, `${base}/fr/blog`].map((url) => ({
       url,
       lastModified: posts[0] ? new Date(posts[0].date) : updated,
