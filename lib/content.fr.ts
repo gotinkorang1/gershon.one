@@ -596,6 +596,8 @@ export const blogCopyFr = {
   searchLabel: "Rechercher des articles",
   clearSearch: "Effacer la recherche",
   all: "Tous",
+  filterLabel: "Filtrer par sujet",
+  resultCount: (n: number) => `${n} article${n > 1 ? "s" : ""}`,
   latest: "Le plus récent",
   noResults: (query: string, tag: string) =>
     `Aucun article ne correspond${query ? ` à « ${query} »` : ""}${tag ? ` dans ${tag}` : ""}.`,

@@ -78,3 +78,33 @@ test("web app manifest exposes install-grade icons and service worker", async ({
   expect(worker.headers()["content-type"]).toContain("application/javascript");
   expect(await worker.text()).toContain('url.pathname.startsWith("/api/")');
 });
+
+test("blog topic filter is announced and kept in the URL", async ({ page }) => {
+  await page.goto("/blog");
+  const posts = page.locator("main h2");
+  await expect(posts).toHaveCount(3);
+
+  const fibre = page.getByRole("button", { name: "Fibre 1 post", exact: true });
+  await fibre.click();
+  await expect(fibre).toHaveAttribute("aria-pressed", "true");
+  await expect(page).toHaveURL(/\?tag=Fibre$/);
+  const status = page.getByRole("main").getByRole("status");
+  await expect(status).toHaveText("1 post");
+  await expect(status).toBeVisible();
+  await expect(posts).toHaveCount(1);
+  await expect(posts.first()).toHaveText("Your network is slow, and it's probably not the fibre");
+
+  // A shared or reloaded link opens on the same filtered view.
+  await page.goto("/blog?tag=Africa");
+  await expect(page.getByRole("button", { name: "Africa 1 post", exact: true })).toHaveAttribute(
+    "aria-pressed",
+    "true",
+  );
+  await expect(posts).toHaveCount(1);
+  await expect(posts.first()).toHaveText("The reality of foreign-owned workplaces in Africa");
+  await expect(posts.first()).toBeVisible();
+
+  await page.getByRole("button", { name: "All", exact: true }).click();
+  await expect(page).toHaveURL(/\/blog$/);
+  await expect(posts).toHaveCount(3);
+});

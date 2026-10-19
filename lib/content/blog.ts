@@ -14,6 +14,8 @@ export const blogCopy = {
   searchLabel: "Search posts",
   clearSearch: "Clear search",
   all: "All",
+  filterLabel: "Filter by topic",
+  resultCount: (n: number) => `${n} ${n === 1 ? "post" : "posts"}`,
   latest: "Latest",
   noResults: (query: string, tag: string) =>
     `No posts match${query ? ` “${query}”` : ""}${tag ? ` in ${tag}` : ""}.`,
