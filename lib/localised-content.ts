@@ -35,6 +35,7 @@ import {
   projectsFr,
   projectsPageFr,
   briefActionsFr,
+  briefFr,
   eligibilityFr,
   labFr,
   blogCopyFr,
@@ -192,11 +193,35 @@ export function getProjectsContent(locale: Locale): {
 /** Path to the projects page in the given language. */
 export const projectsHref = (locale: Locale) => (locale === "fr" ? "/fr/projects" : "/projects");
 
-/** Availability facts and share/print labels for the brief and recruiter packs. */
+type BriefStrength = { skill: string; years: string; level: string };
+
+/** Everything on the candidate brief, plus the share/print labels the recruiter packs reuse. */
 export function getBriefContent(locale: Locale) {
-  if (locale === "en") return { eligibility: brief.eligibility, actions: site.briefActions };
-  return { eligibility: eligibilityFr, actions: { ...site.briefActions, ...briefActionsFr } };
+  if (locale === "en") {
+    return {
+      page: brief.page,
+      eligibility: brief.eligibility,
+      compensation: brief.compensation,
+      pitch: brief.pitch,
+      strengths: brief.strengths as readonly BriefStrength[],
+      targetRoles: brief.targetRoles as readonly string[],
+      actions: site.briefActions,
+    };
+  }
+  return {
+    page: briefFr.page,
+    eligibility: eligibilityFr,
+    compensation: briefFr.compensation,
+    pitch: briefFr.pitch,
+    // Untranslated skills fall back to English rather than disappearing.
+    strengths: brief.strengths.map((s) => briefFr.strengths[s.skill] ?? s) as readonly BriefStrength[],
+    targetRoles: briefFr.targetRoles as readonly string[],
+    actions: { ...site.briefActions, ...briefActionsFr },
+  };
 }
+
+/** Path to the candidate brief in the given language. */
+export const briefHref = (locale: Locale) => (locale === "fr" ? "/fr/brief" : "/brief");
 
 /** Path to a recruiter pack in the given language. */
 export const packHref = (locale: Locale, id: string) => (locale === "fr" ? `/fr/pack/${id}` : `/pack/${id}`);

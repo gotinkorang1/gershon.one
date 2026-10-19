@@ -85,7 +85,7 @@ export function SiteFooter() {
                 <CvButton variant="ghost" size="sm" className="-ml-3" respondToShortcut />
               </li>
               <li>
-                <Link href="/brief" className="link">
+                <Link href={`${prefix}/brief`} className="link">
                   {t.ui.candidateBrief}
                 </Link>
               </li>
