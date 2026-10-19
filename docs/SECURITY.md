@@ -1,40 +1,34 @@
 # Security notes
 
-## Dependency advisories — assessed, accepted
+## Dependency audit — CI gate
 
-`npm audit` reports three high-severity advisories. All are real, none are
-reachable in this application, and the remediation npm proposes is worse than
-the exposure. Re-assess whenever the dependency tree changes.
+CI runs `npm audit --omit=dev --audit-level=high` and fails on any high or
+critical advisory in a production dependency. At the time of writing the
+production tree has no known vulnerabilities.
 
 **Do not run `npm audit fix --force`.** It resolves to `next@9.3.3` — a 2020
 release — which would remove the App Router, both locales, every API route and
-all server components in order to patch code that cannot be reached.
+all server components.
 
-### sharp <0.35.0 — libvips CVEs
+### Resolved — sharp and postcss
 
-CVE-2026-33327, CVE-2026-33328, CVE-2026-35590, CVE-2026-35591.
+Earlier advisories in `sharp <0.35.0` (libvips CVEs) and `postcss <=8.5.17`
+are fixed by the `overrides` in `package.json`, which pin both to patched
+releases across the whole tree, including the copy Next vendors.
 
-Memory-corruption bugs triggered by decoding a malicious image.
+### Accepted — dev-only lint tooling
 
-*Not reachable.* `sharp` runs only when `next/image` optimises a source image.
-This site serves one image, `public/gershon.webp`, committed to the repository.
-There are no uploads, no `images.remotePatterns`, and no query-driven image
-URLs, so no attacker-supplied bytes ever reach the decoder. `sharp` is also an
-optional dependency.
+A full `npm audit` (without `--omit=dev`) reports a high-severity
+stack-exhaustion advisory in `braces`, pulled in through
+`micromatch` → `fast-glob` → `@next/eslint-plugin-next` → `eslint-config-next`.
 
-Revisit if the site ever accepts uploaded images or configures remote patterns.
+*Not reachable.* That chain runs only when ESLint lints files authored in this
+repository, locally and in CI. It is never bundled or run in production and
+never receives user input.
 
-### postcss <=8.5.17 — three advisories
-
-XSS via unescaped `</style>`, and two source-map path-traversal issues.
-
-*Not reachable.* The top-level `postcss` is already 8.5.23 and patched. The
-vulnerable 8.4.31 is vendored inside `node_modules/next/node_modules/postcss`
-for Next's own build pipeline. All three require attacker-controlled CSS; the
-only CSS processed here is authored in this repository and compiled at build
-time on the deployment builder, never at runtime and never from user input.
-
-Resolved automatically when Next updates its bundled copy.
+**Do not blanket-override `brace-expansion` or `braces` to fix it** — see the
+`//overrides` note in `package.json`. Resolved when `eslint-config-next`
+updates its dependency.
 
 ## Registry
 
@@ -45,9 +39,16 @@ ever reported. Integrity hashes meant nothing could be silently substituted,
 but the absence of advisories was a genuine blind spot. Switching registries
 also reduced the tree from 443 packages to 365.
 
-## Blocked install scripts
+## Install scripts
 
-`sharp` and `unrs-resolver` report blocked postinstall scripts. Both ship
-prebuilt platform binaries as ordinary dependencies (`@img/sharp-*`,
-`@unrs/resolver-binding-*`), so the scripts are fallbacks that are not needed.
-Nothing is missing.
+npm blocks dependency install scripts unless `allowScripts` in `package.json`
+allows them. Current decisions:
+
+- `core-js` — **denied.** Its postinstall only prints a funding banner.
+- `unrs-resolver` — **denied.** It ships prebuilt platform binaries as
+  ordinary optional dependencies (`@unrs/resolver-binding-*`); the postinstall
+  is a download fallback that is not needed.
+- `sharp` — no entry needed; prebuilt binaries come from `@img/sharp-*`.
+
+Review any new package that appears in `npm install-scripts ls` before
+approving it.
