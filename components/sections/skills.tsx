@@ -31,7 +31,7 @@ import { useRoleFocus } from "@/components/role-focus-provider";
 import { getRoleFocus, isTopMatch, prioritizeByKeys } from "@/lib/role-focus";
 
 // One icon per capability group, in the same order as `skillGroups` in
-// lib/site.ts: IT support, Retail & field, Networking, Security, Servers,
+// lib/content/skills.ts: IT support, Retail & field, Networking, Security, Servers,
 // Cloud & web, GIS & other. Kept here rather than in the data file so the
 // content layer stays free of UI-library imports.
 const ICONS = [LifeBuoy, Store, Network, ShieldCheck, Server, Cloud, Map];

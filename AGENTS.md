@@ -4,7 +4,9 @@ Personal portfolio site. Next.js App Router + TypeScript + Tailwind CSS v4 + Mot
 
 ## Ground rules
 
-- **All content lives in `lib/site.ts`.** Never hardcode copy into a component.
+- **All content lives in `lib/content/`** (one file per section, re-exported
+  from `lib/site.ts`). Import it from `@/lib/site`. Never hardcode copy into a
+  component.
 - **Server components by default.** Add `"use client"` only when a component
   needs state, effects or event handlers.
 - **Tailwind v4 is CSS-first.** There is no `tailwind.config.js` — tokens are

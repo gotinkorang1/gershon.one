@@ -48,18 +48,12 @@ Every push and pull request runs the full gate in CI (audit → typecheck → li
 
 ## Editing content
 
-**Everything lives in [`lib/site.ts`](lib/site.ts).** Name, roles, stats, jobs,
-skills, projects and credentials are all plain data — you should never need to
-touch a component to update the site.
-
-Search that file for `TODO:` to find the placeholders that still need your real
-details:
-
-- Your city (currently "Accra, Ghana")
-- GitHub / LinkedIn / X handles
-- The second employer in `experience`
-- Project live + repo links
-- The exact title on the Google certificate
+**Everything lives in [`lib/content/`](lib/content/)**, one file per section —
+`profile.ts`, `experience.ts`, `skills.ts`, `credentials.ts`, `projects.ts` and
+so on — all re-exported from [`lib/site.ts`](lib/site.ts). Name, roles, stats,
+jobs, skills, projects and credentials are all plain data — you should never
+need to touch a component to update the site. French copy lives in
+[`lib/content.fr.ts`](lib/content.fr.ts).
 
 Then drop your CV at `public/gershon-otinkorang-cv.pdf` so the **Download CV**
 button and command palette work.

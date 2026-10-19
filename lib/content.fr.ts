@@ -2,7 +2,7 @@
  * French content.
  *
  * Only the prose that differs is stored here — dates, company names, stack
- * entries and credential IDs are locale-independent and stay in `lib/site.ts`.
+ * entries and credential IDs are locale-independent and stay in `lib/content/`.
  * Keys match the English records so a missing translation is a type error
  * rather than a silent fallback.
  */

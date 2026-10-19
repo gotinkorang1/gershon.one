@@ -27,7 +27,7 @@ before it can merge.
 
 These are enforced by review; please follow them so a change fits in cleanly.
 
-- **All copy lives in `lib/site.ts`** (and the localised `lib/*.fr.ts`
+- **All copy lives in `lib/content/`**, re-exported from `lib/site.ts` (and the localised `lib/*.fr.ts`
   companions). Never hardcode user-facing text into a component.
 - **Server components by default.** Add `"use client"` only when a component
   needs state, effects, or event handlers.
