@@ -1,5 +1,6 @@
 "use client";
 
+import type { Route } from "next";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
@@ -22,7 +23,7 @@ const GO_TARGETS: Record<string, string> = {
 };
 
 // `G then B` routes rather than scrolls — the blog is its own page.
-const GO_ROUTES: Record<string, string> = {
+const GO_ROUTES: Record<string, Route> = {
   b: "/blog",
 };
 

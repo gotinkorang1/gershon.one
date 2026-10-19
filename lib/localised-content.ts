@@ -41,6 +41,7 @@ import {
   readingFr,
 } from "@/lib/content.fr";
 import { brief } from "@/lib/brief";
+import type { Route } from "next";
 import type { Locale } from "@/lib/i18n";
 import { caseStudies, type CaseStudy } from "@/lib/case-studies";
 import { caseStudiesFr } from "@/lib/case-studies.fr";
@@ -199,7 +200,8 @@ export function getBriefContent(locale: Locale) {
 }
 
 /** Path to a recruiter pack in the given language. */
-export const packHref = (locale: Locale, id: string) => (locale === "fr" ? `/fr/pack/${id}` : `/pack/${id}`);
+export const packHref = (locale: Locale, id: string) =>
+  (locale === "fr" ? `/fr/pack/${id}` : `/pack/${id}`) as Route;
 
 type Widen<T> = T extends string
   ? string
@@ -218,7 +220,7 @@ export function getLab(locale: Locale): LabContent {
   return locale === "fr" ? labFr : portfolioFeatures.lab;
 }
 
-export const labHref = (locale: Locale) => (locale === "fr" ? "/fr/lab" : "/lab");
+export const labHref = (locale: Locale): Route => (locale === "fr" ? "/fr/lab" : "/lab");
 
 /** Blog index, post page and reading-widget labels in one language. */
 export function getBlogCopy(locale: Locale): BlogCopy & { reading: typeof portfolioFeatures.reading } {
@@ -228,7 +230,7 @@ export function getBlogCopy(locale: Locale): BlogCopy & { reading: typeof portfo
 }
 
 export const blogHref = (locale: Locale, slug?: string) =>
-  `${locale === "fr" ? "/fr" : ""}/blog${slug ? `/${slug}` : ""}`;
+  `${locale === "fr" ? "/fr" : ""}/blog${slug ? `/${slug}` : ""}` as Route;
 
 /** Date as shown on the blog: "1 August 2026" / "1 août 2026". */
 export function blogDate(iso: string, locale: Locale) {

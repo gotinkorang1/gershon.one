@@ -1,3 +1,4 @@
+import type { Route } from "next";
 import { getPublishedPosts } from "@/lib/blog";
 import { caseStudies } from "@/lib/case-studies";
 import {
@@ -20,8 +21,8 @@ export type EvidenceItem = {
   skill: string;
   group: string;
   experience: { title: string; subtitle: string }[];
-  caseStudies: { title: string; href: string }[];
-  roles: { title: string; href: string }[];
+  caseStudies: { title: string; href: Route }[];
+  roles: { title: string; href: Route }[];
   credentials: { title: string; subtitle: string }[];
 };
 
@@ -83,7 +84,7 @@ export function getEvidenceItems(locale: Locale = "en"): EvidenceItem[] {
             ),
         )
         .slice(0, 4)
-        .map(({ local }) => ({ title: local.title, href: `${prefix}/work/${local.slug}` }));
+        .map(({ local }) => ({ title: local.title, href: `${prefix}/work/${local.slug}` as Route }));
 
       const matchingRoles = roleFocusProfiles
         .map((profile, i) => ({ profile, local: profilesL[i] }))
@@ -93,7 +94,7 @@ export function getEvidenceItems(locale: Locale = "en"): EvidenceItem[] {
             hasRelevantToken(`${profile.title} ${profile.description}`, skill),
         )
         .slice(0, 4)
-        .map(({ local }) => ({ title: local.title, href: `${prefix}/for/${local.id}` }));
+        .map(({ local }) => ({ title: local.title, href: `${prefix}/for/${local.id}` as Route }));
 
       const matchingCredentials = credentials
         .map((credential, i) => ({ credential, local: credsL[i] }))

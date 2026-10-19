@@ -1,5 +1,6 @@
 "use client";
 
+import type { Route } from "next";
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, CircleAlert, RotateCcw, XCircle } from "lucide-react";
@@ -90,7 +91,7 @@ export function TroubleshootingLab() {
               </div>
               <p className="mt-4 leading-relaxed text-muted-foreground">{scenario.resolution}</p>
               <div className="mt-6 flex flex-wrap gap-3">
-                <Link href={scenario.proofHref} className="link inline-flex items-center gap-2 text-sm text-accent">
+                <Link href={scenario.proofHref as Route} className="link inline-flex items-center gap-2 text-sm text-accent">
                   {scenario.proofLabel} <ArrowRight className="size-4" />
                 </Link>
                 <Button type="button" variant="outline" size="sm" onClick={restart}>

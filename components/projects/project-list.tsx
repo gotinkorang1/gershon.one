@@ -1,5 +1,6 @@
 "use client";
 
+import type { Route } from "next";
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
@@ -75,7 +76,7 @@ export function ProjectList({ copy, projects }: { copy: ListCopy; projects: Proj
                   {p.href &&
                     (external ? (
                       <a
-                        href={p.href}
+                        href={p.href as Route}
                         target="_blank"
                         rel="noreferrer noopener"
                         className="link inline-flex items-center gap-1 text-xs font-medium text-accent"
@@ -84,7 +85,7 @@ export function ProjectList({ copy, projects }: { copy: ListCopy; projects: Proj
                       </a>
                     ) : (
                       <Link
-                        href={p.href}
+                        href={p.href as Route}
                         className="link inline-flex items-center gap-1 text-xs font-medium text-accent"
                       >
                         {copy.readMore} <ArrowRight aria-hidden className="size-3" />
