@@ -4,8 +4,10 @@ import { ArrowLeft, ArrowUpRight, Globe } from "lucide-react";
 import { Panel } from "@/components/ui/panel";
 import { ProjectList } from "@/components/projects/project-list";
 import { site } from "@/lib/site";
-import { getProjectsContent } from "@/lib/localised-content";
+import { getProjectsContent, projectsHref } from "@/lib/localised-content";
 import type { Locale } from "@/lib/i18n";
+import { serialiseJsonLd } from "@/lib/json-ld";
+import { breadcrumbJsonLd, webPageJsonLd } from "@/lib/seo";
 
 const domain = (url: string) => new URL(url).hostname.replace(/^www\./, "");
 
@@ -14,6 +16,26 @@ export function ProjectsView({ locale }: { locale: Locale }) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { homepageAlt, ...listCopy } = copy;
   const home = locale === "fr" ? "/fr" : "/";
+  const path = projectsHref(locale);
+  const base = process.env.NEXT_PUBLIC_SITE_URL ?? site.url;
+  // A listing page: the live sites and the project write-ups, in page order.
+  const pageLd = webPageJsonLd(
+    locale,
+    { type: "CollectionPage", path, name: copy.metaTitle, description: copy.metaDescription },
+    {
+      mainEntity: {
+        "@type": "ItemList",
+        itemListElement: [
+          ...websites.filter((w) => !w.offline).map((w) => ({ name: w.name, url: w.url })),
+          ...projects.map((p) => ({
+            name: p.title,
+            url: p.href ? (p.href.startsWith("/") ? `${base}${p.href}` : p.href) : undefined,
+          })),
+        ].map((item, i) => ({ "@type": "ListItem", position: i + 1, ...item })),
+      },
+    },
+  );
+  const breadcrumbs = breadcrumbJsonLd(locale, [{ name: copy.eyebrow, path }]);
   return (
     <div className="shell pb-24 pt-28 md:pt-32">
       <Link href={home} className="link inline-flex items-center gap-2 text-sm text-muted-foreground">
@@ -101,6 +123,17 @@ export function ProjectsView({ locale }: { locale: Locale }) {
         <p className="mt-1.5 text-sm text-muted-foreground">{copy.projectsLede}</p>
         <ProjectList copy={listCopy} projects={projects} />
       </section>
+
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: serialiseJsonLd(pageLd) }}
+      />
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: serialiseJsonLd(breadcrumbs) }}
+      />
     </div>
   );
 }

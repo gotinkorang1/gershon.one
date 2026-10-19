@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { LabView } from "@/components/lab/lab-view";
 import { portfolioFeatures, site } from "@/lib/site";
-import { defaultOgImage } from "@/lib/seo";
+import { defaultOgImage, pageTitle } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: portfolioFeatures.lab.metaTitle,
-  description: portfolioFeatures.lab.lede,
+  title: pageTitle(portfolioFeatures.lab.metaTitle),
+  description: portfolioFeatures.lab.metaDescription,
   alternates: {
     canonical: "/lab",
     languages: { "en-CA": "/lab", "fr-CA": "/fr/lab", "x-default": "/lab" },
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "/lab",
     title: `${portfolioFeatures.navigation.lab} — ${site.shortName}`,
-    description: portfolioFeatures.lab.lede,
+    description: portfolioFeatures.lab.metaDescription,
   },
   twitter: { card: "summary_large_image", images: [defaultOgImage.url] },
 };

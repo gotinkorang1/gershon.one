@@ -632,6 +632,9 @@ export const readingFr = {
 
 export const labFr = {
   metaTitle: "Labo interactif de dépannage informatique",
+  // Extrait de recherche, 160 caractères au plus.
+  metaDescription:
+    "Quatre vues du portfolio : dépannage guidé, preuves derrière chaque compétence, architecture des systèmes et historique des activités.",
   eyebrow: "Preuve interactive",
   title: "Voyez comment je diagnostique, relie et améliore les systèmes.",
   lede:
