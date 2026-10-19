@@ -29,11 +29,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Surfaces newly published advisories. Assessed exceptions are recorded
-      # in docs/SECURITY.md; `|| true` keeps the report visible without
-      # blocking a deploy on an unreachable transitive advisory.
+      # Fails on a high or critical advisory in anything that ships to
+      # production. Dev-only tooling is excluded; assessed exceptions are
+      # recorded in docs/SECURITY.md.
       - name: Audit dependencies
-        run: npm audit --omit=dev || true
+        run: npm audit --omit=dev --audit-level=high
 
       - name: Typecheck
         run: npm run typecheck
