@@ -9,6 +9,8 @@ import {
   references,
   projects,
   projectsPage,
+  nowPage,
+  type NowPageCopy,
   websites,
   type Job,
   type Project,
@@ -38,6 +40,7 @@ import {
   briefFr,
   eligibilityFr,
   labFr,
+  nowPageFr,
   blogCopyFr,
   readingFr,
 } from "@/lib/content.fr";
@@ -264,3 +267,10 @@ export function blogDate(iso: string, locale: Locale) {
     timeZone: "UTC",
   });
 }
+
+/** Headings for the /now page in one language. */
+export function getNowCopy(locale: Locale): NowPageCopy {
+  return locale === "fr" ? nowPageFr : nowPage;
+}
+
+export const nowHref = (locale: Locale) => (locale === "fr" ? "/fr/now" : "/now");
