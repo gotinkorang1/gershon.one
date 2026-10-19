@@ -18,6 +18,6 @@
 
 ## Conventions
 
-- [ ] User-facing copy lives in `lib/site.ts` (or its `*.fr.ts` companion), not hardcoded in components
+- [ ] User-facing copy lives in `lib/content/` (or its `*.fr.ts` companion), not hardcoded in components
 - [ ] New animations respect `prefers-reduced-motion`
 - [ ] No personal documents from `docs/credentials/` were committed or moved into `public/`
