@@ -1,5 +1,6 @@
 "use client";
 
+import type { Route } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Languages } from "lucide-react";
@@ -26,7 +27,7 @@ export function LanguageToggle() {
 
   return (
     <Link
-      href={target}
+      href={target as Route}
       hrefLang={isFrench ? "en-CA" : "fr-CA"}
       onClick={() =>
         captureAnalyticsEvent(

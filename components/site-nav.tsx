@@ -1,5 +1,6 @@
 "use client";
 
+import type { Route } from "next";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -26,7 +27,7 @@ export function SiteNav() {
     pathname === "/fr" ||
     pathname.startsWith("/for/") ||
     pathname.startsWith("/fr/for/");
-  const sectionHref = (hash: string) => (onHome ? hash : `${home}${hash}`);
+  const sectionHref = (hash: string) => (onHome ? hash : `${home}${hash}`) as Route;
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("");
   const [open, setOpen] = useState(false);

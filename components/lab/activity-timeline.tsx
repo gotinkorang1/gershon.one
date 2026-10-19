@@ -1,5 +1,6 @@
 "use client";
 
+import type { Route } from "next";
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
@@ -75,7 +76,7 @@ export function ActivityTimeline({ items }: { items: ActivityItem[] }) {
                 <h3 className="mt-3 font-semibold tracking-tight">
                   {item.href ? (
                     <Link
-                      href={item.href}
+                      href={item.href as Route}
                       target={item.href.startsWith("http") ? "_blank" : undefined}
                       rel={item.href.startsWith("http") ? "noreferrer noopener" : undefined}
                       className="group inline-flex items-start gap-2"

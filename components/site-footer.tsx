@@ -1,5 +1,6 @@
 "use client";
 
+import type { Route } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { site, navLinks } from "@/lib/site";
@@ -20,7 +21,7 @@ export function SiteFooter() {
     pathname === "/fr" ||
     pathname.startsWith("/for/") ||
     pathname.startsWith("/fr/for/");
-  const sectionHref = (hash: string) => (onHome ? hash : `${prefix || "/"}${hash}`);
+  const sectionHref = (hash: string) => (onHome ? hash : `${prefix || "/"}${hash}`) as Route;
 
   return (
     <footer className="border-t border-border">

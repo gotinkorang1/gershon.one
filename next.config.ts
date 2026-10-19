@@ -91,6 +91,13 @@ const nextConfig: NextConfig = {
   // Drop the default `X-Powered-By: Next.js` header — it fingerprints the
   // framework for no benefit to visitors.
   poweredByHeader: false,
+  // Memoises client components automatically, so hand-written useMemo /
+  // useCallback is no longer needed to avoid wasted re-renders.
+  reactCompiler: true,
+  // Typechecks every internal <Link href> and router.push() against the
+  // real route tree, so a renamed or deleted page fails `npm run typecheck`
+  // instead of shipping a broken link.
+  typedRoutes: true,
   experimental: {
     // The site has one root layout per language (app/(en) and app/fr) so
     // <html lang> is right in the server HTML. With no single root layout,
