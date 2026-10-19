@@ -1046,7 +1046,7 @@ export const websites: Website[] = [
   { slug: "kwaaba-foundation", name: "Kwaaba Foundation", url: "https://kwaabafoundation.org/about-kwaaba/", summary: "Non-profit for health and community initiatives", image: "/projects/kwaaba-foundation.webp" },
   { slug: "greenhouse-international", name: "Greenhouse International Development", url: "https://greenhouseintdev.com/en/", summary: "Corporate site for the industrial park developer", image: "/projects/greenhouse-international.webp" },
   { slug: "proptisgh", name: "Prop-Tis GH", url: "https://www.proptisgh.com/", summary: "Real estate listing platform", image: "/projects/proptisgh.webp" },
-  { slug: "autism-destigma", name: "Autism Destigma", url: "https://autismdestigma.org/", summary: "Autism awareness non-profit", offline: true },
+  { slug: "autism-destigma", name: "Autism Destigma", url: "https://autismdestigma.org/", summary: "Autism awareness non-profit", image: "/projects/autism-destigma.webp" },
   { slug: "plantsville-ghana", name: "Plantsville Ghana", url: "https://plantsvillegh.com/", summary: "Residences and lounge", image: "/projects/plantsville-ghana.webp" },
   { slug: "the-home-of-beads", name: "The Home of Beads", url: "https://thehomeofbeads.myshopify.com/", summary: "Shopify store for African beads and jewellery", image: "/projects/the-home-of-beads.webp" },
 ];
