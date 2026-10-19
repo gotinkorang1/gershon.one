@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageTitle } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, Clock } from "lucide-react";
@@ -30,7 +31,7 @@ export async function generateMetadata({
   if (!study) return {};
 
   return {
-    title: study.title,
+    title: pageTitle(study.title),
     description: study.metaDescription,
     // Both language versions must reference each other, or Google discards the
     // hreflang annotations entirely. The French page already points back here;
@@ -99,7 +100,10 @@ export default async function CaseStudyPage({
     headline: study.title,
     description: study.metaDescription,
     datePublished: study.published,
-    author: { "@type": "Person", name: site.name },
+    // Google's article guidelines ask for an image and an author it can
+    // resolve; the @id ties the author to the Person node in the root layout.
+    image: `${base}/work/${study.slug}/opengraph-image`,
+    author: { "@type": "Person", "@id": `${base}/#person`, name: site.name, url: base },
     keywords: study.tags.join(", "),
     ...(study.repo ? { codeRepository: study.repo } : {}),
   };

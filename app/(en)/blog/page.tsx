@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { defaultOgImage } from "@/lib/seo";
+import { defaultOgImage, pageTitle } from "@/lib/seo";
 import { site } from "@/lib/site";
 import { BlogIndexView } from "@/components/blog/blog-index-view";
 import { getBlogCopy } from "@/lib/localised-content";
@@ -8,7 +8,7 @@ const c = getBlogCopy("en");
 const description = c.description;
 
 export const metadata: Metadata = {
-  title: c.metaTitle,
+  title: pageTitle(c.metaTitle),
   description,
   alternates: {
     canonical: "/blog",
