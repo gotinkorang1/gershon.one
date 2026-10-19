@@ -40,7 +40,14 @@ ${caseStudyLines || "- (none published yet)"}
 
 - [Portfolio home](${base}/): experience, capabilities, credentials and contact
 - [Portfolio home — French](${base}/fr): the same content in French
+- [Projects](${base}/projects): websites built or maintained, and other project work
+- [Systems lab](${base}/lab): interactive troubleshooting walkthroughs
+- [Blog](${base}/blog): technical writing
 - [Résumé (PDF)](${base}/gershon-otinkorang-cv.pdf)
+
+## Full content
+
+- [llms-full.txt](${base}/llms-full.txt): every page above as one Markdown document, including full case studies and posts
 
 ## Contact
 
