@@ -8,6 +8,26 @@
  */
 
 export const brief = {
+  // Page chrome. French in lib/content.fr.ts (briefFr.page).
+  page: {
+    metaTitle: "Candidate brief",
+    metaDescription: (name: string, role: string) =>
+      `Availability, work authorisation and core skills for ${name}, ${role}.`,
+    back: "Full site",
+    eyebrow: "Candidate brief",
+    downloadCv: "Download CV",
+    eligibility: "Eligibility and availability",
+    compensation: "Compensation expectation",
+    pitch: "In one paragraph",
+    strengths: "Core skills, ranked",
+    targetRoles: "Roles I'm a match for",
+    current: "Current role",
+    credentials: "Education and certification",
+    education: "Education",
+    certifications: "Certifications",
+    contact: "Contact",
+  },
+
   // The three facts that decide whether you get a call at all.
   eligibility: [
     {
