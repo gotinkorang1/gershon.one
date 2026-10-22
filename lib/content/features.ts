@@ -8,6 +8,9 @@ export const portfolioFeatures = {
   navigation: { projects: "Projects", lab: "Lab", blog: "Blog" },
   lab: {
     metaTitle: "Interactive IT troubleshooting lab",
+    // Search snippet, ≤160 characters.
+    metaDescription:
+      "Four working views of the portfolio: guided troubleshooting, evidence behind each skill, system architecture and a chronological activity record.",
     eyebrow: "Interactive proof",
     title: "See how I diagnose, connect and improve systems.",
     lede:

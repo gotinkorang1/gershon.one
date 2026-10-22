@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import { ProjectsView } from "@/components/projects/projects-view";
 import { site } from "@/lib/site";
 import { getProjectsContent } from "@/lib/localised-content";
-import { defaultOgImage } from "@/lib/seo";
+import { defaultOgImage, pageTitle } from "@/lib/seo";
 
 const { copy } = getProjectsContent("fr");
 
 export const metadata: Metadata = {
-  title: copy.metaTitle,
+  title: pageTitle(copy.metaTitle),
   description: copy.metaDescription,
   alternates: {
     canonical: "/fr/projects",

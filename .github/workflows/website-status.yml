@@ -1,0 +1,42 @@
+name: Website status
+
+# Once a day, check every site on the Projects page. When one goes down or
+# comes back, open (or update) a pull request that flips its `offline` flag
+# in lib/content/projects.ts. Nothing changes on the live site until that PR
+# is reviewed and merged.
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: website-status
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Check sites
+        id: check
+        run: node scripts/check-websites.mjs --write
+
+      - name: Open pull request
+        if: steps.check.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: chore/website-status
+          delete-branch: true
+          add-paths: lib/content/projects.ts
+          commit-message: "chore(projects): update website offline flags"
+          title: "chore(projects): update website offline flags"
+          body-path: website-status.md
