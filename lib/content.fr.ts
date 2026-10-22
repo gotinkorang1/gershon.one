@@ -1,3 +1,5 @@
+import type { NowPageCopy } from "@/lib/content/now";
+
 /**
  * French content.
  *
@@ -347,7 +349,7 @@ export const roleFocusFr = {
 /* -------------------------------------------------------------------------- */
 
 export const featuresFr = {
-  navigation: { projects: "Projets", lab: "Labo", blog: "Blog" },
+  navigation: { projects: "Projets", lab: "Labo", blog: "Blog", now: "En ce moment" },
   lab: {
     eyebrow: "Preuve interactive",
     homeTitle: "Ne vous contentez pas de lire. Examinez la démarche.",
@@ -869,4 +871,25 @@ export const labFr = {
     lede: "Études de cas publiées, rédaction technique, certifications et activité publique, réunies en un seul historique.",
     filters: { all: "Tout", writing: "Rédaction", caseStudy: "Études de cas", credential: "Certifications" },
   },
+};
+
+/** French for lib/content/now.ts. */
+export const nowPageFr: NowPageCopy = {
+  metaTitle: "En ce moment",
+  metaDescription: "Ce sur quoi Gershon Otinkorang se concentre en ce moment : études, travail, rédaction et les postes qu'il recherche.",
+  eyebrow: "En ce moment",
+  title: "Ce sur quoi je me concentre en ce moment",
+  lede: "Un aperçu de la situation actuelle, tenu à jour avec le reste du site.",
+  updated: "Mis à jour le",
+  about: "Qu'est-ce qu'une page « now » ?",
+  sections: {
+    studying: "Études",
+    working: "Travail",
+    based: "Lieu",
+    lookingFor: "Ce que je recherche",
+    writing: "Dernier article",
+    earned: "Obtenu récemment",
+  },
+  briefLink: "Voir la fiche candidat",
+  readPost: "Lire l'article",
 };

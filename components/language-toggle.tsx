@@ -16,9 +16,9 @@ export function LanguageToggle() {
   const { t } = useI18n();
   const pathname = usePathname();
   const isFrench = pathname?.startsWith("/fr") ?? false;
-  // Role views and the candidate brief have a direct counterpart in the other
-  // language, so the toggle keeps the reader on the same page.
-  const rolePath = pathname?.match(/^\/(?:fr\/)?(?:for\/[^/]+|brief$)/)?.[0];
+  // Role views, the candidate brief and the now page have a direct
+  // counterpart in the other language, so the toggle keeps the reader there.
+  const rolePath = pathname?.match(/^\/(?:fr\/)?(?:for\/[^/]+|brief$|now$)/)?.[0];
   const target = rolePath
     ? isFrench
       ? rolePath.replace(/^\/fr/, "")

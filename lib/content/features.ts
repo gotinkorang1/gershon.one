@@ -5,7 +5,7 @@
 /* -------------------------------------------------------------------------- */
 
 export const portfolioFeatures = {
-  navigation: { projects: "Projects", lab: "Lab", blog: "Blog" },
+  navigation: { projects: "Projects", lab: "Lab", blog: "Blog", now: "Now" },
   lab: {
     metaTitle: "Interactive IT troubleshooting lab",
     // Search snippet, ≤160 characters.
