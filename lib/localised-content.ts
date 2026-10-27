@@ -197,6 +197,9 @@ export function getProjectsContent(locale: Locale): {
 /** Path to the projects page in the given language. */
 export const projectsHref = (locale: Locale) => (locale === "fr" ? "/fr/projects" : "/projects");
 
+/** Path to the downloadable portfolio PDF in the given language. */
+export const portfolioPdfHref = (locale: Locale) => `${projectsHref(locale)}/portfolio.pdf`;
+
 type BriefStrength = { skill: string; years: string; level: string };
 
 /** Everything on the candidate brief, plus the share/print labels the recruiter packs reuse. */

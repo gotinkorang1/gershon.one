@@ -1,10 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, Globe } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Download, Globe } from "lucide-react";
 import { Panel } from "@/components/ui/panel";
+import { buttonVariants } from "@/components/ui/button";
 import { ProjectList } from "@/components/projects/project-list";
 import { site } from "@/lib/site";
-import { getProjectsContent, projectsHref } from "@/lib/localised-content";
+import { getProjectsContent, portfolioPdfHref, projectsHref } from "@/lib/localised-content";
+import { cn } from "@/lib/utils";
 import type { Locale } from "@/lib/i18n";
 import { serialiseJsonLd } from "@/lib/json-ld";
 import { breadcrumbJsonLd, webPageJsonLd } from "@/lib/seo";
@@ -47,6 +49,14 @@ export function ProjectsView({ locale }: { locale: Locale }) {
         <p className="label">{copy.eyebrow}</p>
         <h1 className="mt-4 text-jumbo font-semibold">{copy.title}</h1>
         <p className="mt-5 text-lede text-muted-foreground">{copy.lede}</p>
+        <a
+          href={portfolioPdfHref(locale)}
+          download={copy.pdf.fileName}
+          className={cn(buttonVariants({ variant: "outline" }), "mt-7 min-h-11 w-full sm:w-auto")}
+        >
+          <Download aria-hidden />
+          {copy.download}
+        </a>
       </header>
 
       {/* ------------------------------------------------------ websites */}
