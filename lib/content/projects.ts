@@ -24,6 +24,7 @@ export const websites: Website[] = [
   { slug: "papersource-ghana", name: "PaperSource Ghana", url: "https://www.papersourcegh.com/", summary: "Catalogue and storefront delivering across Accra and Tema", image: "/projects/papersource-ghana.webp" },
   { slug: "nii-plants-group", name: "Nii Plants Group", url: "https://www.niiplantsgroup.com/", summary: "Group site for mobility, hospitality and business services", image: "/projects/nii-plants-group.webp" },
   { slug: "nii-plants-car-rentals", name: "Nii Plants Car Rentals", url: "https://www.niiplantsghana.com/", summary: "Self-drive and chauffeur car rental in Accra", image: "/projects/nii-plants-car-rentals.webp" },
+  { slug: "premium-rides-ghana", name: "Premium Rides Ghana", url: "https://premiumridesghana.com/", summary: "Car rental, chauffeur and airport transfer services", image: "/projects/premium-rides-ghana.webp" },
   { slug: "nbc-ghana-trust", name: "NBC Ghana Trust", url: "https://nbcghanatrust.com/", summary: "Employee benefits trust company", image: "/projects/nbc-ghana-trust.webp" },
   { slug: "akosombo-textiles", name: "Akosombo Textiles", url: "https://www.akosombotextiles.com/", summary: "Textile manufacturer and fashion collections", image: "/projects/akosombo-textiles.webp" },
   { slug: "kwaaba-foundation", name: "Kwaaba Foundation", url: "https://kwaabafoundation.org/about-kwaaba/", summary: "Non-profit for health and community initiatives", image: "/projects/kwaaba-foundation.webp" },
