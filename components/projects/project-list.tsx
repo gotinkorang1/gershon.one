@@ -60,6 +60,7 @@ export function ProjectList({ copy, projects }: { copy: ListCopy; projects: Proj
               <Panel className="flex h-full flex-col p-5">
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
                   <span className="label">{copy.categories[p.category]}</span>
+                  {p.href?.startsWith("/") && <Badge variant="accent">{copy.writeUp}</Badge>}
                   {p.status === "in-progress" && <Badge variant="accent">{copy.inProgress}</Badge>}
                 </div>
                 <h3 className="mt-2.5 font-semibold leading-snug tracking-tight">{p.title}</h3>
