@@ -1,6 +1,7 @@
 ---
 title: From IT generalist in Ghana to specialist roles in Canada
 date: 2026-10-17
+cover: /it-generalist-cover.webp
 summary: I used to be the network admin, the help desk, the web developer, and the server guy, all in one role. That’s normal where I’m from. In Ghana, many IT…
 tags: [LinkedIn, Tech, Newfoundland, Ghana, CanadaTech, NewcomersToCanada, ITCareers, CareerGrowth, InternationallyTrainedProfessionals]
 draft: false

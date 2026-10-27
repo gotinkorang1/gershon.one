@@ -1,6 +1,7 @@
 ---
 title: Learning Newfoundland weather, coming from Ghana
 date: 2026-10-17
+cover: /newfoundland-weather-cover.webp
 summary: One thing I’m definitely still adjusting to in Newfoundland is the weather. Coming from Ghana, where the climate is generally warm and predictable…
 tags: [LinkedIn, Newfoundland, StJohns, Ghana, NewcomersToCanada, InternationalStudents, LifeInCanada]
 draft: false
