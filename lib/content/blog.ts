@@ -28,6 +28,7 @@ export const blogCopy = {
   share: "Share",
   shareOnX: "Share on X",
   shareOnLinkedIn: "Share on LinkedIn",
+  originallyOnLinkedIn: "Originally posted on LinkedIn",
   copyLink: "Copy link",
   linkCopied: "Link copied",
   onThisPage: "On this page",

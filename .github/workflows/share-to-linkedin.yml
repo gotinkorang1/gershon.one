@@ -1,0 +1,49 @@
+name: Share to LinkedIn
+
+# When a push to main publishes a blog post (new file, or draft → published),
+# wait for the deploy to serve it and then share it to LinkedIn. Posts that
+# came from LinkedIn, posts with `share: false` and posts dated before the
+# cutoff in scripts/share-to-linkedin.mjs are skipped. Setup: docs/linkedin.md.
+on:
+  push:
+    branches: [main]
+    paths: ["content/blog/*.md"]
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: Slug of a published post to share now (e.g. network-is-slow-not-the-fibre)
+        required: true
+
+permissions:
+  contents: read
+
+# Queue rather than cancel: a cancelled run could stop between two shares.
+concurrency:
+  group: share-to-linkedin
+  cancel-in-progress: false
+
+jobs:
+  share:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Share newly published posts
+        if: github.event_name == 'push'
+        env:
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          LINKEDIN_PERSON_URN: ${{ secrets.LINKEDIN_PERSON_URN }}
+        run: node scripts/share-to-linkedin.mjs --before "${{ github.event.before }}" --after "${{ github.sha }}"
+
+      - name: Share one post
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          LINKEDIN_PERSON_URN: ${{ secrets.LINKEDIN_PERSON_URN }}
+          SLUG: ${{ inputs.slug }}
+        run: node scripts/share-to-linkedin.mjs --slug "$SLUG"

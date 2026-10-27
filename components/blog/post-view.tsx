@@ -8,7 +8,7 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { AlertTriangle, ArrowLeft, ArrowRight, Clock, Info, Lightbulb } from "lucide-react";
+import { AlertTriangle, ArrowLeft, ArrowRight, ArrowUpRight, Clock, Info, Lightbulb } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
@@ -160,9 +160,24 @@ export function PostView({ slug, locale }: { slug: string; locale: Locale }) {
                 <Clock className="size-3" />
                 {post.readingMinutes} {c.minRead}
               </p>
+              {post.linkedin && (
+                <a
+                  href={post.linkedin}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="label link inline-flex items-center gap-1 normal-case tracking-normal text-accent"
+                >
+                  {c.originallyOnLinkedIn}
+                  <ArrowUpRight aria-hidden className="size-3" />
+                </a>
+              )}
             </div>
             <h1 className="mt-5 text-jumbo font-semibold tracking-tight">{post.title}</h1>
-            <p className="measure mt-5 text-lede text-muted-foreground">{post.summary}</p>
+            {/* An imported LinkedIn post's summary is its own opening lines,
+                so showing it here would print them twice. */}
+            {!post.linkedin && (
+              <p className="measure mt-5 text-lede text-muted-foreground">{post.summary}</p>
+            )}
 
             <div className="mt-7 flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-3">

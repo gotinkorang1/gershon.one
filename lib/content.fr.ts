@@ -693,6 +693,7 @@ export const blogCopyFr = {
   share: "Partager",
   shareOnX: "Partager sur X",
   shareOnLinkedIn: "Partager sur LinkedIn",
+  originallyOnLinkedIn: "Publié d'abord sur LinkedIn",
   copyLink: "Copier le lien",
   linkCopied: "Lien copié",
   onThisPage: "Sur cette page",
