@@ -142,9 +142,11 @@ export function toPost(row, { publish = false } = {}) {
   const blocks = text.split(/\n\s*\n/);
   const firstLine = plain(text.split("\n").find((l) => plain(l)) ?? "");
   const title = clip(firstLine.replace(/[.:!?]+$/, ""), TITLE_MAX);
-  // A one-line opening paragraph is the post's headline: it becomes the title
-  // rather than repeating under it on the page.
-  const headline = blocks.length > 1 && !blocks[0].trim().includes("\n");
+  // A short one-line opening paragraph is the post's headline: it becomes the
+  // title rather than repeating under it on the page. One too long for a title
+  // stays in the body, or its clipped tail would be lost.
+  const headline =
+    blocks.length > 1 && !blocks[0].trim().includes("\n") && plain(blocks[0]).length <= TITLE_MAX;
   const body = headline ? blocks.slice(1).join("\n\n").trim() : text;
   const paragraphs = body.split(/\n\s*\n/).map(plain).filter(Boolean);
   const summary = clip(paragraphs.slice(0, 2).join(" "), SUMMARY_MAX);

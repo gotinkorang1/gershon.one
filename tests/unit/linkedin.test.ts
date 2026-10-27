@@ -59,6 +59,13 @@ describe("toPost", () => {
     expect(shareable(data)).toBe(false);
   });
 
+  it("keeps an opening line too long for a title in the body", () => {
+    const opening = "I used to be the network admin, the help desk, the web developer, and the server guy, all in one role.";
+    const post = toPost({ ...withText, ShareCommentary: `${opening}\n\nIn Ghana, many IT professionals become generalists.` })!;
+    expect(post.title.endsWith("…")).toBe(true);
+    expect(post.file).toContain(opening);
+  });
+
   it("skips reshares with no text of their own", () => {
     expect(toPost(reshare)).toBeNull();
   });
