@@ -1,4 +1,8 @@
 import { expect, test } from "@playwright/test";
+import { getPublishedPosts } from "@/lib/blog";
+
+// Counted from content/blog so publishing a post doesn't break the blog tests.
+const publishedPostCount = getPublishedPosts().length;
 
 test.beforeEach(async ({ page }) => {
   await page.route(/^https:\/\/.*\.posthog\.com\/.*$/, (route) => route.abort());
@@ -82,7 +86,7 @@ test("web app manifest exposes install-grade icons and service worker", async ({
 test("blog topic filter is announced and kept in the URL", async ({ page }) => {
   await page.goto("/blog");
   const posts = page.locator("main h2");
-  await expect(posts).toHaveCount(3);
+  await expect(posts).toHaveCount(publishedPostCount);
 
   const fibre = page.getByRole("button", { name: "Fibre 1 post", exact: true });
   await fibre.click();
@@ -106,5 +110,5 @@ test("blog topic filter is announced and kept in the URL", async ({ page }) => {
 
   await page.getByRole("button", { name: "All", exact: true }).click();
   await expect(page).toHaveURL(/\/blog$/);
-  await expect(posts).toHaveCount(3);
+  await expect(posts).toHaveCount(publishedPostCount);
 });
