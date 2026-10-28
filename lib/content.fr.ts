@@ -1,3 +1,5 @@
+import type { NowPageCopy } from "@/lib/content/now";
+
 /**
  * French content.
  *
@@ -347,7 +349,7 @@ export const roleFocusFr = {
 /* -------------------------------------------------------------------------- */
 
 export const featuresFr = {
-  navigation: { projects: "Projets", lab: "Labo", blog: "Blog" },
+  navigation: { projects: "Projets", lab: "Labo", blog: "Blog", now: "En ce moment" },
   lab: {
     eyebrow: "Preuve interactive",
     homeTitle: "Ne vous contentez pas de lire. Examinez la démarche.",
@@ -388,6 +390,67 @@ export const briefActionsFr = {
   shareTitle: "Gershon Otinkorang — dossier candidat",
   shareText:
     "Disponibilité, autorisation de travail, expérience et compétences clés de Gershon Otinkorang.",
+  copyDetails: "Copier toutes les coordonnées",
+  detailsCopied: "Coordonnées copiées",
+  copyFailed: "Copie impossible",
+  detailsLabels: {
+    email: "Courriel",
+    phone: "Téléphone",
+    linkedin: "LinkedIn",
+    portfolio: "Portfolio",
+    compensation: "Rémunération",
+    summary: "Résumé",
+  },
+};
+
+/** French for the rest of lib/brief.ts. Lists keep the English order. */
+export const briefFr = {
+  page: {
+    metaTitle: "Fiche candidat",
+    metaDescription: (name: string, role: string) =>
+      `Disponibilité, autorisation de travail et compétences clés de ${name}, ${role}.`,
+    back: "Site complet",
+    eyebrow: "Fiche candidat",
+    downloadCv: "Télécharger le CV",
+    eligibility: "Admissibilité et disponibilité",
+    compensation: "Attentes salariales",
+    pitch: "En un paragraphe",
+    strengths: "Compétences clés, par ordre",
+    targetRoles: "Postes qui me correspondent",
+    current: "Poste actuel",
+    credentials: "Formation et certifications",
+    education: "Formation",
+    certifications: "Certifications",
+    contact: "Contact",
+  },
+  compensation: {
+    value: "45 000–60 000 $ CA",
+    note: "Ouvert à la discussion selon la portée et le niveau du poste",
+  },
+  pitch:
+    "Spécialiste en infrastructure TI et systèmes, étudiant à la maîtrise en informatique à l'Université Memorial, avec cinq ans d'expérience dans l'exploitation de bout en bout des réseaux, des serveurs et du soutien aux utilisateurs. J'offre actuellement des services-conseils TI à distance chez Sabaoth au Canada : matériel, commutation, pare-feu et Microsoft 365/Google Workspace. Auparavant, j'ai dirigé le soutien TI d'un parc industriel de 1 200 acres au Ghana, en supervisant une équipe de quatre personnes et en déployant la vidéosurveillance et Starlink dans 47 succursales et usines.",
+  /** Keyed by the English skill name. */
+  strengths: {
+    "IT Consulting & Remote Support": { skill: "Services-conseils TI et soutien à distance", years: "5 ans", level: "Quotidien, en production" },
+    "Microsoft 365 & Google Workspace": { skill: "Microsoft 365 et Google Workspace", years: "3 ans", level: "Quotidien, en production" },
+    "MikroTik RouterOS / Networking": { skill: "MikroTik RouterOS / réseautique", years: "3 ans", level: "Quotidien, en production" },
+    "ERPNext / Odoo administration": { skill: "Administration ERPNext / Odoo", years: "3 ans", level: "Quotidien, en production" },
+    "Network troubleshooting & firewalls": { skill: "Dépannage réseau et pare-feu", years: "5 ans", level: "Quotidien" },
+    "Server & systems administration": { skill: "Administration de serveurs et de systèmes", years: "5 ans", level: "Quotidien" },
+    "Starlink / satellite networking": { skill: "Starlink / réseaux satellitaires", years: "2 ans", level: "Déployé et entretenu" },
+    AWS: { skill: "AWS", years: "2 ans", level: "Certified Cloud Practitioner" },
+    "CCTV / IP camera systems": { skill: "Vidéosurveillance / caméras IP", years: "3 ans", level: "Conçu et déployé" },
+    "Web development (PHP, MySQL, JS)": { skill: "Développement Web (PHP, MySQL, JS)", years: "5 ans", level: "Pratique courante" },
+  } as Record<string, { skill: string; years: string; level: string }>,
+  targetRoles: [
+    "Administrateur réseau",
+    "Administrateur de systèmes TI",
+    "Spécialiste du soutien réseau",
+    "Analyste du soutien TI",
+    "Analyste de systèmes",
+    "Technicien en infrastructure",
+    "Analyste en sécurité réseau",
+  ],
 };
 
 /** Same order as `brief.eligibility` in lib/brief.ts. */
@@ -429,6 +492,7 @@ export const websitesFr: Record<string, { summary: string }> = {
   "papersource-ghana": { summary: "Catalogue et boutique en ligne livrant à Accra et Tema" },
   "nii-plants-group": { summary: "Site du groupe : mobilité, hôtellerie et services aux entreprises" },
   "nii-plants-car-rentals": { summary: "Location de voitures avec ou sans chauffeur à Accra" },
+  "premium-rides-ghana": { summary: "Location de voitures, service de chauffeur et transferts aéroport" },
   "nbc-ghana-trust": { summary: "Société fiduciaire d'avantages sociaux" },
   "akosombo-textiles": { summary: "Fabricant textile et collections de mode" },
   "kwaaba-foundation": { summary: "Organisme sans but lucratif pour la santé et les initiatives communautaires" },
@@ -573,6 +637,25 @@ export const projectsPageFr = {
     business: "Systèmes de gestion",
     study: "Études et labos",
   },
+  writeUp: "Étude de cas",
+  stats: { websites: "sites web en ligne", projects: "projets", disciplines: "domaines" },
+  download: "Télécharger le portfolio (PDF)",
+  downloadHint: "Tous les sites et projets dans un document imprimable.",
+  pdf: {
+    fileName: "gershon-otinkorang-portfolio-fr.pdf",
+    title: "Portfolio de réalisations",
+    role: "Spécialiste en infrastructure TI et systèmes",
+    intro: "Les sites web en ligne que j'ai construits ou maintenus, puis des projets en réseaux, infrastructure, logiciel, design et systèmes de gestion, chacun avec une courte description.",
+    updated: "Mis à jour en",
+    contents: "Sommaire",
+    contactTitle: "Parlons-en",
+    contactBody: "Chaque projet ici cache plus qu'une page ne peut en contenir. Je serai heureux d'en présenter un en détail, de vous mettre en contact avec mes références ou de vous envoyer mon CV.",
+    email: "Courriel",
+    phone: "Téléphone",
+    website: "Site web",
+    cv: "CV",
+    cvLink: "Télécharger le PDF",
+  },
   homeLink: "Voir tous les projets et sites web",
   metaTitle: "Sites web, réseaux et projets informatiques",
   metaDescription: "Des sites web que j'ai construits et maintenus, et des projets réseau, infrastructure, ERP et logiciels au Ghana et au Canada.",
@@ -596,6 +679,8 @@ export const blogCopyFr = {
   searchLabel: "Rechercher des articles",
   clearSearch: "Effacer la recherche",
   all: "Tous",
+  filterLabel: "Filtrer par sujet",
+  resultCount: (n: number) => `${n} article${n > 1 ? "s" : ""}`,
   latest: "Le plus récent",
   noResults: (query: string, tag: string) =>
     `Aucun article ne correspond${query ? ` à « ${query} »` : ""}${tag ? ` dans ${tag}` : ""}.`,
@@ -608,6 +693,7 @@ export const blogCopyFr = {
   share: "Partager",
   shareOnX: "Partager sur X",
   shareOnLinkedIn: "Partager sur LinkedIn",
+  originallyOnLinkedIn: "Publié d'abord sur LinkedIn",
   copyLink: "Copier le lien",
   linkCopied: "Lien copié",
   onThisPage: "Sur cette page",
@@ -632,6 +718,9 @@ export const readingFr = {
 
 export const labFr = {
   metaTitle: "Labo interactif de dépannage informatique",
+  // Extrait de recherche, 160 caractères au plus.
+  metaDescription:
+    "Quatre vues du portfolio : dépannage guidé, preuves derrière chaque compétence, architecture des systèmes et historique des activités.",
   eyebrow: "Preuve interactive",
   title: "Voyez comment je diagnostique, relie et améliore les systèmes.",
   lede:
@@ -803,4 +892,25 @@ export const labFr = {
     lede: "Études de cas publiées, rédaction technique, certifications et activité publique, réunies en un seul historique.",
     filters: { all: "Tout", writing: "Rédaction", caseStudy: "Études de cas", credential: "Certifications" },
   },
+};
+
+/** French for lib/content/now.ts. */
+export const nowPageFr: NowPageCopy = {
+  metaTitle: "En ce moment",
+  metaDescription: "Ce sur quoi Gershon Otinkorang se concentre en ce moment : études, travail, rédaction et les postes qu'il recherche.",
+  eyebrow: "En ce moment",
+  title: "Ce sur quoi je me concentre en ce moment",
+  lede: "Un aperçu de la situation actuelle, tenu à jour avec le reste du site.",
+  updated: "Mis à jour le",
+  about: "Qu'est-ce qu'une page « now » ?",
+  sections: {
+    studying: "Études",
+    working: "Travail",
+    based: "Lieu",
+    lookingFor: "Ce que je recherche",
+    writing: "Dernier article",
+    earned: "Obtenu récemment",
+  },
+  briefLink: "Voir la fiche candidat",
+  readPost: "Lire l'article",
 };

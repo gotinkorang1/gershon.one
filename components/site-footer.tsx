@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { site, navLinks } from "@/lib/site";
 import { useI18n } from "@/components/locale-provider";
-import { blogHref, getFeatures, labHref, projectsHref } from "@/lib/localised-content";
+import { blogHref, getFeatures, labHref, nowHref, projectsHref } from "@/lib/localised-content";
 import { CvButton } from "@/components/cv-button";
 import { SHORTCUTS_HELP_EVENT } from "@/components/keyboard-shortcuts";
 import { PwaController } from "@/components/pwa-controller";
@@ -61,6 +61,11 @@ export function SiteFooter() {
                   {features.navigation.blog}
                 </Link>
               </li>
+              <li>
+                <Link href={nowHref(locale)} className="link text-sm text-muted-foreground">
+                  {features.navigation.now}
+                </Link>
+              </li>
             </ul>
           </nav>
 
@@ -86,7 +91,7 @@ export function SiteFooter() {
                 <CvButton variant="ghost" size="sm" className="-ml-3" respondToShortcut />
               </li>
               <li>
-                <Link href="/brief" className="link">
+                <Link href={`${prefix}/brief`} className="link">
                   {t.ui.candidateBrief}
                 </Link>
               </li>

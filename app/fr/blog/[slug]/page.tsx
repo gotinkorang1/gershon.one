@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageTitle } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { getAllPosts, getPost } from "@/lib/blog";
 import { PostView } from "@/components/blog/post-view";
@@ -18,7 +19,7 @@ export async function generateMetadata({
   if (!post) return {};
 
   return {
-    title: post.title,
+    title: pageTitle(post.title),
     description: post.description ?? post.summary,
     alternates: {
       canonical: `/fr/blog/${post.slug}`,

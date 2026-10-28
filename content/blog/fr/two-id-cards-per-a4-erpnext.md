@@ -2,6 +2,7 @@
 title: Deux cartes d'identité par feuille A4, directement depuis ERPNext
 date: 2026-08-02
 summary: Un format d'impression qui transforme les dossiers d'employés ERPNext en cartes d'identité finies, recto verso — deux par feuille — sans outil de conception externe.
+description: Un format d'impression ERPNext qui produit des cartes d'identité recto verso, deux par feuille A4, sans outil de conception externe.
 cover: /erpnext-id-cards-cover.webp
 tags: [ERPNext, Jinja, RH, Impression]
 draft: false

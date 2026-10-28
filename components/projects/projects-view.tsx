@@ -1,19 +1,59 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, Globe } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Download, Globe } from "lucide-react";
 import { Panel } from "@/components/ui/panel";
+import { buttonVariants } from "@/components/ui/button";
 import { ProjectList } from "@/components/projects/project-list";
 import { site } from "@/lib/site";
-import { getProjectsContent } from "@/lib/localised-content";
+import { getProjectsContent, portfolioPdfHref, projectsHref } from "@/lib/localised-content";
+import { cn } from "@/lib/utils";
 import type { Locale } from "@/lib/i18n";
+import { serialiseJsonLd } from "@/lib/json-ld";
+import { breadcrumbJsonLd, webPageJsonLd } from "@/lib/seo";
 
 const domain = (url: string) => new URL(url).hostname.replace(/^www\./, "");
+const monogram = (name: string) =>
+  name
+    .split(/\s+/)
+    .filter((word) => /^[A-Z]/.test(word))
+    .slice(0, 3)
+    .map((word) => word[0])
+    .join("");
 
 export function ProjectsView({ locale }: { locale: Locale }) {
   const { copy, websites, projects } = getProjectsContent(locale);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { homepageAlt, ...listCopy } = copy;
   const home = locale === "fr" ? "/fr" : "/";
+  const path = projectsHref(locale);
+  const base = process.env.NEXT_PUBLIC_SITE_URL ?? site.url;
+  // A listing page: the live sites and the project write-ups, in page order.
+  const pageLd = webPageJsonLd(
+    locale,
+    { type: "CollectionPage", path, name: copy.metaTitle, description: copy.metaDescription },
+    {
+      mainEntity: {
+        "@type": "ItemList",
+        itemListElement: [
+          ...websites.filter((w) => !w.offline).map((w) => ({ name: w.name, url: w.url })),
+          ...projects.map((p) => ({
+            name: p.title,
+            url: p.href ? (p.href.startsWith("/") ? `${base}${p.href}` : p.href) : undefined,
+          })),
+        ].map((item, i) => ({ "@type": "ListItem", position: i + 1, ...item })),
+      },
+    },
+  );
+  const breadcrumbs = breadcrumbJsonLd(locale, [{ name: copy.eyebrow, path }]);
+  const stats = [
+    { value: websites.filter((w) => !w.offline).length, label: copy.stats.websites, href: "#websites" },
+    { value: projects.length, label: copy.stats.projects, href: "#projects" },
+    {
+      value: new Set(projects.map((p) => p.category)).size,
+      label: copy.stats.disciplines,
+      href: "#projects",
+    },
+  ];
   return (
     <div className="shell pb-24 pt-28 md:pt-32">
       <Link href={home} className="link inline-flex items-center gap-2 text-sm text-muted-foreground">
@@ -25,10 +65,33 @@ export function ProjectsView({ locale }: { locale: Locale }) {
         <p className="label">{copy.eyebrow}</p>
         <h1 className="mt-4 text-jumbo font-semibold">{copy.title}</h1>
         <p className="mt-5 text-lede text-muted-foreground">{copy.lede}</p>
+        <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+          <a
+            href={portfolioPdfHref(locale)}
+            download={copy.pdf.fileName}
+            className={cn(buttonVariants({ variant: "accent" }), "min-h-11 w-full sm:w-auto")}
+          >
+            <Download aria-hidden />
+            {copy.download}
+          </a>
+          <p className="text-sm text-faint">{copy.downloadHint}</p>
+        </div>
       </header>
 
+      {/* Headline numbers double as jump links into the page. */}
+      <ul className="mt-12 grid grid-cols-3 gap-2 sm:gap-3">
+        {stats.map((s) => (
+          <li key={s.label}>
+            <a href={s.href} className="panel panel-interactive flex h-full flex-col gap-1 p-3 sm:p-5">
+              <span className="text-2xl font-semibold tabular-nums tracking-tight sm:text-3xl">{s.value}</span>
+              <span className="text-xs leading-snug text-muted-foreground sm:text-sm">{s.label}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+
       {/* ------------------------------------------------------ websites */}
-      <section aria-labelledby="websites-title" className="mt-16">
+      <section id="websites" aria-labelledby="websites-title" className="mt-16 scroll-mt-28">
         <h2 id="websites-title" className="text-xl font-semibold tracking-tight">
           {copy.websitesTitle}
         </h2>
@@ -48,8 +111,18 @@ export function ProjectsView({ locale }: { locale: Locale }) {
                       className="object-cover object-top transition-transform duration-500 motion-safe:group-hover:scale-[1.03]"
                     />
                   ) : (
-                    <div className="grid size-full place-items-center">
-                      <Globe aria-hidden className="size-8 text-faint" />
+                    // No screenshot (the site blocks automated capture): a
+                    // monogram tile reads as deliberate rather than broken.
+                    <div className="grid size-full place-items-center bg-[radial-gradient(var(--color-border)_1px,transparent_1px)] [background-size:14px_14px]">
+                      <div className="flex flex-col items-center gap-2">
+                        <span aria-hidden className="text-4xl font-semibold tracking-tight text-faint">
+                          {monogram(w.name)}
+                        </span>
+                        <span className="label inline-flex items-center gap-1.5 normal-case tracking-normal">
+                          <Globe aria-hidden className="size-3" />
+                          {domain(w.url)}
+                        </span>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -94,13 +167,24 @@ export function ProjectsView({ locale }: { locale: Locale }) {
       </section>
 
       {/* ------------------------------------------------------ projects */}
-      <section aria-labelledby="projects-title" className="mt-20">
+      <section id="projects" aria-labelledby="projects-title" className="mt-20 scroll-mt-28">
         <h2 id="projects-title" className="text-xl font-semibold tracking-tight">
           {copy.projectsTitle}
         </h2>
         <p className="mt-1.5 text-sm text-muted-foreground">{copy.projectsLede}</p>
         <ProjectList copy={listCopy} projects={projects} />
       </section>
+
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: serialiseJsonLd(pageLd) }}
+      />
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: serialiseJsonLd(breadcrumbs) }}
+      />
     </div>
   );
 }

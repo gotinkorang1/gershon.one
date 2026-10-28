@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, Clock } from "lucide-react";
 import { Github } from "@/components/ui/brand-icons";
 import { caseStudies } from "@/lib/case-studies";
-import { getCaseStudy } from "@/lib/localised-content";
+import { getBlogCopy, getCaseStudy } from "@/lib/localised-content";
 import { getDictionary } from "@/lib/i18n";
 import { Badge } from "@/components/ui/badge";
 import { Panel } from "@/components/ui/panel";
@@ -14,7 +14,7 @@ import { CaseStudyToc } from "@/components/case-study-toc";
 import { slugify } from "@/lib/utils";
 import { serialiseJsonLd } from "@/lib/json-ld";
 import { site } from "@/lib/site";
-import { defaultOgImage } from "@/lib/seo";
+import { defaultOgImage, pageTitle } from "@/lib/seo";
 
 const t = getDictionary("fr");
 
@@ -33,7 +33,7 @@ export async function generateMetadata({
 
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? site.url;
   return {
-    title: study.title,
+    title: pageTitle(study.title),
     description: study.metaDescription,
     alternates: {
       canonical: `/fr/work/${study.slug}`,
@@ -77,17 +77,32 @@ export default async function FrenchCaseStudy({
   if (!study) notFound();
 
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? site.url;
+  const url = `${base}/fr/work/${study.slug}`;
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "TechArticle",
-    "@id": `${base}/fr/work/${study.slug}`,
+    "@id": url,
+    url,
     headline: study.title,
     description: study.metaDescription,
     datePublished: study.published,
     inLanguage: "fr-CA",
-    author: { "@type": "Person", name: site.name },
+    wordCount: study.sections.reduce((n, sec) => n + sec.body.join(" ").split(/\s+/).length, 0),
+    // Same share card as the English study: it carries no text to translate.
+    image: `${base}/work/${study.slug}/opengraph-image`,
+    author: { "@type": "Person", "@id": `${base}/#person`, name: site.name, url: base },
     keywords: study.tags.join(", "),
     ...(study.repo ? { codeRepository: study.repo } : {}),
+  };
+
+  const breadcrumbs = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: getBlogCopy("fr").home, item: `${base}/fr` },
+      { "@type": "ListItem", position: 2, name: t.nav.work, item: `${base}/fr#work` },
+      { "@type": "ListItem", position: 3, name: study.title, item: url },
+    ],
   };
 
   return (
@@ -190,6 +205,11 @@ export default async function FrenchCaseStudy({
         type="application/ld+json"
         suppressHydrationWarning
         dangerouslySetInnerHTML={{ __html: serialiseJsonLd(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: serialiseJsonLd(breadcrumbs) }}
       />
     </article>
   );

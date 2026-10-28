@@ -19,3 +19,4 @@ export * from "@/lib/content/features";
 export * from "@/lib/content/navigation";
 export * from "@/lib/content/projects";
 export * from "@/lib/content/blog";
+export * from "@/lib/content/now";

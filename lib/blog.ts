@@ -33,6 +33,8 @@ export type Post = {
   cover?: string;
   tags: string[];
   draft: boolean;
+  /** The LinkedIn post this was imported from (front matter `linkedin`), by scripts/import-linkedin.mjs. */
+  linkedin?: string;
   /** Raw Markdown body (frontmatter stripped). */
   content: string;
   readingMinutes: number;
@@ -111,6 +113,7 @@ export function getAllPosts(locale: Locale = "en"): Post[] {
         cover: asString(data.cover) || undefined,
         tags: Array.isArray(data.tags) ? data.tags : [],
         draft: data.draft === true,
+        linkedin: asString(data.linkedin) || undefined,
         content,
         readingMinutes: readingMinutes(content),
       } satisfies Post;
