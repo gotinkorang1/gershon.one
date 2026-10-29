@@ -32,7 +32,7 @@ jobs:
 
       - name: Open pull request
         if: steps.check.outputs.changed == 'true'
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           branch: chore/website-status
           delete-branch: true
