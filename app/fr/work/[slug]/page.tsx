@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowUpRight, Clock } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Clock, Globe } from "lucide-react";
 import { Github } from "@/components/ui/brand-icons";
 import { caseStudies } from "@/lib/case-studies";
 import { getBlogCopy, getCaseStudy } from "@/lib/localised-content";
@@ -14,7 +14,7 @@ import { CaseStudyToc } from "@/components/case-study-toc";
 import { slugify } from "@/lib/utils";
 import { serialiseJsonLd } from "@/lib/json-ld";
 import { site } from "@/lib/site";
-import { defaultOgImage, pageTitle } from "@/lib/seo";
+import { pageTitle } from "@/lib/seo";
 
 const t = getDictionary("fr");
 
@@ -58,11 +58,14 @@ export async function generateMetadata({
     },
     openGraph: {
       type: "article",
+      url: `/fr/work/${study.slug}`,
       title: study.title,
       description: study.metaDescription,
       locale: "fr_CA",
-      // Setting openGraph replaces the layout's wholesale, image included.
-      images: [defaultOgImage],
+      publishedTime: study.published,
+      modifiedTime: study.updated ?? study.published,
+      authors: [site.name],
+      tags: [...study.tags],
     },
   };
 }
@@ -88,11 +91,18 @@ export default async function FrenchCaseStudy({
     datePublished: study.published,
     inLanguage: "fr-CA",
     wordCount: study.sections.reduce((n, sec) => n + sec.body.join(" ").split(/\s+/).length, 0),
-    // Same share card as the English study: it carries no text to translate.
-    image: `${base}/work/${study.slug}/opengraph-image`,
+    image: `${base}/fr/work/${study.slug}/opengraph-image`,
     author: { "@type": "Person", "@id": `${base}/#person`, name: site.name, url: base },
     keywords: study.tags.join(", "),
+    dateModified: study.updated ?? study.published,
+    mainEntityOfPage: url,
+    publisher: { "@id": `${base}/#person` },
     ...(study.repo ? { codeRepository: study.repo } : {}),
+    // The site the study describes, so search engines can tie the write-up to
+    // the live work it is evidence for.
+    ...(study.liveUrl
+      ? { about: { "@type": "WebSite", url: study.liveUrl, name: study.context } }
+      : {}),
   };
 
   const breadcrumbs = {
@@ -141,6 +151,18 @@ export default async function FrenchCaseStudy({
           >
             <Github className="size-3.5 shrink-0 text-faint" />
             {t.common.viewSource}
+            <ArrowUpRight className="size-3.5 shrink-0 text-faint transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </a>
+        )}
+        {study.liveUrl && (
+          <a
+            href={study.liveUrl}
+            target="_blank"
+            rel="noopener"
+            className="group mt-5 inline-flex items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm transition-colors hover:border-border-strong hover:bg-surface-1"
+          >
+            <Globe className="size-3.5 shrink-0 text-faint" />
+            {t.common.viewLiveSite}
             <ArrowUpRight className="size-3.5 shrink-0 text-faint transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
         )}

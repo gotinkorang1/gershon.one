@@ -17,6 +17,7 @@ export type Website = {
 };
 
 export const websites: Website[] = [
+  { slug: "evik-travel-advisory", name: "Evik Travel Advisory", url: "https://eviktraveladvisory.com/", summary: "Visa and travel advisory site with guides, enquiries and a team inbox" },
   { slug: "origin8", name: "Origin8", url: "https://origin8gh.com/", summary: "Marketing communication, technology and publishing agency", image: "/projects/origin8.webp" },
   { slug: "st-charles-shs", name: "St. Charles Senior High School", url: "https://stcharles.edu.gh/", summary: "School website with news and an alumni portal" },
   { slug: "fdi-ghana", name: "Foreign Direct International Group", url: "https://fdighana.com/", summary: "Investment and business setup services in Ghana", image: "/projects/fdi-ghana.webp" },
@@ -108,6 +109,14 @@ export const projects: Project[] = [
     category: "software",
     summary: "A support chatbot built with Next.js, LangChain and OpenAI, with Upstash Redis for memory, Scrapy and Botpress resources for its knowledge, and Zendesk to hand conversations to a person.",
     tags: ["Next.js", "LangChain", "OpenAI", "Zendesk"],
+  },
+  {
+    title: "Evik Travel Advisory website",
+    context: "Evik Travel Advisory",
+    category: "software",
+    summary: "Built and launched the full site on free tiers: Astro on Cloudflare Workers, visa and travel guides staff edit through a CMS, enquiry and newsletter forms stored in D1 behind Turnstile, a password-protected team inbox with email alerts and WhatsApp reply links, and structured data, sitemaps and IndexNow for search. Accessibility tests with Playwright and axe-core report zero violations.",
+    tags: ["Astro", "Cloudflare Workers", "D1", "Tailwind CSS", "SEO"],
+    href: "/work/evik-travel-advisory-website",
   },
   {
     title: "Car rental booking app",

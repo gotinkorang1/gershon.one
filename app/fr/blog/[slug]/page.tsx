@@ -30,12 +30,16 @@ export async function generateMetadata({
           ["fr-CA", `/fr/blog/${post.slug}`, "fr"],
         ]
           .filter(([, , l]) => getPost(post.slug, l as "en" | "fr"))
-          .map(([k, v]) => [k, v]),
+          .map(([k, v]) => [k, v])
+          // x-default is the English post when it exists, matching every other
+          // page; an FR-only post has no default to point at.
+          .concat(getPost(post.slug, "en") ? [["x-default", `/blog/${post.slug}`]] : []),
       ),
     },
     robots: post.draft ? { index: false, follow: true } : { index: true, follow: true },
     openGraph: {
       type: "article",
+      url: `/fr/blog/${post.slug}`,
       locale: "fr_CA",
       title: post.title,
       description: post.description ?? post.summary,

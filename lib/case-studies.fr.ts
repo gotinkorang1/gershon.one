@@ -16,6 +16,79 @@ export const caseStudiesFr: Record<
     outcomes: string[];
   }
 > = {
+  "evik-travel-advisory-website": {
+    title: "Un site de conseil en voyage qui tourne sur des offres gratuites",
+    summary:
+      "Evik Travel Advisory avait besoin d'un site que l'on trouve par la recherche, que l'équipe peut modifier sans développeur, et qui met chaque demande rapidement sous les yeux d'une personne. Astro sur Cloudflare Workers, un CMS adossé à Git, une base D1 derrière les formulaires et un référencement pensé dès le départ — le tout sur des offres gratuites.",
+    metaDescription:
+      "Comment j'ai bâti eviktraveladvisory.com sur des offres gratuites : Astro sur Cloudflare Workers, un CMS, des demandes dans D1 et des alertes WhatsApp.",
+    role: "Développeur web",
+    outcomes: [
+      "violation d'accessibilité axe-core",
+      "types de contenu modifiés par l'équipe dans le CMS",
+      "offre gratuite pour chaque service utilisé",
+    ],
+    sections: [
+      {
+        heading: "Ce que le site devait faire",
+        body: [
+          "Une agence de conseil en voyage vit de trois choses : être trouvée par quelqu'un qui cherche de l'aide pour un visa, inspirer confiance une fois qu'il arrive, et lui répondre avant qu'il ne s'adresse ailleurs. Le site devait porter les trois, pour une petite équipe, sans facture d'hébergement mensuelle.",
+          "Cela a orienté chaque choix. Les pages devaient être rapides et lisibles sur téléphone. L'équipe devait pouvoir modifier une exigence de visa ou un voyage sans m'attendre. Et une demande ne pouvait pas dormir dans une base de données : elle devait parvenir à quelqu'un capable de répondre.",
+        ],
+      },
+      {
+        heading: "Statique par défaut, un serveur seulement là où il se justifie",
+        body: [
+          "Le site est construit avec Astro et TypeScript, et mis en forme avec Tailwind CSS 4, avec les couleurs et espacements de la marque définis comme jetons de design et documentés dans un DESIGN.md. Presque chaque page est générée à l'avance en HTML simple, si bien que la plupart des visites ne sollicitent jamais de serveur.",
+          "Trois éléments en ont réellement besoin : le formulaire de demande, l'inscription à l'infolettre et la boîte de réception de l'équipe. Ils tournent sur Cloudflare Workers grâce à l'adaptateur @astrojs/cloudflare, à côté des fichiers statiques servis par Workers Static Assets. Un seul déploiement sert les deux.",
+          "Les polices — Newsreader pour les titres, Instrument Sans pour le texte — sont servies par le site lui-même via Fontsource plutôt que par Google Fonts, ce qui évite une requête vers un tiers et n'y transmet pas les données des visiteurs. Sharp redimensionne les images et en produit des versions WebP, et Pagefind fournit la recherche sur le site sans aucun serveur de recherche.",
+        ],
+      },
+      {
+        heading: "Un contenu que l'équipe modifie elle-même",
+        body: [
+          "Les guides visas, les guides de voyage, les services, les voyages, les politiques, la FAQ et les avis sont stockés en Markdown et en JSON dans des collections de contenu Astro.",
+          "Sveltia CMS, accessible à /admin, modifie ces mêmes fichiers. L'équipe remplit un formulaire ; la modification devient un commit dans le dépôt GitHub ; Cloudflare Workers Builds la déploie. Il n'y a pas de base de contenu séparée à sauvegarder ou à synchroniser, et chaque modification a son historique.",
+        ],
+      },
+      {
+        heading: "Une demande doit parvenir à une personne",
+        body: [
+          "Les demandes et les inscriptions à l'infolettre sont enregistrées dans Cloudflare D1, une base de données SQL, et Cloudflare Turnstile protège les deux formulaires contre le spam sans imposer d'énigmes aux visiteurs.",
+          "Enregistrer une demande ne fait que la moitié du travail. Pour chaque nouvelle demande, le Worker envoie à l'équipe une alerte courriel contenant un lien WhatsApp qui ouvre une réponse à ce visiteur : la réponse la plus rapide est à un toucher de la notification. Une page /team protégée par mot de passe liste toutes les demandes à traiter.",
+          "Des liens WhatsApp « cliquer pour discuter » figurent sur tout le site, avec un message prérempli selon la page consultée, si bien que l'équipe sait si la personne s'intéresse à un guide visa ou à un voyage avant même qu'elle n'écrive. Cloudflare Email Routing redirige info@eviktraveladvisory.com vers le Gmail de l'entreprise, qui dispose ainsi d'une adresse professionnelle sans payer de boîte aux lettres.",
+        ],
+      },
+      {
+        heading: "Conçu pour être trouvé",
+        body: [
+          "Le plan du site est produit par @astrojs/sitemap, avec des dates de dernière modification fidèles et l'image principale de chaque page, et une action GitHub actualise ces dates et prévient les moteurs de recherche via IndexNow après chaque push. Google Search Console et Bing Webmaster Tools sont configurés, avec le plan du site et le flux RSS soumis.",
+          "Les données structurées décrivent l'entreprise comme une TravelAgency, liée à sa fiche Google Maps avec ses coordonnées, aux côtés des balisages WebSite, fil d'Ariane, FAQ et article. Chaque page a ses balises canoniques, une image de partage générée pour les aperçus WhatsApp et Facebook, et la balise qui permet à Google d'afficher de grands aperçus d'image. Un fichier llms.txt résume le site pour les outils d'IA.",
+          "Hors du site, le profil Google Business a sa description, ses catégories, ses services, son lien d'avis et ses publications hebdomadaires : pour une entreprise locale, cette fiche est souvent vue avant le site.",
+        ],
+      },
+      {
+        heading: "Tester avant que quiconque ne le voie",
+        body: [
+          "Une copie de préproduction sur workers.dev exécute le même code que le site en ligne, mais demande aux moteurs de recherche de ne pas l'indexer. Avant le lancement, un mode aperçu affichait une bannière sur chaque page et tenait tout le site hors de Google, pour que rien d'inachevé ne soit indexé.",
+          "Astro Check détecte les erreurs de type. Playwright avec axe-core teste l'accessibilité et ne relève aucune violation. Lighthouse mesure la vitesse, et chaque page a été vérifiée à la main sur téléphone, tablette et ordinateur. En local, astro dev et une copie Wrangler de la base D1 permettent de tester les formulaires de bout en bout sans toucher aux vraies données.",
+        ],
+      },
+      {
+        heading: "Mesurer sans en faire trop",
+        body: [
+          "Google Analytics 4 fonctionne en mode consentement, avec les témoins d'analyse désactivés par défaut pour les visiteurs d'Europe. Il enregistre les actions qui comptent pour l'entreprise — demandes, touchers WhatsApp, appels, courriels et clics sur le lien d'avis — plutôt que chaque défilement. Cloudflare Web Analytics ajoute des statistiques de visites sans témoins, et la politique de confidentialité précise ce qui est suivi et comment s'y opposer.",
+          "Le travail sur la vitesse est modeste mais réfléchi : les Speculation Rules chargent en arrière-plan les pages probables, les transitions de vue d'Astro adoucissent les changements de page, et les images comme la carte Google ne se chargent que lorsqu'elles sont nécessaires.",
+        ],
+      },
+      {
+        heading: "La suite",
+        body: [
+          "Le site et sa configuration de référencement viennent d'être mis en ligne, et les données de recherche mettent des semaines à devenir parlantes. La prochaine étape consiste à lire Search Console et les événements de demande côte à côte pour voir quels guides amènent réellement des demandes, et à écrire davantage de ce qui fonctionne.",
+        ],
+      },
+    ],
+  },
   "erpnext-bilingual-id-cards": {
     title: "Des badges que deux langues devaient partager",
     summary:
