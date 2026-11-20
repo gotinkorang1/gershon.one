@@ -31,6 +31,86 @@ export type CaseStudy = {
 
 export const caseStudies: CaseStudy[] = [
   {
+    slug: "evik-travel-advisory-website",
+    title: "A travel advisory site that runs on free tiers",
+    summary:
+      "Evik Travel Advisory needed a site people find through search, staff can edit without a developer, and that puts every enquiry in front of a person quickly. Astro on Cloudflare Workers, a Git-backed CMS, a D1 database behind the forms, and SEO built in from the start — all on free tiers.",
+    metaDescription:
+      "How I built eviktraveladvisory.com on free tiers: Astro on Cloudflare Workers, a staff CMS, D1-backed enquiries with WhatsApp alerts, and SEO built in.",
+    role: "Web developer",
+    context: "Evik Travel Advisory",
+    period: "2026",
+    published: "2026-11-20",
+    readingMinutes: 5,
+    tags: ["Astro", "Cloudflare Workers", "D1", "Tailwind CSS", "SEO", "Accessibility"],
+    outcomes: [
+      { value: "0", label: "axe-core accessibility violations" },
+      { value: "7", label: "content types staff edit in the CMS" },
+      { value: "Free", label: "tier on every service it runs on" },
+    ],
+    draft: false,
+    sections: [
+      {
+        heading: "What the site had to do",
+        body: [
+          "A travel advisory business lives on three things: being found by someone searching for visa help, being trusted once they land, and answering them before they ask someone else. The site had to carry all three, for a small team, without a monthly hosting bill.",
+          "That shaped every choice. Pages had to be fast and readable on a phone. Staff had to be able to change a visa requirement or a trip without waiting on me. And an enquiry could not sit unread in a database — it had to reach someone who could reply.",
+        ],
+      },
+      {
+        heading: "Static by default, a server only where it earns it",
+        body: [
+          "The site is built with Astro and TypeScript, styled with Tailwind CSS 4 using brand colours and spacing set as design tokens and written up in a DESIGN.md. Almost every page is built ahead of time as plain HTML, so most visits never touch a server.",
+          "Three things genuinely need one: the enquiry form, the newsletter sign-up and the team inbox. Those run on Cloudflare Workers through the @astrojs/cloudflare adapter, alongside the static files on Workers Static Assets. One deployment serves both.",
+          "Fonts — Newsreader for headings, Instrument Sans for body text — are served from the site itself through Fontsource rather than from Google Fonts, which saves a third-party request and keeps visitors' details out of it. Sharp resizes images and produces WebP versions, and Pagefind provides site search with no search server at all.",
+        ],
+      },
+      {
+        heading: "Content the team can edit themselves",
+        body: [
+          "Visa guides, travel guides, services, trips, policies, FAQs and reviews are stored as Markdown and JSON in Astro content collections.",
+          "Sveltia CMS sits at /admin and edits those same files. Staff get a form; the change lands as a commit in the GitHub repository; Cloudflare Workers Builds deploys it. There is no separate content database to back up or keep in sync, and every edit has a history.",
+        ],
+      },
+      {
+        heading: "An enquiry has to reach a person",
+        body: [
+          "Enquiries and newsletter sign-ups are stored in Cloudflare D1, a SQL database, with Cloudflare Turnstile in front of both forms to stop spam without making visitors solve puzzles.",
+          "Storing an enquiry is only half the job. For each new one, the Worker emails staff an alert containing a WhatsApp link that opens a reply to that visitor, so the fastest response is one tap from the notification. A password-protected /team page lists every enquiry for the team to work through.",
+          "WhatsApp click-to-chat links appear across the site with a message already filled in for the page the visitor is on, so the team knows whether someone is asking about a visa guide or a trip before they say a word. Cloudflare Email Routing forwards info@eviktraveladvisory.com to the business's Gmail, giving them a professional address without paying for a mailbox.",
+        ],
+      },
+      {
+        heading: "Built to be found",
+        body: [
+          "The sitemap comes from @astrojs/sitemap with honest last-changed dates and each page's main image, and a GitHub Action refreshes those dates and notifies search engines through IndexNow after every push. Google Search Console and Bing Webmaster Tools are set up, with the sitemap and RSS feed submitted.",
+          "Structured data describes the business as a TravelAgency, linked to its Google Maps listing with map coordinates, alongside WebSite, breadcrumb, FAQ and article markup. Every page has canonical tags, a generated share image for WhatsApp and Facebook previews, and the tag that lets Google show large image previews. An llms.txt file summarises the site for AI tools.",
+          "Off the site, the Google Business Profile has its description, categories, services, review link and weekly posts set up — for a local business, that listing is often seen before the website is.",
+        ],
+      },
+      {
+        heading: "Testing before anyone saw it",
+        body: [
+          "A staging copy on workers.dev runs the same code as the live site but tells search engines not to index it. Before launch, a preview-mode switch showed a banner on every page and kept the whole site out of Google, so nothing half-finished could be indexed.",
+          "Astro Check catches type errors. Playwright with axe-core tests accessibility and reports zero violations. Lighthouse covers speed, and every page was checked by hand at phone, tablet and desktop widths. Locally, astro dev and a Wrangler copy of the D1 database mean the forms can be tested end to end without touching real data.",
+        ],
+      },
+      {
+        heading: "Measuring without overreaching",
+        body: [
+          "Google Analytics 4 runs in consent mode, with analytics cookies off by default for visitors from Europe. It records the actions that matter to the business — enquiries, WhatsApp taps, calls, emails and clicks on the review link — rather than every scroll. Cloudflare Web Analytics adds cookie-free visit counts, and the privacy policy says what is tracked and how to opt out.",
+          "Speed work is small but deliberate: Speculation Rules load likely next pages in the background, Astro view transitions smooth page changes, and images and the Google map load only when they are needed.",
+        ],
+      },
+      {
+        heading: "What comes next",
+        body: [
+          "The site and its search setup are newly live, and search data takes weeks to mean anything. The next job is reading Search Console and the enquiry events side by side to see which guides actually bring in enquiries, and writing more of what works.",
+        ],
+      },
+    ],
+  },
+  {
     slug: "erpnext-bilingual-id-cards",
     title: "ID cards two languages had to agree on",
     summary:

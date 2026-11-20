@@ -116,7 +116,7 @@ export const projects: Project[] = [
     category: "software",
     summary: "Built and launched the full site on free tiers: Astro on Cloudflare Workers, visa and travel guides staff edit through a CMS, enquiry and newsletter forms stored in D1 behind Turnstile, a password-protected team inbox with email alerts and WhatsApp reply links, and structured data, sitemaps and IndexNow for search. Accessibility tests with Playwright and axe-core report zero violations.",
     tags: ["Astro", "Cloudflare Workers", "D1", "Tailwind CSS", "SEO"],
-    href: "https://eviktraveladvisory.com/",
+    href: "/work/evik-travel-advisory-website",
   },
   {
     title: "Car rental booking app",
