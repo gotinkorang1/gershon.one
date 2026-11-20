@@ -485,6 +485,7 @@ export const referencesFr: Record<string, { title: string }> = {
 
 /** Keyed by website slug. */
 export const websitesFr: Record<string, { summary: string }> = {
+  "evik-travel-advisory": { summary: "Site de conseil en visas et voyages, avec guides, demandes et boîte de réception d'équipe" },
   origin8: { summary: "Agence de communication marketing, technologie et édition" },
   "st-charles-shs": { summary: "Site de l'école avec actualités et portail des anciens élèves" },
   "fdi-ghana": { summary: "Services d'investissement et de création d'entreprise au Ghana" },
@@ -548,6 +549,11 @@ export const projectsFr: Record<
     context: "Projet de fin d'études, KNUST",
     summary: "Un agent conversationnel de support construit avec Next.js, LangChain et OpenAI, avec Upstash Redis pour la mémoire, Scrapy et des ressources Botpress pour ses connaissances, et Zendesk pour transférer la conversation à une personne.",
     tags: ["Next.js", "LangChain", "OpenAI", "Zendesk"],
+  },
+  "Evik Travel Advisory website": {
+    title: "Site web d'Evik Travel Advisory",
+    summary: "Conception et mise en ligne du site complet avec des offres gratuites : Astro sur Cloudflare Workers, des guides visas et voyages que l'équipe modifie dans un CMS, des formulaires de demande et d'infolettre enregistrés dans D1 et protégés par Turnstile, une boîte de réception d'équipe protégée par mot de passe avec alertes courriel et liens de réponse WhatsApp, ainsi que données structurées, plans de site et IndexNow pour le référencement. Les tests d'accessibilité Playwright et axe-core ne relèvent aucune violation.",
+    tags: ["Astro", "Cloudflare Workers", "D1", "Tailwind CSS", "Référencement"],
   },
   "Car rental booking app": {
     title: "Application de réservation de voitures",
