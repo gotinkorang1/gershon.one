@@ -27,6 +27,10 @@ export type CaseStudy = {
   draft: boolean;
   /** Public repository, when the work is independently inspectable. */
   repo?: string;
+  /** The live site the study is about, when there is one to visit. */
+  liveUrl?: string;
+  /** Last substantive edit (YYYY-MM-DD). Defaults to `published`. */
+  updated?: string;
 };
 
 export const caseStudies: CaseStudy[] = [
@@ -43,6 +47,7 @@ export const caseStudies: CaseStudy[] = [
     published: "2026-11-20",
     readingMinutes: 5,
     tags: ["Astro", "Cloudflare Workers", "D1", "Tailwind CSS", "SEO", "Accessibility"],
+    liveUrl: "https://eviktraveladvisory.com/",
     outcomes: [
       { value: "0", label: "axe-core accessibility violations" },
       { value: "7", label: "content types staff edit in the CMS" },

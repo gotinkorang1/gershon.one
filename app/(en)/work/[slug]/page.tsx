@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { pageTitle } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowUpRight, Clock } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Clock, Globe } from "lucide-react";
 import { Github } from "@/components/ui/brand-icons";
 import { caseStudies, getCaseStudy } from "@/lib/case-studies";
 import { Badge } from "@/components/ui/badge";
@@ -57,9 +57,11 @@ export async function generateMetadata({
     },
     openGraph: {
       type: "article",
+      url: `/work/${study.slug}`,
       title: study.title,
       description: study.metaDescription,
       publishedTime: study.published,
+      modifiedTime: study.updated ?? study.published,
       authors: [site.name],
       tags: [...study.tags],
     },
@@ -105,7 +107,15 @@ export default async function CaseStudyPage({
     image: `${base}/work/${study.slug}/opengraph-image`,
     author: { "@type": "Person", "@id": `${base}/#person`, name: site.name, url: base },
     keywords: study.tags.join(", "),
+    dateModified: study.updated ?? study.published,
+    mainEntityOfPage: `${base}/work/${study.slug}`,
+    publisher: { "@id": `${base}/#person` },
     ...(study.repo ? { codeRepository: study.repo } : {}),
+    // The site the study describes, so search engines can tie the write-up to
+    // the live work it is evidence for.
+    ...(study.liveUrl
+      ? { about: { "@type": "WebSite", url: study.liveUrl, name: study.context } }
+      : {}),
   };
 
   return (
@@ -148,6 +158,18 @@ export default async function CaseStudyPage({
           >
             <Github className="size-3.5 shrink-0 text-faint" />
             {t.common.viewSource}
+            <ArrowUpRight className="size-3.5 shrink-0 text-faint transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </a>
+        )}
+        {study.liveUrl && (
+          <a
+            href={study.liveUrl}
+            target="_blank"
+            rel="noopener"
+            className="group mt-5 inline-flex items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm transition-colors hover:border-border-strong hover:bg-surface-1"
+          >
+            <Globe className="size-3.5 shrink-0 text-faint" />
+            {t.common.viewLiveSite}
             <ArrowUpRight className="size-3.5 shrink-0 text-faint transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
         )}

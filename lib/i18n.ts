@@ -61,6 +61,7 @@ type Dictionary = {
     allCaseStudies: string;
     onThisPage: string;
     viewSource: string;
+    viewLiveSite: string;
     summary: string;
   };
   ui: {
@@ -296,6 +297,7 @@ const en: Dictionary = {
     allCaseStudies: "All case studies",
     onThisPage: "On this page",
     viewSource: "View the source on GitHub",
+    viewLiveSite: "Visit the live site",
     summary: "Summary",
   },
   ui: {
@@ -543,6 +545,7 @@ const fr: Dictionary = {
     allCaseStudies: "Toutes les études de cas",
     onThisPage: "Sur cette page",
     viewSource: "Voir le code source sur GitHub",
+    viewLiveSite: "Voir le site en ligne",
     summary: "Résumé",
   },
   ui: {
@@ -596,7 +599,7 @@ const fr: Dictionary = {
       "Pour moi, la sécurité fait partie de l'exploitation du réseau, pas d'un projet à part. Au parc industriel Bright, cela voulait dire segmenter le réseau par VLAN et règles de pare-feu, placer l'accès administrateur aux systèmes internes derrière un VPN, et garder le système RH qui contient les données personnelles de 8 000 personnes entièrement hors de l'internet public. Cela voulait aussi dire le travail moins visible : sauvegardes complètes hebdomadaires, sauvegardes de bases de données déclenchées par événement, politiques d'identité et de mots de passe, et MFA sur les comptes infonuagiques. Je prolonge aujourd'hui ce travail avec le cours Foundations of Cybersecurity de Google et une maîtrise à l'Université Memorial axée sur la sécurité réseau et la détection d'intrusion.",
     aboutMe: "En bref",
     metaDescription:
-      "Spécialiste en infrastructure et systèmes informatiques à St. John's (T.-N.-L.) : 5 ans de réseaux, serveurs et support. Maîtrise en informatique à Memorial.",
+      "Spécialiste en infrastructure et systèmes informatiques à St. John's (T.-N.-L.) : 5 ans de réseaux, serveurs et support. Maîtrise à Memorial.",
     present: "aujourd'hui",
     eyebrowExperience: "01 — Expérience",
     eyebrowWork: "02 — Études de cas",
